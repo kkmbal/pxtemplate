@@ -3,6 +3,6 @@
 
     <!--footer-->
   	<div id="footer">
-  		footers
+  		CROSSENT.COM
     </div>
     <!--//footer-->

@@ -16,6 +16,8 @@
 	};
 
 	var fnSearchList = function(orderType) {
+		if(orderType == "") return;
+		
 		pageUnit = $('#list_cnt').val();
 		//pageIndex = '${pageIndex}';
 		document.listForm.pageIndex.value = '1';
@@ -25,7 +27,7 @@
 		document.listForm.isDesc.value = isDesc;
 
 		document.listForm.pageUnit.value = pageUnit;
-		document.listForm.action = WEB_HOME+"/board210/getBoardInfoList.do?boardId="+boardId+"&fh="+frameHeight;
+		document.listForm.action = WEB_HOME+"/board210/getBoardInfoList.do?boardId="+boardId;
 		document.listForm.submit();
 
 	};
@@ -314,16 +316,20 @@
 ////////////////////////////////onload/////////////////////////////////////////////////////////////////////	
 	
 	$(document).ready(function () {//이벤트 모음 
-		
+		/*	
 		if(pageUnit == "10"){
 			parent.document.getElementById("bbsFrame").height = frameHeight +"px";
-		}else if(pageUnit == "15"){
-			parent.document.getElementById("bbsFrame").height = Number(frameHeight) + 100 +"px";
+		}else if(pageUnit == "20"){
+			parent.document.getElementById("bbsFrame").height = Number(frameHeight) + 200 +"px";
 		}else if(pageUnit == "30"){
 			parent.document.getElementById("bbsFrame").height = Number(frameHeight) + 550 +"px";
 		}else if(pageUnit == "50"){
 			parent.document.getElementById("bbsFrame").height = Number(frameHeight) + 1150 +"px";
 		}
+		*/
+
+		parent.document.getElementById("bbsFrame").height = "700px";
+		parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
 	
 		$(parent.document).scrollTop(0);
 

@@ -16,7 +16,7 @@
 	<tiles:insertAttribute name="header" />
 	  <!--container-->
      <div id="container">
-    	<div>
+    	<div class="content_area clearfix">
     	  <!--content-->
 			<div id="content">
 				<tiles:insertAttribute name="left" />

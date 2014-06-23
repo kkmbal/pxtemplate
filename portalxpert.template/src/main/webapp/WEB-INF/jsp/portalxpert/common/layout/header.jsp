@@ -3,9 +3,22 @@
 <script type="text/javascript">	
 </script>
 
+
 	<!--header-->
 	<div id="header">
-    	header
+		<div class="head_con">
+			<h1><a>LOGO</a></h1>
+		</div>
+		<div class="gnb_area">
+			<ul class="clearfix">
+        		<li><a>복지포인트관리</a></li>
+        		<li><a>보험관리</a></li>
+        		<li><a>복지제도안내</a></li>
+        		<li><a>제휴복지서비스</a></li>
+        		<li><a>커뮤니티</a></li>
+        		<li><a>생활정보</a></li>
+            </ul>
+		</div>
     </div>
     <!--//header-->
     
