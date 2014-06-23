@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.board.board230.mapper.BBSMovieMapper">
+
+<insert id="insertBBSMovie" 
+		parameterType="portalxpert.board.board230.vo.BBSMovieVO">
+		
+	<![CDATA[
+		INSERT INTO BBS_MVP_FILE(
+			 MVP_KEY
+			, MVP_SKEY
+			, FORMT
+			, TITLE_IMG_NO
+			, RUN_TIME
+			, ORGINL_FILE_NM
+			, THUMB_TIME
+			, STATE
+			, MVP_FILE_NM
+			, TITLE_FILE_NM
+			, THUMB_FILE1
+			, THUMB_FILE2
+			, THUMB_FILE3
+			, THUMB_FILE4
+			, THUMB_FILE5
+			, THUMB_FILE6
+			, RGSDE
+			, MVP_HIGH_FILE_NM
+		) VALUES (
+			 #{mvpKey}
+			, #{mvpSkey}
+			, #{formt}
+			, #{titleImgNo}
+			, #{runTime}
+			, #{orginlFileNm}
+			, #{thumbTime}
+			, #{state}
+			, #{mvpFileNm}
+			, #{titleFileNm}
+			, #{thumbFile1}
+			, #{thumbFile2}
+			, #{thumbFile3}
+			, #{thumbFile4}
+			, #{thumbFile5}
+			, #{thumbFile6}
+			, sysdate
+			, #{mvpHighFileNm}
+		)
+	]]>
+</insert>
+
+<update id="updateTnMspMvp" parameterType="portalxpert.board.board230.vo.BBSMovieVO">
+<![CDATA[
+UPDATE BBS_MVP_FILE SET 
+]]>
+<if test="mvpSkey != null and mvpSkey != ''"> MVP_SKEY = #{mvpSkey} </if>
+<if test="formt != null and formt != ''"> , FORMT = #{formt} </if>
+<if test="titleImgNo != null and titleImgNo != ''"> , TITLE_IMG_NO = #{titleImgNo} </if>
+<if test="runTime != null and runTime != ''"> , RUN_TIME = #{runTime} </if>
+<if test="orginlFileNm != null and orginlFileNm != ''"> , ORGINL_FILE_NM = #{orginlFileNm} </if>
+<if test="thumbTime != null and thumbTime != ''"> , THUMB_TIME = #{thumbTime} </if>
+<if test="state != null and state != ''"> , STATE = #{state} </if>
+<if test="mvpFileNm != null and mvpFileNm != ''"> , MVP_FILE_NM = #{mvpFileNm} </if>
+<if test="titleFileNm != null and titleFileNm != ''"> , TITLE_FILE_NM = #{titleFileNm} </if>
+<if test="thumbFile1 != null and thumbFile1 != ''"> , THUMB_FILE1 = #{thumbFile1} </if>
+<if test="thumbFile2 != null and thumbFile2 != ''"> , THUMB_FILE2 = #{thumbFile2} </if>
+<if test="thumbFile3 != null and thumbFile3 != ''"> , THUMB_FILE3 = #{thumbFile3} </if>
+<if test="thumbFile4 != null and thumbFile4 != ''"> , THUMB_FILE4 = #{thumbFile4} </if>
+<if test="thumbFile5 != null and thumbFile5 != ''"> , THUMB_FILE5 = #{thumbFile5} </if>
+<if test="thumbFile6 != null and thumbFile6 != ''"> , THUMB_FILE6 = #{thumbFile6} </if>
+<if test="rgsde != null and rgsde != ''"> , RGSDE = #{rgsde} </if>
+<if test="mvpHighFileNm != null and mvpHighFileNm != ''"> , MVP_HIGH_FILE_NM = #{mvpHighFileNm} </if>
+WHERE MVP_KEY = #{mvpKey}
+</update>
+
+
+<select id="getTnMspMvpCnt" 
+	    parameterType="portalxpert.board.board230.vo.BBSMovieVO" 
+	    resultType="int">	    	
+	    <![CDATA[		  
+		   select count(1)
+			 from BBS_MVP_FILE
+			 where MVP_KEY = #{mvpKey}		   
+		]]>
+</select>
+
+<select id="getMoviePlayInfo" 
+	    parameterType="portalxpert.board.board230.vo.BBSMovieVO" 
+	    resultType="portalxpert.board.board230.vo.BBSMovieVO">	    	
+	    <![CDATA[		  
+		SELECT
+		    SEQ_NO,                    -- 시퀀스번호
+		    MVP_SKEY,                -- 인코딩 설정 ID
+		    MVP_KEY,                -- 동영상 키값
+		    FORMT,                    -- 동영상 형식
+		    TITLE_IMG_NO,            -- 타이틀 쎔네일번호
+		    RUN_TIME,                -- 동영상 식난
+		    ORGINL_FILE_NM,            -- 원본파일명
+		    THUMB_TIME,                -- 썸네일시간
+		    STATE,                    -- 상태값
+		    MVP_FILE_NM,            -- 동영상파일 경로
+		    MVP_HIGH_FILE_NM,        -- 고화질 동영상파일 경로
+		    TITLE_FILE_NM,                -- 타이틀이미지 경로
+		    THUMB_FILE1,            -- 썸네일이미지1
+		    THUMB_FILE2,            -- 썸네일이미지2
+		    THUMB_FILE3,            -- 썸네일이미지3
+		    THUMB_FILE4,            -- 썸네일이미지4
+		    THUMB_FILE5,            -- 썸네일이미지5
+		    THUMB_FILE6                -- 썸네일이미지6
+		FROM BBS_MVP_FILE
+		WHERE MVP_KEY = #{mvpKey}   
+		]]>
+</select>
+	
+</mapper>

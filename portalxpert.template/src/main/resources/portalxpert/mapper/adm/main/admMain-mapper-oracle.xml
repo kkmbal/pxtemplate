@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--	version			날짜 				수정자					내용
+*******************************************************************************************
+		v1.0		2013.07.16			crossent				최초작성
+ -->
+ 
+<mapper namespace="portalxpert.adm.main.mapper.AdmMainMapper">
+	
+	<select id="getMandatoryContentList" parameterType="portalxpert.adm.main.vo.AdmMainVO" resultType="portalxpert.adm.main.vo.AdmMainVO">
+ 		/* === AdmMainMapper.getDefaultContentList === */
+			SELECT A.CNTS_ID
+ 			     , A.CNTS_NAME
+ 			  FROM COM_CNTS_INFO A
+ 			     , (
+             		SELECT CNTS_ID 
+             			 , STND_CNTS_SEQ
+               		  FROM COM_STND_CNTS_INFO
+              		 WHERE CNTS_TP = #{cntsTp}
+                	   AND MNDT_YN = 'Y'
+                	   AND DEL_YN = 'N'
+                	) B
+			 WHERE A.CNTS_ID = B.CNTS_ID
+			   AND A.USE_YN = 'Y'
+			   AND A.DEL_YN = 'N'
+		  ORDER BY B.STND_CNTS_SEQ ASC
+ 	</select>
+ 	
+	<select id="getDefaultContentList" parameterType="portalxpert.adm.main.vo.AdmMainVO" resultType="portalxpert.adm.main.vo.AdmMainVO">
+ 		/* === AdmMainMapper.getDefaultContentList === */
+			SELECT A.CNTS_ID
+ 			     , A.CNTS_NAME
+ 			  FROM COM_CNTS_INFO A
+ 			     , (
+             		SELECT CNTS_ID 
+             			 , STND_CNTS_SEQ
+               		  FROM COM_STND_CNTS_INFO
+              		 WHERE CNTS_TP = #{cntsTp}
+                	   AND MNDT_YN = 'D'
+                	   AND DEL_YN = 'N'
+                	) B
+			 WHERE A.CNTS_ID = B.CNTS_ID
+			   AND A.USE_YN = 'Y'
+			   AND A.DEL_YN = 'N'
+		  ORDER BY B.STND_CNTS_SEQ ASC
+ 	</select>
+ 	
+ 	<select id="getUnselectContentList" parameterType="portalxpert.adm.main.vo.AdmMainVO" resultType="portalxpert.adm.main.vo.AdmMainVO">
+ 		/* === AdmMainMapper.getUnselectContentList === */
+		<![CDATA[     
+ 		     SELECT A.CNTS_ID
+                  , A.CNTS_NAME
+               FROM COM_CNTS_INFO A
+              WHERE A.CNTS_TP = #{cntsTp} 
+                AND A.USE_YN = 'Y'
+                AND A.DEL_YN = 'N'
+                AND NOT EXISTS (
+                				SELECT 1 FROM COM_STND_CNTS_INFO B 
+                				 WHERE A.CNTS_ID = B.CNTS_ID 
+                				   AND B.CNTS_TP = #{cntsTp} 
+                				   AND B.MNDT_YN <> 'N'
+                				   AND B.DEL_YN = 'N'
+                				)
+		]]>	 
+ 	</select>
+ 	
+ 	<delete id="deleteStandardContent">
+		/* === AdmMainMapper.deleteStandardContent === */
+			DELETE FROM COM_STND_CNTS_INFO
+			 WHERE CNTS_TP = #{cntsTp}
+	</delete>
+	
+	<insert id="insertStandardContent">
+		/* === AdmMainMapper.insertStandardContent === */
+			INSERT INTO COM_STND_CNTS_INFO
+			(												
+				CNTS_TP
+			  , STND_CNTS_SEQ
+			  , MNDT_YN
+			  , CNTS_ID
+			  ,	CNTS_CDTS_X
+			  , CNTS_CDTS_Y
+			  , DEL_YN	
+			  , REGR_ID
+			  , REGR_NAME
+			  , REG_DTTM
+			  , UPDR_ID
+			  , UPDR_NAME
+			  , UPD_DTTM
+			  , OLD_TABLE
+			  , OLD_POS
+			  ,	OLD_SEQ				
+			)
+			 VALUES
+			(
+				#{cntsTp}
+		      , #{stndCntsSeq}
+		      , #{mndtYn}
+		      , #{cntsId}
+		      , ''
+		      , ''
+		      , 'N'
+		      , #{userId}
+		      , #{userName}
+		      , SYSDATE
+		      , #{userId} 
+		      , #{userName}
+		      , SYSDATE
+		      , ''
+		      , ''
+		      , ''
+			)
+	</insert>
+	
+	<select id="getMandatoryBoardList" parameterType="portalxpert.adm.main.vo.AdmMainVO" resultType="portalxpert.adm.main.vo.AdmMainVO">
+ 		/* === AdmMainMapper.getMandatoryBoardList === */
+			SELECT BOARD_ID
+           		 , BOARD_NAME
+			  FROM COM_STND_BOARD_INFO
+			 WHERE BOARD_USE_DIV = #{boardUseDiv}
+         	   AND MNDT_YN = 'Y'
+         	   AND DEL_YN = 'N' 
+	      ORDER BY STND_BOARD_SEQ ASC
+ 	</select>
+ 	
+	<select id="getDefaultBoardList" parameterType="portalxpert.adm.main.vo.AdmMainVO" resultType="portalxpert.adm.main.vo.AdmMainVO">
+ 		/* === AdmMainMapper.getDefaultBoardList === */
+			SELECT BOARD_ID
+			     , BOARD_NAME
+			  FROM COM_STND_BOARD_INFO
+			 WHERE BOARD_USE_DIV = #{boardUseDiv}
+         	   AND MNDT_YN = 'D'
+         	   AND DEL_YN = 'N' 
+	  	  ORDER BY STND_BOARD_SEQ ASC
+ 	</select>
+ 	
+	<delete id="deleteStandardBoard" parameterType="portalxpert.adm.main.vo.AdmMainVO">
+		/* === AdmMainMapper.deleteStandardBoard === */
+			DELETE FROM COM_STND_BOARD_INFO
+			 WHERE BOARD_USE_DIV = #{boardUseDiv}
+	</delete>
+	
+	<insert id="insertStandardBoard">
+		/* === AdmMainMapper.insertStandardBoard === */
+			 INSERT INTO COM_STND_BOARD_INFO 
+			 (
+			    BOARD_USE_DIV
+			  , STND_BOARD_SEQ
+			  , MNDT_YN
+			  , BOARD_ID
+			  , BOARD_NAME
+			  , BOARD_URL
+			  , SORT_ORD
+			  , DEL_YN
+			  , REGR_ID
+			  , REGR_NAME
+			  , REG_DTTM
+			  , UPDR_ID
+			  , UPDR_NAME
+			  , UPD_DTTM
+			  , OLD_TABLE
+			  , OLD_USE
+			  , OLD_SEQ
+			 ) 
+			 VALUES
+			 ( 
+		 	    #{boardUseDiv}
+		 	  , #{stndBoardSeq}
+		 	  , #{mndtYn}
+		 	  , #{boardId}
+		      , #{boardName}
+		      , ''
+		      , #{stndBoardSeq}
+		      , 'N'
+		      , #{userId}
+		      , #{userName}
+		      , SYSDATE
+		      , #{userId}
+		      , #{userName}
+		      , SYSDATE 
+		      , ''
+		      , ''
+		      , ''
+			 )
+	</insert>
+ 	
+ 	<select id="getWorkDeskCategoryList" resultType="portalxpert.adm.main.vo.AdmMainVO">
+		/* === AdmMainMapper.getWorkDeskCategoryList === */
+			SELECT LINK_CAT_ID
+				 , LINK_CAT_NM
+	 	      FROM BIZ_LINK_CATEGORY
+ 			 WHERE END_DATE IS NULL
+ 		  ORDER BY LINK_CAT_ORDER
+ 	</select>
+ 	
+	<select id="getWorkDeskList" resultType="portalxpert.adm.main.vo.AdmMainVO">
+		/* === AdmMainMapper.getWorkDeskList === */	
+			SELECT A.LINK_CAT_ID                     
+			     , B.LINK_CAT_NM                     
+			     , A.LINK_CD                         
+			     , A.LINK_NM                         
+			     , A.MAIN_DSP_GB                     
+			  FROM BIZ_LINK A                        
+			     , BIZ_LINK_CATEGORY B               
+			 WHERE B.LINK_CAT_ID (+) = A.LINK_CAT_ID 
+			   AND A.END_DATE IS NULL                
+			ORDER BY B.LINK_CAT_ORDER ASC, A.LINK_NM ASC  
+	</select>
+		
+	<select id="getWorkDeskCnt" resultType="int">
+		/* === AdmMainMapper.getWorkDeskCnt === */	
+			SELECT COUNT(1) AS CNT                        
+			  FROM BIZ_LINK 
+			 WHERE MAIN_DSP_GB = 'Y'   
+	</select>
+                      
+	<update id="updateWorkDeskReset">
+		/* === AdmMainMapper.updateWorkDeskReset === */
+			UPDATE BIZ_LINK
+			   SET MAIN_DSP_GB = ''
+	</update>
+	
+	<update id="updateWorkDesk">
+		/* === AdmMainMapper.updateWorkDesk === */	
+			UPDATE BIZ_LINK
+			   SET MAIN_DSP_GB = 'Y'
+			     , UPD_DTTM = SYSDATE
+			     , UPDR_ID = #{userId}
+			 WHERE LINK_CAT_ID = #{linkCatId}
+			   AND LINK_CD = #{linkCd}
+	</update> 
+</mapper>

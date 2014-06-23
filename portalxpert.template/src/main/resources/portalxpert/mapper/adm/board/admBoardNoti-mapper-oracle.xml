@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.adm.board.mapper.AdmBoardNotiMapper">
+	
+
+	<resultMap id="pbsUserBoardInfoResult" type="portalxpert.board.board100.vo.PbsUserBoardInfoVO">
+		<result property="boardId" column="BOARD_ID" />
+		<result property="boardTp" column="BOARD_TP" />
+		<result property="boardOwnrId" column="BOARD_OWNR_ID" />
+		<result property="boardOwnrName" column="BOARD_OWNR_NAME" />
+		<result property="boardName" column="BOARD_NAME" />
+		<result property="boardExpl" column="BOARD_EXPL" />
+		<result property="apndFileUseYn" column="APND_FILE_USE_YN" />
+		<result property="apndFileCnt" column="APND_FILE_CNT" />
+		<result property="apndFileSz" column="APND_FILE_SZ" />
+		<result property="boardKind" column="BOARD_KIND" />
+		<result property="boardForm" column="BOARD_FORM" />
+		<result property="boardFormSpec" column="BOARD_FORM_SPEC" />
+		<result property="moblLinkYn" column="MOBL_LINK_YN" />
+		<result property="boardOperYn" column="BOARD_OPER_YN" />
+		<result property="adminAlertYn" column="ADMIN_ALERT_YN" />
+		<result property="boardOpenDiv" column="BOARD_OPEN_DIV" />
+		<result property="boardOpenDivSpec" column="BOARD_OPEN_DIV_SPEC" />
+		<result property="boardOperDiv" column="BOARD_OPER_DIV" />
+		<result property="boardOperBgnDttm" column="BOARD_OPER_BGN_DTTM" />
+		<result property="boardOperEndDttm" column="BOARD_OPER_END_DTTM" />
+		<result property="notiTermDiv" column="NOTI_TERM_DIV" />
+		<result property="publAsgnDiv" column="PUBL_ASGN_DIV" />
+		<result property="publAsgnDivSpec" column="PUBL_ASGN_DIV_SPEC" />
+		<result property="boardAnmtUseYn" column="BOARD_ANMT_USE_YN" />
+		<result property="boardExplUseYn" column="BOARD_EXPL_USE_YN" />
+		<result property="makrDispDiv" column="MAKR_DISP_DIV" />
+		<result property="notiReadmanAsgnYn" column="NOTI_READMAN_ASGN_YN" />
+		<result property="agrmOppUseYn" column="AGRM_OPP_USE_YN" />
+		<result property="replyWrteDiv" column="REPLY_WRTE_DIV" />
+		<result property="opnFileUploadYn" column="OPN_FILE_UPLOAD_YN" />
+		<result property="opnFileUploadCnt" column="OPN_FILE_UPLOAD_CNT" />
+		<result property="opnWrteDiv" column="OPN_WRTE_DIV" />
+		<result property="opnReplyUseDiv" column="OPN_REPLY_USE_DIV" />
+		<result property="opnRealnameDiv" column="OPN_REALNAME_DIV" />
+		<result property="likeUseYn" column="LIKE_USE_YN" />
+		<result property="nickUseYn" column="NICK_USE_YN" />
+		<result property="smsUseYn" column="SMS_USE_YN" />
+		<result property="editDiv" column="EDIT_DIV" />
+		<result property="notiEmailSendYn" column="NOTI_EMAIL_SEND_YN" />
+		<result property="outsideOpenDiv" column="OUTSIDE_OPEN_DIV" />
+		<result property="outsideOpenDivSpec" column="OUTSIDE_OPEN_DIV_SPEC" />
+		<result property="popupYn" column="POPUP_YN" />
+		<result property="briefYn" column="BRIEF_YN" />
+		<result property="fcode" column="FCODE" />
+		<result property="readDiv" column="READ_DIV" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+	</resultMap>
+	
+		<!-- PBS_사용자_게시판_참여_정보 -->
+	<resultMap id="pbsUserBoardPartInfoResult" type="portalxpert.board.board100.vo.PbsUserBoardPartInfoVO">
+		<result property="boardId" column="BOARD_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="cateUseYn" column="CATE_USE_YN" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="name" column="DISPLAY_NAME" />
+		<result property="id" column="USER_ID" />
+	</resultMap>
+	
+	<!-- 게시물관리 목록 -->
+	<select id="getAdmBoardNotiList" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO" resultType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		   SELECT
+			  	P.NOTI_ID
+			    ,P.BOARD_NAME
+			    ,P.MOBL_OPEN_DIV
+			    ,P.NOTI_TITLE
+			    ,P.LINK_URL
+			    ,P.NOTI_TP
+			    ,P.NOTI_KIND
+			    ,P.USER_NAME
+			    ,P.NOTI_BGN_DTTM
+			    ,P.NOTI_END_DTTM
+			    ,P.STAT_CODE
+			    ,P.DEPT_NAME
+			    ,P.REGR_NAME
+			    ,P.REG_DTTM
+			    ,P.UPDR_NAME
+			    ,P.UPD_DTTM
+			FROM (
+			     SELECT  ROWNUM RNUM, S.*
+				   FROM (
+							SELECT
+							    A.NOTI_ID/*게시물_아이디*/
+							    ,B.BOARD_NAME/*게시판명*/
+							    ,A.MOBL_OPEN_DIV/*모바일_공개_구분*/
+							    ,A.NOTI_TITLE/*게시물_제목*/
+							    ,A.LINK_URL/*링크_URL*/
+							    ,A.NOTI_TP/*게시물_타입*/
+							    ,A.NOTI_KIND/*게시물_종류*/
+							    ,A.USER_NAME/*사용자_명*/
+							    ,TO_CHAR(A.NOTI_BGN_DTTM,'YYYY.MM.DD') AS NOTI_BGN_DTTM/*게시물_시작_일시*/
+							    ,TO_CHAR(A.NOTI_END_DTTM,'YYYY.MM.DD') AS NOTI_END_DTTM/*게시물_종료_일시*/
+							    ,A.STAT_CODE/*상태_코드*/
+							    ,A.DEPT_NAME/*부서_명*/
+							    ,A.REGR_NAME/*등록자_명*/
+							    ,TO_CHAR(A.REG_DTTM,'YYYY.MM.DD') AS REG_DTTM/*등록_일시*/
+							    ,A.UPDR_NAME/*수정자_명*/
+							    ,TO_CHAR(A.UPD_DTTM,'YYYY.MM.DD') AS UPD_DTTM/*수정_일시*/
+							FROM BBS_NOTI_INFO A, BBS_BOARD_INFO B
+							WHERE A.BOARD_ID = B.BOARD_ID
+								AND A.DEL_YN = 'N'
+								
+								<if test="searchCondition == 'TITLE'">
+								AND A.NOTI_TITLE LIKE '%'|| #{searchKeyword} ||'%'
+								</if>
+								<if test="searchCondition == 'NAME'">
+								AND A.USER_NAME LIKE '%'|| #{searchKeyword} ||'%'
+								</if>
+								
+			    		ORDER BY REG_DTTM,UPD_DTTM DESC
+					 ) S
+			) P
+			<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage}  and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	<!-- 게시물관리 목록 총 갯수 -->
+	<select id="getAdmBoardNotiCnt" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO" resultType="int">
+		SELECT COUNT(A.NOTI_ID) totcnt
+		FROM BBS_NOTI_INFO A, BBS_BOARD_INFO B
+		WHERE A.BOARD_ID = B.BOARD_ID
+			AND A.DEL_YN = 'N'
+			
+			<if test="searchCondition == 'TITLE'">
+			AND A.NOTI_TITLE LIKE '%'|| #{searchKeyword} ||'%'
+			</if>
+			<if test="searchCondition == 'NAME'">
+			AND A.USER_NAME LIKE '%'|| #{searchKeyword} ||'%'
+			</if>
+			
+	</select>
+	
+	<!-- 게시물삭제시 삭제코드 조회 -->
+	<select id="getAdmBoardNotiDelCodeList" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO" resultType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		SELECT CD
+		     , CD_SPEC
+		     , CD_NM
+		     , REMARK
+		FROM COM_CODE_SPEC
+		WHERE CD='AAA'
+	</select>
+	
+	<!-- 게시물 이동1 (BBS_NOTI_INFO Insert) -->
+	<insert id="insertAdmBoardNotiMove1" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		INSERT INTO BBS_NOTI_INFO
+		SELECT
+		    (
+		    SELECT 'SP' || LPAD(NVL(MAX(SUBSTR(NOTI_ID, 3)), 0) + 1, 7, '0') 
+			FROM BBS_NOTI_INFO WHERE SUBSTR(NOTI_ID, 1, 2) = 'SP'
+			)
+		    ,'*'/*상위_게시물_아이디*/
+		    ,SEQ_NOTI_INFO.NEXTVAL/*정렬_일련번호*/
+		    ,#{boardId}/*게시판_아이디*/
+		    ,EMGC_YN
+		    ,ANMT_YN
+		    ,POPUP_YN
+		    ,BRIEF_YN
+		    ,MOBL_OPEN_DIV
+		    ,NOTI_TITLE
+		    ,TITLE_BOLD_YN
+		    ,TITLE_COLOR_DIV
+		    ,NOTI_CONTS
+		    ,LINK_URL
+		    ,NOTI_TP
+		    ,NOTI_KIND
+		    ,NICK_USE_YN
+		    ,USER_ID
+		    ,USER_NICK
+		    ,USER_NAME
+		    ,EDIT_DIV
+		    ,RSRV_YN
+		    ,NOTI_BGN_DTTM
+		    ,NOTI_END_DTTM
+		    ,NOTI_OPEN_DIV
+		    ,NOTI_OPEN_DIV_SPEC
+		    ,PUBL_ASGN_DIV
+		    ,PUBL_ASGN_DIV_SPEC
+		    ,REPLY_PRMS_YN
+		    ,REPLY_MAKR_REALNAME_YN
+		    ,OPN_PRMS_YN
+		    ,OPN_MAKR_REALNAME_YN
+		    ,0,0,0,0,0,0
+		    ,BOARD_ID/*이전_게시판_아이디*/
+		    ,NOTI_ID/*이전_게시물_아이디*/
+		    ,STAT_CODE
+		    ,DEPT_CODE
+		    ,DEPT_NAME
+		    ,DEPT_FNAME
+		    ,MAKR_IP
+		    ,BRGH_CODE
+		    ,CDLN_DEPT_CODE
+		    ,CDLN_DEPT_NAME
+		    ,CDLN_DEPT_FNAME
+		    ,CDLN_OBJR_NAME
+		    ,CDLN_EVNT_CODE
+		    ,DEL_YN
+		    ,#{loginedUserId}
+		    ,'request'
+		    ,SYSDATE
+		    ,#{loginedUserId}
+		    ,'request'
+		    ,SYSDATE
+		    ,''
+		    ,''
+		    ,''
+		    ,''
+		FROM BBS_NOTI_INFO
+		WHERE NOTI_ID = #{notiId}
+	</insert>
+	
+	<!-- 게시물 이동2 (BBS_NOTI_DEL_INFO Insert) -->
+	<insert id="insertAdmBoardNotiMove2" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		INSERT INTO BBS_NOTI_DEL_INFO
+		SELECT 
+		    NOTI_ID
+		    ,'MOV'
+		    ,''
+		    ,''
+		    ,''
+		    ,''
+		    ,NULL
+		    ,USER_NAME/*사용자_명*/
+		    ,''
+		    ,REGR_ID/*게시물_등록자_아이디*/
+		    ,REGR_NAME/*게시물_등록자_명*/
+		    ,REG_DTTM/*게시물_등록_일시*/
+		    ,UPDR_ID/*게시물_수정자_아이디*/
+		    ,UPDR_NAME/*게시물_수정자_명*/
+		    ,UPD_DTTM/*게시물_수정자_일시*/
+		    ,'N'/*삭제_여부*/
+		    ,#{loginedUserId}/*등록자_아이디*/
+		    ,'request'/*등록자_명*/
+		    ,SYSDATE
+		    ,#{loginedUserId}/*수정자_아이디*/
+		    ,'request'/*수정자_명*/
+		    ,SYSDATE
+		    ,''
+		    ,''
+		    ,''
+		FROM BBS_NOTI_INFO
+		WHERE NOTI_ID = #{notiId}
+	</insert>
+	
+	<!-- 게시물 이동3 (BBS_NOTI_INFO Update) -->
+	<update id="updateAdmBoardNotiMove3" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		UPDATE BBS_NOTI_INFO SET
+			DEL_YN = 'Y'
+			,STAT_CODE = '3'
+		WHERE NOTI_ID = #{notiId}
+	</update>
+	
+	<!-- 게시물 삭제1 (BBS_NOTI_DEL_INFO Insert) -->
+	<insert id="insertAdmBoardNotiDelete1" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		INSERT INTO BBS_NOTI_DEL_INFO
+		SELECT 
+		    NOTI_ID
+		    ,'DEL'
+		    ,#{delBasis}/*삭제_근거(입력값)*/
+		    ,#{delRsn}/*삭제_사유(입력값)*/
+		    ,'AAA'
+		    ,#{delRsnCodeSpec}/*삭제_사유_코드_상세 (관리자선택)*/
+		    ,TO_DATE('','YYYYMMDD')/*불량_게시물_발견_일시(입력값)*/
+		    ,USER_NAME/*사용자_명*/
+		    ,#{rmrk, javaType=String, jdbcType=VARCHAR}/*비고(입력값)*/
+		    ,REGR_ID/*게시물_등록자_아이디*/
+		    ,REGR_NAME/*게시물_등록자_명*/
+		    ,REG_DTTM/*게시물_등록_일시*/
+		    ,UPDR_ID/*게시물_수정자_아이디*/
+		    ,UPDR_NAME/*게시물_수정자_명*/
+		    ,UPD_DTTM/*게시물_수정자_일시*/
+		    ,'N'/*삭제_여부*/
+		    ,#{loginedUserId}/*등록자_아이디*/
+		    ,'request'/*등록자_명*/
+		    ,SYSDATE
+		    ,#{loginedUserId}/*수정자_아이디*/
+		    ,'request'/*수정자_명*/
+		    ,SYSDATE
+		    ,''
+		    ,''
+		    ,''
+		FROM BBS_NOTI_INFO
+		WHERE NOTI_ID = #{notiId}
+	</insert>
+	
+	<!-- 게시물 삭제2 (BBS_NOTI_INFO Update) -->
+	<update id="updateAdmBoardNotiDelete2" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		UPDATE BBS_NOTI_INFO SET
+			DEL_YN = 'Y'
+			,STAT_CODE = '1'
+		WHERE NOTI_ID = #{notiId}
+	</update>
+
+	<!-- 개인게시판관리 목록 -->
+	<select id="getAdmPbsBoardList" parameterType="portalxpert.adm.board.vo.AdmBoardPbsNotiInfoVO" resultType="portalxpert.adm.board.vo.AdmBoardPbsNotiInfoVO">
+		SELECT
+		    P.RNUM
+		    ,P.BOARD_ID
+		    ,P.BOARD_NAME
+		    ,P.BOARD_OWNR_ID
+		    ,P.BOARD_OWNR_NAME
+		    ,TO_CHAR(P.REG_DTTM, 'YYYY-MM-DD') REG_DTTM
+		    ,CASE WHEN P.DEL_YN = 'Y' THEN TO_CHAR(P.UPD_DTTM, 'YYYY-MM-DD') END DEL_YN
+		    ,CASE WHEN P.BOARD_OPER_YN = 'Y' THEN '운영' ELSE '비운영' END BOARD_OPER_YN
+		    ,P.OU
+		    ,(SELECT NVL(SUM(B.APND_FILE_SZ),0)
+		    FROM PBS_USER_NOTI_INFO A, PBS_USER_NOTI_APND_FILE B
+		    WHERE A.USER_NOTI_SEQ = B.USER_NOTI_SEQ
+		    AND A.BOARD_ID = P.BOARD_ID) APND_FILE_SZ
+		FROM (
+		    SELECT  ROWNUM RNUM, S.*
+		    FROM (
+		        SELECT
+		               A.BOARD_ID  /* 게시판_아이디           */
+		             , A.BOARD_TP  /* 게시판_유형             */
+		             , A.BOARD_OWNR_ID  /* 게시판_소유자_아이디    */
+		             , A.BOARD_OWNR_NAME  /* 게시판_소유자_명        */
+		             , A.BOARD_NAME  /* 게시판_명               */
+		             , A.BOARD_EXPL  /* 게시판_설명             */
+		             , A.APND_FILE_USE_YN  /* 첨부_파일_사용_여부     */
+		             , A.APND_FILE_CNT  /* 첨부_파일_갯수          */
+		             , A.APND_FILE_SZ  /* 첨부_파일_사이즈        */
+		             , A.BOARD_KIND  /* 게시판_종류             */
+		             , A.BOARD_FORM  /* 게시판_형태             */
+		             , A.BOARD_FORM_SPEC  /* 게시판_형태_상세        */
+		             , A.MOBL_LINK_YN  /* 모바일_연동_여부        */
+		             , A.BOARD_OPER_YN  /* 게시판_운영_여부        */
+		             , A.ADMIN_ALERT_YN  /* 관리자_알림_여부        */
+		             , A.BOARD_OPEN_DIV  /* 게시판_공개_구분        */
+		             , A.BOARD_OPEN_DIV_SPEC  /* 게시판_공개_구분_상세   */
+		             , A.BOARD_OPER_DIV  /* 게시판_운영_구분        */
+		             , A.BOARD_OPER_BGN_DTTM  /* 게시판_운영_시작_일시   */
+		             , A.BOARD_OPER_END_DTTM  /* 게시판_운영_종료_일시   */
+		             , A.NOTI_TERM_DIV  /* 게시물_기간_구분        */
+		             , A.PUBL_ASGN_DIV  /* 게시자_지정_구분        */
+		             , A.PUBL_ASGN_DIV_SPEC  /* 게시자_지정_구분_상세   */
+		             , A.BOARD_ANMT_USE_YN  /* 게시판_공지_사용_여부   */
+		             , A.BOARD_EXPL_USE_YN  /* 게시판_설명_사용_여부   */
+		             , A.MAKR_DISP_DIV  /* 작성자_표기_구분        */
+		             , A.NOTI_READMAN_ASGN_YN  /* 게시물_조회자_지정_여부 */
+		             , A.AGRM_OPP_USE_YN  /* 찬성_반대_사용_여부     */
+		             , A.REPLY_WRTE_DIV  /* 답글_쓰기_구분          */
+		             , A.OPN_FILE_UPLOAD_YN  /* 의견_파일_업로드_여부   */
+		             , A.OPN_FILE_UPLOAD_CNT  /* 의견_파일_업로드_갯수   */
+		             , A.OPN_WRTE_DIV  /* 의견_쓰기_구분          */
+		             , A.OPN_REPLY_USE_DIV  /* 의견_답글_사용_구분     */
+		             , A.OPN_REALNAME_DIV  /* 의견_실명_구분          */
+		             , A.LIKE_USE_YN  /* 좋아요_사용_여부        */
+		             , A.NICK_USE_YN  /* 닉네임_사용_여부        */
+		             , A.SMS_USE_YN  /* SMS_사용_여부           */
+		             , A.EDIT_DIV  /* 입력툴_구분             */
+		             , A.NOTI_EMAIL_SEND_YN  /* 게시물_이메일_발송_여부 */
+		             , A.OUTSIDE_OPEN_DIV  /* 외부_공개_구분          */
+		             , A.OUTSIDE_OPEN_DIV_SPEC  /* 외부_공개_구분_상세     */
+		             , A.POPUP_YN  /* 팝업_여부               */
+		             , A.BRIEF_YN  /* 핫브리핑_여부           */
+		             , A.FCODE  /* FCODE                   */
+		             , A.READ_DIV  /* 조회_구분               */
+		             , A.DEL_YN  /* 삭제_여부               */
+		             , A.REGR_ID  /* 등록자_아이디           */
+		             , A.REGR_NAME  /* 등록자_명               */
+		             , A.REG_DTTM  /* 등록_일시               */
+		             , A.UPDR_ID  /* 수정자_아이디           */
+		             , A.UPDR_NAME  /* 수정자_명               */
+		             , A.UPD_DTTM  /* 수정_일시               */
+		            , C.DEPT_NAME OU
+		        FROM PBS_USER_BOARD_INFO A, PSN_USER_INFO B, PSN_DEPT_INFO C
+		        WHERE A.BOARD_OWNR_ID = B.USER_ID
+		        AND B.DEPT_CODE = C.DEPT_CODE
+		        <if test="boardName != null and boardName != ''">
+		        AND A.BOARD_NAME LIKE '%'|| #{boardName} || '%'
+		        </if>
+		        <if test="boardOwnrName != null and boardOwnrName != ''">
+		        AND A.BOARD_OWNR_NAME LIKE '%'|| #{boardOwnrName} ||'%'
+		        </if>
+		        <if test="ou != null and ou != ''">
+		        AND C.DEPT_NAME LIKE '%'|| #{ou} ||'%'
+		        </if>
+		        <if test="boardOperYn != null and boardOperYn != ''">
+		        AND A.BOARD_OPER_YN = #{boardOperYn}
+		        </if>
+		        <if test="userDiv != null and userDiv != '' and boardPart != null and boardPart != ''">
+					<if test="userDiv == 'EMP'">
+		             AND B.DISPLAYNAME LIKE '%'|| #{boardPart} || '%'
+		             </if>        
+		        </if>		        
+        		<if test="userDiv != null and userDiv != '' and boardPart != null and boardPart != ''">
+                AND A.BOARD_ID IN (
+                                 SELECT A.BOARD_ID
+                                 FROM PBS_USER_BOARD_PART_INFO A, PSN_USER_INFO B, PSN_DEPT_INFO C
+                                 WHERE A.USER_ID = B.USESR_ID (+)
+                                 AND A.USER_ID = C.DEPT_CODE (+)
+                                 AND A.USER_DIV = #{userDiv}
+                                 <if test="userDiv == 'DPT'">
+                                 AND C.DEPT_NAME LIKE '%'|| #{boardPart} || '%'
+                                 </if>
+                                 <if test="userDiv == 'EMP'">
+                                 AND B.DISPLAYNAME LIKE '%'|| #{boardPart} || '%'
+                                 </if>
+                                 )
+		        </if>
+                AND A.DEL_YN = 'N'                 
+		        
+		        ORDER BY A.REG_DTTM DESC
+		    ) S
+		) P
+		<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage}  and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	<!-- 개인게시판관리 목록 총 갯수 -->
+	<select id="getAdmPbsBoardCnt" parameterType="portalxpert.adm.board.vo.AdmBoardPbsNotiInfoVO" resultType="int">
+        SELECT
+               COUNT(A.BOARD_ID) totcnt
+        FROM PBS_USER_BOARD_INFO A, PSN_USER_INFO B, PSN_DEPT_INFO C
+        WHERE A.BOARD_OWNR_ID = B.USER_ID
+        AND B.DEPT_CODE = C.DEPT_CODE
+        <if test="boardName != null and boardName != ''">
+        AND A.BOARD_NAME LIKE '%'|| #{boardName} || '%'
+        </if>
+        <if test="boardOwnrName != null and boardOwnrName != ''">
+        AND A.BOARD_OWNR_NAME LIKE '%'|| #{boardOwnrName} ||'%'
+        </if>
+        <if test="ou != null and ou != ''">
+        AND C.DEPT_NAME LIKE '%'|| #{ou} ||'%'
+        </if>
+        <if test="boardOperYn != null and boardOperYn != ''">
+        AND A.BOARD_OPER_YN = #{boardOperYn}
+        </if>	
+        <if test="userDiv != null and userDiv != '' and boardPart != null and boardPart != ''">
+			<if test="userDiv == 'EMP'">
+             AND B.USER_NAME LIKE '%'|| #{boardPart} || '%'
+             </if>        
+        </if>	        
+        <if test="userDiv != null and userDiv != '' and boardPart != null and boardPart != ''">
+        AND A.BOARD_ID IN (
+                         SELECT A.BOARD_ID
+                         FROM PBS_USER_BOARD_PART_INFO A, PSN_USER_INFO B, PSN_DEPT_INFO C
+                         WHERE A.USER_ID = B.USER_ID (+)
+                         AND A.USER_ID = C.DEPT_CODE (+)
+                         AND A.USER_DIV = #{userDiv}
+                         <if test="userDiv == 'DPT'">
+                         AND C.DEPT_NAME LIKE '%'|| #{boardPart} || '%'
+                         </if>
+                         <if test="userDiv == 'EMP'">
+                         AND B.USER_NAME LIKE '%'|| #{boardPart} || '%'
+                         </if>
+                         )
+        </if>
+        AND A.DEL_YN = 'N'
+        ORDER BY A.REG_DTTM DESC
+			
+	</select>
+	
+	<select id="getPbsUserBoardInfoList" resultMap="pbsUserBoardInfoResult">
+		<![CDATA[
+		SELECT BOARD_ID
+			, BOARD_TP
+			, BOARD_OWNR_ID
+			, BOARD_OWNR_NAME
+			, BOARD_NAME
+			, BOARD_EXPL
+			, APND_FILE_USE_YN
+			, APND_FILE_CNT
+			, APND_FILE_SZ
+			, BOARD_KIND
+			, BOARD_FORM
+			, BOARD_FORM_SPEC
+			, MOBL_LINK_YN
+			, BOARD_OPER_YN
+			, ADMIN_ALERT_YN
+			, BOARD_OPEN_DIV
+			, BOARD_OPEN_DIV_SPEC
+			, BOARD_OPER_DIV
+			, BOARD_OPER_BGN_DTTM
+			, BOARD_OPER_END_DTTM
+			, NOTI_TERM_DIV
+			, PUBL_ASGN_DIV
+			, PUBL_ASGN_DIV_SPEC
+			, BOARD_ANMT_USE_YN
+			, BOARD_EXPL_USE_YN
+			, MAKR_DISP_DIV
+			, NOTI_READMAN_ASGN_YN
+			, AGRM_OPP_USE_YN
+			, REPLY_WRTE_DIV
+			, OPN_FILE_UPLOAD_YN
+			, OPN_FILE_UPLOAD_CNT
+			, OPN_WRTE_DIV
+			, OPN_REPLY_USE_DIV
+			, OPN_REALNAME_DIV
+			, LIKE_USE_YN
+			, NICK_USE_YN
+			, SMS_USE_YN
+			, EDIT_DIV
+			, NOTI_EMAIL_SEND_YN
+			, OUTSIDE_OPEN_DIV
+			, OUTSIDE_OPEN_DIV_SPEC
+			, POPUP_YN
+			, BRIEF_YN
+			, FCODE
+			, READ_DIV
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+		FROM PBS_USER_BOARD_INFO
+		WHERE BOARD_ID = #{boardId}
+		]]>	
+	</select>
+
+	<!-- 개인 게시판_사용자_매핑 조회 -->
+	<select id="getPbsUserBoardPartInfoList" resultMap="pbsUserBoardPartInfoResult">
+		<![CDATA[
+		SELECT (SELECT BOARD_NAME FROM PBS_USER_BOARD_INFO WHERE BOARD_ID = #{boardId}) AS BOARD_NAME, 
+			A.BOARD_ID
+			, A.USER_DIV
+			, A.USER_ID
+			, A.CATE_USE_YN
+			, A.DEL_YN
+			, A.REGR_ID
+			, A.REGR_NAME
+			, A.REG_DTTM
+			, A.UPDR_ID
+			, A.UPDR_NAME
+	        , A.UPD_DTTM
+	        , CASE WHEN A.USER_DIV = 'DPT' THEN C.DEPT_NAME WHEN A.USER_DIV = 'EMP' THEN B.DEPT_NAME||' '||B.USER_NAME ELSE A.USER_ID END AS DISPLAY_NAME   
+	        FROM PBS_USER_BOARD_PART_INFO A, PSN_USER_INFO B, PSN_DEPT_INFO C
+	        WHERE A.USER_ID = B.USER_ID (+)
+	           AND A.USER_ID = C.DEPT_CODE (+)
+	          AND A.BOARD_ID = #{boardId}
+         ]]>
+	</select>
+	
+	<!-- 공지사항관리 조회 -->
+	<select id="getBoardPopupList" parameterType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO" resultType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO">
+        SELECT
+            P.RNUM
+            ,P.NOTI_ID
+            ,P.BOARD_ID
+            ,P.NOTI_TITLE
+            ,P.NOTI_TITLE_ORGN
+            ,P.NOTI_READ_CNT
+            ,NVL(P.UPDR_NAME,
+	            (SELECT USER_NAME
+				FROM PSN_USER_INFO
+				WHERE RESINUMBER = P.REGR_ID)
+            	) UPDR_NAME
+            ,TO_CHAR(P.NOTI_BGN_DTTM, 'YYYY-MM-DD') NOTI_BGN_DTTM
+            ,P.SORT_SEQ
+            ,CASE WHEN P.EXPO_YN IS NULL THEN 'N' ELSE P.EXPO_YN END POPUP_YN
+            ,(SELECT COUNT(NOTI_ID) FROM BBS_NOTI_OPN WHERE DEL_YN = 'N' AND NOTI_ID = P.NOTI_ID) AS NOTI_OPN_CNT
+        FROM(
+            SELECT  ROWNUM RNUM, S.*
+            FROM (
+                SELECT A.NOTI_ID
+                    ,A.BOARD_ID
+                    ,A.NOTI_TITLE
+                    ,A.NOTI_TITLE_ORGN
+                    ,A.NOTI_READ_CNT
+                    ,A.UPDR_NAME
+                    ,A.NOTI_BGN_DTTM
+                    ,A.SORT_SEQ
+                    ,B.NOTI_ID POP_NOTI_ID
+                    ,B.EXPO_YN
+                    ,A.REGR_ID
+                FROM BBS_NOTI_INFO A
+                    ,BBS_NOTI_POPUP_INFO B
+			    WHERE A.NOTI_ID = B.NOTI_ID(+)
+			    AND B.POPUP_DIV(+) = 'POP'
+
+				<if test="searchTxt != null and searchTxt != ''">
+				    <if test="searchGbn == 'titile'">
+						AND A.NOTI_TITLE LIKE '%'|| #{searchTxt} ||'%'
+				    </if>
+				    <if test="searchGbn == 'regiName'">
+						AND A.UPDR_NAME LIKE '%'|| #{searchTxt} ||'%'
+				    </if>
+				</if>
+				<if test="popupYn != null">
+					AND	B.EXPO_YN = #{popupYn}
+				</if>
+                ORDER BY A.REG_DTTM DESC
+            ) S
+        ) P
+        <![CDATA[WHERE ROWNUM <= #{recordCountPerPage}  and RNUM > #{firstIndex}]]>
+	</select>
+	
+	<!-- 공지사항관리 조회CNT -->
+	<select id="getBoardPopupCnt" parameterType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO" resultType="int">
+	    SELECT COUNT(A.NOTI_ID) TOTCNT
+	    FROM BBS_NOTI_INFO A
+	        ,BBS_NOTI_POPUP_INFO B
+	    WHERE A.NOTI_ID = B.NOTI_ID(+)
+	    AND B.POPUP_DIV(+) = 'POP'
+		<if test="searchTxt != null and searchTxt != ''">
+		    <if test="searchGbn == 'titile'">
+				AND A.NOTI_TITLE LIKE '%'|| #{searchTxt} ||'%'
+		    </if>
+		    <if test="searchGbn == 'regiName'">
+				AND A.UPDR_NAME LIKE '%'|| #{searchTxt} ||'%'
+		    </if>
+		</if>
+		<if test="popupYn != null">
+			AND	B.EXPO_YN = #{popupYn}
+		</if>
+	</select>
+	
+	<!-- 공지사항관리 CNT -->
+	<select id="selectAdmPopupNoti" parameterType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO" resultType="int">
+		SELECT COUNT(NOTI_ID)
+		FROM BBS_NOTI_POPUP_INFO
+		WHERE NOTI_ID = #{notiId}
+	</select>
+	
+	<select id="selectAdmPopupNotiInfo" parameterType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO" resultType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO">
+		SELECT	NI.NOTI_ID
+					,NI.NOTI_TITLE
+					,NI.NOTI_CONTS
+					,TO_CHAR(NPI.EXPO_DTTM_BGN, 'YYYYMMDDHH24MI') EXPO_DTTM_BGN
+					,TO_CHAR(NPI.EXPO_DTTM_END, 'YYYYMMDDHH24MI') EXPO_DTTM_END
+					,NPI.EXPO_YN
+		FROM	BBS_NOTI_INFO NI
+				,BBS_NOTI_POPUP_INFO NPI
+		WHERE	NI.NOTI_ID = NPI.NOTI_ID(+)
+		AND	NI.NOTI_ID = #{notiId}
+	</select>
+	
+	
+	<insert id="insertAdmPopupNoti" parameterType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO">
+		INSERT INTO BBS_NOTI_POPUP_INFO
+		(
+		    NOTI_ID
+		    ,POPUP_DIV
+		    ,EXPO_DTTM_BGN
+		    ,EXPO_DTTM_END
+		    ,EXPO_YN
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,UPD_DTTM
+		)
+		VALUES
+		(
+		    #{notiId}
+		    ,'POP'
+		    ,TO_DATE( REPLACE(#{expoDttmBgn},'-','') ,'YYYYMMDDHH24MI' )
+		    ,TO_DATE( REPLACE(#{expoDttmEnd},'-','') ,'YYYYMMDDHH24MI' )
+		    ,#{expoYn}
+		    ,'N'
+		    ,#{regrId}
+		    ,#{regrName}
+		    ,SYSDATE
+		    ,#{updrId}
+		    ,#{updrName}
+		    ,SYSDATE
+		)
+	</insert>
+	
+	<update id="updateAdmPopupNoti" parameterType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO">
+		UPDATE BBS_NOTI_POPUP_INFO
+		SET EXPO_DTTM_BGN = TO_DATE( REPLACE(#{expoDttmBgn},'-','') ,'YYYYMMDDHH24MI' )
+		    ,EXPO_DTTM_END = TO_DATE( REPLACE(#{expoDttmEnd},'-','') ,'YYYYMMDDHH24MI' )
+		    ,EXPO_YN = #{expoYn}
+		    ,UPDR_ID = #{updrId}
+		    ,UPDR_NAME = #{updrName}
+		    ,UPD_DTTM = SYSDATE
+		WHERE NOTI_ID = #{notiId}
+	</update>
+	
+	<update id="updateAdmAllPopupCancel" parameterType="portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO">
+		UPDATE BBS_NOTI_POPUP_INFO
+		SET EXPO_YN = 'N'
+		WHERE EXPO_YN = 'Y'
+	</update>
+	
+	
+	<!-- 삭제이동게시물 목록 -->
+	<select id="getAdmBoardNotiDelList" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO" resultType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		   SELECT
+			  	P.NOTI_ID
+			  	,P.DEL_DIV
+			    ,P.BOARD_NAME
+			    ,P.BOARD_ID
+			    ,P.NOTI_TITLE
+			    ,P.NOTI_REGR_NAME
+			    ,P.UPDR_NAME
+			    ,P.REG_DTTM
+			    ,P.DEL_REG_DTTM
+			    ,P.DEL_RSN
+			    ,(SELECT COUNT(NOTI_ID) FROM BBS_NOTI_APND_FILE WHERE DEL_YN = 'N' AND NOTI_ID = P.NOTI_ID AND APND_FILE_TP = '050') APND_FILE_CNT
+			FROM (
+			     SELECT  ROWNUM RNUM, S.*
+				   FROM (
+			    		SELECT 
+			    		    A.NOTI_ID
+			    		    ,A.DEL_DIV
+			    		    ,C.BOARD_NAME
+			    		    ,C.BOARD_ID
+			    		    ,B.NOTI_TITLE
+			    		    ,A.NOTI_REGR_NAME
+			    		    ,A.UPDR_NAME
+			    		    ,TO_CHAR(A.REG_DTTM,'YYYY.MM.DD') AS DEL_REG_DTTM
+			    		    ,TO_CHAR(B.REG_DTTM,'YYYY.MM.DD') AS REG_DTTM
+			    		    ,A.DEL_RSN
+			    		    ,ROWNUM
+			    		FROM BBS_NOTI_DEL_INFO A, BBS_NOTI_INFO B, BBS_BOARD_INFO C
+			    		WHERE A.NOTI_ID = B.NOTI_ID
+			    		  AND B.BOARD_ID = C.BOARD_ID
+			    		  
+			    		  <if test="searchCondition == 'boardName'">
+			    		  AND C.BOARD_NAME LIKE '%' || #{searchKeyword} || '%'
+			    		  </if>
+			    		  <if test="searchCondition == 'notiTitle'">
+			    		  AND B.NOTI_TITLE LIKE '%' || #{searchKeyword} || '%'
+			    		  </if>
+			    		  <if test="searchCondition == 'notiRegName'">
+			    		  AND A.NOTI_REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+			    		  </if>
+			    		  
+			    		  
+			    		  <if test="delDiv != null and delDiv != ''">
+			    		  AND A.DEL_DIV = #{delDiv}
+			    		  </if>
+			    		  <if test="regDttmFrom !=null and regDttmFrom != '' and regDttmTo != null and regDttmTo != ''">
+			    		  AND A.REG_DTTM BETWEEN TO_DATE( #{regDttmFrom},'YYYY-MM-DD' ) AND TO_DATE( #{regDttmTo},'YYYY-MM-DD' )
+			    		  </if>
+			    		  
+			    		ORDER BY REG_DTTM DESC
+					 ) S
+			) P
+			<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage}  and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	<!-- 삭제이동게시물 목록 총 갯수 -->
+	<select id="getAdmBoardNotiDelCnt" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO" resultType="int">
+		SELECT COUNT(A.NOTI_ID) totcnt
+		FROM BBS_NOTI_DEL_INFO A, BBS_NOTI_INFO B, BBS_BOARD_INFO C
+		WHERE A.NOTI_ID = B.NOTI_ID
+			AND B.BOARD_ID = C.BOARD_ID
+			
+   		  <if test="searchCondition == 'boardName'">
+   		  AND C.BOARD_NAME LIKE '%' || #{searchKeyword} || '%'
+   		  </if>
+   		  <if test="searchCondition == 'notiTitle'">
+   		  AND B.NOTI_TITLE LIKE '%' || #{searchKeyword} || '%'
+   		  </if>
+   		  <if test="searchCondition == 'notiRegName'">
+   		  AND A.NOTI_REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+   		  </if>
+   		  
+   		  	<if test="delDiv != null and delDiv != ''">
+   		  	AND A.DEL_DIV = #{delDiv}
+   		  	</if>
+   		  	<if test="regDttmFrom !=null and regDttmFrom != '' and regDttmTo != null and regDttmTo != ''">
+   		  	AND A.REG_DTTM BETWEEN TO_DATE( #{regDttmFrom},'YYYY-MM-DD' ) AND TO_DATE( #{regDttmTo},'YYYY-MM-DD' )
+   		  	</if>
+			
+	</select>
+	
+	<!-- 삭제이동게시물조회 단건 -->
+	<select id="getAdmBoardNotiDel" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO" resultType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		SELECT 
+              A.NOTI_ID
+              ,A.DEL_DIV /*삭제이동구분*/
+              ,C.BOARD_NAME /*게시판명*/
+              ,A.NOTI_UPDR_DTTM /*게시일*/
+              ,A.NOTI_UPDR_NAME /*게시자*/
+              ,A.REG_DTTM /*삭제일*/
+              ,A.REGR_NAME /*삭제자*/
+              ,A.DEL_BASIS /*근거*/
+              ,A.DEL_RSN /*사유*/
+              ,B.NOTI_TITLE /*제목*/
+              ,B.NOTI_CONTS /*내용*/
+              ,A.RMRK/*비고*/
+              ,A.OLD_DELYEAR /*연변1*/
+              ,A.OLD_SEQ /*연변2*/
+              ,D.DEPT_NAME /*소속*/
+              ,A.BAD_NOTI_FIND_DTTM /*조치일시*/
+              ,A.USER_NAME/*조치자*/
+              ,A.DEL_RSN/*조치내용*/
+          FROM BBS_NOTI_DEL_INFO A, BBS_NOTI_INFO B, BBS_BOARD_INFO C, PSN_USER_INFO D
+          WHERE A.NOTI_ID = B.NOTI_ID
+          AND B.BOARD_ID = C.BOARD_ID
+          AND A.NOTI_UPDR_ID = D.USER_ID
+   		  AND A.NOTI_ID = #{notiId}
+	</select>
+	
+	<!-- 삭제게시물 복원1 (BBS_NOTI_DEL_INFO 정보삭제) -->
+	<delete id="deleteAdmBoardNotiDelRollBack1" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		DELETE BBS_NOTI_DEL_INFO
+		WHERE NOTI_ID = #{notiId}
+			AND DEL_DIV = 'DEL'
+			AND DEL_YN = 'N'
+	</delete>
+	
+	<!-- 삭제게시물 복원2 (BBS_NOTI_INFO 정보수정) -->
+	<update id="updateAdmBoardNotiDelRollBack2" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_INFO SET 
+			DEL_YN = 'N'
+			, STAT_CODE = '0'
+			, UPDR_ID = #{updrId}
+			, UPDR_NAME = #{updrName}
+			, UPD_DTTM = SYSDATE
+		WHERE NOTI_ID = #{notiId}
+	</update>
+		
+		
+	<!-- BBS_게시판_정보 조회 -->
+	<select id="getAdminBbsBoardInfo" resultType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		<![CDATA[
+		SELECT BOARD_ID
+		, BOARD_TP
+		, REQU_DEPT_CODE
+		, REQU_DEPT_NAME
+		, REQU_USER_ID
+		, REQU_USER_NAME
+		, REQU_DOC_NO
+		, BOARD_NAME
+		, BOARD_KIND
+		, BOARD_FORM
+		, BOARD_FORM_SPEC
+		, MOBL_LINK_YN
+		, BOARD_OPER_YN
+		, ADMIN_ALERT_YN
+		, BOARD_OPEN_DIV
+		, BOARD_OPEN_DIV_SPEC
+		, BOARD_OPER_DIV
+		, TO_CHAR(BOARD_OPER_BGN_DTTM, 'yyyy-mm-dd') BOARD_OPER_BGN_DTTM
+		, TO_CHAR(BOARD_OPER_END_DTTM, 'yyyy-mm-dd') BOARD_OPER_END_DTTM
+		, NOTI_TERM_DIV
+		, PUBL_ASGN_DIV
+		, PUBL_ASGN_DIV_SPEC
+		, BOARD_ANMT_USE_YN
+		, BOARD_EXPL_USE_YN
+		, BOARD_EXPL
+		, MAKR_DISP_DIV
+		, NOTI_READMAN_ASGN_YN
+		, AGRM_OPP_USE_YN
+		, REPLY_WRTE_DIV
+		, OPN_FILE_UPLOAD_YN
+		, OPN_FILE_UPLOAD_CNT
+		, OPN_WRTE_DIV
+		, OPN_REPLY_USE_DIV
+		, OPN_REALNAME_DIV
+		, LIKE_USE_YN
+		, NICK_USE_YN
+		, SMS_USE_YN
+		, APND_FILE_SZ
+		, EDIT_DIV
+		, NOTI_EMAIL_SEND_YN
+		, OUTSIDE_OPEN_DIV
+		, OUTSIDE_OPEN_DIV_SPEC
+		, POPUP_YN
+		, BRIEF_YN
+		, FCODE
+		, READ_DIV
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, OLD_BRD_ID
+		, OLD_PAR_ID
+		, OLD_SEQ
+		, TO_CHAR(CASE WHEN NOTI_TERM_DIV = '0' THEN TO_DATE('99991231','YYYYMMDD') ELSE  ADD_MONTHS(SYSDATE, NOTI_TERM_DIV) END,'yyyy-mm-dd') BASIC_CLOSE_DTTM
+		]]>
+		FROM BBS_BOARD_INFO X
+		WHERE BOARD_ID = #{boardId}
+	</select>	
+	
+	<!-- 게시글 상세정보 -->
+	<select id="getBbsNotiInfoView" resultType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
+		
+		SELECT X.AGRM_OPP_YN,
+			   X.NOTI_TITLE,
+		       X.NOTI_ID,
+		       X.UP_NOTI_ID,
+		       X.SORT_SEQ,
+		       X.BOARD_ID,
+		       X.EMGC_YN,
+		       X.ANMT_YN,
+		       X.POPUP_YN,
+		       X.BRIEF_YN,
+		       X.MOBL_OPEN_DIV,
+		       X.NOTI_TITLE_ORGN,
+		       X.TITLE_BOLD_YN,
+		       X.TITLE_COLOR_DIV,
+		       X.NOTI_CONTS,
+		       X.LINK_URL,
+		       X.NOTI_TP,
+		       X.NOTI_KIND,
+		       X.NICK_USE_YN,
+		       X.USER_ID,
+		       X.USER_NICK,
+		       X.USER_NAME,
+		       X.EDIT_DIV,
+		       X.RSRV_YN,
+		       TO_CHAR(X.NOTI_BGN_DTTM, 'yyyy-mm-dd hh24:mi') NOTI_BGN_DTTM,
+		       TO_CHAR(X.NOTI_END_DTTM, 'yyyy-mm-dd') NOTI_END_DTTM,
+		       X.NOTI_OPEN_DIV,
+		       X.NOTI_OPEN_DIV_SPEC,
+		       X.PUBL_ASGN_DIV,
+		       X.PUBL_ASGN_DIV_SPEC,
+		       X.REPLY_PRMS_YN,
+		       X.REPLY_MAKR_REALNAME_YN,
+		       X.OPN_PRMS_YN,
+		       X.OPN_MAKR_REALNAME_YN,
+		       X.NOTI_READ_CNT,
+		       X.NOTI_OPN_CNT,
+		       X.NOTI_AGRM_CNT,
+		       X.NOTI_OPP_CNT,
+		       X.NOTI_LIKE_CNT,
+		       X.BF_BOARD_ID,
+		       X.BF_NOTI_ID,
+		       X.STAT_CODE,
+		       X.DEPT_CODE,
+		       X.DEPT_NAME,
+		       X.DEPT_FNAME,
+		       X.MAKR_IP,
+		       X.BRGH_CODE,
+		       X.CDLN_DEPT_CODE,
+		       X.CDLN_DEPT_NAME,
+		       X.CDLN_DEPT_FNAME,
+		       X.CDLN_OBJR_NAME,
+		       X.CDLN_EVNT_CODE,
+		       X.DEL_YN,
+		       X.REGR_ID,
+		       X.REGR_NAME,
+		       TO_CHAR(X.REG_DTTM, 'yyyy-mm-dd') REG_DTTM,
+		       X.UPDR_ID,
+		       X.UPDR_NAME,
+		       X.UPD_DTTM,
+		       X.OLD_BRD_ID,
+		       X.OLD_HEADER_ID,
+		       X.OLD_ORIGNAL_ID,
+		       X.OLD_NOTICE_SEQ,
+		       X.NOTI_TAG_LST,
+		       Z.BOARD_FORM_SPEC,
+		       Z.NOTI_READMAN_ASGN_YN,
+		       Z.BOARD_NAME,
+		       (SELECT COUNT(NOTI_ID)
+		        FROM BBS_NOTI_OPN
+		        WHERE NOTI_ID = X.NOTI_ID
+		          AND DEL_YN = 'N') OPN_CNT,
+		       NOTI_EVAL_DIV_10 AS EVAL_AGRM_CNT,
+		       NOTI_EVAL_DIV_20 AS EVAL_OPP_CNT,
+		       NOTI_EVAL_DIV_30 AS EVAL_LIKE_CNT,
+		       NOTI_EVAL_DIV_40 AS EVAL_READ_CNT,
+		       CASE WHEN Z.NICK_USE_YN = 'Y' AND Z.OPN_REALNAME_DIV != '010' THEN 'Y'
+		            ELSE 'N'
+		       END IP_OPEN_YN , 
+		       (SELECT MAIL FROM PSN_USER_INFO WHERE USER_ID = X.USER_ID) MAIL
+		FROM BBS_NOTI_INFO X,
+		     (SELECT A.NOTI_ID,
+		             SUM(CASE 
+		                   WHEN NOTI_EVAL_DIV = '010' THEN 1
+		                   ELSE 0
+		                 END) NOTI_EVAL_DIV_10,
+		             SUM(CASE 
+		                   WHEN NOTI_EVAL_DIV = '020' THEN 1
+		                   ELSE 0
+		                 END) NOTI_EVAL_DIV_20,
+		             SUM(CASE 
+		                   WHEN NOTI_EVAL_DIV = '030' THEN 1
+		                   ELSE 0
+		                 END) NOTI_EVAL_DIV_30,
+		             SUM(CASE 
+		                   WHEN NOTI_EVAL_DIV = '040' THEN 1
+		                   ELSE 0
+		                 END) NOTI_EVAL_DIV_40
+		      FROM BBS_NOTI_INFO A,
+		           BBS_NOTI_EVAL_INFO B
+		      WHERE A.NOTI_ID  = B.NOTI_ID(+)
+		        AND A.NOTI_ID  = #{notiId}
+		      GROUP BY A.NOTI_ID) Y,
+		      BBS_BOARD_INFO Z  
+		 WHERE X.NOTI_ID  = Y.NOTI_ID
+		   AND X.BOARD_ID = Z.BOARD_ID
+        
+	</select>		
+</mapper>

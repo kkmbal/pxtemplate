@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.adm.gen.mapper.AdmGenManageMapper">
+    <resultMap id="admGenCodeManage" type="portalxpert.adm.gen.vo.AdmGenCodeManageVO">
+		<result property="cd" column="cd"/>
+		<result property="cdNm" column="cd_nm"/>
+		<result property="remark" column="remark"/>
+		<result property="cdSpec" column="cd_spec"/>
+	</resultMap>
+	
+	<resultMap id="getContentList" type="portalxpert.adm.gen.vo.AdmGenContentManageVO">
+		<result property="cntsId" column="CNTS_ID"/>		  
+		<result property="cntsName" column="CNTS_NAME"/>		  
+		<result property="cntsLink" column="CNTS_LINK"/>		  
+		<result property="adminLink" column="ADMIN_LINK"/>
+		<result property="cntsTp" column="CNTS_TP"/>
+		<result property="iconName" column="ICON_NAME"/>
+		<result property="relaKey" column="RELA_KEY"/>
+		<result property="msgRefreshTm" column="MSG_REFRESH_TM"/>
+		<result property="useYn" column="USE_YN"/>
+		<result property="delYn" column="DEL_YN"/>
+		<result property="sysErrYn" column="SYS_ERR_YN"/>
+	</resultMap>
+	
+		
+	
+	<!-- 상위코드 목록조회 -->
+	<select id="getAdmGenCommonLCodeList" 	
+			parameterType="portalxpert.adm.gen.vo.AdmGenCodeManageVO" 
+			resultMap="admGenCodeManage">
+			
+		SELECT A.CD, A.CD_NM, A.REMARK
+		FROM(
+			SELECT ROWNUM RNUM, S.*
+			FROM(
+				SELECT CD, CD_NM, REMARK           
+				FROM COM_CODE         
+				<where>
+				<if test="searchCondition=='cd'">
+					CD LIKE '%'|| #{searchKeyword} || '%' 
+				</if>
+				<if test="searchCondition=='cdNm'">
+					CD_NM LIKE '%'|| #{searchKeyword} || '%'
+				</if>
+				</where>
+				ORDER BY CD  
+			) S
+		) A 
+		<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage} and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	<!-- 상위코드 목록 총건수조회 -->
+	<select id="getAdmGenCommonListTotCnt" 
+			parameterType="portalxpert.adm.gen.vo.AdmGenCodeManageVO" 
+			resultType="int">
+		SELECT COUNT(1) totcnt
+		FROM COM_CODE
+		<where>
+		<if test="searchCondition=='cd'">
+			CD LIKE '%'|| #{searchKeyword} || '%' 
+		</if>
+		<if test="searchCondition=='cdNm'">
+			CD_NM LIKE '%'|| #{searchKeyword} || '%' 
+		</if>
+		</where>
+	</select>
+
+	<!-- 상위코드저장시, 상위코드 중복여부조회 -->
+	<select id="getAdmGenCheckCodeCdCnt" 
+			parameterType="string" 
+			resultType="int">
+		SELECT COUNT(1) cnt    
+  		FROM COM_CODE         
+ 		WHERE CD = #{cd}           
+	</select>
+	
+	<!-- 상위코드 상세조회 -->
+	<select id="getAdmGenCommonLCodeOne" 
+			parameterType="portalxpert.adm.gen.vo.AdmGenCodeManageVO" 
+			resultMap="admGenCodeManage">
+		SELECT CD, CD_NM, REMARK        
+		FROM COM_CODE         
+		WHERE CD = #{cd} 
+	</select>
+	
+	<!-- 상위코드 등록 -->
+	<insert id="insertAdmGenCommonLCode">
+		INSERT INTO COM_CODE (
+			CD
+			, CD_NM
+			, REMARK
+			, REG_DTTM
+			, REGR_ID
+<!-- 			, UPD_DT -->
+<!-- 			, UPD_MAN -->
+		) 
+		VALUES 
+		(
+			#{cd}
+			, #{cdNm, javaType=String, jdbcType=VARCHAR}
+			, #{remark, javaType=String, jdbcType=VARCHAR}
+			, SYSDATE
+			, #{insMan}
+<!-- 			, '' -->
+<!-- 			, '' -->
+		)  
+	</insert>
+	
+	<!-- 상위코드 수정 -->
+	<update id="updateAdmGenCommonLCode">
+		UPDATE COM_CODE         
+		SET CD_NM = #{cdNm, javaType=String, jdbcType=VARCHAR}       
+   			, REMARK = #{remark, javaType=String, jdbcType=VARCHAR}      
+   			, UPD_DTTM = SYSDATE 
+   			, UPDR_ID = #{updMan}
+		WHERE CD = #{cd}    
+	</update>
+	
+	<!-- 상위코드 삭제-상위코드의 세부코드삭제 -->
+	<delete id="deleteAdmGenCommonSCodeAll">
+		DELETE                     
+  		FROM COM_CODE_SPEC         
+		WHERE CD = #{cd}  
+	</delete>
+
+	<!-- 상위코드 삭제 -->
+	<delete id="deleteAdmGenCommonLCode">
+		DELETE                 
+  		FROM COM_CODE         
+ 		WHERE CD = #{cd}  
+	</delete>
+	
+	<!-- 세부코드 목록조회 -->
+	<select id="getAdmGenCommonSCodeList" 
+			parameterType="portalxpert.adm.gen.vo.AdmGenCodeManageVO" 
+			resultMap="admGenCodeManage">
+		SELECT A.CD, A.CD_NM, A.REMARK, A.CD_SPEC
+		FROM(
+			SELECT ROWNUM RNUM, S.*
+			FROM(
+				SELECT CD, CD_SPEC, CD_NM, REMARK                         
+				FROM COM_CODE_SPEC                  
+				<where>
+				<if test="cd == null or cd == ''">
+					CD = (SELECT MIN(CD) FROM COM_CODE)  
+				</if>
+				<if test="cd != null and cd != ''">
+					CD = #{cd}
+					<if test="searchKeyword != null and searchKeyword != ''">
+						AND CD_NM LIKE '%'|| #{searchKeyword} ||'%' 
+					</if>
+				</if>
+				</where>                      
+				ORDER BY CD_SPEC 
+			) S
+		) A 
+		<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage} and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	<!-- 세부코드 목록 총건수조회 -->
+	<select id="getAdmGenCommonSCodeListTotCnt"
+			parameterType="portalxpert.adm.gen.vo.AdmGenCodeManageVO"
+			resultType="int">
+		SELECT COUNT(1) totcnt                     
+		FROM COM_CODE_SPEC                  
+		<where>
+		<if test="cd == null or cd == ''">
+			CD = (SELECT MIN(CD) FROM COM_CODE)  
+		</if>
+		<if test="cd != null and cd != ''">
+			CD = #{cd}
+			<if test="searchKeyword != null and searchKeyword != ''">
+				AND CD_NM LIKE '%'|| #{searchKeyword} ||'%' 
+			</if>
+		</if>
+		</where>                     
+	</select>
+
+	<!-- 세부코드 조회를 위한 상위코드 목록조회 -->
+	<select id="getAdmGenCommonLCodeType" 
+			resultMap="admGenCodeManage">
+		SELECT CD, CD_NM        
+		FROM COM_CODE        
+		ORDER BY CD 
+	</select>
+	
+	<!-- 세부코드 저장시, 세부코드 중복여부조회 -->
+	<select id="getAdmGenCheckCodeCdSpecCnt" 
+			parameterType="portalxpert.adm.gen.vo.AdmGenCodeManageVO"
+			resultType="int">
+		SELECT COUNT(1) cnt                     
+		FROM COM_CODE_SPEC                  
+		WHERE CD = #{cd} AND CD_SPEC = #{cdSpec}
+	</select>
+	
+	<!-- 세부코드 상세조회 -->
+	<select id="getAdmGenCommonSCodeOne" 
+			parameterType="portalxpert.adm.gen.vo.AdmGenCodeManageVO" 
+			resultMap="admGenCodeManage">
+		SELECT CD, CD_NM, CD_SPEC, REMARK                    
+		FROM COM_CODE_SPEC                  
+		WHERE CD = #{cd} AND CD_SPEC = #{cdSpec}
+	</select>
+	
+	<!-- 세부코드 등록 -->
+	<insert id="insertAdmGenCommonSCode">
+		INSERT INTO COM_CODE_SPEC (
+			CD
+			, CD_SPEC
+			, CD_NM
+			, REMARK
+			, REG_DTTM
+			, REGR_ID
+<!-- 			, UPD_DT -->
+<!-- 			, UPD_MAN -->
+		) 
+		VALUES 
+		(
+			#{cd}
+			, #{cdSpec}
+			, #{cdNm, javaType=String, jdbcType=VARCHAR}
+			, #{remark, javaType=String, jdbcType=VARCHAR}
+			, SYSDATE
+			, #{insMan}
+		)   
+	</insert>
+	
+	<!-- 세부코드 수정 -->
+	<update id="updateAdmGenCommonSCode">
+		UPDATE COM_CODE_SPEC         
+		SET CD_NM = #{cdNm, javaType=String, jdbcType=VARCHAR}             
+			, REMARK = #{remark, javaType=String, jdbcType=VARCHAR}            
+			, UPD_DTTM = SYSDATE    
+			, UPDR_ID = #{updMan}          
+	    WHERE CD = #{cd} AND CD_SPEC = #{cdSpec}  
+	</update>
+	
+	<!-- 세부코드 삭제 -->
+	<delete id="deleteAdmGenCommonSCode">
+		DELETE                       
+		FROM COM_CODE_SPEC        
+		WHERE CD = #{cd} AND CD_SPEC = #{cdSpec} 
+	</delete>
+
+	<!-- 컨텐츠조회 목록 -->
+	<select id="getAdmGenContentManageList" parameterType="portalxpert.adm.gen.vo.AdmGenContentManageVO" resultMap="getContentList">
+		SELECT P.CNTS_ID
+			 , P.CNTS_NAME
+			 , P.CNTS_LINK
+			 , P.ADMIN_LINK
+			 , P.CNTS_TP
+			 , P.ICON_NAME
+			 , P.RELA_KEY
+			 , P.MSG_REFRESH_TM
+			 , P.USE_YN
+			 , P.SYS_ERR_YN
+		FROM (
+			SELECT ROWNUM RNUM, S.*
+			FROM (
+				SELECT CNTS_ID
+					 , CNTS_NAME
+					 , CNTS_LINK
+					 , ADMIN_LINK
+					 , CNTS_TP
+					 , ICON_NAME
+					 , RELA_KEY
+					 , MSG_REFRESH_TM
+					 , USE_YN
+					 , SYS_ERR_YN
+				 FROM COM_CNTS_INFO
+				WHERE CNTS_NAME LIKE '%'|| #{searchKeyword} ||'%'
+				ORDER BY CNTS_TP, CNTS_NAME
+			) S
+		) P
+		<![CDATA[
+		WHERE ROWNUM <= #{recordCountPerPage} and RNUM > #{firstIndex}
+		]]>
+	</select>
+  
+  	<!-- 컨텐츠조회 목록 Count -->
+	<select id="getAdmGenContentManageCnt" parameterType="portalxpert.adm.gen.vo.AdmGenContentManageVO" resultType="int">
+		SELECT COUNT(1)
+		FROM COM_CNTS_INFO
+		WHERE CNTS_NAME LIKE '%'|| #{searchKeyword} ||'%'
+	</select>
+	
+	<!-- 컨텐츠조회 단건 -->
+	<select id="getAdmGenContentManage" parameterType="portalxpert.adm.gen.vo.AdmGenContentManageVO" resultMap ="getContentList">
+		SELECT CNTS_ID
+			 , CNTS_NAME
+			 , CNTS_LINK
+			 , ADMIN_LINK
+			 , CNTS_TP
+			 , ICON_NAME
+			 , RELA_KEY
+			 , MSG_REFRESH_TM
+			 , USE_YN
+			 , DEL_YN
+			 , SYS_ERR_YN
+		FROM COM_CNTS_INFO
+		WHERE CNTS_ID = #{cntsId}
+	</select>
+	
+	<!-- 컨텐츠 등록 -->
+	<insert id="insertAdmGenContentManage">
+		INSERT INTO COM_CNTS_INFO ( 
+			  CNTS_ID
+			, CNTS_NAME
+			, CNTS_WIDTH
+			, CNTS_HGHT
+			, CNTS_LINK
+			, ADMIN_LINK
+			, CNTS_TP
+			, ICON_NAME
+			, RELA_KEY
+			, MSG_REFRESH_TM
+			, USE_YN
+			, POPUP_YN
+			, DEL_YN
+			, SYS_ERR_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+		) VALUES ( 
+			NVL((SELECT LPAD(MAX(CNTS_ID)+1, 3, '0') FROM COM_CNTS_INFO), '201')
+			, #{cntsName}
+			, ''
+			, ''
+			, #{cntsLink}
+			, #{adminLink}
+			, #{cntsTp}
+			, #{iconName}
+			, #{relaKey}
+			, #{msgRefreshTm}
+			, #{useYn}
+			, 'Y'
+			, 'N'
+			, 'N'
+			, #{userId}
+			, #{userName}
+			, SYSDATE
+			, #{userId}
+			, #{userName}
+			, SYSDATE
+		)
+	</insert>
+ 
+ 	<!-- 컨텐츠 수정 -->
+ 	<update id="updateAdmGenContentManage">
+ 		UPDATE COM_CNTS_INFO
+ 		   SET CNTS_NAME = #{cntsName}
+ 		     , USE_YN = #{useYn}
+ 		     , DEL_YN = #{delYn}
+ 		     , SYS_ERR_YN = #{sysErrYn}
+ 		   	<if test="cntsLink != null and cntsLink != ''">, CNTS_LINK = #{cntsLink}</if>
+			<if test="cntsTp != null and cntsTp != ''">, CNTS_TP = #{cntsTp}</if>
+			<if test="adminLink != null and adminLink != ''">, ADMIN_LINK = #{adminLink}</if>
+			<if test="msgRefreshTm != null and msgRefreshTm != ''">, MSG_REFRESH_TM = #{msgRefreshTm}</if>
+			 , UPDR_ID = #{userId}
+			 , UPDR_NAME = #{userName}
+			 , UPD_DTTM = SYSDATE
+		WHERE CNTS_ID = #{cntsId}
+ 	</update>
+	
+	<!-- 컨텐츠 삭제 -->
+	<update id="deleteAdmGenContentManage">
+		UPDATE COM_CNTS_INFO 
+		   SET DEL_YN = 'Y'
+		 WHERE CNTS_ID = #{cntsId}
+	</update>
+
+	
+	<!-- /////////////////////////// 링크분류관리 START /////////////////////////// -->
+	<!-- 링크분류조회 목록 -->
+	<select id="getAdmGenSysLinkCtlgList" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		SELECT
+			P.LINK_CAT_ID
+			, P.LINK_CAT_NM
+			, P.LINK_CAT_ORDER
+		FROM (
+			SELECT ROWNUM RNUM, S.*
+			FROM (
+				SELECT 
+					LINK_CAT_ID
+					, LINK_CAT_NM
+				    , LINK_CAT_ORDER
+				FROM BIZ_LINK_CATEGORY
+				WHERE END_DATE IS NULL
+					<if test="searchKeyword != null and searchKeyword != ''">
+					AND LINK_CAT_NM LIKE '%'|| #{searchKeyword} ||'%'
+					</if>
+				ORDER BY LINK_CAT_ORDER
+			) S
+		) P
+		<![CDATA[
+		WHERE ROWNUM <= #{recordCountPerPage} and RNUM > #{firstIndex}
+		]]>
+	</select>
+  
+  	<!-- 링크분류조회 목록 Count -->
+	<select id="getAdmGenSysLinkCtlgCnt" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="int">
+		SELECT COUNT(1)
+  		FROM BIZ_LINK_CATEGORY
+  		WHERE END_DATE IS NULL
+  			<if test="searchKeyword != null and searchKeyword != ''">
+			AND LINK_CAT_NM LIKE '%'|| #{searchKeyword} ||'%'
+			</if>
+	</select>
+	
+	<!-- 링크분류조회 단건 -->
+	<select id="getAdmGenSysLinkCtlg" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		SELECT 
+			LINK_CAT_ID
+		    , LINK_CAT_NM
+		    , LINK_CAT_ORDER
+		    , (SELECT MAX(LINK_CAT_ORDER) FROM BIZ_LINK_CATEGORY WHERE END_DATE IS NULL) AS linkCatCount
+		FROM BIZ_LINK_CATEGORY A
+		WHERE LINK_CAT_ID = #{linkCatId}
+			AND END_DATE IS NULL
+	</select>
+ 
+ 	<!-- 링크분류등록시 분류순서 수정 -->
+ 	<update id="updateAdmGenSysLinkCtlgIOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+ 		UPDATE BIZ_LINK_CATEGORY
+   		SET LINK_CAT_ORDER = LINK_CAT_ORDER + 1
+ 		WHERE LINK_CAT_ORDER >= #{linkCatOrder}
+ 	</update>
+	
+	<!-- 링크분류 등록 -->
+	<insert id="insertAdmGenSysLinkCtlg" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		INSERT INTO BIZ_LINK_CATEGORY (
+			LINK_CAT_ID
+			, LINK_CAT_NM
+			, LINK_CAT_ORDER
+			, REG_DTTM
+			, REGR_ID
+			, UPD_DTTM
+			, UPDR_ID
+		) VALUES (
+			NVL((SELECT LPAD(MAX(LINK_CAT_ID) + 1, 3, '0') FROM BIZ_LINK_CATEGORY), '001')
+			, #{linkCatNm, javaType=String, jdbcType=VARCHAR}
+			, #{linkCatOrder, javaType=Long, jdbcType=NUMERIC}
+			, SYSDATE
+			, #{insMan}
+			, ''
+			, ''
+		)
+	</insert>
+	
+	
+	
+	<!-- 링크분류 수정(링크명) -->
+	<update id="updateAdmGenSysLinkCtlg" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		UPDATE BIZ_LINK_CATEGORY SET 
+			LINK_CAT_NM = #{linkCatNm}
+		    , UPD_DTTM = SYSDATE
+		    , UPDR_ID = #{updMan}
+		WHERE LINK_CAT_ID = #{linkCatId}
+	</update>
+	
+	<!-- 링크분류수정시 링크분류 순서 수정1 -->
+	<update id="updateAdmGenSysLinkCtlgUOrder1" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		<![CDATA[
+		UPDATE BIZ_LINK_CATEGORY A
+   		SET LINK_CAT_ORDER = A.LINK_CAT_ORDER + 1
+ 		WHERE LINK_CAT_ORDER >= #{linkCatOrderNew}
+   			AND LINK_CAT_ORDER < #{linkCatOrder}
+   		]]>
+	</update>
+	
+	<!-- 링크분류수정시 링크분류 순서 수정2 -->
+	<update id="updateAdmGenSysLinkCtlgUOrder2" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		<![CDATA[
+		UPDATE BIZ_LINK_CATEGORY A
+   		SET LINK_CAT_ORDER = A.LINK_CAT_ORDER - 1
+ 		WHERE LINK_CAT_ORDER <= #{linkCatOrderNew}
+   			AND LINK_CAT_ORDER > #{linkCatOrder}
+   		]]>
+	</update>
+	
+	<!-- 링크분류 수정(링크순서) -->
+	<update id="updateAdmGenSysLinkCtlgUOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		UPDATE BIZ_LINK_CATEGORY
+   		SET LINK_CAT_ORDER = #{linkCatOrderNew}
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+	</update>
+
+	
+	
+	<!-- 링크분류삭제시 링크분류 순서 수정 -->
+	<update id="updateAdmGenSysLinkCtlgDOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		<![CDATA[
+		UPDATE BIZ_LINK_CATEGORY A SET 
+			LINK_CAT_ORDER = A.LINK_CAT_ORDER - 1
+		WHERE LINK_CAT_ORDER > (
+								SELECT LINK_CAT_ORDER
+	                            FROM BIZ_LINK_CATEGORY
+	                          	WHERE LINK_CAT_ID = #{linkCatId}
+	                          	)
+	    ]]>
+	</update>
+	
+	<!-- 링크 삭제 -->
+	<update id="deleteAdmGenSysLinkAll" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		UPDATE BIZ_LINK SET 
+			END_DATE = SYSDATE 
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+	</update>
+ 
+	<!-- 링크분류 삭제 -->
+	<delete id="deleteAdmGenSysLinkCtlg" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		UPDATE BIZ_LINK_CATEGORY SET 
+			END_DATE = SYSDATE
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+	</delete>
+	
+	<!-- 업무데스크 삭제 -->
+	<delete id="deleteAdmGenSysLinkCtlgPsnJobDesk" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		DELETE
+  		FROM PSN_JOB_DESK
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+	</delete>
+	<!-- /////////////////////////// 링크분류관리 END /////////////////////////// -->
+	
+	
+	
+	<!-- /////////////////////////// 링크관리 START /////////////////////////// -->
+	<!-- 링크조회 목록 -->
+	<select id="getAdmGenSysLinkList" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		SELECT
+			P.LINK_CAT_ID
+			, P.LINK_CAT_NM
+			, P.LINK_CD
+			, P.LINK_ORDER
+			, P.LINK_ADDRESS
+			, P.LINK_NM
+			, P.POPUP_USE_GB
+			, P.LINK_SNM
+		FROM (
+			SELECT ROWNUM RNUM, S.*
+			FROM (
+				SELECT
+					A.LINK_CAT_ID
+				    , B.LINK_CAT_NM
+				    , A.LINK_CD
+				    , A.LINK_ORDER
+				    , A.LINK_ADDRESS
+				    , A.LINK_NM
+				    , A.POPUP_USE_GB
+				    , A.LINK_SNM
+				FROM 
+					BIZ_LINK A
+				    , BIZ_LINK_CATEGORY B
+				WHERE B.LINK_CAT_ID = A.LINK_CAT_ID
+					AND A.END_DATE IS NULL
+		
+<!-- 		2013-09-04  요구사항으로 제거			 -->
+<!-- 					<choose> -->
+<!-- 					<when test="linkCatId != null and linkCatId != ''"> -->
+<!-- 					AND A.LINK_CAT_ID = #{linkCatId} -->
+<!-- 					</when> -->
+<!-- 					<otherwise> -->
+<!-- 					AND A.LINK_CAT_ID = ( -->
+<!-- 										SELECT LINK_CAT_ID -->
+<!-- 				                    	FROM LSI_LINK_CATEGORY -->
+<!-- 				                    	WHERE LINK_CAT_ORDER = 1 -->
+<!-- 				                    	AND END_DATE IS NULL -->
+<!-- 				                    	) -->
+<!-- 					</otherwise> -->
+<!-- 					</choose> -->
+					
+					<if test="searchKeyword != null and searchKeyword != ''">
+				    AND A.LINK_NM LIKE '%'|| #{searchKeyword} ||'%'
+				    </if>
+				    
+				ORDER BY A.LINK_CAT_ID ,A.LINK_ORDER
+			) S
+		) P
+		<![CDATA[
+		WHERE ROWNUM <= #{recordCountPerPage} and RNUM > #{firstIndex}
+		]]>
+		ORDER BY LINK_CAT_ID ,LINK_ORDER
+	</select>
+  
+  	<!-- 링크조회 목록 Count -->
+	<select id="getAdmGenSysLinkCnt" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="int">
+  		SELECT COUNT(1)
+		FROM BIZ_LINK
+		WHERE END_DATE IS NULL
+		
+<!-- 		2013-09-04  요구사항으로 제거			 -->		
+<!-- 			<choose> -->
+<!-- 			<when test="linkCatId != null and linkCatId != ''"> -->
+<!-- 			AND LINK_CAT_ID = #{linkCatId} -->
+<!-- 			</when> -->
+<!-- 			<otherwise> -->
+<!-- 			AND LINK_CAT_ID = ( -->
+<!-- 								SELECT LINK_CAT_ID -->
+<!-- 		                    	FROM LSI_LINK_CATEGORY -->
+<!-- 		                    	WHERE LINK_CAT_ORDER = 1 -->
+<!-- 		                    	AND END_DATE IS NULL -->
+<!-- 		                    	) -->
+<!-- 			</otherwise> -->
+<!-- 			</choose> -->
+			
+			<if test="searchKeyword != null and searchKeyword != ''">
+			AND LINK_NM LIKE '%'|| #{searchKeyword} ||'%'
+			</if>
+	</select>
+	
+	<!-- 링크분류목록 Comb -->
+	<select id="getAdmGenSysLinkCatList" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		SELECT 
+			LINK_CAT_ID
+		    , LINK_CAT_NM
+		FROM BIZ_LINK_CATEGORY
+		WHERE END_DATE IS NULL
+		ORDER BY LINK_CAT_ORDER
+	</select>
+	
+	<!-- 링크조회 단건 -->
+	<select id="getAdmGenSysLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		SELECT A.LINK_CAT_ID
+		     , NVL(B.LINK_CAT_NM, '') AS LINK_CAT_NM
+		     , A.LINK_CD
+		     , A.LINK_ORDER
+		     , A.LINK_ADDRESS
+		     , A.LINK_NM
+		     , A.POPUP_USE_GB
+		     , A.LINK_SNM
+		     , (SELECT MAX(LINK_ORDER) FROM BIZ_LINK WHERE LINK_CAT_ID=A.LINK_CAT_ID ) AS linkCount
+		  FROM BIZ_LINK A
+		     , BIZ_LINK_CATEGORY B
+		 WHERE B.LINK_CAT_ID (+) = A.LINK_CAT_ID
+		   AND A.LINK_CAT_ID = #{linkCatId}
+		   AND A.LINK_CD = #{linkCd}
+		   AND A.END_DATE IS NULL
+	</select>	
+	
+	<!-- 링크등록시 분류순서 수정 -->
+ 	<update id="updateAdmGenSysLinkIOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+ 		<![CDATA[
+ 		UPDATE BIZ_LINK A
+    	SET LINK_ORDER = A.LINK_ORDER + 1
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+   			AND LINK_ORDER >= #{linkOrder}
+   		]]>
+ 	</update>
+	
+	<!-- 링크 등록 -->
+	<insert id="insertAdmGenSysLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		INSERT INTO BIZ_LINK (
+			LINK_CAT_ID
+			, LINK_CD
+			, LINK_ORDER
+			, LINK_ADDRESS
+			, LINK_NM
+			, POPUP_USE_GB
+			, REG_DTTM
+			, REGR_ID
+			, UPD_DTTM
+			, UPDR_ID
+			, MAIN_DSP_GB
+       	, END_DATE
+       	, LINK_SNM
+		) VALUES (
+			#{linkCatId}
+			, NVL((SELECT LPAD(MAX(LINK_CD) + 1, 3, '0') FROM BIZ_LINK WHERE LINK_CAT_ID = #{linkCatId}), '001')
+			, #{linkOrder, javaType=Long, jdbcType=NUMERIC}
+			, #{linkAddress, javaType=String, jdbcType=VARCHAR}
+			, #{linkNm, javaType=String, jdbcType=VARCHAR}
+			, #{popupUseGb, javaType=String, jdbcType=VARCHAR}
+			, SYSDATE
+			, #{insMan}
+			, ''
+			, ''
+			, #{mainDspGb, javaType=String, jdbcType=VARCHAR}
+			, #{endDate, javaType=String, jdbcType=VARCHAR}
+			, #{linkSnm, javaType=String, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 링크 수정(링크명) -->
+	<update id="updateAdmGenSysLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		UPDATE BIZ_LINK SET 
+			LINK_ADDRESS = #{linkAddress, javaType=String, jdbcType=VARCHAR}
+	     	, LINK_NM = #{linkNm, javaType=String, jdbcType=VARCHAR}
+	     	, POPUP_USE_GB = #{popupUseGb, javaType=String, jdbcType=VARCHAR}
+	     	, UPD_DTTM = SYSDATE
+	     	, UPDR_ID = #{updMan}
+	     	, LINK_SNM = #{linkSnm, javaType=String, jdbcType=VARCHAR}
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+   			AND LINK_CD = #{linkCd}
+	</update>
+	
+	<!-- 링크수정시 링크 순서 수정1 -->
+	<update id="updateAdmGenSysLinkUOrder1" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		<![CDATA[	
+   		UPDATE BIZ_LINK A SET 
+   			LINK_ORDER = A.LINK_ORDER + 1
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+   			AND LINK_ORDER >= #{linkOrderNew}
+   			AND LINK_ORDER < #{linkOrder}
+   		]]>
+	</update>
+	
+	<!-- 링크수정시 링크 순서 수정2 -->
+	<update id="updateAdmGenSysLinkUOrder2" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		<![CDATA[	
+   		UPDATE BIZ_LINK A SET 
+   			LINK_ORDER = A.LINK_ORDER - 1
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+   			AND LINK_ORDER <= #{linkOrderNew}
+   			AND LINK_ORDER > #{linkOrder}
+   		]]>
+	</update>
+	
+	<!-- 링크 수정(링크순서) -->
+	<update id="updateAdmGenSysLinkUOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+ 		UPDATE BIZ_LINK SET 
+ 			LINK_ORDER = #{linkOrderNew}
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+   			AND LINK_CD = #{linkCd}
+	</update>
+	
+    <!-- 링크삭제시 링크순서 수정 -->
+	<update id="updateAdmGenSysLinkDOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		<![CDATA[
+		UPDATE BIZ_LINK A SET 
+		LINK_ORDER = A.LINK_ORDER - 1
+		WHERE LINK_CAT_ID = #{linkCatId}
+			AND LINK_ORDER > (
+								SELECT LINK_ORDER
+		                        FROM BIZ_LINK
+		                        WHERE LINK_CAT_ID = #{linkCatId}
+		                        AND LINK_CD = #{linkCd}
+		                      )
+	    ]]>
+	</update>
+	
+	<!-- 링크 삭제 -->
+	<update id="deleteAdmGenSysLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		UPDATE BIZ_LINK SET END_DATE = SYSDATE
+ 		WHERE LINK_CAT_ID = #{linkCatId}
+   			AND LINK_CD = #{linkCd}
+	</update>
+	
+	<!-- 업무데스크 삭제 -->
+	<delete id="deleteAdmGenSysLinkPsnJobDesk" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		DELETE
+		FROM PSN_JOB_DESK
+		WHERE LINK_CAT_ID = #{linkCatId}
+			AND LINK_CD = #{linkCd}
+	</delete>
+	<!-- /////////////////////////// 링크관리 END /////////////////////////// -->
+	
+	
+	
+	<!-- /////////////////////////// 업무데스크관리 START /////////////////////////// -->
+	<!-- 메인화면에 표시되는 링크 설정을 위한 조회 -->
+	<select id="getAdmGenMainLinkList" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		SELECT 
+			A.LINK_CAT_ID
+		    , B.LINK_CAT_NM
+		    , A.LINK_CD
+		    , A.LINK_ORDER
+		    , A.LINK_ADDRESS
+		    , A.LINK_NM
+		    , A.POPUP_USE_GB
+		    , A.MAIN_DSP_GB
+		    , A.LINK_SNM
+		FROM BIZ_LINK A
+		   , BIZ_LINK_CATEGORY B
+		WHERE B.LINK_CAT_ID (+) = A.LINK_CAT_ID
+			AND A.END_DATE IS NULL
+		/*ORDER BY B.LINK_CAT_ORDER, A.LINK_ORDER*/
+		ORDER BY B.LINK_CAT_ORDER, A.LINK_NM
+	</select>
+	
+	<!-- 메인화면에 표시되는 링크 설정 초기화 -->
+	<update id="updateAdmGenMainLinkAll" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		UPDATE BIZ_LINK SET 
+	    	MAIN_DSP_GB = ''
+	    	, UPD_DTTM = SYSDATE
+	    	, UPDR_ID = #{updMan}
+	</update>
+	
+	<!-- 메인화면에 표시되는 링크 설정 -->
+	<update id="updateAdmGenMainLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		UPDATE BIZ_LINK SET 
+		    MAIN_DSP_GB = 'Y'
+		    , UPD_DTTM = SYSDATE
+		    , UPDR_ID = #{updMan}
+		WHERE LINK_CAT_ID = #{linkCatId}
+		    AND LINK_CD = #{linkCd}
+	</update>
+	<!-- /////////////////////////// 업무데스크관리 END /////////////////////////// -->
+		
+</mapper>

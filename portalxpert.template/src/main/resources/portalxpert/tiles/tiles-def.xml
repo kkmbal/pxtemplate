@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	
+	<!-- default layout -->    
+	<definition name=".defaultLayout" template="/WEB-INF/jsp/portalxpert/common/layout/defaultLayout.jsp">     
+	  	<put-attribute name="title" value="포털"/>   
+		<put-attribute name="header" value="/WEB-INF/jsp/portalxpert/common/layout/header.jsp" />                      	
+		<put-attribute name="left" value="/WEB-INF/jsp/portalxpert/common/layout/left.jsp" />                      	
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/portalxpert/common/layout/footer.jsp" />                      	
+	</definition>
+	    
+    <!-- ############################## default ############################## -->
+    <!-- default -->    
+    <definition name=".default/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
+    </definition>         
+    
+    <definition name=".default/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
+    </definition>         
+    
+    <definition name=".default/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    <definition name=".default/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
+    </definition>
+    
+    <!-- ############################## Main ############################## -->
+    <!-- main -->    
+    <definition name=".main/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
+    </definition>         
+    
+    <definition name=".main/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
+    </definition>         
+    
+    <definition name=".main/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    <definition name=".main/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
+    </definition>
+    
+    <!-- ############################## Board ############################## -->
+    <definition name=".board/*" extends=".defaultLayout">    
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
+    </definition>         
+    
+    <definition name=".board/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
+    </definition>         
+    
+    <definition name=".board/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    <definition name=".board/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
+    </definition>
+    
+    <!-- ############################## person ############################## -->
+    <definition name=".person/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
+    </definition>         
+    
+    <definition name=".person/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
+    </definition>         
+    
+    <definition name=".person/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    <definition name=".person/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
+    </definition>
+    
+    <!-- ############################## adw ############################## -->
+    <definition name=".adw/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
+    </definition>         
+    
+    <definition name=".adw/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
+    </definition>         
+    
+    <definition name=".adw/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    <definition name=".adw/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
+    </definition>	
+    
+    <!-- ############################## Admin ############################## -->
+	<!-- admin layout" -->    
+    <!-- ### admin ### -->    
+    <definition name=".adm/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
+    </definition>         
+    
+    <definition name=".adm/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
+    </definition>         
+    
+    <definition name=".adm/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    <definition name=".adm/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
+    </definition>
+    
+    <definition name=".admFrame/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    
+    <!-- ############################## organization ############################## -->
+    <!-- organization layout" -->    
+    <definition name=".organization/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
+    </definition>         
+    
+    <definition name=".organization/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
+    </definition>         
+    
+    <definition name=".organization/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    <definition name=".organization/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
+    </definition>
+    
+    <!-- ############################## setup ############################## -->
+    <definition name=".setup/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
+    </definition>         
+    
+    <definition name=".setup/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
+    </definition>         
+    
+    <definition name=".setup/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
+    </definition>
+    
+    <definition name=".setup/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
+    </definition>
+    
+    <!-- ############################## Self ############################## -->
+    <!-- ###  body self ### -->
+    <definition name=".self/*" template="/WEB-INF/jsp/portalxpert/{1}.jsp"/>        
+    <definition name=".self/*/*" template="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp"/>        
+  	<definition name=".self/*/*/*" template="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp"/>        
+    <definition name=".self/*/*/*/*" template="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp"/>
+
+    
+</tiles-definitions>

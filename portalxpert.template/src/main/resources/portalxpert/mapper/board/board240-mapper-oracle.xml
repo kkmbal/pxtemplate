@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.board.board240.mapper.Board240Mapper">
+	
+	
+	<resultMap id="bbsTmpNotiInfoResult" type="portalxpert.board.board230.vo.BbsTmpNotiInfoVO">
+		<result property="tmpNotiSeq" column="TMP_NOTI_SEQ" />
+		<result property="upNotiId" column="UP_NOTI_ID" />
+		<result property="boardId" column="BOARD_ID" />
+		<result property="emgcYn" column="EMGC_YN" />
+		<result property="anmtYn" column="ANMT_YN" />
+		<result property="popupYn" column="POPUP_YN" />
+		<result property="briefYn" column="BRIEF_YN" />
+		<result property="moblOpenDiv" column="MOBL_OPEN_DIV" />
+		<result property="notiTitle" column="NOTI_TITLE" />
+		<result property="notiTitleOrgn" column="NOTI_TITLE_ORGN" />
+		<result property="titleBoldYn" column="TITLE_BOLD_YN" />
+		<result property="titleColorDiv" column="TITLE_COLOR_DIV" />
+		<result property="notiConts" column="NOTI_CONTS" />
+		<result property="linkUrl" column="LINK_URL" />
+		<result property="notiTp" column="NOTI_TP" />
+		<result property="notiKind" column="NOTI_KIND" />
+		<result property="nickUseYn" column="NICK_USE_YN" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="userName" column="USER_NAME" />
+		<result property="editDiv" column="EDIT_DIV" />
+		<result property="rsrvYn" column="RSRV_YN" />
+		<result property="notiBgnDttm" column="NOTI_BGN_DTTM" />
+		<result property="notiEndDttm" column="NOTI_END_DTTM" />
+		<result property="notiOpenDiv" column="NOTI_OPEN_DIV" />
+		<result property="notiOpenDivSpec" column="NOTI_OPEN_DIV_SPEC" />
+		<result property="publAsgnDiv" column="PUBL_ASGN_DIV" />
+		<result property="publAsgnDivSpec" column="PUBL_ASGN_DIV_SPEC" />
+		<result property="replyPrmsYn" column="REPLY_PRMS_YN" />
+		<result property="replyMakrRealnameYn" column="REPLY_MAKR_REALNAME_YN" />
+		<result property="opnPrmsYn" column="OPN_PRMS_YN" />
+		<result property="opnMakrRealnameYn" column="OPN_MAKR_REALNAME_YN" />
+		<result property="notiTagLst" column="NOTI_TAG_LST" />
+		<result property="statCode" column="STAT_CODE" />
+		<result property="deptCode" column="DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="deptFname" column="DEPT_FNAME" />
+		<result property="makrIp" column="MAKR_IP" />
+		<result property="brghCode" column="BRGH_CODE" />
+		<result property="cdlnDeptCode" column="CDLN_DEPT_CODE" />
+		<result property="cdlnDeptName" column="CDLN_DEPT_NAME" />
+		<result property="cdlnDeptFname" column="CDLN_DEPT_FNAME" />
+		<result property="cdlnObjr" column="CDLN_OBJR" />
+		<result property="cdlnEvntCode" column="CDLN_EVNT_CODE" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="boardName" column="BOARD_NAME" />
+	</resultMap>
+	
+	
+	
+	<!-- 임시게시판 조회 -->
+	<select id="getBbsTmpNotiInfoListForPaging" resultMap="bbsTmpNotiInfoResult">
+		SELECT N.*
+        FROM(
+        SELECT   
+                          NOTI_TITLE   
+                        , ROW_NUMBER() over(order by UPD_DTTM desc)  PNUM                        
+                        , TMP_NOTI_SEQ
+                        , UP_NOTI_ID
+                        , BOARD_ID
+                        , EMGC_YN
+                        , ANMT_YN
+                        , POPUP_YN
+                        , BRIEF_YN
+                        , MOBL_OPEN_DIV
+                        , NOTI_TITLE_ORGN
+                        , TITLE_BOLD_YN
+                        , TITLE_COLOR_DIV
+                        , NOTI_CONTS
+                        , LINK_URL
+                        , NOTI_TP
+                        , NOTI_KIND
+                        , NICK_USE_YN
+                        , USER_NICK
+                        , USER_NAME
+                        , EDIT_DIV
+                        , RSRV_YN
+                        , NOTI_BGN_DTTM
+                        , NOTI_END_DTTM
+                        , NOTI_OPEN_DIV
+                        , NOTI_OPEN_DIV_SPEC
+                        , PUBL_ASGN_DIV
+                        , PUBL_ASGN_DIV_SPEC
+                        , REPLY_PRMS_YN
+                        , REPLY_MAKR_REALNAME_YN
+                        , OPN_PRMS_YN
+                        , OPN_MAKR_REALNAME_YN
+                        , (SELECT COUNT(1) FROM BBS_TMP_NOTI_APND_FILE WHERE TMP_NOTI_SEQ = X.TMP_NOTI_SEQ AND DEL_YN='N') APND_FILE_CNT
+                        , STAT_CODE
+                        , DEPT_CODE
+                        , DEPT_NAME
+                        , DEPT_FNAME
+                        , MAKR_IP
+                        , BRGH_CODE
+                        , DEL_YN
+                        , REGR_ID
+                        , REGR_NAME
+                        , TO_CHAR(REG_DTTM,'yyyy-mm-dd') REG_DTTM             
+                        , UPDR_ID
+                        , UPDR_NAME
+                        , UPD_DTTM
+                        , NOTI_TAG_LST  
+                        , (SELECT BOARD_NAME FROM BBS_BOARD_INFO WHERE BOARD_ID = X.BOARD_ID ) as BOARD_NAME  
+                    FROM (
+                    SELECT A.*
+                            FROM BBS_TMP_NOTI_INFO A 
+                            WHERE DEL_YN='N' 
+                           <if test="searchCondition !=null and searchCondition !=''">
+                                <if test="searchKeyword !=null and searchKeyword !=''">
+                                AND ${searchCondition} LIKE '%' || #{searchKeyword} || '%'
+                                </if>
+                            </if>
+                    
+                    ) X
+                    WHERE USER_ID = #{userId}
+        ) N
+		WHERE PNUM BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+		
+	</select>
+	
+	<!-- 일반게시판 게시글 총 개수 -->
+	<select id="getBbsTmpNotiInfoListTotCnt" resultType="int">
+		<![CDATA[
+		SELECT COUNT(*) CNT
+		FROM BBS_TMP_NOTI_INFO A 
+		WHERE USER_ID = #{userId} AND DEL_YN = 'N'		]]>
+		<if test="searchCondition!=null and searchCondition !=''">
+			<if test="searchCondition!=null and searchCondition !=''">
+			AND ${searchCondition} LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
+	</select> 	
+		
+		
+</mapper>

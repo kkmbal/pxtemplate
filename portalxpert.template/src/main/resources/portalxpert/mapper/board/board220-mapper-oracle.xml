@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.board.board220.mapper.Board220Mapper">
+	
+	<!-- BBS_게시물_정보 -->
+	<resultMap id="bbsNotiInfoResult" type="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		<result property="notiId" column="NOTI_ID" />
+		<result property="upNotiId" column="UP_NOTI_ID" />
+		<result property="boardId" column="BOARD_ID" />
+		<result property="emgcYn" column="EMGC_YN" />
+		<result property="anmtYn" column="ANMT_YN" />
+		<result property="popupYn" column="POPUP_YN" />
+		<result property="briefYn" column="BRIEF_YN" />
+		<result property="moblOpenDiv" column="MOBL_OPEN_DIV" />
+		<result property="notiTitle" column="NOTI_TITLE" />
+		<result property="titleBoldYn" column="TITLE_BOLD_YN" />
+		<result property="titleColorDiv" column="TITLE_COLOR_DIV" />
+		<result property="notiConts" column="NOTI_CONTS" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="linkUrl" column="LINK_URL" />
+		<result property="notiTp" column="NOTI_TP" />
+		<result property="notiKind" column="NOTI_KIND" />
+		<result property="nickUseYn" column="NICK_USE_YN" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="userName" column="USER_NAME" />
+		<result property="editDiv" column="EDIT_DIV" />
+		<result property="rsrvYn" column="RSRV_YN" />
+		<result property="notiBgnDttm" column="NOTI_BGN_DTTM" />
+		<result property="notiEndDttm" column="NOTI_END_DTTM" />
+		<result property="notiOpenDiv" column="NOTI_OPEN_DIV" />
+		<result property="notiOpenDivSpec" column="NOTI_OPEN_DIV_SPEC" />
+		<result property="publAsgnDiv" column="PUBL_ASGN_DIV" />
+		<result property="publAsgnDivSpec" column="PUBL_ASGN_DIV_SPEC" />
+		<result property="replyPrmsYn" column="REPLY_PRMS_YN" />
+		<result property="replyMakrRealnameYn" column="REPLY_MAKR_REALNAME_YN" />
+		<result property="opnPrmsYn" column="OPN_PRMS_YN" />
+		<result property="opnMakrRealnameYn" column="OPN_MAKR_REALNAME_YN" />
+		<result property="notiReadCnt" column="NOTI_READ_CNT" />
+		<result property="notiOpnCnt" column="NOTI_OPN_CNT" />
+		<result property="notiAgrmCnt" column="NOTI_AGRM_CNT" />
+		<result property="notiOppCnt" column="NOTI_OPP_CNT" />
+		<result property="notiLikeCnt" column="NOTI_LIKE_CNT" />
+		<result property="bfBoardId" column="BF_BOARD_ID" />
+		<result property="bfNotiId" column="BF_NOTI_ID" />
+		<result property="statCode" column="STAT_CODE" />
+		<result property="deptCode" column="DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="deptFname" column="DEPT_FNAME" />
+		<result property="makrIp" column="MAKR_IP" />
+		<result property="brghCode" column="BRGH_CODE" />
+		<result property="cdlnDeptCode" column="CDLN_DEPT_CODE" />
+		<result property="cdlnDeptName" column="CDLN_DEPT_NAME" />
+		<result property="cdlnDeptFname" column="CDLN_DEPT_FNAME" />
+		<result property="cdlnObjrName" column="CDLN_OBJR_NAME" />
+		<result property="cdlnEvntCode" column="CDLN_EVNT_CODE" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="oldBrdId" column="OLD_BRD_ID" />
+		<result property="oldHeaderId" column="OLD_HEADER_ID" />
+		<result property="oldOrignalId" column="OLD_ORIGNAL_ID" />
+		<result property="oldNoticeSeq" column="OLD_NOTICE_SEQ" />
+		<result property="apndFileCnt" column="APND_FILE_CNT" />
+		<result property="notiTagLst" column="NOTI_TAG_LST" />
+		<result property="opnCnt" column="OPN_CNT" />
+		<result property="prevNotiId" column="PREV_NOTI_ID" />
+		<result property="prevNotiTitle" column="PREV_NOTI_TITLE" />
+		<result property="nextNotiId" column="NEXT_NOTI_ID" />
+		<result property="nextNotiTitle" column="NEXT_NOTI_TITLE" />
+		<result property="evalReadCnt" column="EVAL_READ_CNT" />
+		<result property="updYn" column="UPD_YN" />
+		<result property="pnum" column="PNUM" />
+		<result property="mail" column="MAIL" />
+		<result property="evalReadYn" column="EVAL_READ_YN" />
+		<result property="notiReadYn" column="NOTI_READ_YN" />
+		<result property="evalAgrmCnt" column="EVAL_AGRM_CNT" />
+		<result property="evalOppCnt" column="EVAL_OPP_CNT" />
+		<result property="evalLikeCnt" column="EVAL_LIKE_CNT" />
+		<result property="cdlnTitle" column="CDLN_TITLE" />
+		<result property="reNotiYn" column="RE_NOTI_YN" />
+		<result property="agrmOppYn" column="AGRM_OPP_YN" />
+		<result property="rid" column="RID" />
+		<result property="prevNotiKind" column="PREV_NOTI_KIND" />
+		<result property="nextNotiKind" column="NEXT_NOTI_KIND" />
+		<result property="nextLinkUrl" column="NEXT_LINK_URL" />
+		<result property="prevLinkUrl" column="PREV_LINK_URL" />
+		<result property="boardFormSpec" column="BOARD_FORM_SPEC" />
+		<result property="notiReadmanAsgnYn" column="NOTI_READMAN_ASGN_YN" />
+		<result property="boardName" column="BOARD_NAME" />
+		
+	</resultMap>  
+	
+	<select id="getBbsNotiInfoListForTmln" resultMap="bbsNotiInfoResult" parameterType="portalxpert.common.vo.BoardSearchVO" >
+		
+		SELECT    
+   		       (SELECT COUNT(NOTI_ID) FROM BBS_NOTI_APND_FILE WHERE DEL_YN = 'N' AND NOTI_ID = N.NOTI_ID AND APND_FILE_TP = '050') APND_FILE_CNT
+             , (SELECT COUNT(NOTI_ID) FROM BBS_NOTI_OPN WHERE DEL_YN = 'N' AND NOTI_ID = N.NOTI_ID) OPN_CNT
+             , CASE 
+               WHEN CDLN_EVNT_CODE = 'NT' THEN '[공지]'
+               ELSE  '[' || (SELECT CD_NM FROM COM_CODE_SPEC WHERE CD = 'CBV' AND CD_SPEC = N.CDLN_EVNT_CODE) || ' ' || CDLN_OBJR_NAME || ']' 
+               END AS CDLN_TITLE
+             , NVL((SELECT 'Y' FROM DUAL WHERE EXISTS (SELECT 1 FROM BBS_NOTI_EVAL_INFO WHERE NOTI_ID = N.NOTI_ID AND USER_ID = #{userId} AND NOTI_EVAL_DIV = '040')), 'N') AS NOTI_READ_YN  
+			 , N.*   
+		FROM (SELECT 
+					 NOTI_TITLE,
+		             ROW_NUMBER() OVER(ORDER BY SORT_SEQ DESC) as ROW_NUM,
+		             NOTI_ID,
+		             UP_NOTI_ID,
+		             SORT_SEQ,
+		             BOARD_ID,
+		             EMGC_YN,
+		             ANMT_YN,
+		             POPUP_YN,
+		             BRIEF_YN,
+		             MOBL_OPEN_DIV,
+		             NOTI_TITLE_ORGN,
+		             TITLE_BOLD_YN,
+		             TITLE_COLOR_DIV,
+		             LINK_URL,
+		             NOTI_TP,
+		             NOTI_CONTS,
+		             NOTI_KIND,
+		             NICK_USE_YN,
+		             USER_ID,
+		             USER_NICK,
+		             USER_NAME,
+		             EDIT_DIV,
+		             RSRV_YN,
+		             TO_CHAR(NOTI_BGN_DTTM, 'yyyy-mm-dd') NOTI_BGN_DTTM,
+		             TO_CHAR(NOTI_END_DTTM, 'yyyy-mm-dd') NOTI_END_DTTM,
+		             NOTI_OPEN_DIV,
+		             NOTI_OPEN_DIV_SPEC,
+		             PUBL_ASGN_DIV,
+		             PUBL_ASGN_DIV_SPEC,
+		             REPLY_PRMS_YN,
+		             REPLY_MAKR_REALNAME_YN,
+		             OPN_PRMS_YN,
+		             OPN_MAKR_REALNAME_YN,
+		             NOTI_READ_CNT ,		             
+					<![CDATA[
+		             CASE 
+		               WHEN REG_DTTM < UPD_DTTM THEN 'Y'
+		               WHEN REG_DTTM = UPD_DTTM THEN 'N'
+		               ELSE 'X'
+		             END UPD_YN,
+		             ]]>
+		             BF_BOARD_ID,
+		             BF_NOTI_ID,
+		             STAT_CODE,
+		             DEPT_CODE,
+		             DEPT_NAME,
+		             DEPT_FNAME,
+		             MAKR_IP,
+		             BRGH_CODE,
+		             CDLN_DEPT_CODE,
+		             CDLN_DEPT_NAME,
+		             CDLN_DEPT_FNAME,
+		             CDLN_OBJR_NAME,
+		             CDLN_EVNT_CODE,
+		             DEL_YN,
+		             REGR_ID,
+		             REGR_NAME,
+		             TO_CHAR(REG_DTTM, 'yyyy-mm-dd') REG_DTTM,
+		             UPDR_ID,
+		             UPDR_NAME,
+		             UPD_DTTM,
+		             OLD_BRD_ID,
+		             OLD_HEADER_ID,
+		             OLD_ORIGNAL_ID,
+		             OLD_NOTICE_SEQ,
+		             NOTI_TAG_LST,
+		             NOTI_AGRM_CNT,
+		             NOTI_OPP_CNT
+			      FROM (SELECT /*+ INDEX(A IDX_BBS_NOTI_INFO_03) */
+			            A.*
+			            FROM BBS_NOTI_INFO A
+			            WHERE DEL_YN = 'N'
+			              AND BOARD_ID = #{boardId}
+			              <if test="boardAnmtUseYn !=null and boardAnmtUseYn.equalsIgnoreCase('N') ">
+			              	AND ANMT_YN = 'N'
+			              </if>
+			              <![CDATA[ 
+			              AND SORT_SEQ < #{userNotiSeq}
+			              AND (NOTI_BGN_DTTM <= SYSDATE OR (RSRV_YN = 'Y' AND REGR_ID = #{userId} AND REG_DTTM <= SYSDATE))
+			              AND NOTI_END_DTTM >= SYSDATE -1 
+			              ]]>
+			              <if test="searchCondition !=null and searchCondition !=''">
+	                            <if test="searchKeyword !=null and searchKeyword !=''">
+	                            	<if test="!searchCondition.equalsIgnoreCase('MY_NOTI_TITLE') ">
+	                            		/* 키워드 검색 */
+	                            		<choose>
+	                            			<when test="searchCondition.equalsIgnoreCase('REGR_NAME')">
+	                            				AND REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+	                            				AND NICK_USE_YN = 'N'
+	                            			</when>
+	                            			<otherwise>
+	                            				AND ${searchCondition} LIKE '%' || #{searchKeyword} || '%'
+	                            			</otherwise>
+	                            		</choose>	
+                            			<if test="boardKind == '020'">
+                            				AND (USER_ID = #{userId} OR 'Y' = #{eamAdminYn}) 
+                            			</if>
+									</if>
+	                            </if>
+	                            <if test="searchCondition.equalsIgnoreCase('MY_NOTI_TITLE') ">
+                            		/* 내게시글 검색 */
+                            		AND REGR_ID = #{userId}
+                            		AND NOTI_TITLE LIKE '%' || #{searchKeyword} || '%'
+                            	</if>
+	                        </if>
+	                        <if test="regDttmFrom != null and regDttmFrom != '' ">/* 기간 */
+	                            <![CDATA[
+	                            AND UPD_DTTM >= TO_DATE(#{regDttmFrom},'yyyy-mm-dd')
+	                            ]]>
+	                        </if>
+	                        <if test="regDttmTo != null and regDttmTo != '' ">
+	                        	<![CDATA[	                        	
+	                        	AND UPD_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+	                        	]]>
+	                        </if>
+	                        <if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('N') ">
+	                        AND EXISTS(SELECT 1
+                                       FROM BBS_BOARD_USER_MAP B
+                                       WHERE A.BOARD_ID = B.BOARD_ID
+                                       AND B.USER_ID IN (${userMap}))
+							</if>
+							<if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('Y') ">
+							AND EXISTS(SELECT 1
+                                       FROM BBS_NOTI_USER_MAP B
+                                       WHERE A.NOTI_ID = B.NOTI_ID
+                                       AND B.USER_ID IN (${userMap}))
+							</if>
+							) X
+			      ) N
+	<![CDATA[
+		 WHERE N.ROW_NUM <= #{rowNum}	
+	]]>
+	</select>
+	
+	
+	
+	<!-- BBS 게시물 의견 정보 -->
+	<select id="getBbsNotiOpnListForTmln" parameterType="portalxpert.board.board100.vo.BbsNotiOpnVO"
+										resultType="portalxpert.board.board100.vo.BbsNotiOpnVO">
+		SELECT NOTI_ID
+		/* ,(ROW_NUMBER() OVER(PARTITION BY UP_OPN_SEQ  ORDER BY REG_DTTM DESC )) RANK */
+		, NOTI_OPN_SEQ
+		, UP_OPN_SEQ
+		, OPN_CONTS
+		, USER_ID
+		, USER_NAME
+		, USER_NICK
+		, DEPT_CODE
+		, DEPT_NAME
+		, MAKE_IP
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, TO_CHAR( REG_DTTM,'yyyy-mm-dd hh24:mi') REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		FROM BBS_NOTI_OPN O
+		WHERE NOTI_ID IN (SELECT X.NOTI_ID FROM
+			              (
+				              SELECT NOTI_ID 
+				                    ,ROW_NUMBER() OVER(ORDER BY SORT_SEQ DESC) as ROW_NUM
+				              FROM BBS_NOTI_INFO 
+				              WHERE DEL_YN = 'N'
+				              <![CDATA[
+				              AND SORT_SEQ <= #{sortSeq} 
+				              AND (NOTI_BGN_DTTM <= SYSDATE OR (RSRV_YN = 'Y' AND REGR_ID = #{userId} AND REG_DTTM <= SYSDATE))
+					          AND NOTI_END_DTTM >= SYSDATE -1 
+				              ]]>
+			              ) X
+			              <![CDATA[
+			              WHERE ROW_NUM <= #{rnum} 
+			              ]]>
+		              )
+		AND UP_OPN_SEQ IS NULL
+		AND DEL_YN='N'
+		ORDER BY UPD_DTTM DESC
+	</select>
+	
+	<!-- BBS 게시물 첨부 정보 -->
+	<select id="getBbsNotiApndListForTmln" parameterType="portalxpert.board.board100.vo.BbsNotiApndFileVO"
+										resultType="portalxpert.board.board100.vo.BbsNotiApndFileVO">
+		SELECT NOTI_ID
+		, APND_FILE_SEQ
+		, APND_FILE_TP
+		, APND_FILE_SZ
+		, APND_FILE_ORGN
+		, APND_FILE_NAME
+		, APND_FILE_PATH
+		, APND_FILE_PRVW_PATH
+		, APND_FILE_PRVW_NAME
+		, SOURCE_CODE_INPUT
+		, ADMIN_RCMD_YN
+		, ADMIN_RCMD_DTTM
+		, READ_CNT
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, MVP_KEY
+		FROM BBS_NOTI_APND_FILE
+		WHERE NOTI_ID IN (SELECT X.NOTI_ID FROM
+			              (
+				              SELECT NOTI_ID 
+				                    ,ROW_NUMBER() OVER(ORDER BY SORT_SEQ DESC) as ROW_NUM
+				              FROM BBS_NOTI_INFO 
+				              WHERE DEL_YN = 'N'
+				              <![CDATA[
+				              AND SORT_SEQ <= #{sortSeq} 
+				              AND (NOTI_BGN_DTTM <= SYSDATE OR (RSRV_YN = 'Y' AND REGR_ID = #{userId} AND REG_DTTM <= SYSDATE))
+					          AND NOTI_END_DTTM >= SYSDATE -1 
+				              ]]>
+			              ) X
+			              <![CDATA[
+			              WHERE ROW_NUM <= #{rnum} 
+			              ]]>
+		              )
+		AND DEL_YN='N'	
+	</select>
+	
+	
+	
+</mapper>

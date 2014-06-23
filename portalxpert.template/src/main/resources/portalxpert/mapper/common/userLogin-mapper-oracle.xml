@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.common.mapper.UserLoginMapper">
+				
+	<select id="getLoginInfo" parameterType="string" resultType="portalxpert.common.vo.UserInfoVO">
+		SELECT USER_ID ID
+	      	  ,USER_NAME NAME
+		      ,DEPT_CODE OUCODE
+		      ,DEPT_NAME OU
+		      ,DEPT_FNAME ORGFULLNAME
+		      ,MAIL
+		      ,USER_ID SID
+		      ,(SELECT U.FILE_PATH ||'/'|| U.FILE_NAME  
+                FROM PSN_USER_POTO_INFO U
+                WHERE A.USER_ID = U.USER_ID
+                AND A.SLCT_POTO_SEQ = U.POTO_SEQ ) USER_REP_IMG
+              ,USER_NICK NICKNAME
+              ,NVL(TMLN_READ_DTTM, SYSDATE) TMLN_READ_DTTM
+		FROM PSN_USER_INFO A
+		WHERE USER_ID = #{userId}
+	</select>				
+											
+											
+	<select id="getLoginInfoBySsnId" parameterType="string" resultType="portalxpert.common.vo.UserInfoVO">
+		SELECT USER_ID ID
+	      	  ,USER_NAME NAME
+		      ,DEPT_CODE OUCODE
+		      ,DEPT_NAME OU
+		      ,DEPT_FNAME ORGFULLNAME
+		      ,MAIL
+		      ,USER_ID SID
+		      ,(SELECT U.FILE_PATH ||'/'|| U.FILE_NAME  
+                FROM PSN_USER_POTO_INFO U
+                WHERE A.USER_ID = U.USER_ID
+                AND A.SLCT_POTO_SEQ = U.POTO_SEQ ) USER_REP_IMG
+              ,USER_NICK NICKNAME
+              ,NVL(TMLN_READ_DTTM, SYSDATE) TMLN_READ_DTTM
+		FROM PSN_USER_INFO A
+		WHERE RESINUMBER = #{ssnId}
+	</select>
+	
+	
+	<update id="insertTmlnRead">
+		<![CDATA[
+		UPDATE PSN_USER_INFO SET tmln_read_dttm = TO_DATE(#{tmlnreaddttm}, 'YYYY-MM-DD HH24:MI:SS')
+		]]>
+		WHERE user_id = #{resinumber}		
+		
+	</update>
+
+
+</mapper>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.person.person200.mapper.Person200Mapper">
+	
+	<!-- 공지사항 컨텐츠 조회 -->
+	<select id="getNotiSetContentsList" parameterType="String"  resultType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		<![CDATA[
+		SELECT NOTI_ID
+		     , BOARD_ID
+		     , NOTI_TITLE
+		     , NOTI_CONTS
+		     , BOARD_URL
+		  FROM ( SELECT ROW_NUMBER() OVER (ORDER BY A.UPD_DTTM DESC) AS ROW_NUM
+		              , NOTI_ID
+		              , A.BOARD_ID
+		              , NOTI_TITLE
+		              , NOTI_CONTS
+		              , B.BOARD_URL
+		              , A.DEL_YN
+		           FROM BBS_NOTI_INFO A, PSN_USER_BOARD_SET B
+		          WHERE A.BOARD_ID = B.BOARD_ID
+		          	AND A.UP_NOTI_ID = '*'
+		            AND B.USER_ID = #{userId}
+		            AND B.BOARD_USE_DIV = 'RLT'  
+		            AND A.NOTI_BGN_DTTM <= SYSDATE
+		            AND A.NOTI_END_DTTM >= SYSDATE
+		            AND A.DEL_YN = 'N'
+		            AND NOT EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_KIND = '020') 
+		            )        
+		 WHERE ROW_NUM < 6		
+		]]>
+	</select>
+	
+	<!-- 디폴트 공지사항 리스트조회 -->
+	<select id="getNotiDefaultContentsList" resultType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		<![CDATA[
+		SELECT NOTI_ID
+		     , BOARD_ID
+		     , NOTI_TITLE
+		     , NOTI_CONTS
+		     , BOARD_URL
+		  FROM ( SELECT ROW_NUMBER() OVER (ORDER BY A.UPD_DTTM DESC) AS ROW_NUM
+		              , NOTI_ID
+		              , A.BOARD_ID
+		              , NOTI_TITLE
+		              , NOTI_CONTS
+		              , B.BOARD_URL
+		              , A.DEL_YN
+		           FROM BBS_NOTI_INFO A, COM_STND_BOARD_INFO B
+		          WHERE A.BOARD_ID = B.BOARD_ID
+		          	AND A.UP_NOTI_ID = '*'
+		            AND B.BOARD_USE_DIV = 'RLT'  
+		            AND A.NOTI_BGN_DTTM <= SYSDATE
+		            AND A.NOTI_END_DTTM >= SYSDATE
+		            AND A.DEL_YN = 'N' )        
+		 WHERE ROW_NUM < 6
+		]]>
+	</select>
+	
+	 <!-- 나의 프로젝트,동호회 조회 -->
+	<select id="getMyPjtCouList" parameterType="portalxpert.person.person200.vo.MyProjectCommunityVO"  resultType="portalxpert.person.person200.vo.MyProjectCommunityVO">
+		<if test="mGubun != null and mGubun.equalsIgnoreCase('C') ">
+	     SELECT SSNO, CLUB_ID  CATG_ID, CLUB_NAME COMM_NAME , lengthb(CLUB_NAME) NAME_LEN
+	     FROM PSN_USER_CLUB_INFO 
+	     WHERE USER_ID = #{userId}
+	    </if>
+	    <if test="mGubun != null and mGubun.equalsIgnoreCase('P') "> 
+	     SELECT SSNO, PROJECT_ID CATG_ID , PROJECT_NAME COMM_NAME , lengthb(PROJECT_NAME) NAME_LEN
+	     FROM PSN_USER_PROJECT_INFO 
+	     WHERE USER_ID = #{userId} 
+    	</if>
+	</select>
+	 
+
+	  <!-- 조직도 친구  조회 -->
+	<select id="getOrgFriendList" parameterType="portalxpert.organization.vo.OrganizationVO"  resultType="portalxpert.organization.vo.OrganizationVO">
+	
+		SELECT PID , ID , NAME, OUCODE
+		FROM(
+			SELECT A.PAR_DEPT_CODE AS PID, A.DEPT_CODE AS ID, TRIM(A.DEPT_FNAME || '( ' || C.MEMCNT || ' )') AS NAME , A.DEPT_CODE OUCODE 
+			FROM PSN_DEPT_INFO A 
+			,( SELECT COUNT(1) MEMCNT, DEPT_CODE  FROM PSN_USER_INFO A, PSN_USER_FRIEND_INFO B 
+			  WHERE A.USER_ID = B.FRIEND_ID 
+			    AND B.USER_ID = #{id}
+			    <if test="name !=null and name!=''">
+					<![CDATA[ AND A.USER_NAME LIKE   '%' || #{name} || '%' ]]>
+				</if>
+			    GROUP BY DEPT_CODE ) C
+			
+			  WHERE A.DEPT_CODE IN (
+			                    SELECT A.DEPT_CODE 
+			                    FROM PSN_USER_INFO A, PSN_USER_FRIEND_INFO B 
+			                    WHERE A.USER_ID = B.FRIEND_ID 
+			                    AND B.USER_ID = #{id}
+			                    
+			                    <if test="name!=null and name!=''">
+								<![CDATA[ AND A.USER_NAME LIKE   '%' || #{name} || '%' ]]>
+								</if>
+			                    
+			         )
+					AND  A.DEPT_CODE = C.DEPT_CODE
+			
+			
+			UNION ALL
+			SELECT B.DEPT_CODE PID, USER_ID ID, USER_NAME || ' ' || B.TITLENAME NAME , A.DEPT_CODE 
+			
+			FROM
+			(
+			    SELECT 0 AS RUM, PAR_DEPT_CODE AS PID, DEPT_CODE AS ID, DEPT_NAME AS NAME, DEPT_CODE                                        
+			    FROM PSN_DEPT_INFO                                       
+			    WHERE PAR_DEPT_CODE = '000000000'
+			    UNION ALL
+			    SELECT *
+			    FROM
+			    (      
+			        SELECT ROWNUM AS RUM, PAR_DEPT_CODE AS PID, DEPT_CODE AS ID, DEPT_NAME AS NAME, DEPT_CODE  
+			        FROM PSN_DEPT_INFO
+			        WHERE PAR_DEPT_CODE IS NOT NULL             
+			        START WITH PAR_DEPT_CODE = #{deptCode}                        
+			        CONNECT BY PRIOR DEPT_CODE = PAR_DEPT_CODE           
+			       /* ORDER SIBLINGS BY EOUORDER, EOULEVEL */
+			    )
+			) A, 
+			(SELECT A.* FROM PSN_USER_INFO A, PSN_USER_FRIEND_INFO B 
+			  WHERE A.USER_ID = B.FRIEND_ID 
+			  AND B.USER_ID = #{id}
+			  <if test="name !=null and name!=''">
+					<![CDATA[ AND A.USER_NAME LIKE   '%' || #{name} || '%' ]]>
+			  </if>
+			  ) B
+			WHERE A.DEPT_CODE = B.DEPT_CODE 
+						
+		)ORDER BY PID, OUCODE
+		
+	</select>
+	 
+	 <!-- 나의 그룹 등록 -->
+	<insert id="insertPsnUserGrpInfo" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO">
+	<![CDATA[	
+		INSERT INTO PSN_USER_GRP_INFO
+		(
+		     USER_ID
+		    ,GRP_SEQ
+		    ,GRP_NAME
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,UPD_DTTM
+		)
+
+		 VALUES
+		 (
+		 	  #{userId}
+		 	 ,#{grpSeq}
+		 	 ,#{grpName}
+		 	 ,#{delYn}
+		 	 ,#{regrId}
+		 	 ,#{regrName}
+		 	 ,SYSDATE
+		 	 ,#{updrId}
+		 	 ,#{updrName}
+		 	 ,SYSDATE
+		 )
+	 ]]>
+	</insert>
+	
+	<delete id="deletePsnUserGrpInfo"  parameterType="portalxpert.person.person100.vo.PsnUserGrpFrdMapVO">
+	<![CDATA[	
+		DELETE FROM	PSN_USER_GRP_INFO WHERE USER_ID = #{userId} AND GRP_SEQ = #{grpSeq}
+	]]>
+	</delete>
+	
+	
+	<update id="updatePsnUserGrpInfo"  parameterType="portalxpert.person.person100.vo.PsnUserGrpInfoVO">
+	<![CDATA[	
+		UPDATE PSN_USER_GRP_INFO SET GRP_NAME = #{grpName} WHERE USER_ID =  #{userId} AND GRP_SEQ = #{grpSeq}
+	]]>
+	</update>
+	
+	<!-- 나의 그룹 등록 -->
+	<insert id="insertMyGroup" parameterType="portalxpert.person.person100.vo.PsnUserGrpInfoVO">
+	<![CDATA[	
+		INSERT INTO PSN_USER_GRP_INFO
+		(
+		     USER_ID
+		    ,GRP_SEQ
+		    ,GRP_NAME
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,UPD_DTTM
+		)
+		VALUES
+		(
+		 	  #{userId}
+		 	 ,NVL((SELECT MAX(GRP_SEQ) + 1 FROM PSN_USER_GRP_INFO WHERE USER_ID = #{userId}),0)
+		 	 ,#{grpName}
+		 	 ,'N'
+		 	 ,#{userId}
+		 	 ,#{regrName}
+		 	 ,SYSDATE
+		 	 ,#{userId}
+		 	 ,#{updrName}
+		 	 ,SYSDATE
+		)
+	 ]]>
+	</insert>
+
+	
+	<!-- 나의 그룹 조회 -->
+	<select id="getPsnUserGrpInfo" parameterType="portalxpert.person.person100.vo.PsnUserGrpInfoVO" resultType="portalxpert.person.person100.vo.PsnUserGrpInfoVO">
+		<![CDATA[
+		SELECT  USER_ID
+		       ,GRP_SEQ
+		       ,GRP_NAME
+		FROM PSN_USER_GRP_INFO
+		WHERE USER_ID = #{userId}
+		ORDER BY GRP_SEQ
+		]]>
+	</select>
+	
+	
+	
+	<!-- 나의 GROUPE 관심직원 등록 -->
+	<insert id="insertPsnUserGrpFriendMap" parameterType="portalxpert.person.person100.vo.PsnUserGrpFrdMapVO">
+	<![CDATA[	
+		INSERT INTO PSN_USER_GRP_FRIEND_MAP
+		(
+		     USER_ID
+		    ,GRP_SEQ
+		    ,FRIEND_ID
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,UPD_DTTM
+		)
+
+		 VALUES
+		 (
+		 	  #{userId}
+		 	 ,#{grpSeq}
+		 	 ,#{friendId}
+		 	 ,#{delYn}
+		 	 ,#{regrId}
+		 	 ,#{regrName}
+		 	 ,SYSDATE
+		 	 ,#{updrId}
+		 	 ,#{updrName}
+		 	 ,SYSDATE
+		 )
+	 ]]>
+	</insert>
+	
+	<!-- 나의 GROUPE 관심직원 DELETE  -->
+	<delete id="deletePsnUserGrpFriendMap" parameterType="portalxpert.person.person100.vo.PsnUserGrpFrdMapVO" >
+	<![CDATA[	
+		DELETE FROM	PSN_USER_GRP_FRIEND_MAP WHERE USER_ID = #{userId} AND GRP_SEQ = #{grpSeq}
+	]]>
+	</delete>
+
+
+	<!-- 나의 그룹 FRIEND 조회 -->
+	<select id="getPsnUserGrpFriendMap" parameterType="portalxpert.person.person100.vo.PsnUserGrpFrdMapVO" resultType="portalxpert.person.person100.vo.PsnUserGrpFrdMapVO">
+		<![CDATA[
+		
+			SELECT  A.FRIEND_ID 
+		       ,A.GRP_SEQ 
+		       ,B.USER_NAME FRIEND_NAME
+               ,NVL(B.TITLENAME, ' ') AS TITLENAME
+               ,B.DEPT_NAME OU
+			FROM PSN_USER_GRP_FRIEND_MAP A  , PSN_USER_INFO B 
+			WHERE A.DEL_YN = 'N'
+			  AND A.USER_ID = #{userId}
+	          AND A.GRP_SEQ = #{grpSeq}
+	          AND A.FRIEND_ID = B.USER_ID
+			ORDER BY A.GRP_SEQ
+
+		]]>
+	</select>
+	
+	<delete id="deletePsnUserFriendInfo">
+	<![CDATA[
+		DELETE 
+		  FROM PSN_USER_FRIEND_INFO	  
+	      WHERE USER_ID = #{userId} AND UPDR_NAME <> 'SYSTEM'
+     ]]>
+	
+	</delete>
+	
+	<insert id="insertPsnUserFriendInfo">
+		
+	INSERT INTO PSN_USER_FRIEND_INFO
+		SELECT USER_ID, FRIEND_ID, 'N', #{regrId}, #{regrName}, SYSDATE, #{updrId}, #{updrName}, SYSDATE   
+		 FROM PSN_USER_GRP_FRIEND_MAP A
+		WHERE USER_ID = #{userId} 
+		AND GRP_SEQ > 0 
+		AND NOT EXISTS (SELECT 1 FROM PSN_USER_FRIEND_INFO B WHERE A.USER_ID = B.USER_ID AND A.FRIEND_ID = B.FRIEND_ID AND B.USER_ID = #{userId})
+		GROUP BY  USER_ID, FRIEND_ID	
+		
+		
+	</insert>
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.adm.stat.mapper.AdmStatMapper">
+
+	<!-- /////////////////////////// 게시판통계 START /////////////////////////// -->
+	<!-- 게시판 통계정보 -->
+	<select id="getAdmBbsInfoStatistics" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="portalxpert.adm.stat.vo.AdmStatBBSVO">
+		SELECT	TR.TOT_COUNT TOT_CONTENT_CNT
+					,TR.REPL_COUNT RE_CNT
+					,CNT.READ_CNT VIEW_CNT
+					,CNT.OPINION_CNT OPINION_CNT
+					,CNT.APPROVAL_CNT APPROVAL_CNT
+					,CNT.OPPOSITION_CNT OPPOSITION_CNT
+					,CNT.LIKE_CNT LIKE_CNT
+					,DM.MANAGER_DEL ADM_DEL_CNT
+					,DM.SELF_DEL DEL_CNT
+					,DM.MANAGER_MOVE ADM_MOVE_CNT
+					,DM.SELF_MOVE MOVE_CNT
+					,EC.IMAGE_CNT
+					,EC.MOVIE_CNT
+					,ES.SURVEY_CNT
+		<if test="brdId=='ALL'">
+					,'' INS_DTS
+		</if>
+		<if test="brdId!='ALL'">
+					,(
+						SELECT	TO_CHAR(MAX(REG_DTTM) ,'YYYYMMDD') INS_DTS 
+						FROM	BBS_BOARD_INFO
+						WHERE	1=1
+						AND	BOARD_ID IN
+								<foreach collection="brdIds" item="item" open="(" separator="," close=")" index="idx">
+									#{item}
+								</foreach>
+					) INS_DTS
+		</if>
+		FROM
+		(
+			SELECT	NVL(SUM(TOT_COUNT) ,0) TOT_COUNT
+						,NVL(SUM(REPL_COUNT) ,0) REPL_COUNT
+			FROM
+			(
+				SELECT	DECODE(MAX(UP_NOTI_ID),'*' ,COUNT(UP_NOTI_ID) ,0) TOT_COUNT
+							,DECODE(MAX(UP_NOTI_ID),'*' ,0 ,COUNT(UP_NOTI_ID)) REPL_COUNT
+				FROM	BBS_NOTI_INFO
+				WHERE	1=1
+				AND	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+				<if test="brdId!='ALL'">
+					AND	BOARD_ID IN
+					<foreach collection="brdIds" item="item" open="(" separator="," close=")" index="idx">
+						#{item}
+					</foreach>
+				</if>
+				GROUP BY UP_NOTI_ID
+			)
+		) TR
+		,(
+			SELECT	NVL(SUM(MANAGER_DEL) ,0) MANAGER_DEL                                         
+						,NVL(SUM(SELF_DEL) ,0) SELF_DEL                                            
+						,NVL(SUM(MANAGER_MOVE) ,0) MANAGER_MOVE                                        
+						,NVL(SUM(SELF_MOVE) ,0) SELF_MOVE                                           
+			FROM
+			(
+				SELECT	DECODE(MAX(STAT_CODE), '1', COUNT(STAT_CODE), 0) MANAGER_DEL
+							,DECODE(MAX(STAT_CODE), '2', COUNT(STAT_CODE), 0) SELF_DEL
+							,DECODE(MAX(STAT_CODE), '3', COUNT(STAT_CODE), 0) MANAGER_MOVE
+							,DECODE(MAX(STAT_CODE), '4', COUNT(STAT_CODE), 0) SELF_MOVE
+				FROM	BBS_NOTI_INFO
+				WHERE	1=1
+				AND	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+		<if test="brdId!='ALL'">
+				AND	BOARD_ID IN
+						<foreach collection="brdIds" item="item" open="(" separator="," close=")" index="idx">
+							#{item}
+						</foreach>
+		</if>
+				GROUP BY  STAT_CODE
+			)
+		) DM
+		,(		
+			SELECT	NVL(SUM(NOTI_READ_CNT) ,0) READ_CNT
+						,NVL(SUM(NOTI_OPN_CNT) ,0) OPINION_CNT
+						,NVL(SUM(NOTI_AGRM_CNT) ,0) APPROVAL_CNT
+						,NVL(SUM(NOTI_OPP_CNT) ,0) OPPOSITION_CNT
+						,NVL(SUM(NOTI_LIKE_CNT) ,0) LIKE_CNT
+			FROM	BBS_NOTI_INFO
+			WHERE	1=1
+			AND	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+		<if test="brdId!='ALL'">
+			AND	BOARD_ID IN
+					<foreach collection="brdIds" item="item" open="(" separator="," close=")" index="idx">
+						#{item}
+					</foreach>
+		</if>
+		) CNT
+		,(
+			SELECT	NVL(SUM(DECODE(APND_FILE_TP ,'020' ,1 ,0)) ,0) IMAGE_CNT
+						,NVL(SUM(DECODE(APND_FILE_TP ,'030' ,1 ,0)) ,0) MOVIE_CNT
+			FROM	BBS_NOTI_APND_FILE
+			WHERE	1=1
+			AND	NOTI_ID IN	(
+										SELECT	DISTINCT NOTI_ID
+										FROM	BBS_NOTI_INFO
+										WHERE	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+										<if test="brdId!='ALL'">
+											AND	BOARD_ID IN
+													<foreach collection="brdIds" item="item" open="(" separator="," close=")" index="idx">
+														#{item}
+													</foreach>
+										</if>
+									)
+		) EC
+		,(
+			SELECT	NVL(SUM(COUNT(NOTI_ID)) ,0) SURVEY_CNT
+			FROM	BBS_NOTI_SURVEY
+			WHERE	NOTI_ID IN	(
+										SELECT	DISTINCT NOTI_ID
+										FROM	BBS_NOTI_INFO
+										WHERE	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+										<if test="brdId!='ALL'">
+											AND	BOARD_ID IN
+													<foreach collection="brdIds" item="item" open="(" separator="," close=")" index="idx">
+														#{item}
+													</foreach>
+										</if>
+									)
+			GROUP BY NOTI_ID
+		) ES
+	</select>
+
+	<!-- 게시판 TOP20 -->
+	<select id="getAdmBbsTopList" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="portalxpert.adm.stat.vo.AdmStatBBSVO">
+			SELECT	ROWNUM RANK,
+						BOARD_TITLE,
+						NOTI_TITLE TITLE,
+						USER_NAME INS_NAME,
+						INS_DTS,
+						CNT VIEW_CNT
+			FROM
+			(
+				SELECT	DISTINCT
+							BOARD_ID
+							,(SELECT BOARD_NAME FROM BBS_BOARD_INFO WHERE NI.BOARD_ID=BOARD_ID) BOARD_TITLE
+							,NOTI_ID
+							,NOTI_TITLE
+							,USER_NAME
+							,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') INS_DTS
+						<if test="searchCondition=='VIEW_CNT'">
+							,NOTI_READ_CNT CNT
+						</if>
+						<if test="searchCondition=='OPINION_CNT'">
+							,NOTI_OPN_CNT CNT
+						</if>
+						<if test="searchCondition=='APPROVAL_CNT'">
+							,NOTI_AGRM_CNT CNT
+						</if>
+						<if test="searchCondition=='OPPOSITION_CNT'">
+							,NOTI_OPP_CNT CNT
+						</if>
+						<if test="searchCondition=='LIKE_CNT'">
+							,NOTI_LIKE_CNT CNT							
+						</if>
+				FROM	BBS_NOTI_INFO NI
+				WHERE	1=1
+				AND	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+				<if test="brdId!='ALL'">
+					AND	BOARD_ID IN
+					<foreach collection="brdIds" item="item" open="(" separator="," close=")" index="idx">
+						#{item}
+					</foreach>
+				</if>
+				
+				<if test="searchCondition=='VIEW_CNT'">
+					AND	NOTI_READ_CNT IS NOT NULL
+					ORDER BY NOTI_READ_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,NOTI_ID DESC
+				</if>
+				<if test="searchCondition=='OPINION_CNT'">
+					AND	NOTI_OPN_CNT IS NOT NULL
+					ORDER BY NOTI_OPN_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,NOTI_ID DESC
+				</if>
+				<if test="searchCondition=='APPROVAL_CNT'">
+					AND	NOTI_AGRM_CNT IS NOT NULL
+					ORDER BY NOTI_AGRM_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,NOTI_ID DESC
+				</if>
+				<if test="searchCondition=='OPPOSITION_CNT'">
+					AND	NOTI_OPP_CNT IS NOT NULL
+					ORDER BY NOTI_OPP_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,NOTI_ID DESC
+				</if>
+				<if test="searchCondition=='LIKE_CNT'">
+					AND	NOTI_LIKE_CNT IS NOT NULL
+					ORDER BY NOTI_LIKE_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,NOTI_ID DESC
+				</if>
+			)
+		<![CDATA[
+			WHERE ROWNUM <= 20
+		]]>
+	</select>
+	
+	<!-- 개인게시판 통계정보 -->
+	<select id="getAdmPBbsInfoStatistics" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="portalxpert.adm.stat.vo.AdmStatBBSVO">
+		SELECT	TR.TOT_COUNT TOT_CONTENT_CNT
+					,TR.REPL_COUNT RE_CNT
+					,CNT.READ_CNT VIEW_CNT
+					,CNT.OPINION_CNT OPINION_CNT
+					,CNT.APPROVAL_CNT APPROVAL_CNT
+					,CNT.OPPOSITION_CNT OPPOSITION_CNT
+					,CNT.LIKE_CNT LIKE_CNT
+					,DM.MANAGER_DEL ADM_DEL_CNT
+					,DM.SELF_DEL DEL_CNT
+					,DM.MANAGER_MOVE ADM_MOVE_CNT
+					,DM.SELF_MOVE MOVE_CNT
+					,EC.IMAGE_CNT
+					,EC.MOVIE_CNT
+					,0 SURVEY_CNT
+				<if test="brdId=='ALL'">
+					,'' INS_DTS
+				</if>
+				<if test="brdId!='ALL'">
+					,(
+						SELECT	TO_CHAR(MAX(REG_DTTM) ,'YYYYMMDD') INS_DTS 
+						FROM	PBS_USER_BOARD_INFO
+						WHERE	1=1
+						AND	BOARD_ID = #{brdId}
+					) INS_DTS
+				</if>
+		FROM
+		(
+			SELECT	NVL(TOT_COUNT ,0) TOT_COUNT
+						,NVL(REPL_COUNT ,0) REPL_COUNT
+			FROM
+			(
+			<![CDATA[
+				SELECT	SUM(CASE WHEN UP_USER_NOTI_SEQ=0 AND USER_NOTI_SEQ<>0 THEN 1 ELSE 0 END) TOT_COUNT
+							,SUM(CASE WHEN UP_USER_NOTI_SEQ<>0 THEN 1 ELSE 0 END) REPL_COUNT
+			]]>
+				FROM	PBS_USER_NOTI_INFO
+				WHERE	1=1
+				AND	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+			<if test="deptCode!=null and deptCode!=''">
+				AND	DEPT_CODE = #{deptCode}
+			</if>
+			<if test="brdId!='ALL'">
+				AND	BOARD_ID = #{brdId}
+			</if>
+			<if test="brdId=='ALL' and ownrId!=null and ownrId!=''">
+				AND	BOARD_ID IN	(
+											SELECT	BOARD_ID
+											FROM	PBS_USER_BOARD_INFO
+											WHERE	1=1
+											AND	BOARD_OWNR_ID = #{ownrId}
+										)
+			</if>
+			)
+		) TR
+		,(
+			SELECT	NVL(SUM(MANAGER_DEL) ,0) MANAGER_DEL                                         
+						,NVL(SUM(SELF_DEL) ,0) SELF_DEL                                            
+						,NVL(SUM(MANAGER_MOVE) ,0) MANAGER_MOVE                                        
+						,NVL(SUM(SELF_MOVE) ,0) SELF_MOVE                                           
+			FROM
+			(
+				SELECT	DECODE(MAX(STAT_CODE), '1', COUNT(STAT_CODE), 0) MANAGER_DEL
+							,DECODE(MAX(STAT_CODE), '2', COUNT(STAT_CODE), 0) SELF_DEL
+							,DECODE(MAX(STAT_CODE), '3', COUNT(STAT_CODE), 0) MANAGER_MOVE
+							,DECODE(MAX(STAT_CODE), '4', COUNT(STAT_CODE), 0) SELF_MOVE
+				FROM	PBS_USER_NOTI_INFO
+				WHERE	1=1
+				AND	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+			<if test="deptCode!=null and deptCode!=''">
+				AND	DEPT_CODE = #{deptCode}
+			</if>
+			<if test="brdId!='ALL'">
+				AND	BOARD_ID = #{brdId}
+			</if>
+			<if test="brdId=='ALL' and ownrId!=null and ownrId!=''">
+				AND	BOARD_ID IN	(
+											SELECT	BOARD_ID
+											FROM	PBS_USER_BOARD_INFO
+											WHERE	1=1
+											AND	BOARD_OWNR_ID = #{ownrId}
+										)
+			</if>
+				GROUP BY  STAT_CODE
+			)
+		) DM
+		,(
+			SELECT	NVL(SUM(NOTI_READ_CNT) ,0) READ_CNT
+						,NVL(SUM(NOTI_OPN_CNT) ,0) OPINION_CNT
+						,NVL(SUM(NOTI_AGRM_CNT) ,0) APPROVAL_CNT
+						,NVL(SUM(NOTI_OPP_CNT) ,0) OPPOSITION_CNT
+						,NVL(SUM(NOTI_LIKE_CNT) ,0) LIKE_CNT
+			FROM	PBS_USER_NOTI_INFO
+			WHERE	1=1
+			AND	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+		<if test="deptCode!=null and deptCode!=''">
+			AND	DEPT_CODE = #{deptCode}
+		</if>
+		<if test="brdId!='ALL'">
+			AND	BOARD_ID = #{brdId}
+		</if>
+		<if test="brdId=='ALL' and ownrId!=null and ownrId!=''">
+			AND	BOARD_ID IN	(
+										SELECT	BOARD_ID
+										FROM	PBS_USER_BOARD_INFO
+										WHERE	1=1
+										AND	BOARD_OWNR_ID = #{ownrId}
+									)
+		</if>
+		) CNT
+		,(
+			SELECT	NVL(SUM(DECODE(APND_FILE_TP ,'020' ,1 ,0)) ,0) IMAGE_CNT
+						,NVL(SUM(DECODE(APND_FILE_TP ,'030' ,1 ,0)) ,0) MOVIE_CNT
+			FROM	PBS_USER_NOTI_APND_FILE
+			WHERE	1=1
+			AND	USER_NOTI_SEQ IN	(
+												SELECT	DISTINCT USER_NOTI_SEQ
+												FROM	PBS_USER_NOTI_INFO
+												WHERE	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+											<if test="deptCode!=null and deptCode!=''">
+												AND	DEPT_CODE = #{deptCode}
+											</if>
+											<if test="brdId!='ALL'">
+												AND	BOARD_ID = #{brdId}
+											</if>
+											<if test="brdId=='ALL' and ownrId!=null and ownrId!=''">
+												AND	BOARD_ID IN	(
+																			SELECT	BOARD_ID
+																			FROM	PBS_USER_BOARD_INFO
+																			WHERE	1=1
+																			AND	BOARD_OWNR_ID = #{ownrId}
+																		)
+											</if>
+											)
+		) EC
+	</select>
+
+	<!-- 개인게시판 TOP20 -->
+	<select id="getAdmPBbsTopList" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="portalxpert.adm.stat.vo.AdmStatBBSVO">
+			SELECT	ROWNUM RANK,
+						BOARD_TITLE,
+						NOTI_TITLE TITLE,
+						USER_NAME INS_NAME,
+						INS_DTS,
+						CNT VIEW_CNT
+			FROM
+			(
+				SELECT	DISTINCT
+							BOARD_ID
+							,(SELECT BOARD_NAME FROM PBS_USER_BOARD_INFO WHERE NI.BOARD_ID=BOARD_ID) BOARD_TITLE
+							,USER_NOTI_SEQ
+							,NOTI_TITLE
+							,USER_NAME
+							,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') INS_DTS
+						<if test="searchCondition=='VIEW_CNT'">
+							,NOTI_READ_CNT CNT
+						</if>
+						<if test="searchCondition=='OPINION_CNT'">
+							,NOTI_OPN_CNT CNT
+						</if>
+						<if test="searchCondition=='APPROVAL_CNT'">
+							,NOTI_AGRM_CNT CNT
+						</if>
+						<if test="searchCondition=='OPPOSITION_CNT'">
+							,NOTI_OPP_CNT CNT
+						</if>
+						<if test="searchCondition=='LIKE_CNT'">
+							,NOTI_LIKE_CNT CNT
+						</if>
+				FROM	PBS_USER_NOTI_INFO NI
+				WHERE	1=1
+				AND	NOTI_BGN_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+				<if test="deptCode!=null and deptCode!=''">
+					AND	DEPT_CODE = #{deptCode}
+				</if>
+				<if test="brdId!='ALL'">
+					AND	BOARD_ID = #{brdId}
+				</if>
+				<if test="brdId=='ALL' and ownrId!=null and ownrId!=''">
+					AND	BOARD_ID IN	(
+												SELECT	BOARD_ID
+												FROM	PBS_USER_BOARD_INFO
+												WHERE	1=1
+												AND	BOARD_OWNR_ID = #{ownrId}
+											)
+				</if>
+				
+				<if test="searchCondition=='VIEW_CNT'">
+					AND	NOTI_READ_CNT IS NOT NULL
+					ORDER BY NOTI_READ_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,USER_NOTI_SEQ DESC
+				</if>
+				<if test="searchCondition=='OPINION_CNT'">
+					AND	NOTI_OPN_CNT IS NOT NULL
+					ORDER BY NOTI_OPN_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,USER_NOTI_SEQ DESC
+				</if>
+				<if test="searchCondition=='APPROVAL_CNT'">
+					AND	NOTI_AGRM_CNT IS NOT NULL
+					ORDER BY NOTI_AGRM_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,USER_NOTI_SEQ DESC
+				</if>
+				<if test="searchCondition=='OPPOSITION_CNT'">
+					AND	NOTI_OPP_CNT IS NOT NULL
+					ORDER BY NOTI_OPP_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,USER_NOTI_SEQ DESC
+				</if>
+				<if test="searchCondition=='LIKE_CNT'">
+					AND	NOTI_LIKE_CNT IS NOT NULL
+					ORDER BY NOTI_LIKE_CNT DESC ,TO_CHAR(NOTI_BGN_DTTM ,'YYYYMMDD') DESC ,USER_NOTI_SEQ DESC
+				</if>
+			)
+		<![CDATA[
+			WHERE ROWNUM <= 20
+		]]>
+	</select>
+	
+	<!-- 개인게시판 게시판 선택 팝업창 -->
+	<select id="getAdmPBbsPopup" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="portalxpert.adm.stat.vo.AdmStatBBSVO">
+		SELECT	BOARD_ID
+					,INS_NAME
+					,BOARD_TITLE
+					,DEL_YN 
+					,INS_DTS
+		FROM
+		(
+			SELECT	ROWNUM RNUM ,B.*
+			FROM
+			(
+				SELECT	BOARD_ID
+							,BOARD_OWNR_NAME INS_NAME
+							,BOARD_NAME BOARD_TITLE
+							,DEL_YN 
+							,TO_CHAR(REG_DTTM ,'YYYYMMDD') INS_DTS
+				FROM	PBS_USER_BOARD_INFO
+				WHERE	1=1
+				<if test="deptCode!=null and deptCode!=''">
+					AND	BOARD_ID IN (SELECT BOARD_ID FROM PBS_USER_BOARD_PART_INFO WHERE USER_ID = #{deptCode} AND USER_DIV = 'DPT')
+				</if>
+				<if test="ownrId!=null and ownrId!=''">
+					AND	BOARD_OWNR_ID = #{ownrId}
+				</if>
+				<if test="searchKeyword!=null and searchKeyword!=''">
+					AND	BOARD_NAME LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				ORDER BY BOARD_NAME ,REG_DTTM DESC
+			) B
+		) P
+		<![CDATA[
+		WHERE RNUM <= #{recordCountPerPage}  and RNUM >= #{firstIndex}
+		]]>
+	</select>
+	
+	<!-- 개인게시판 게시판 선택 CNT -->
+	<select id="getAdmPBbsPopupCnt" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="int">
+		SELECT	COUNT(BOARD_ID) CNT
+		FROM	PBS_USER_BOARD_INFO
+		WHERE	1=1
+		<if test="deptCode!=null and deptCode!=''">
+			AND	BOARD_ID IN (SELECT BOARD_ID FROM PBS_USER_BOARD_PART_INFO WHERE USER_ID = #{deptCode} AND USER_DIV = 'DPT')
+		</if>
+		<if test="ownrId!=null and ownrId!=''">
+			AND	BOARD_OWNR_ID = #{ownrId}
+		</if>
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			AND	BOARD_NAME LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+	
+	 
+	
+	<!-- 이용현황통계 -->
+	<select id="getAdmUseStatList" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="portalxpert.adm.stat.vo.AdmStatUseVO">
+		SELECT	L.LINK_NM
+					,L.LINK_ADDRESS
+					,S.LINK_CNT
+		FROM
+		(
+			SELECT	S.LNK_CODE
+						,COUNT(S.USR_NAME) LINK_CNT
+			FROM	USESTS S
+			WHERE	1=1
+			AND	GBN = #{searchCondition}
+			AND	INS_DTS BETWEEN #{sFromDt} AND #{sToDt}
+			GROUP BY GBN ,LNK_CODE
+		) S
+		,LSI_LINK L
+		WHERE	S.LNK_CODE = (L.LINK_CAT_ID||L.LINK_CD)
+		<if test="inDelYn==('Y'.toString())">
+			AND	L.END_DATE IS NULL
+		</if>
+<!-- 		AND L.LINK_CAT_ID =	( -->
+<!-- 										SELECT	LINK_CAT_ID -->
+<!-- 										FROM	LSI_LINK_CATEGORY -->
+<!-- 										WHERE	LINK_CAT_ORDER = 1 -->
+<!-- 										AND	END_DATE IS NULL -->
+<!-- 									) -->
+		ORDER BY S.LINK_CNT DESC ,L.LINK_NM
+	</select>
+	
+	
+	<!-- 설문 목록 -->
+	<select id="getAdmSurVeyList" parameterType="portalxpert.adm.stat.vo.AdmStatSurveyVO" resultType="portalxpert.adm.stat.vo.AdmStatSurveyVO">
+        SELECT
+            P.RNUM
+            ,P.BOARD_NAME
+            ,P.NOTI_ID
+            ,P.BOARD_ID
+            ,P.NOTI_TITLE
+            ,P.SURVEY_NO
+            ,P.SURVEY_CONTS
+            ,P.SURVEY_TP
+            ,P.REGR_ID
+            ,P.REGR_NAME
+            ,CASE WHEN P.SURVEY_RSLT_OPEN_YN = 'Y' THEN '공개' ELSE '비공개' END SURVEY_RSLT_OPEN_YN
+            ,TO_CHAR(P.SURVEY_CLOS_DTTM, 'YYYY-MM-DD HH24:MI') SURVEY_CLOS_DTTM
+            ,TO_CHAR(P.NOTI_END_DTTM, 'YYYY-MM-DD') NOTI_END_DTTM
+            ,TO_CHAR(P.REG_DTTM, 'YYYY-MM-DD') REG_DTTM
+            ,(SELECT COUNT(A.TMLN_SEQ)
+            FROM BBS_NOTI_SURVEY A, BBS_NOTI_SURVEY_ANSW B
+            WHERE A.SURVEY_NO = B.SURVEY_NO
+            AND A.NOTI_ID = P.NOTI_ID) TOT_CNT
+        FROM(
+            SELECT  ROWNUM RNUM, S.*
+            FROM (
+                SELECT A.BOARD_NAME
+                    ,B.NOTI_ID
+                    ,B.BOARD_ID
+                    ,B.NOTI_TITLE
+                    ,C.SURVEY_NO
+                    ,C.SURVEY_CONTS
+                    ,C.SURVEY_TP
+                    ,C.REGR_ID
+                    ,C.REGR_NAME
+                    ,C.SURVEY_RSLT_OPEN_YN
+                    ,C.SURVEY_CLOS_DTTM
+                    ,C.REG_DTTM
+                    ,B.NOTI_END_DTTM
+                FROM BBS_BOARD_INFO A, BBS_NOTI_INFO B, BBS_NOTI_SURVEY C
+                WHERE A.BOARD_ID = B.BOARD_ID
+                AND B.NOTI_ID = C.NOTI_ID
+                AND B.NOTI_KIND = '040'
+				<if test="boardName != null and boardName != ''">
+                AND A.BOARD_NAME LIKE '%'|| #{boardName} ||'%'
+				</if>
+				<if test="notiTitle != null and notiTitle != ''">
+                AND B.NOTI_TITLE LIKE '%'|| #{notiTitle} ||'%'
+				</if>
+				<if test="surveyConts != null and surveyConts != ''">
+                AND C.SURVEY_CONTS LIKE '%'|| #{surveyConts} ||'%'
+				</if>
+				<if test="regrName != null and regrName != ''">
+                AND C.REGR_NAME LIKE '%'|| #{regrName} ||'%'
+				</if>
+				<if test="surveyRsltOpenYn != null and surveyRsltOpenYn != ''">
+                AND C.SURVEY_RSLT_OPEN_YN = #{surveyRsltOpenYn}
+				</if>
+				<if test="surveyClosDttmStart != null and surveyClosDttmStart != ''">
+                AND TO_CHAR(C.SURVEY_CLOS_DTTM, 'YYYYMMDD') <![CDATA[>=]]> #{surveyClosDttmStart}
+				</if>
+				<if test="surveyClosDttmEnd != null and surveyClosDttmEnd != ''">
+                AND TO_CHAR(C.SURVEY_CLOS_DTTM, 'YYYYMMDD') <![CDATA[<=]]> #{surveyClosDttmEnd}
+				</if>
+				<if test="notiEndDttmStart != null and notiEndDttmStart != ''">
+                AND TO_CHAR(B.NOTI_END_DTTM, 'YYYYMMDD') <![CDATA[>=]]> #{notiEndDttmStart}
+				</if>
+				<if test="notiEndDttmEnd != null and notiEndDttmEnd != ''">
+                AND TO_CHAR(B.NOTI_END_DTTM, 'YYYYMMDD') <![CDATA[<=]]> #{notiEndDttmEnd}
+				</if>
+				<if test="regDttmStart != null and regDttmStart != ''">
+                AND TO_CHAR(C.REG_DTTM, 'YYYYMMDD') <![CDATA[>=]]> #{regDttmStart}
+				</if>
+				<if test="regDttmEnd != null and regDttmEnd != ''">
+                AND TO_CHAR(C.REG_DTTM, 'YYYYMMDD') <![CDATA[<=]]> #{regDttmEnd}
+				</if>
+                ORDER BY B.SORT_SEQ DESC
+            ) S
+        ) P
+		<![CDATA[WHERE ROWNUM <= #{recordCountPerPage}  and RNUM > #{firstIndex}]]>
+	</select>
+	
+	<!-- 설문 목록 총 갯수 -->
+	<select id="getAdmSurVeyCnt" parameterType="portalxpert.adm.stat.vo.AdmStatSurveyVO" resultType="int">
+		SELECT COUNT(B.NOTI_ID) TOTCNT
+        FROM BBS_BOARD_INFO A, BBS_NOTI_INFO B, BBS_NOTI_SURVEY C
+        WHERE A.BOARD_ID = B.BOARD_ID
+        AND B.NOTI_ID = C.NOTI_ID
+        AND B.NOTI_KIND = '040'
+		<if test="boardName != null and boardName != ''">
+              AND A.BOARD_NAME LIKE '%'|| #{boardName} ||'%'
+		</if>
+		<if test="notiTitle != null and notiTitle != ''">
+              AND B.NOTI_TITLE LIKE '%'|| #{notiTitle} ||'%'
+		</if>
+		<if test="surveyConts != null and surveyConts != ''">
+              AND C.SURVEY_CONTS LIKE '%'|| #{surveyConts} ||'%'
+		</if>
+		<if test="regrName != null and regrName != ''">
+              AND C.REGR_NAME LIKE '%'|| #{regrName} ||'%'
+		</if>
+		<if test="surveyRsltOpenYn != null and surveyRsltOpenYn != ''">
+              AND C.SURVEY_RSLT_OPEN_YN = #{surveyRsltOpenYn}
+		</if>
+		<if test="surveyClosDttmStart != null and surveyClosDttmStart != ''">
+              AND TO_CHAR(C.SURVEY_CLOS_DTTM, 'YYYYMMDD') <![CDATA[>=]]> #{surveyClosDttmStart}
+		</if>
+		<if test="surveyClosDttmEnd != null and surveyClosDttmEnd != ''">
+              AND TO_CHAR(C.SURVEY_CLOS_DTTM, 'YYYYMMDD') <![CDATA[<=]]> #{surveyClosDttmEnd}
+		</if>
+		<if test="notiEndDttmStart != null and notiEndDttmStart != ''">
+              AND TO_CHAR(B.NOTI_END_DTTM, 'YYYYMMDD') <![CDATA[>=]]> #{notiEndDttmStart}
+		</if>
+		<if test="notiEndDttmEnd != null and notiEndDttmEnd != ''">
+              AND TO_CHAR(B.NOTI_END_DTTM, 'YYYYMMDD') <![CDATA[<=]]> #{notiEndDttmEnd}
+		</if>
+		<if test="regDttmStart != null and regDttmStart != ''">
+              AND TO_CHAR(C.REG_DTTM, 'YYYYMMDD') <![CDATA[>=]]> #{regDttmStart}
+		</if>
+		<if test="regDttmEnd != null and regDttmEnd != ''">
+              AND TO_CHAR(C.REG_DTTM, 'YYYYMMDD') <![CDATA[<=]]> #{regDttmEnd}
+		</if>
+	</select>
+	
+	
+	<select id="getAdmBbsStatList" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="portalxpert.adm.stat.vo.AdmStatBBSVO">
+		SELECT	BOARD_ID
+				,BOARD_NAME
+				,BOARD_KIND
+				,BOARD_FORM 
+				,BOARD_FORM_SPEC
+				,REGR_NAME
+				,TOT_CNT
+				,READ_CNT
+				,REG_DTTM
+				,END_DTTM
+				,DEL_YN
+				,RNUM SEQ
+		FROM
+		(
+			SELECT	ROWNUM RNUM ,B.*
+			FROM (
+			SELECT A.* FROM
+			(
+				SELECT A.BOARD_ID
+				      ,A.BOARD_NAME
+				      ,A.BOARD_KIND
+				      ,A.BOARD_FORM
+				      ,A.BOARD_FORM_SPEC
+				      ,A.REGR_NAME
+				      ,(SELECT	NVL(SUM(B.TOT_COUNT) ,0)
+						FROM
+						(   SELECT	BOARD_ID
+						            ,DECODE(MAX(UP_NOTI_ID),'*' ,COUNT(UP_NOTI_ID) ,0) TOT_COUNT
+									,DECODE(MAX(UP_NOTI_ID),'*' ,0 ,COUNT(UP_NOTI_ID)) REPL_COUNT
+							FROM	BBS_NOTI_INFO
+							GROUP BY BOARD_ID, UP_NOTI_ID
+						) B WHERE B.BOARD_ID = A.BOARD_ID) TOT_CNT
+				      ,(SELECT NVL(SUM(NOTI_READ_CNT) ,0) FROM BBS_NOTI_INFO 
+				        WHERE BOARD_ID = A.BOARD_ID) READ_CNT
+				      ,TO_CHAR(REG_DTTM ,'YYYY.MM.DD') REG_DTTM
+				      ,A.BOARD_OPER_BGN_DTTM
+				      ,DECODE(A.BOARD_OPER_YN,'N',TO_CHAR(A.UPD_DTTM,'YYYY.MM.DD'), '운영중') END_DTTM
+				      ,A.DEL_YN
+				FROM BBS_BOARD_INFO A
+				WHERE 1 = 1
+				<if test="searchDttm == 'REG'">
+				AND A.REG_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+				</if>
+				<if test="searchDttm == 'END'">
+				AND A.BOARD_OPER_YN = 'N'
+				AND A.UPD_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+				</if>
+				<if test="searchCondition !=null and searchCondition !=''">
+					<if test="searchCondition == 'BOARD_NAME'">
+					AND A.BOARD_NAME LIKE '%'||#{searchKeyword}||'%'
+					</if>
+					<if test="searchCondition == 'REGR_NAME'">
+					AND A.REGR_NAME LIKE '%'||#{searchKeyword}||'%'
+					</if>
+				</if>
+				<if test="stat == 'USE'">
+				AND A.DEL_YN = 'N'
+				</if>
+				<if test="stat == 'NOT_USE'">
+				AND A.DEL_YN = 'Y'
+				</if>
+			) A
+			<if test="orderType == null or orderType == '' ">
+			ORDER BY A.REG_DTTM DESC
+			</if>
+			<if test="orderType !=null and orderType !=''">
+				<if test="orderType == 'TOT_CNT' ">
+				ORDER BY A.TOT_CNT
+					<if test="isDesc != true ">
+						 DESC
+					</if>					
+				</if>
+				<if test="orderType == 'READ_CNT' ">
+				ORDER BY A.READ_CNT
+					<if test="isDesc != true ">
+						 DESC
+					</if>				
+				</if>
+				<if test="orderType == 'REG_DTTM' ">
+				ORDER BY A.REG_DTTM
+					<if test="isDesc != true ">
+						 DESC
+					</if>				
+				</if>
+				<if test="orderType == 'END_DTTM' ">
+				ORDER BY A.BOARD_OPER_END_DTTM
+					<if test="isDesc != true ">
+						 DESC
+					</if>				
+				</if>
+			</if>	
+			) B	
+		) P
+		<![CDATA[
+		WHERE RNUM <= #{recordCountPerPage}  and RNUM >= #{firstIndex}
+		]]>
+	</select>	
+	
+	<select id="getAdmBbsStatListTotCnt" parameterType="portalxpert.adm.stat.vo.AdmStatSearchVO" resultType="int">
+ 
+	 
+			SELECT COUNT(A.BOARD_ID) 
+			FROM
+			(
+				SELECT A.BOARD_ID
+				      ,A.BOARD_NAME
+				      ,A.BOARD_KIND
+				      ,A.BOARD_FORM
+				      ,A.BOARD_FORM_SPEC
+				      ,A.REGR_NAME
+				      ,(SELECT	NVL(SUM(B.TOT_COUNT) ,0)
+						FROM
+						(   SELECT	BOARD_ID
+						            ,DECODE(MAX(UP_NOTI_ID),'*' ,COUNT(UP_NOTI_ID) ,0) TOT_COUNT
+									,DECODE(MAX(UP_NOTI_ID),'*' ,0 ,COUNT(UP_NOTI_ID)) REPL_COUNT
+							FROM	BBS_NOTI_INFO
+							GROUP BY BOARD_ID, UP_NOTI_ID
+						) B WHERE B.BOARD_ID = A.BOARD_ID) TOT_CNT
+				      ,(SELECT NVL(SUM(NOTI_READ_CNT) ,0) FROM BBS_NOTI_INFO 
+				        WHERE BOARD_ID = A.BOARD_ID) READ_CNT
+				      ,TO_CHAR(REG_DTTM ,'YYYY.MM.DD') REG_DTTM
+				      ,A.BOARD_OPER_BGN_DTTM
+				      ,A.BOARD_OPER_END_DTTM
+				      ,A.DEL_YN
+				FROM BBS_BOARD_INFO A
+				WHERE 1 = 1
+				<if test="searchDttm == 'REG'">
+				AND A.REG_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+				</if>
+				<if test="searchDttm == 'END'">
+				AND A.BOARD_OPER_YN = 'N'
+				AND A.UPD_DTTM BETWEEN TO_DATE(#{sFromDt} ,'YYYYMMDD') AND TO_DATE(#{sToDt} ,'YYYYMMDD')
+				</if>
+				<if test="searchCondition !=null and searchCondition !=''">
+					<if test="searchCondition == 'BOARD_NAME'">
+					AND A.BOARD_NAME LIKE '%'||#{searchKeyword}||'%'
+					</if>
+					<if test="searchCondition == 'REGR_NAME'">
+					AND A.REGR_NAME LIKE '%'||#{searchKeyword}||'%'
+					</if>
+				</if>
+				<if test="stat == 'USE'">
+				AND A.DEL_YN = 'N'
+				</if>
+				<if test="stat == 'NOT_USE'">
+				AND A.DEL_YN = 'Y'
+				</if>
+			) A
+		 
+	 
+
+	</select>	
+	
+</mapper>

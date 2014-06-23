@@ -1,0 +1,1278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.person.person100.mapper.Person100Mapper">
+
+	<insert id="insertPbsList">
+		<selectKey keyProperty="boardSeq" resultType="String" order="BEFORE">
+			SELECT SEQ_BOARD_INFO.NEXTVAL AS boardSeq FROM DUAL 
+	    </selectKey>
+	   
+		<![CDATA[
+			INSERT INTO PBS_USER_BOARD_INFO(
+			 BOARD_SEQ
+			, BOARD_TP
+			, BOARD_OWNR_ID
+			, BOARD_OWNR_NAME
+			, BOARD_NAME
+			, BOARD_EXPL
+			, APND_FILE_USE_YN
+			, APND_FILE_CNT
+			, APND_FILE_SZ
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			) VALUES (
+			 #{boardSeq}
+			, #{boardTp}
+			, #{boardOwnrId}
+			, #{boardOwnrName}
+			, #{boardName}
+			, #{boardExpl}
+			, #{apndFileUseYn}
+			, #{apndFileCnt}
+			, #{apndFileSz}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			)
+			]]>
+	</insert>
+
+	<insert id="insertPbsUserBoardPartInfo">
+		<![CDATA[
+		INSERT INTO PBS_USER_BOARD_PART_INFO(
+		 BOARD_SEQ
+		, USER_ID
+		, CATE_USE_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		) VALUES (
+		 #{boardSeq}
+		, #{userId}
+		, #{cateUseYn}
+		, #{regrId}
+		, #{regrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		)
+		]]>
+	</insert>
+	
+	<!-- 사용자 정보 -->
+	<select id="getComUserInfoList_backup" parameterType="portalxpert.person.person100.vo.ComUserInfoVO"
+	resultType="portalxpert.person.person100.vo.ComUserInfoVO">
+		<![CDATA[
+		SELECT    USER_ID
+                , USER_NAME
+                , USER_NICK 
+                , USER_INTRO
+                , SLCT_POTO_SEQ
+                , REST_ID
+                , USER_JOB /*업무분장*/
+                , USER_BIRTH /*생년월일*/
+                , DEPT_NAME OU 
+                , PU.SMS_BAL_CNT
+                , PU.SMS_ALL_CNT
+                , LU.DEPT_FNAME ORGFULLNAME, LU.TITLENAME, LU.TELEPHONENUMBER, LU.MOBILE, LU.MAIL, LU.INTERMAIL
+        FROM      PSN_USER_INFO PU
+                , PSN_DEPT_INFO LD
+        WHERE PU.DEPT_CODE = LD.DEPT_CODE(+)
+        AND PU.USER_ID = #{userId}    
+		]]>
+	</select>
+	
+	<!-- 사용자 정보 -->
+	<select id="getComUserInfoList" parameterType="portalxpert.person.person100.vo.ComUserInfoVO"
+	resultType="portalxpert.person.person100.vo.ComUserInfoVO">
+		<![CDATA[
+		SELECT    PU.USER_ID
+                , PU.USER_NAME
+                , USER_NICK 
+                , USER_INTRO
+                , SLCT_POTO_SEQ
+                , REST_ID
+                , USER_JOB /*업무분장*/
+                , USER_BIRTH /*생년월일*/
+                , LD.DEPT_CODE OU 
+                , PU.SMS_BAL_CNT
+                , PU.SMS_ALL_CNT
+                , PU.DEPT_FNAME ORGFULLNAME, PU.TITLENAME, PU.TELEPHONENUMBER, PU.MOBILE, PU.MAIL, PU.INTERMAIL
+        FROM      PSN_USER_INFO PU
+                , PSN_DEPT_INFO LD
+        WHERE PU.DEPT_CODE = LD.DEPT_CODE(+)
+        AND PU.USER_ID = #{userId}    
+		]]>
+	</select>
+	
+	<select id="getPsnUserInfo" parameterType="portalxpert.person.person100.vo.ComUserInfoVO"
+	resultType="int">
+		<![CDATA[
+		SELECT    COUNT(*) USER_ID
+        FROM      PSN_USER_INFO
+        WHERE USER_ID = #{userId}    
+		]]>
+	</select>	
+
+
+	<insert id="insertPsnUserInfo" parameterType="portalxpert.person.person100.vo.ComUserPotoInfoVO">
+		<![CDATA[
+		INSERT INTO PSN_USER_INFO(
+		 USER_ID
+		, USER_NAME
+		, USER_NICK
+		, USER_JOB
+		, SLCT_POTO_SEQ
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		) VALUES (
+		 #{userId}
+		, #{updrName}
+		, #{userNick}
+		, #{userJob}
+		, #{slctPotoSeq}
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		)
+		]]>
+	</insert>
+
+	<!-- 사용자 사진 정보 -->
+	<select id="getComUserPotoInfoList" parameterType="portalxpert.person.person100.vo.ComUserPotoInfoVO"
+	resultType="portalxpert.person.person100.vo.ComUserPotoInfoVO">
+		<![CDATA[
+		SELECT USER_ID
+		, POTO_SEQ
+		, FILE_PATH
+		, FILE_NAME
+		, FILE_EXTS
+		, PRVW_PATH
+		, PRVW_NAME
+		, PRVW_EXTS
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		FROM PSN_USER_POTO_INFO
+		WHERE USER_ID = #{userId} 
+		]]>
+	</select>
+
+	<!-- 사용자 업무분장 사용자 닉네임, 선택이미지 수정 -->
+	<update id="updatePsnUserInfo" parameterType="portalxpert.person.person100.vo.ComUserInfoVO">
+		 UPDATE psn_user_info 
+         SET USER_JOB = #{userJob} 
+         , UPDR_ID = #{updrId}
+         , UPD_DTTM = sysdate
+         , UPDR_NAME = #{updrName}
+         , SLCT_POTO_SEQ = #{slctPotoSeq}
+         , USER_NICK = #{userNick}
+         WHERE user_id = #{userId}
+         
+	</update>
+	
+	<!-- 프로필 이미지 등록 -->
+	<insert id="insertComUserPotoInfo" parameterType="portalxpert.person.person100.vo.ComUserPotoInfoVO">
+		<![CDATA[
+		INSERT INTO PSN_USER_POTO_INFO(
+		 USER_ID
+		, POTO_SEQ
+		, FILE_PATH
+		, FILE_NAME
+		, FILE_EXTS
+		, PRVW_PATH
+		, PRVW_NAME
+		, PRVW_EXTS
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		) VALUES (
+		 #{userId}
+		, #{potoSeq}
+		, #{filePath}
+		, #{fileName}
+		, #{fileExts}
+		, #{prvwPath}
+		, #{prvwName}
+		, #{prvwExts}
+		, #{delYn}
+		, #{regrId}
+		, #{regrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		)
+		]]>
+	</insert>
+	
+	<delete id="deleteComUserPotoInfo" parameterType="portalxpert.person.person100.vo.ComUserPotoInfoVO">
+		DELETE FROM PSN_USER_POTO_INFO WHERE USER_ID = #{userId}
+	</delete>
+	
+	
+	<!-- 나의 관심직원 조회 -->
+	<select id="getPsnUserFriendInfo" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO" resultType="portalxpert.person.person100.vo.PsnUserFrdInfoVO">
+		<![CDATA[
+		SELECT A.USER_ID
+		      ,A.FRIEND_ID
+		      ,(SELECT USER_NAME FROM PSN_USER_INFO B WHERE A.FRIEND_ID = B.USER_ID) FRIEND_NAME
+		FROM PSN_USER_FRIEND_INFO A 
+		WHERE A.USER_ID = #{userId}
+		AND A.DEL_YN = 'N'
+		]]>
+	</select>
+	
+	<!-- 나의 관심직원 건수 -->
+	<select id="getPsnUserFriendInfoCnt" parameterType="String" resultType="int">
+		<![CDATA[
+		SELECT COUNT(1)
+		FROM PSN_USER_FRIEND_INFO A 
+		WHERE A.USER_ID = #{userId}
+		]]>
+	</select>
+	
+	<!-- 나의 부서 직원  -->
+	<select id="getPsnUserOVInfo" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO" resultType="portalxpert.person.person100.vo.PsnUserFrdInfoVO">
+		<![CDATA[
+	
+			SELECT  '' USER_ID
+		       , A.USER_ID FRIEND_ID
+		       , A.USER_NAME FRIEND_NAME
+		       , A.MAIL
+		       , A.INTERMAIL
+		       , A.TELEPHONENUMBER
+		 FROM PSN_USER_INFO A
+		WHERE A.DEPT_CODE = (SELECT OUCODE FROM PSN_USER_INFO WHERE USER_ID = #{userId})
+		
+		]]>
+	</select>
+	
+	<!-- 나의 부서 직원 건수  -->
+	<select id="getPsnUserOVInfoCnt" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO" resultType="int">
+		<![CDATA[
+	
+			SELECT COUNT(1)
+			FROM PSN_USER_INFO A
+			WHERE A.DEPT_CODE = (SELECT DEPT_CODE FROM PSN_USER_INFO WHERE USER_ID = #{userId})
+		
+		]]>
+	</select>
+	
+	<!-- 나를 추가한 직원  -->
+	<select id="getPsnInterestedUser" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO" resultType="portalxpert.person.person100.vo.PsnUserFrdInfoVO">
+		<![CDATA[
+	SELECT * FROM (
+			SELECT A.USER_ID                                
+			      ,A.FRIEND_ID FRIEND_ID
+			      ,B.USER_NAME FRIEND_NAME
+			      ,B.MAIL
+			      ,B.INTERMAIL
+			      ,B.TELEPHONENUMBER
+			      ,B.DEPT_NAME OU
+			      ,ROWNUM RNUM
+			FROM PSN_USER_FRIEND_INFO A , PSN_USER_INFO B
+			WHERE A.FRIEND_ID =  #{userId}
+			AND A.DEL_YN = 'N'
+			AND A.USER_ID = B.USER_ID )
+		WHERE RNUM  > #{rnum} AND RNUM < #{rnum} + 50
+		ORDER BY 3
+		]]>
+	</select>
+	
+	<!-- 나를 추가한 직원 건수  -->
+	<select id="getStaffFriendInfoCnt" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO" resultType="int">
+		<![CDATA[
+	
+			SELECT COUNT(1)
+			FROM PSN_USER_FRIEND_INFO A 
+			WHERE FRIEND_ID = #{userId}
+				AND A.DEL_YN = 'N'
+		
+		
+		]]>
+	</select>
+	
+	<!-- 나의 멤버 상세조회  -->
+	<select id="getPsnUserDetailInfo" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO" resultType="portalxpert.person.person100.vo.PsnUserFrdInfoVO">
+		<![CDATA[
+	
+	     SELECT  USER_ID
+	            ,MAIL
+	            ,INTERMAIL
+	            ,TELEPHONENUMBER
+	            ,MOBILE
+	     FROM PSN_USER_INFO 
+	     WHERE USER_ID =  #{userId}
+		
+		]]>
+	</select>
+	
+	<!-- 나의 관심직원 등록 -->
+	<insert id="insertPsnUserFriendInfo" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO">
+	<![CDATA[	
+		INSERT INTO PSN_USER_FRIEND_INFO
+		(
+		     USER_ID
+		    ,FRIEND_ID
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,UPD_DTTM
+		 )
+		 VALUES
+		 (
+		 	  #{userId}
+		 	 ,#{friendId}
+		 	 ,#{delYn}
+		 	 ,#{regrId}
+		 	 ,#{regrName}
+		 	 ,SYSDATE
+		 	 ,#{updrId}
+		 	 ,#{updrName}
+		 	 ,SYSDATE
+		 )
+	 ]]>
+	</insert>
+	
+	<delete id="deletePsnUserFriendInfo">
+		<![CDATA[	
+			DELETE FROM	PSN_USER_FRIEND_INFO WHERE USER_ID = #{userId}
+		]]>
+		<if test="friendId != null and friendId != ''">
+		  AND FRIEND_ID = #{friendId}
+		</if>
+	
+	</delete>
+	
+	<!-- 나의 그룹 조회 -->
+	<select id="getPsnUserGrpInfo" parameterType="portalxpert.person.person100.vo.PsnUserGrpInfoVO" resultType="portalxpert.person.person100.vo.PsnUserGrpInfoVO">
+		<![CDATA[
+		SELECT  USER_ID
+		       ,GRP_SEQ
+		       ,GRP_NAME
+		FROM PSN_USER_GRP_INFO
+		WHERE USER_ID = #{userId}
+		ORDER BY GRP_SEQ
+		]]>
+	</select>
+	
+	<!-- 나의 그룹 등록 -->
+	<insert id="insertPsnUserGrpInfo" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO">
+	<![CDATA[	
+		INSERT INTO PSN_USER_GRP_INFO
+		(
+		     USER_ID
+		    ,GRP_SEQ
+		    ,GRP_NAME
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,UPD_DTTM
+		)
+
+		 VALUES
+		 (
+		 	  #{userId}
+		 	 ,#{grpSeq}
+		 	 ,#{grpName}
+		 	 ,#{delYn}
+		 	 ,#{regrId}
+		 	 ,#{regrName}
+		 	 ,SYSDATE
+		 	 ,#{updrId}
+		 	 ,#{updrName}
+		 	 ,SYSDATE
+		 )
+	 ]]>
+	</insert>
+	
+	<delete id="deletePsnUserGrpInfo">
+	<![CDATA[	
+		DELETE FROM	PSN_USER_GRP_INFO WHERE USER_ID = #{userId}
+	]]>
+	</delete>
+	
+	<!-- 나의 그룹 직원 조회 -->
+	<select id="getPsnUserGrpFriendMap" parameterType="portalxpert.person.person100.vo.PsnUserGrpFrdMapVO" resultType="portalxpert.person.person100.vo.PsnUserGrpFrdMapVO">
+		<![CDATA[
+		SELECT  A.USER_ID
+		       ,A.GRP_SEQ
+		       ,A.FRIEND_ID
+		       ,(SELECT USER_NAME FROM PSN_USER_INFO B WHERE A.FRIEND_ID = B.USER_ID) FRIEND_NAME
+		FROM PSN_USER_GRP_FRIEND_MAP A
+		WHERE A.DEL_YN = 'N'
+		  AND USER_ID = #{userId}
+		ORDER BY A.GRP_SEQ
+		]]>
+	</select>
+	
+	<!-- 나의 관심직원 등록 -->
+	<insert id="insertPsnUserGrpFriendMap" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO">
+	<![CDATA[	
+		INSERT INTO PSN_USER_GRP_FRIEND_MAP
+		(
+		     USER_ID
+		    ,GRP_SEQ
+		    ,FRIEND_ID
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,UPD_DTTM
+		)
+
+		 VALUES
+		 (
+		 	  #{userId}
+		 	 ,#{grpSeq}
+		 	 ,#{friendId}
+		 	 ,#{delYn}
+		 	 ,#{regrId}
+		 	 ,#{regrName}
+		 	 ,SYSDATE
+		 	 ,#{updrId}
+		 	 ,#{updrName}
+		 	 ,SYSDATE
+		 )
+	 ]]>
+	</insert>
+	
+	<delete id="deletePsnUserGrpFriendMap">
+	<![CDATA[	
+		DELETE FROM	PSN_USER_GRP_FRIEND_MAP WHERE USER_ID = #{userId}
+	]]>
+	</delete>
+	
+	<!-- SMS 전송할수 있는 건수  -->
+	<select id="getMySmsCnt" parameterType="String" resultType="String">
+		<![CDATA[
+	
+			SELECT TO_CHAR(NVL(SMS_BAL_CNT,0)) SMS_BAL_CNT
+			FROM PSN_USER_INFO  
+			WHERE USER_ID = #{userId}
+		]]>
+	</select>
+	
+	<!-- SMS 전송할수 있는 총 건수  -->
+	<select id="getMySmsAllCnt" parameterType="String" resultType="String">
+		<![CDATA[
+	
+			SELECT TO_CHAR(NVL(SMS_ALL_CNT,0)) SMS_ALL_CNT
+			FROM PSN_USER_INFO  
+			WHERE USER_ID = #{userId}
+		]]>
+	</select>
+	
+	<!-- SMS 전송 건수 차감 -->
+	<update id="updateMySmsCnt" parameterType="String">
+		<![CDATA[
+		
+			UPDATE PSN_USER_INFO 
+			SET SMS_BAL_CNT = SMS_BAL_CNT - 1 
+			WHERE USER_ID = #{userId}
+		
+		]]>
+	</update>
+
+	<!-- SMS 전송 정보  -->
+	<insert id="insertSmsSendHist" parameterType="portalxpert.person.person100.vo.SmsSendHistVO">
+	<![CDATA[	
+		INSERT INTO SMS_SEND_HIST
+		(
+		    SEND_SEQ,
+			OBJ_TELNO,
+			SEND_TELNO,
+			SEND_DTTM,
+			SMS_CONTS,
+			USER_ID,
+			USER_NAME,
+			DEL_YN,
+			REGR_ID,
+			REGR_NAME,
+			REG_DTTM,
+			UPDR_ID,
+			UPDR_NAME,
+			UPD_DTTM
+		)
+
+		 VALUES
+		 (
+		 	 (SELECT 
+            	(CASE ( SELECT 0 FROM DUAL WHERE NOT EXISTS ( SELECT SEND_SEQ FROM SMS_SEND_HIST ))
+                WHEN 0 THEN 0 ELSE ( SELECT MAX(SEND_SEQ) + 1 FROM SMS_SEND_HIST ) END ) As  sendSeq
+        		FROM DUAL)
+		 	 ,#{objTelno}
+		 	 ,#{sendTelno}
+		 	 ,SYSDATE
+		 	 ,#{smsConts}
+		 	 ,#{userId}
+		 	 ,#{userName}
+		 	 ,#{delYn}
+		 	 ,#{regrId}
+		 	 ,#{regrName}
+		 	 ,SYSDATE
+		 	 ,#{updrId}
+		 	 ,#{updrName}
+		 	 ,SYSDATE
+		 )
+	 ]]>
+	</insert>
+	
+	<!-- 사용자 설정 게시판 목록 -->
+	<select id="getPsnUserCncrSetBoardList"  parameterType="String" resultType="portalxpert.person.person100.vo.PsnUserCncrBoardSetVO">
+		<![CDATA[
+		SELECT  A.USER_ID
+		       ,A.BOARD_ID 
+		       ,A.BOARD_DIV 
+		       ,B.BOARD_NAME
+		FROM PSN_USER_CNCR_BOARD_SET A , BBS_BOARD_INFO B
+		WHERE A.USER_ID = #{userId}
+		AND A.DEL_YN = 'N'
+		AND A.BOARD_ID = B.BOARD_ID
+		UNION ALL
+		SELECT  A.USER_ID
+		       ,A.BOARD_ID 
+		       ,A.BOARD_DIV 
+		       ,B.BOARD_NAME
+		FROM PSN_USER_CNCR_BOARD_SET A , PBS_USER_BOARD_INFO B
+		WHERE A.USER_ID = #{userId}
+		AND A.DEL_YN = 'N'
+		AND A.BOARD_ID = B.BOARD_ID
+		]]>
+	</select>
+	
+	<!-- 사용자 설정 알림 컨텐츠 목록 -->
+	<select id="getPsnUserTmlnAlertList"  resultType="portalxpert.person.person100.vo.PsnUserTmlnAlertSetVO">
+		<![CDATA[	
+		SELECT A.USER_ID
+		      ,A.CNTS_ID
+		      ,B.CNTS_NAME
+		FROM PSN_USER_TMLN_ALERT_SET A , COM_CNTS_INFO B
+		WHERE A.USER_ID = #{userId}
+		AND A.DEL_YN = 'N'
+		AND A.CNTS_ID = B.CNTS_ID
+
+		]]>
+	</select>
+	
+	<!-- 알림관리 컨텐츠 목록 -->
+	<select id="getComCntsInfoList"  resultType="portalxpert.person.person100.vo.ComCntsInfoVO">
+		<![CDATA[
+		SELECT CNTS_ID
+		      ,CNTS_NAME
+		      ,CNTS_LINK
+		      ,CNTS_TP
+		FROM COM_CNTS_INFO
+		WHERE CNTS_TP = 'F'
+		]]>
+	</select>
+	
+	<!-- 지정가능한 공지 ,게시만 숫자 -->
+	<select id="getAdmTmlnEnvSet"  resultType="portalxpert.person.person100.vo.AdmTmlnEnvSetVO">
+		<![CDATA[
+		SELECT  BOARD_SLCT_MAX
+       			,ANMT_SLCT_MAX
+       			,TAG_MAX
+		FROM ADM_TMLN_ENV_SET
+		]]>
+	</select>
+	
+	<!-- 설정된 공지사항 갯수  -->
+	<select id="getPsnUserBoardCnt"  resultType="int">
+		<![CDATA[
+			SELECT COUNT(1) 
+			FROM PSN_USER_BOARD_SET
+			WHERE USER_ID =  #{userId}
+			AND BOARD_USE_DIV = 'RLT'
+		]]>
+	</select>
+	
+	<!-- 설정된 공지사항 리스트 -->
+	<select id="getPsnUserNotiList"  resultType="portalxpert.person.person100.vo.PsnUserBoardSetVO">
+		<![CDATA[
+			SELECT  BOARD_ID
+			       ,BOARD_NAME 
+			FROM PSN_USER_BOARD_SET
+			WHERE USER_ID = #{userId}
+			AND BOARD_USE_DIV = 'RLT'
+		]]>
+	</select>
+	
+	
+	<!-- 설정된 디폴트 공지사항 리스트 -->
+	<select id="getComStandBoardList"  resultType="portalxpert.person.person100.vo.PsnUserBoardSetVO">
+		<![CDATA[
+			SELECT BOARD_ID
+			      ,BOARD_NAME
+			FROM COM_STND_BOARD_INFO
+			WHERE BOARD_USE_DIV = 'RLT'
+		]]>
+	</select>
+	
+	
+	<!-- 사용자 공지사항 설정  -->
+	<insert id="insertPsnUserNotiSet" parameterType="portalxpert.person.person100.vo.PsnUserBoardSetVO">
+		<selectKey keyProperty="stndBoardSeq" resultType="int" order="BEFORE">
+			SELECT (CASE ( SELECT 0 FROM DUAL WHERE NOT EXISTS ( SELECT STND_BOARD_SEQ FROM PSN_USER_BOARD_SET WHERE USER_ID = #{userId} AND BOARD_USE_DIV = 'RLT' ))
+			    WHEN 0 THEN 0 
+			    ELSE ( SELECT MAX(STND_BOARD_SEQ) + 1 FROM PSN_USER_BOARD_SET WHERE USER_ID = #{userId} AND BOARD_USE_DIV = 'RLT' ) 
+			    END ) As  stndBoardSeq
+			    FROM DUAL
+		</selectKey>
+	
+	<![CDATA[	
+		INSERT INTO PSN_USER_BOARD_SET
+	    (
+	         USER_ID
+	        ,BOARD_USE_DIV
+	        ,STND_BOARD_SEQ
+	        ,BOARD_ID
+	       	,BOARD_NAME
+	        ,BOARD_URL
+	        ,USE_YN
+	        ,DEL_YN
+	        ,REGR_ID
+	        ,REGR_NAME
+	        ,REG_DTTM
+	        ,UPDR_ID
+	        ,UPDR_NAME
+	        ,UPD_DTTM
+	        ,OLD_USE
+	        ,OLD_SEQ
+	    )
+	    VALUES
+	    (
+	    	 #{userId}
+	    	,#{boardUseDiv}
+		    ,#{stndBoardSeq}
+		    ,#{boardId}
+		    ,(SELECT BOARD_NAME As boardName FROM BBS_BOARD_INFO WHERE BOARD_ID = #{boardId})
+		    ,#{boardUrl}
+		    ,#{useYn}
+		    ,#{delYn}
+		    ,#{regrId}
+		    ,#{regrName}
+		    ,SYSDATE
+		    ,#{updrId}
+		    ,#{updrName}
+		    ,SYSDATE
+		    ,#{oldUse}
+		    ,#{oldSeq}
+	    )
+	 ]]>
+	</insert>
+	
+	<!-- 사용자 관심 게시판 설정  -->
+	<delete id="deletePsnUserNotiSet" parameterType="String">
+		DELETE FROM PSN_USER_BOARD_SET WHERE USER_ID = #{userId} AND BOARD_USE_DIV = 'RLT'
+	</delete>
+	
+	<!-- 사용자 관심 게시판 설정  -->
+	<insert id="insertPsnUserCncrBoardSet" parameterType="portalxpert.person.person100.vo.PsnUserCncrBoardSetVO">
+	<![CDATA[	
+		INSERT INTO PSN_USER_CNCR_BOARD_SET 
+		(
+		    USER_ID
+		   ,BOARD_ID
+		   ,BOARD_DIV
+		   ,DEL_YN
+		   ,REGR_ID
+		   ,REGR_NAME
+		   ,REG_DTTM
+		   ,UPDR_ID
+		   ,UPDR_NAME
+		   ,UPD_DTTM
+		)
+		VALUES
+		(
+			 #{userId}
+		    ,#{boardId}
+		    ,#{boardDiv}
+		    ,#{delYn}
+		    ,#{regrId}
+		    ,#{regrName}
+		    ,SYSDATE
+		    ,#{updrId}
+		    ,#{updrName}
+		    ,SYSDATE
+		)
+	 ]]>
+	</insert>
+	
+	<!-- 사용자 관심 게시판 설정  -->
+	<delete id="deletePsnUserCncrBoardSet" parameterType="String">
+		DELETE FROM PSN_USER_CNCR_BOARD_SET WHERE USER_ID = #{userId}
+	</delete>
+	 
+	<!-- 사용자 알림 설정  -->
+	<insert id="insertPsnUserTmlnAlertSet" parameterType="portalxpert.person.person100.vo.PsnUserTmlnAlertSetVO">
+	<![CDATA[	
+		INSERT INTO PSN_USER_TMLN_ALERT_SET 
+		(
+		    USER_ID
+		   ,CNTS_ID
+		   ,DEL_YN
+		   ,REGR_ID
+		   ,REGR_NAME
+		   ,REG_DTTM
+		   ,UPDR_ID
+		   ,UPDR_NAME
+		   ,UPD_DTTM
+		)
+		VALUES
+		(
+			 #{userId}
+		    ,#{cntsId}
+		    ,#{delYn}
+		    ,#{regrId}
+		    ,#{regrName}
+		    ,SYSDATE
+		    ,#{updrId}
+		    ,#{updrName}
+		    ,SYSDATE
+		)
+	 ]]>
+	</insert>
+	
+	<!-- 사용자 알림 설정  -->
+	<delete id="deletePsnUserTmlnAlertSet" parameterType="String">
+		DELETE FROM PSN_USER_TMLN_ALERT_SET WHERE USER_ID = #{userId}
+	</delete>
+	
+	<!-- MY게시판 조회 -->
+	<select id="getPbsUserBoardInfoList" parameterType="portalxpert.board.board100.vo.PbsUserBoardInfoVO" resultType="portalxpert.board.board100.vo.PbsUserBoardInfoVO">
+		<![CDATA[
+		SELECT BOARD_ID
+		, BOARD_TP
+		, BOARD_OWNR_ID
+		, BOARD_OWNR_NAME
+		, BOARD_NAME
+		, BOARD_EXPL
+		, APND_FILE_USE_YN
+		, APND_FILE_CNT
+		, APND_FILE_SZ
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		FROM PBS_USER_BOARD_INFO
+		WHERE BOARD_TP = '020'
+		AND BOARD_OWNR_ID = #{boardOwnrId}
+		AND DEL_YN='N'
+		ORDER BY REG_DTTM DESC
+		]]>
+	</select>
+	
+	<!-- MY게시판 조회 ZTREE -->
+	<select id="getPbsUserBoardInfoListForZTree" parameterType="portalxpert.board.board100.vo.PbsUserBoardInfoVO" resultType="portalxpert.board.board100.vo.PbsUserBoardInfoVO">
+		<![CDATA[
+		    SELECT CATE_CONTS CONT
+		    FROM BBS_CATE_INFO WHERE USER_ID = #{boardOwnrId}
+		]]>
+	</select>
+	
+	<!-- 개인홈 LNB 참여게시판  -->
+	<select id="getPersonLnbPartList" parameterType="portalxpert.board.board100.vo.PbsUserBoardInfoVO" resultType="portalxpert.board.board100.vo.PbsUserBoardInfoVO">
+		<![CDATA[
+			SELECT TREE_TYPE, BOARD_ID, BOARD_NAME ,lengthb(BOARD_NAME) NAME_LEN
+			       ,BOARD_KIND, BOARD_FORM, BOARD_FORM_SPEC
+			  FROM ( SELECT 'PART' TREE_TYPE
+				          , BOARD_ID, BOARD_NAME
+				          , BOARD_KIND, BOARD_FORM, BOARD_FORM_SPEC
+				          , ROW_NUMBER() OVER (ORDER BY BOARD_ID DESC) NUM
+				       FROM	( SELECT A.BOARD_ID
+				                   , A.BOARD_NAME
+				                   , A.BOARD_OWNR_ID USER_ID 
+				                   , A.BOARD_KIND 
+                                   , A.BOARD_FORM
+                                   , A.BOARD_FORM_SPEC
+				                FROM PBS_USER_BOARD_INFO A
+				               WHERE BOARD_OPER_YN = 'Y'   
+				                 AND DEL_YN = 'N'             
+				                 AND EXISTS ( SELECT 1 
+				                                FROM PBS_USER_BOARD_PART_INFO B 
+				                               WHERE A.BOARD_ID= B.BOARD_ID
+				                                 AND B.DEL_YN='N'
+				                                 AND B.USER_ID IN (${userMap})
+				                             )
+				            ) X
+				      WHERE X.BOARD_ID NOT IN (SELECT BOARD_ID FROM PBS_USER_BOARD_CATE_USE WHERE USER_ID = #{boardOwnrId})
+			       )
+		]]>
+	</select>
+	
+	<select id="getPersonLnbPartList_backup" parameterType="portalxpert.board.board100.vo.PbsUserBoardInfoVO" resultType="portalxpert.board.board100.vo.PbsUserBoardInfoVO">
+		<![CDATA[
+			SELECT TREE_TYPE, BOARD_ID, BOARD_NAME ,lengthb(BOARD_NAME) NAME_LEN
+			       ,BOARD_KIND, BOARD_FORM, BOARD_FORM_SPEC
+			  FROM ( SELECT 'PART' TREE_TYPE
+				          , BOARD_ID, BOARD_NAME
+				          , BOARD_KIND, BOARD_FORM, BOARD_FORM_SPEC
+				          , ROW_NUMBER() OVER (ORDER BY BOARD_ID DESC) NUM
+				       FROM	( SELECT A.BOARD_ID
+				                   , A.BOARD_NAME
+				                   , A.BOARD_OWNR_ID USER_ID 
+				                   , A.BOARD_KIND 
+                                   , A.BOARD_FORM
+                                   , A.BOARD_FORM_SPEC
+				                FROM PBS_USER_BOARD_INFO A
+				               WHERE BOARD_OPER_YN = 'Y'   
+				                 AND DEL_YN = 'N'             
+				                 AND EXISTS ( SELECT 1 
+				                                FROM PBS_USER_BOARD_PART_INFO B 
+				                               WHERE A.BOARD_ID= B.BOARD_ID
+				                                 AND B.USER_ID IN (#{boardOwnrId}, (SELECT DEPT_CODE FROM PSN_USER_INFO WHERE USER_ID = #{boardOwnrId}))
+				                             )
+				            ) X
+				      WHERE X.BOARD_ID NOT IN (SELECT BOARD_ID FROM PBS_USER_BOARD_CATE_USE WHERE USER_ID = #{boardOwnrId})
+			       )
+		]]>
+	</select>	
+	
+	<!-- 개인홈 LNB 즐겨찾기게시판 -->
+	<select id="getPersonLnbFavoList" parameterType="portalxpert.board.board100.vo.PbsUserBoardInfoVO" resultType="portalxpert.board.board100.vo.PbsUserBoardInfoVO">
+		<![CDATA[
+			SELECT TREE_TYPE, BOARD_ID, BOARD_NAME ,lengthb(BOARD_NAME) NAME_LEN, BOARD_KIND, BOARD_FORM, BOARD_FORM_SPEC
+            FROM(
+                SELECT 
+                 'FAVO' TREE_TYPE 
+                , BOARD_ID, BOARD_NAME 
+                , ROW_NUMBER() OVER (ORDER BY BOARD_ID DESC) NUM
+                , P.BOARD_KIND, P.BOARD_FORM, P.BOARD_FORM_SPEC
+                FROM 
+                BBS_FAVORITE B, (SELECT BOARD_ID, BOARD_NAME,'' BOARD_KIND,'' BOARD_FORM,'' BOARD_FORM_SPEC FROM PBS_USER_BOARD_INFO WHERE DEL_YN='N' AND BOARD_OWNR_ID = #{boardOwnrId}
+                UNION ALL SELECT BOARD_ID, BOARD_NAME, BOARD_KIND, BOARD_FORM, BOARD_FORM_SPEC FROM BBS_BOARD_INFO WHERE DEL_YN='N') P
+                WHERE B.USER_ID = #{boardOwnrId}
+                AND B.BRD_ID = P.BOARD_ID
+            )
+		]]>
+	</select>
+	
+	<!-- MY게시판 게시글 등록 -->
+	<insert id="insertPbsUserNotiInfo" parameterType="portalxpert.person.person100.vo.PbsUserNotiInfoVO">
+		<selectKey keyProperty="notiSeq" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(NOTI_SEQ) + 1,1) notiSeq FROM PBS_USER_NOTI_INFO WHERE BOARD_ID = #{boardId}
+		</selectKey>
+		
+		<![CDATA[
+		INSERT INTO PBS_USER_NOTI_INFO(
+		 NOTI_SEQ
+		, UP_NOTI_SEQ
+		, EMGC_YN
+		, ANMT_YN
+		, NOTI_TITLE
+		, TITLE_BOLD_YN
+		, TITLE_COLOR_DIV
+		, NOTI_CONTS
+		, LINK_URL
+		, NOTI_TP
+		, NOTI_KIND
+		, NICK_USE_YN
+		, USER_NICK
+		, USER_NAME
+		, EDIT_DIV
+		, RSRV_YN
+		, NOTI_BGN_DTTM
+		, NOTI_END_DTTM
+		, NOTI_OPEN_DIV
+		, NOTI_OPEN_DIV_SPEC
+		, PUBL_ASGN_DIV
+		, PUBL_ASGN_DIV_SPEC
+		, REPLY_PRMS_YN
+		, REPLY_MAKR_REALNAME_YN
+		, OPN_PRMS_YN
+		, OPN_MAKR_REALNAME_YN
+		, NOTI_READ_CNT
+		, NOTI_OPN_CNT
+		, NOTI_AGRM_CNT
+		, NOTI_OPP_CNT
+		, NOTI_LIKE_CNT
+		, STAT_CODE
+		, DEPT_CODE
+		, DEPT_NAME
+		, DEPT_FNAME
+		, MAKR_IP
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, BOARD_ID
+		) VALUES (
+		 #{notiSeq}
+		, #{upNotiSeq}
+		, #{emgcYn}
+		, #{anmtYn}
+		, #{notiTitle}
+		, #{titleBoldYn}
+		, #{titleColorDiv}
+		, #{notiConts}
+		, #{linkUrl}
+		, #{notiTp}
+		, #{notiKind}
+		, #{nickUseYn}
+		, #{userNick}
+		, #{userName}
+		, #{editDiv}
+		, #{rsrvYn}
+		, #{notiBgnDttm}
+		, #{notiEndDttm}
+		, #{notiOpenDiv}
+		, #{notiOpenDivSpec}
+		, #{publAsgnDiv}
+		, #{publAsgnDivSpec}
+		, #{replyPrmsYn}
+		, #{replyMakrRealnameYn}
+		, #{opnPrmsYn}
+		, #{opnMakrRealnameYn}
+		, #{notiReadCnt}
+		, #{notiOpnCnt}
+		, #{notiAgrmCnt}
+		, #{notiOppCnt}
+		, #{notiLikeCnt}
+		, #{statCode}
+		, #{deptCode}
+		, #{deptName}
+		, #{deptFname}
+		, #{makrIp}
+		, 'N'
+		, #{regrId}
+		, #{regrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		, #{boardId}
+		)
+		]]>
+	</insert>
+
+	<!-- SMS발송이력 -->
+	<select id="getSmsSendHistList" 
+		parameterType="portalxpert.person.person100.vo.SmsSendHistVO"
+		resultType="portalxpert.person.person100.vo.SmsSendHistVO">
+		<![CDATA[
+		SELECT * FROM(
+		        SELECT ROWNUM PNUM,  N.*
+		        FROM(
+		                    SELECT SEND_SEQ
+		                    , OBJ_TELNO
+		                    , SEND_TELNO
+		                    , TO_CHAR(SEND_DTTM,'yyyy-mm-dd') SEND_DTTM
+		                    , TO_CHAR(SEND_DTTM,'yyyy-mm-dd hh24:mi:ss') SEND_DTTM_TIME
+		                    , SMS_CONTS
+		                    , USER_ID
+		                    , USER_NAME
+		                    , DEL_YN
+		                    , REGR_ID
+		                    , REGR_NAME
+		                    , REG_DTTM
+		                    , UPDR_ID
+		                    , UPDR_NAME
+		                    , UPD_DTTM
+		                    , ROW_NUMBER() OVER (ORDER BY SEND_DTTM  ) AS RNUM
+		                    FROM SMS_SEND_HIST
+		                    ]]>
+		                    WHERE USER_ID = #{userId}
+		                    AND DEL_YN = 'N'
+		                    <if test="sendSeq != null and sendSeq != ''"> 
+		                    	AND SEND_SEQ = #{sendSeq} 
+		                    </if>
+		                    <if test="searchKeyword != null and searchKeyword != ''"> 
+		                    	AND SMS_CONTS LIKE '%' || #{searchKeyword} || '%'
+		                    </if>
+		                    <if test="sendDttmFrom != null and sendDttmFrom != '' and sendDttmTo != null and sendDttmTo != ''">
+		                    	AND TO_CHAR(SEND_DTTM,'yyyymmdd') BETWEEN #{sendDttmFrom} AND #{sendDttmTo}
+		                    </if>
+		                    ORDER BY RNUM DESC
+		        ) N
+		)WHERE PNUM BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+		
+	</select>
+	
+	<select id="getSmsSendHistListTotCnt" 
+			parameterType="portalxpert.person.person100.vo.SmsSendHistVO" 
+	    	resultType="int">
+	    	<![CDATA[
+	    	SELECT COUNT(SEND_SEQ) TOTCNT
+			FROM SMS_SEND_HIST
+            WHERE USER_ID = #{userId}
+            AND DEL_YN = 'N'
+            ]]>
+            <if test="smsConts != null and smsConts != ''"> 
+            	AND SMS_CONTS LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="sendDttmFrom != null and sendDttmFrom != '' and sendDttmTo != null and sendDttmTo != ''">
+            	AND TO_CHAR(SEND_DTTM,'yyyymmdd') BETWEEN #{sendDttmFrom} AND #{sendDttmTo}
+            </if>
+		                    
+	</select>	
+	
+	<update id="deleteSmsSendHist" parameterType="portalxpert.person.person100.vo.SmsSendHistVO">
+		<![CDATA[
+		UPDATE SMS_SEND_HIST SET 
+		  UPDR_ID = #{updrId}
+		, UPDR_NAME = #{updrName} 
+		, UPD_DTTM = sysdate
+		, DEL_YN = 'Y'
+		]]>
+		WHERE SEND_SEQ = #{sendSeq}
+		AND USER_ID = #{userId} 
+	</update>	
+	
+	<!-- 관심태그 등록 -->
+	<insert id="insertPsnUserCncrTag" parameterType="portalxpert.person.person100.vo.PsnUserCncrTagVO">
+		<![CDATA[
+		INSERT INTO PSN_USER_CNCR_TAG(
+		 USER_ID
+		, CNCR_TAG
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		) VALUES (
+		 #{userId}
+		, #{cncrTag}
+		, 'N'
+		, #{regrId}
+		, #{regrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		)
+		]]>
+	</insert>
+	
+	<!-- 관심태그 조회 --> 
+	<select id="getPsnUserCncrTagList" resultType="portalxpert.person.person100.vo.PsnUserCncrTagVO">
+		<![CDATA[
+		SELECT USER_ID
+		, CNCR_TAG
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		FROM PSN_USER_CNCR_TAG
+		]]>
+		WHERE USER_ID = #{userId} 
+		ORDER BY REG_DTTM 
+	</select>
+	
+	<!-- 관심태그 삭제 -->
+	<delete id="deletePsnUserCncrTagList">
+		DELETE FROM PSN_USER_CNCR_TAG
+		WHERE USER_ID = #{userId}
+	</delete>
+	
+	<!-- 사용자 프로필 이미지 조회 롤링용 -->
+	<select id="getPsnUserPotoInfoListForRoll" resultType="portalxpert.person.person100.vo.ComUserPotoInfoVO">
+		<![CDATA[
+		SELECT USER_ID
+		, POTO_SEQ
+		, FILE_PATH
+		, FILE_NAME
+		, FILE_EXTS
+		, PRVW_PATH
+		, PRVW_NAME
+		, PRVW_EXTS
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, (SELECT COUNT(1) FROM PSN_USER_POTO_INFO WHERE USER_ID = #{userId}  AND DEL_YN='N') PHOTO_CNT
+		FROM PSN_USER_POTO_INFO
+		]]>
+		WHERE USER_ID = #{userId}   
+		AND DEL_YN='N'
+        AND POTO_SEQ = (
+                SELECT  
+                CASE WHEN COUNT(POTO_SEQ) > 0 THEN  MAX(POTO_SEQ)
+                ELSE 1 END POTO_SEQ
+                FROM PSN_USER_POTO_INFO WHERE USER_ID = #{userId}  
+                AND POTO_SEQ > #{potoSeq} AND ROWNUM = 1 
+                AND DEL_YN='N'
+                
+        )
+		
+	</select>
+	
+	<select id="getPsnUserPotoInfoListForRollEtc" resultType="portalxpert.person.person100.vo.ComUserPotoInfoVO">
+		<![CDATA[
+        SELECT USER_ID
+        , POTO_SEQ
+        , FILE_PATH
+        , FILE_NAME
+        , FILE_EXTS
+        , PRVW_PATH
+        , PRVW_NAME
+        , PRVW_EXTS
+        , DEL_YN
+        , REGR_ID
+        , REGR_NAME
+        , REG_DTTM
+        , UPDR_ID
+        , UPDR_NAME
+        , UPD_DTTM
+        FROM PSN_USER_POTO_INFO
+		]]>
+        WHERE USER_ID = #{userId}
+        AND POTO_SEQ = (SELECT SLCT_POTO_SEQ
+                                    FROM PSN_USER_INFO 
+                                    WHERE USER_ID = #{userId})		
+	</select>
+	
+	<select id="getComUserDeptInfoList" resultType="portalxpert.person.person100.vo.ComUserDeptInfoVO" parameterType="String">
+		<![CDATA[
+        SELECT
+            A.DEPT_CODE OUCODE
+            ,A.DEPT_NAME OU
+            ,A.PAR_DEPT_CODE PARENTOUCODE
+            ,A.DEPT_FNAME ORGFULLNAME
+            ,'' CONTENT
+        FROM PSN_DEPT_INFO A
+        WHERE A.DEPT_CODE = (SELECT DEPT_CODE FROM PSN_USER_INFO WHERE USER_ID = #{userId})
+		]]>
+	</select>
+	
+	<select id="getComUserDeptDetailInfo" resultType="portalxpert.person.person100.vo.ComUserDeptInfoVO" parameterType="String">
+		<![CDATA[
+        SELECT
+            A.DEPT_CODE OUCODE
+            ,A.DEPT_NAME OU
+            ,A.PAR_DEPT_CODE PARENTOUCODE
+            ,A.DEPT_FNAME ORGFULLNAME
+            ,A.USER_KEY
+            ,'' CONTENT
+        FROM PSN_DEPT_INFO A
+        WHERE A.DEPT_CODE = #{oucode}
+		]]>
+	</select>
+ 
+ 	<select id="favoriteUserDuplicationCheck" parameterType="portalxpert.person.person100.vo.PsnUserFrdInfoVO" resultType="int">
+		/* === Person100Mapper.favoriteUserDuplicationCheck === */
+			SELECT COUNT(FRIEND_ID) AS CNT
+			  FROM PSN_USER_FRIEND_INFO
+			 WHERE USER_ID = #{userId}
+			   AND FRIEND_ID IN (${userArr})
+	</select>
+	
+	<select id="selectUserBuseoHongbo" resultType="int">
+		<![CDATA[
+		SELECT COUNT(OUCODE) CNT
+		FROM BUSEO_HONGBO
+		WHERE OUCODE = #{oucode}
+		]]>
+	</select>
+	
+	<insert id="insertUserBuseoHongbo" >
+		<![CDATA[
+		INSERT INTO BUSEO_HONGBO
+		(
+		    OUCODE
+		    , CONTENT
+		    , INS_ID
+		    , INS_DTS
+		    , UPD_ID
+		    , UPD_DTS
+		)
+		VALUES
+		(
+		    #{oucode}
+		    , #{content}
+		    , #{insId}
+		    , SYSDATE
+		    , #{updId}
+		    , SYSDATE
+		)
+		]]>
+	</insert>
+	
+	<update id="updateUserBuseoHongbo" >
+		<![CDATA[
+		UPDATE BUSEO_HONGBO
+		SET CONTENT = #{content}
+		    ,UPD_ID = #{updId}
+		    ,UPD_DTS = SYSDATE
+		WHERE OUCODE = #{oucode}
+		]]>
+	</update>
+	
+	
+	<!-- 타임라인 환경설정 화면 -->
+	<select id="getTmlnEnv" parameterType="portalxpert.person.person100.vo.TmlnEnvInfoVO" resultType="portalxpert.person.person100.vo.TmlnEnvInfoVO">
+		SELECT
+		    BOARD_SLCT_MAX
+		    , ANMT_SLCT_MAX
+		    , TAG_MAX
+		    , DEL_YN
+		    , REGR_ID
+		    , REGR_NAME
+		    , REG_DTTM
+		    , UPDR_ID
+		    , UPDR_NAME
+		    , UPD_DTTM
+		FROM ADM_TMLN_ENV_SET
+		WHERE DEL_YN = 'N'
+	</select>
+	
+	<!-- 타임라인 환경설정 수정 -->
+ 	<update id="updateTmlnEnv" parameterType="portalxpert.person.person100.vo.TmlnEnvInfoVO">
+ 		UPDATE ADM_TMLN_ENV_SET SET
+ 			BOARD_SLCT_MAX = #{boardSlctMax}
+ 			, ANMT_SLCT_MAX = #{anmtSlctMax}
+ 			, TAG_MAX = #{tagMax}
+ 			, UPDR_ID = #{updrId}
+ 			, UPDR_NAME = #{updrName}
+ 	</update>	
+</mapper>

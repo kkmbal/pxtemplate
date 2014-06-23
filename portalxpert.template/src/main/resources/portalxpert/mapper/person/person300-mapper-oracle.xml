@@ -1,0 +1,1418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.person.person300.mapper.Person300Mapper">
+
+	<resultMap id="psnTmlnInfoResult" type="portalxpert.person.person300.vo.PsnTmlnInfoVO">
+		<result property="tmlnSeq" column="TMLN_SEQ" />
+		<result property="upTmlnSeq" column="UP_TMLN_SEQ" />
+		<result property="objrDiv" column="OBJR_DIV" />
+		<result property="objrId" column="OBJR_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="userName" column="USER_NAME" />
+		<result property="tmlnDiv" column="TMLN_DIV" />
+		<result property="tmlnKind" column="TMLN_KIND" />
+		<result property="tmlnTitle" column="TMLN_TITLE" />
+		<result property="tmlnConts" column="TMLN_CONTS" />
+		<result property="tmlnSrc" column="TMLN_SRC" />
+		<result property="relaUrl" column="RELA_URL" />
+		<result property="opnCnt" column="OPN_CNT" />
+		<result property="agrmCnt" column="AGRM_CNT" />
+		<result property="oppCnt" column="OPP_CNT" />
+		<result property="likeCnt" column="LIKE_CNT" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="evalCnt" column="EVAL_CNT" />
+		<result property="faceImg" column="faceImg" />
+		<result property="readYn" column="READ_YN" />
+		
+	</resultMap>
+	
+	
+	<resultMap id="psnTmlnOpnResult" type="portalxpert.person.person300.vo.PsnTmlnOpnVO">
+		<result property="tmlnSeq" column="TMLN_SEQ" />
+		<result property="tmlnOpnSeq" column="TMLN_OPN_SEQ" />
+		<result property="upOpnSeq" column="UP_OPN_SEQ" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="opnConts" column="OPN_CONTS" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="readYn" column="READ_YN" />
+	</resultMap>
+		
+	<resultMap id="psnTmlnApndFileResult" type="portalxpert.person.person300.vo.PsnTmlnApndFileVO">
+		<result property="tmlnSeq" column="TMLN_SEQ" />
+		<result property="fileSeq" column="FILE_SEQ" />
+		<result property="apndFileTp" column="APND_FILE_TP" />
+		<result property="apndFileSz" column="APND_FILE_SZ" />
+		<result property="apndFileOrgn" column="APND_FILE_ORGN" />
+		<result property="apndFileName" column="APND_FILE_NAME" />
+		<result property="apndFilePath" column="APND_FILE_PATH" />
+		<result property="apndFilePrvwName" column="APND_FILE_PRVW_NAME" />
+		<result property="apndFilePrvwPath" column="APND_FILE_PRVW_PATH" />
+		<result property="sourceCodeInput" column="SOURCE_CODE_INPUT" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="mvpKey" column="MVP_KEY" />
+	</resultMap>
+	
+	<resultMap id="bbsNotiSurveyResult" type="portalxpert.board.board100.vo.BbsNotiSurveyVO">
+		<result property="surveyNo" column="SURVEY_NO" />
+		<result property="notiId" column="NOTI_ID" />
+		<result property="tmpNotiSeq" column="TMP_NOTI_SEQ" />
+		<result property="tmlnSeq" column="TMLN_SEQ" />
+		<result property="surveyClosDttm" column="SURVEY_CLOS_DTTM" />
+		<result property="surveyRsltOpenYn" column="SURVEY_RSLT_OPEN_YN" />
+		<result property="surveyConts" column="SURVEY_CONTS" />
+		<result property="surveyTp" column="SURVEY_TP" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+	</resultMap>
+	
+	
+
+	<resultMap id="bbsNotiSurveyExmplResult" type="portalxpert.board.board100.vo.BbsNotiSurveyExmplVO">
+		<result property="surveyNo" column="SURVEY_NO" />
+		<result property="exmplNo" column="EXMPL_NO" />
+		<result property="exmplConts" column="EXMPL_CONTS" />
+		<result property="imgPath" column="IMG_PATH" />
+		<result property="imgName" column="IMG_NAME" />
+		<result property="prvwPath" column="PRVW_PATH" />
+		<result property="prvwName" column="PRVW_NAME" />
+		<result property="totCnt" column="TOT_CNT" />
+		<result property="rsltCnt" column="RSLT_CNT" />
+		<result property="rsltRto" column="RSLT_RTO" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="surveyTp" column="SURVEY_TP" />
+		<result property="answExmplNo" column="ANSW_EXMPL_NO" />
+		
+		
+	</resultMap>
+	
+	<resultMap id="psnTmlnEvalInfoResult" type="portalxpert.person.person300.vo.PsnTmlnEvalInfoVO">
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="ou" column="OU" />
+	</resultMap>
+	
+	<resultMap id="psnSurveyResult" type="portalxpert.person.person300.vo.PsnSurveyResultVO">
+		<result property="tmlnSeq" column="tmlnSeq" />
+		<result property="totCnt" column="CNT" />
+		<result property="beginDttm" column="BEGIN_DATE" />
+		<result property="endDttm" column="END_DATE" />
+	</resultMap>
+	
+	<!-- BBS_게시물_의견 -->
+	<resultMap id="bbsNotiOpnResult" type="portalxpert.board.board100.vo.BbsNotiOpnVO">
+		<result property="notiId" column="NOTI_ID" />
+		<result property="notiOpnSeq" column="NOTI_OPN_SEQ" />
+		<result property="upOpnSeq" column="UP_OPN_SEQ" />
+		<result property="opnConts" column="OPN_CONTS" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="deptCode" column="DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="boardName" column="BOARD_NAME" />    
+		<result property="boardId" column="BOARD_ID" />    
+		<result property="notiTitleOrgn" column="NOTI_TITLE_ORGN" />
+	</resultMap>
+	
+	<!-- BBS_게시물_정보 -->
+	<resultMap id="bbsNotiInfoResult" type="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		<result property="notiId" column="NOTI_ID" />
+		<result property="upNotiId" column="UP_NOTI_ID" />
+		<result property="sortSeq" column="SORT_SEQ" />
+		<result property="boardId" column="BOARD_ID" />
+		<result property="boardName" column="BOARD_NAME" />
+		<result property="boardDiv" column="BOARD_DIV" />
+		<result property="emgcYn" column="EMGC_YN" />
+		<result property="anmtYn" column="ANMT_YN" />
+		<result property="popupYn" column="POPUP_YN" />
+		<result property="briefYn" column="BRIEF_YN" />
+		<result property="moblOpenDiv" column="MOBL_OPEN_DIV" />
+		<result property="notiTitle" column="NOTI_TITLE" />
+		<result property="titleBoldYn" column="TITLE_BOLD_YN" />
+		<result property="titleColorDiv" column="TITLE_COLOR_DIV" />
+		<result property="notiConts" column="NOTI_CONTS" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="linkUrl" column="LINK_URL" />
+		<result property="notiTp" column="NOTI_TP" />
+		<result property="notiKind" column="NOTI_KIND" />
+		<result property="nickUseYn" column="NICK_USE_YN" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="userName" column="USER_NAME" />
+		<result property="editDiv" column="EDIT_DIV" />
+		<result property="rsrvYn" column="RSRV_YN" />
+		<result property="notiBgnDttm" column="NOTI_BGN_DTTM" />
+		<result property="notiEndDttm" column="NOTI_END_DTTM" />
+		<result property="notiOpenDiv" column="NOTI_OPEN_DIV" />
+		<result property="notiOpenDivSpec" column="NOTI_OPEN_DIV_SPEC" />
+		<result property="publAsgnDiv" column="PUBL_ASGN_DIV" />
+		<result property="publAsgnDivSpec" column="PUBL_ASGN_DIV_SPEC" />
+		<result property="replyPrmsYn" column="REPLY_PRMS_YN" />
+		<result property="replyMakrRealnameYn" column="REPLY_MAKR_REALNAME_YN" />
+		<result property="opnPrmsYn" column="OPN_PRMS_YN" />
+		<result property="opnMakrRealnameYn" column="OPN_MAKR_REALNAME_YN" />
+		<result property="notiReadCnt" column="NOTI_READ_CNT" />
+		<result property="notiOpnCnt" column="NOTI_OPN_CNT" />
+		<result property="notiAgrmCnt" column="NOTI_AGRM_CNT" />
+		<result property="notiOppCnt" column="NOTI_OPP_CNT" />
+		<result property="notiLikeCnt" column="NOTI_LIKE_CNT" />
+		<result property="bfBoardId" column="BF_BOARD_ID" />
+		<result property="bfNotiId" column="BF_NOTI_ID" />
+		<result property="statCode" column="STAT_CODE" />
+		<result property="deptCode" column="DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="deptFname" column="DEPT_FNAME" />
+		<result property="makrIp" column="MAKR_IP" />
+		<result property="brghCode" column="BRGH_CODE" />
+		<result property="cdlnDeptCode" column="CDLN_DEPT_CODE" />
+		<result property="cdlnDeptName" column="CDLN_DEPT_NAME" />
+		<result property="cdlnDeptFname" column="CDLN_DEPT_FNAME" />
+		<result property="cdlnObjrName" column="CDLN_OBJR_NAME" />
+		<result property="cdlnEvntCode" column="CDLN_EVNT_CODE" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="oldBrdId" column="OLD_BRD_ID" />
+		<result property="oldHeaderId" column="OLD_HEADER_ID" />
+		<result property="oldOrignalId" column="OLD_ORIGNAL_ID" />
+		<result property="oldNoticeSeq" column="OLD_NOTICE_SEQ" />
+		<result property="apndFileCnt" column="APND_FILE_CNT" />
+		<result property="opnCnt" column="OPN_CNT" />
+		<result property="prevNotiId" column="PREV_NOTI_ID" />
+		<result property="prevNotiTitle" column="PREV_NOTI_TITLE" />
+		<result property="nextNotiId" column="NEXT_NOTI_ID" />
+		<result property="nextNotiTitle" column="NEXT_NOTI_TITLE" />
+		<result property="evalReadCnt" column="EVAL_READ_CNT" />
+		<result property="updYn" column="UPD_YN" />
+		<result property="pnum" column="PNUM" />
+		<result property="mail" column="MAIL" />
+		<result property="evalReadYn" column="EVAL_READ_YN" />
+		
+	</resultMap>			
+	
+	<!-- 소통글 등록 -->
+	<insert id="insertPsnTmlnInfo" >
+		<selectKey keyProperty="tmlnSeq" resultType="int" order="BEFORE" >
+		  SELECT SEQ_TMLN_INFO.NEXTVAL As tmlnSeq 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+			INSERT INTO PSN_TMLN_INFO(
+			 TMLN_SEQ
+			, UP_TMLN_SEQ
+			, OBJR_DIV
+			, OBJR_ID
+			, USER_ID
+			, USER_NICK
+			, USER_NAME
+			, TMLN_DIV
+			, TMLN_KIND
+			, TMLN_TITLE
+			, TMLN_CONTS
+			, TMLN_SRC
+			, RELA_URL
+			, OPN_CNT
+			, AGRM_CNT
+			, OPP_CNT
+			, LIKE_CNT
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			) VALUES (
+			 #{tmlnSeq}
+			, #{upTmlnSeq}
+			, #{objrDiv}
+			, #{objrId}
+			, #{userId}
+			, #{userNick}
+			, #{userName}
+			, #{tmlnDiv}
+			, #{tmlnKind}
+			, #{tmlnTitle}
+			, #{tmlnConts}
+			, #{tmlnSrc}
+			, #{relaUrl}
+			, #{opnCnt}
+			, #{agrmCnt}
+			, #{oppCnt}
+			, #{likeCnt}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			)
+		]]>
+	</insert>
+	
+	
+	<update id="updatePsnTmlnInfo" >
+		<![CDATA[
+		UPDATE PSN_TMLN_INFO SET UPDR_ID = #{updrId}, UPD_DTTM = sysdate
+		]]>
+		<if test="tmlnConts != null and tmlnConts != ''"> , TMLN_CONTS = #{tmlnConts} </if>
+		<if test="updrName != null and updrName != ''"> , UPDR_NAME = #{updrName} </if>
+		WHERE TMLN_SEQ = #{tmlnSeq}
+	</update>
+	
+	<delete id="deletePsnTmlnInfo" >
+		<![CDATA[
+		DELETE FROM PSN_TMLN_INFO
+		 WHERE TMLN_SEQ = #{tmlnSeq}
+		]]>
+	</delete>
+	
+	<delete id="deletePsnTmlnApndFile" >
+		<![CDATA[
+		DELETE FROM PSN_TMLN_APND_FILE
+		 WHERE TMLN_SEQ = #{tmlnSeq}
+		]]>
+	</delete>
+	
+	<delete id="deletePsnTmlnOpn" >
+		<![CDATA[
+		DELETE FROM PSN_TMLN_OPN
+		 WHERE TMLN_SEQ = #{tmlnSeq}
+		]]>
+	</delete>
+	
+	<select id="getPsnTmlnInfoList" resultMap="psnTmlnInfoResult">
+	
+	<![CDATA[
+		SELECT *
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY TMLN_SEQ DESC) as ROW_NUM
+		             , CASE WHEN (SELECT TMLN_READ_DTTM FROM PSN_USER_INFO WHERE USER_ID = #{userId}) >= UPD_DTTM THEN 'Y' ELSE 'N' END AS READ_YN
+		             , (SELECT COUNT(1) FROM PSN_TMLN_EVAL_INFO A WHERE A.TMLN_SEQ = S.TMLN_SEQ AND A.TMLN_EVAL_DIV= '030') AS EVAL_CNT
+		             , TMLN_SEQ
+		             , UP_TMLN_SEQ
+		             , OBJR_DIV
+		             , OBJR_ID
+		             , USER_ID
+		             , USER_NICK
+		             , USER_NAME
+		             , TMLN_DIV
+		             , TMLN_KIND
+		             , TMLN_TITLE
+		             , TMLN_CONTS
+		             , TMLN_SRC
+		             , RELA_URL
+		             , OPN_CNT
+		             , AGRM_CNT
+		             , OPP_CNT
+		             , LIKE_CNT
+		             , DEL_YN
+		             , REGR_ID
+		             , REGR_NAME
+		             , TO_CHAR(REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+		             , UPDR_ID
+		             , UPDR_NAME
+		             , UPD_DTTM
+		             , NVL((SELECT A.FILE_PATH ||'/'|| A.FILE_NAME FROM PSN_USER_POTO_INFO A, PSN_USER_INFO B WHERE A.USER_ID = B.USER_ID AND A.POTO_SEQ = B.SLCT_POTO_SEQ AND A.USER_ID = S.USER_ID), '') AS FACEIMG
+		             , (SELECT TMLN_READ_DTTM FROM PSN_USER_INFO WHERE USER_ID = #{userId}) AS READ_DTTM
+		          FROM PSN_TMLN_INFO S
+		         WHERE EXISTS (SELECT 1 
+		                         FROM (
+	]]>
+	<if test="viewMode == 'ALL' "> 
+	<![CDATA[
+		                               SELECT TMLN_SEQ
+		                                 FROM PSN_TMLN_INFO A, PSN_USER_FRIEND_INFO B
+		                                WHERE A.USER_ID = B.FRIEND_ID
+		                                  AND B.USER_ID = #{userId}
+		                                  AND A.OBJR_DIV != 'GRP'
+		                                  AND A.TMLN_DIV= '010'
+		                                  AND A.TMLN_SEQ < #{tmlnSeq}
+		                                UNION ALL 
+		                               SELECT TMLN_SEQ
+		                                 FROM PSN_TMLN_INFO A, PSN_USER_GRP_FRIEND_MAP B
+		                                WHERE A.USER_ID = B.USER_ID
+		                                  AND A.OBJR_ID = B.GRP_SEQ
+		                                  AND B.FRIEND_ID = #{userId}
+		                                  AND A.OBJR_DIV = 'GRP'
+		                                  AND TMLN_DIV= '010'
+		                                  AND TMLN_SEQ < #{tmlnSeq}
+		                                UNION ALL 
+		                               SELECT TMLN_SEQ
+		                                 FROM PSN_TMLN_INFO A
+		                                WHERE A.USER_ID = #{userId}
+		                                  AND TMLN_SEQ < #{tmlnSeq}
+	]]>
+	</if>
+	<if test="viewMode == 'USER' ">
+	<![CDATA[
+		                               SELECT TMLN_SEQ
+		                                 FROM PSN_TMLN_INFO A
+		                                WHERE A.USER_ID = #{userId}
+		                                  AND TMLN_SEQ < #{tmlnSeq}
+	]]>
+	</if>	
+	<![CDATA[
+		                              ) B
+		                        WHERE S.TMLN_SEQ = B.TMLN_SEQ
+	]]>
+	<if test="tmlnDiv != null and tmlnDiv != ''">
+	<![CDATA[
+								  AND S.TMLN_DIV = #{tmlnDiv}
+	]]>
+	</if>
+	<![CDATA[
+		                        ))
+		 WHERE ROW_NUM <= #{rowNum}	
+	]]>
+	</select>
+	
+	<select id="getPsnTmlnOpnList" resultMap="psnTmlnOpnResult">
+		<![CDATA[
+		select F.*, case when F.READ_DTTM >= F.UPD_DTTM then 'Y' else 'N' end as READ_YN FROM(
+		select A.TMLN_SEQ
+			, A.TMLN_OPN_SEQ
+			, A.UP_OPN_SEQ
+			, A.USER_ID
+			, A.USER_NAME
+			, A.USER_NICK
+			, A.OPN_CONTS
+			, A.DEL_YN
+			, A.REGR_ID
+			, A.REGR_NAME
+			, TO_CHAR(A.REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+			, A.UPDR_ID
+			, A.UPDR_NAME
+			, A.UPD_DTTM,
+			NVL((select P.FILE_PATH ||'/'|| P.FILE_NAME 
+		      from PSN_USER_POTO_INFO P, psn_user_info B
+		     where  P.user_id = B.user_id 
+		       and P.POTO_SEQ = B.SLCT_POTO_SEQ 
+		       and P.user_id = A.USER_ID),'')  as faceImg,
+		       (select TMLN_READ_DTTM from PSN_USER_INFO  where user_id = #{userId}) as READ_DTTM		       
+		 from PSN_TMLN_OPN A
+		where A.TMLN_SEQ in(
+							SELECT Z.TMLN_SEQ
+							  FROM (SELECT ROW_NUMBER() OVER(ORDER BY TMLN_SEQ DESC) as ROW_NUM
+							             , TMLN_SEQ
+							          FROM PSN_TMLN_INFO S
+							         WHERE EXISTS (SELECT 1 
+							                         FROM (
+		]]>
+		<if test="viewMode == 'ALL' "> 
+		<![CDATA[
+							                               SELECT TMLN_SEQ
+							                                 FROM PSN_TMLN_INFO A, PSN_USER_FRIEND_INFO B
+							                                WHERE A.USER_ID = B.FRIEND_ID
+							                                  AND B.USER_ID = #{userId}
+							                                  AND A.OBJR_DIV != 'GRP'
+							                                  AND A.TMLN_DIV= '010'
+							                                  AND A.TMLN_SEQ < #{tmlnSeq}
+							                                UNION ALL 
+							                               SELECT TMLN_SEQ
+							                                 FROM PSN_TMLN_INFO A, PSN_USER_GRP_FRIEND_MAP B
+							                                WHERE A.USER_ID = B.USER_ID
+							                                  AND A.OBJR_ID = B.GRP_SEQ
+							                                  AND B.FRIEND_ID = #{userId}
+							                                  AND A.OBJR_DIV = 'GRP'
+							                                  AND TMLN_DIV= '010'
+							                                  AND TMLN_SEQ < #{tmlnSeq}
+							                                UNION ALL 
+							                               SELECT TMLN_SEQ
+							                                 FROM PSN_TMLN_INFO A
+							                                WHERE A.USER_ID = #{userId}
+							                                  AND TMLN_SEQ < #{tmlnSeq}
+		]]>
+		</if>
+		<if test="viewMode == 'USER' ">
+		<![CDATA[
+							                               SELECT TMLN_SEQ
+							                                 FROM PSN_TMLN_INFO A
+							                                WHERE A.USER_ID = #{userId}
+							                                  AND TMLN_SEQ < #{tmlnSeq}
+		]]>
+		</if>	
+		<![CDATA[
+							                              ) B
+							                        WHERE S.TMLN_SEQ = B.TMLN_SEQ
+		]]>
+		<if test="tmlnDiv != null and tmlnDiv != ''">
+		<![CDATA[
+													  AND S.TMLN_DIV = #{tmlnDiv}
+		]]>
+		</if>
+		<![CDATA[
+							                        )) Z
+							 WHERE ROW_NUM <= #{rowNum}	
+		    )	
+		AND A.DEL_YN = 'N'    	
+		ORDER BY 1,2
+		) F   
+		]]>
+	</select>
+		
+	<insert id="insertPsnTmlnOpn" >
+		<selectKey keyProperty="tmlnOpnSeq" resultType="int" order="BEFORE" >
+		  SELECT SEQ_TMLN_OPN.NEXTVAL As tmlnOpnSeq 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+		INSERT INTO PSN_TMLN_OPN(
+			 TMLN_SEQ
+			, TMLN_OPN_SEQ
+			, UP_OPN_SEQ
+			, USER_ID
+			, USER_NAME
+			, USER_NICK
+			, OPN_CONTS
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			) VALUES (
+			 #{tmlnSeq}
+			, #{tmlnOpnSeq}
+			, #{upOpnSeq}
+			, #{userId}
+			, #{userName}
+			, #{userNick}
+			, #{opnConts}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate 
+			, #{updrId}
+			, #{updrName}
+			, TO_DATE(#{updDttm},'YYYY-MM-DD HH24:MI:SS')
+			)
+		
+		]]>
+	</insert>
+	
+	<insert id="insertPsnTmlnApndFile" >
+		<selectKey keyProperty="fileSeq" resultType="int" order="BEFORE" >
+		  SELECT SEQ_TMLN_APND.NEXTVAL As fileSeq 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+			INSERT INTO PSN_TMLN_APND_FILE(
+			 TMLN_SEQ
+			, FILE_SEQ
+			, APND_FILE_TP
+			, APND_FILE_SZ
+			, APND_FILE_ORGN
+			, APND_FILE_NAME
+			, APND_FILE_PATH
+			, APND_FILE_PRVW_NAME
+			, APND_FILE_PRVW_PATH
+			, SOURCE_CODE_INPUT
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, MVP_KEY
+			) VALUES (
+			 #{tmlnSeq}
+			, #{fileSeq}
+			, #{apndFileTp}
+			, #{apndFileSz}
+			, #{apndFileOrgn}
+			, #{apndFileName}
+			, #{apndFilePath}
+			, #{apndFilePrvwName}
+			, #{apndFilePrvwPath}
+			, #{sourceCodeInput}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			, #{mvpKey}
+		)
+		]]>
+	</insert>
+		
+
+	<select id="getPsnTmlnApndFileList" resultMap="psnTmlnApndFileResult">
+		<![CDATA[
+			SELECT TMLN_SEQ
+			, FILE_SEQ
+			, APND_FILE_TP
+			, APND_FILE_SZ
+			, APND_FILE_ORGN
+			, APND_FILE_NAME
+			, APND_FILE_PATH
+			, APND_FILE_PRVW_NAME
+			, APND_FILE_PRVW_PATH
+			, SOURCE_CODE_INPUT
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, TO_CHAR(REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, MVP_KEY
+			FROM PSN_TMLN_APND_FILE
+			WHERE TMLN_SEQ in (			
+					    		SELECT Z.TMLN_SEQ
+								  FROM (SELECT ROW_NUMBER() OVER(ORDER BY TMLN_SEQ DESC) as ROW_NUM
+								             , TMLN_SEQ
+								          FROM PSN_TMLN_INFO S
+								         WHERE EXISTS (SELECT 1 
+								                         FROM (
+		]]>
+		<if test="viewMode == 'ALL' "> 
+		<![CDATA[
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A, PSN_USER_FRIEND_INFO B
+								                                WHERE A.USER_ID = B.FRIEND_ID
+								                                  AND B.USER_ID = #{userId}
+								                                  AND A.OBJR_DIV != 'GRP'
+								                                  AND A.TMLN_DIV= '010'
+								                                  AND A.TMLN_SEQ < #{tmlnSeq}
+								                                UNION ALL 
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A, PSN_USER_GRP_FRIEND_MAP B
+								                                WHERE A.USER_ID = B.USER_ID
+								                                  AND A.OBJR_ID = B.GRP_SEQ
+								                                  AND B.FRIEND_ID = #{userId}
+								                                  AND A.OBJR_DIV = 'GRP'
+								                                  AND TMLN_DIV= '010'
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+								                                UNION ALL 
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A
+								                                WHERE A.USER_ID = #{userId}
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+		]]>
+		</if>
+		<if test="viewMode == 'USER' ">
+		<![CDATA[
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A
+								                                WHERE A.USER_ID = #{userId}
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+		]]>
+		</if>	
+		<![CDATA[
+								                              ) B
+								                        WHERE S.TMLN_SEQ = B.TMLN_SEQ
+		]]>
+		<if test="tmlnDiv != null and tmlnDiv != ''">
+		<![CDATA[
+														  AND S.TMLN_DIV = #{tmlnDiv}
+		]]>
+		</if>
+		<![CDATA[
+								                        )) Z
+								 WHERE ROW_NUM <= #{rowNum}	 						
+			)
+			order by 2
+		]]>		
+	</select>
+	
+	<insert id="insertBbsNotiSurvey">
+		<selectKey keyProperty="surveyNo" resultType="int" order="BEFORE" >
+		  SELECT SEQ_NOTI_SURVEY.NEXTVAL As surveyNo 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+			INSERT INTO Bbs_NOTI_SURVEY(
+			 SURVEY_NO
+			, NOTI_ID
+			, TMP_NOTI_SEQ
+			, TMLN_SEQ
+			, SURVEY_CLOS_DTTM
+			, SURVEY_RSLT_OPEN_YN
+			, SURVEY_CONTS
+			, SURVEY_TP
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			) VALUES (
+			 #{surveyNo}
+			, #{notiId}
+			, #{tmpNotiSeq}
+			, #{tmlnSeq}
+			, TO_DATE(#{surveyClosDttm}, 'YYYY-MM-DD HH24:MI:SS') 
+			, #{surveyRsltOpenYn}
+			, #{surveyConts}
+			, #{surveyTp}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			)
+		]]>
+	</insert>
+	
+	<insert id="insertBbsNotiSurveyExmpl">
+		<selectKey keyProperty="exmplNo" resultType="int" order="BEFORE" >
+		  SELECT SEQ_NOTI_EXMPL.NEXTVAL As exmplNo 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+			INSERT INTO Bbs_NOTI_SURVEY_EXMPL(
+			 SURVEY_NO
+			, EXMPL_NO
+			, EXMPL_CONTS
+			, IMG_PATH
+			, IMG_NAME
+			, PRVW_PATH
+			, PRVW_NAME
+			, TOT_CNT
+			, RSLT_CNT
+			, RSLT_RTO
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			) VALUES (
+			 #{surveyNo}
+			, #{exmplNo}
+			, #{exmplConts}
+			, #{imgPath}
+			, #{imgName}
+			, #{prvwPath}
+			, #{prvwName}
+			, #{totCnt}
+			, #{rsltCnt}
+			, #{rsltRto}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			)
+		]]>
+	</insert>
+	
+	<select id="getBbsNotiSurveyList" resultMap="bbsNotiSurveyResult">
+		<![CDATA[
+			SELECT SURVEY_NO
+				, NOTI_ID
+				, TMP_NOTI_SEQ
+				, TMLN_SEQ
+				, SURVEY_CLOS_DTTM
+				, SURVEY_RSLT_OPEN_YN
+				, SURVEY_CONTS
+				, SURVEY_TP
+				, DEL_YN
+				, REGR_ID
+				, REGR_NAME
+				, TO_CHAR(REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+				, UPDR_ID
+				, UPDR_NAME
+				, UPD_DTTM
+			 FROM Bbs_NOTI_SURVEY
+			WHERE TMLN_SEQ IN (
+					    		SELECT Z.TMLN_SEQ
+								  FROM (SELECT ROW_NUMBER() OVER(ORDER BY TMLN_SEQ DESC) as ROW_NUM
+								             , TMLN_SEQ
+								          FROM PSN_TMLN_INFO S
+								         WHERE EXISTS (SELECT 1 
+								                         FROM (
+		]]>
+		<if test="viewMode == 'ALL' "> 
+		<![CDATA[
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A, PSN_USER_FRIEND_INFO B
+								                                WHERE A.USER_ID = B.FRIEND_ID
+								                                  AND B.USER_ID = #{userId}
+								                                  AND A.OBJR_DIV != 'GRP'
+								                                  AND A.TMLN_DIV= '010'
+								                                  AND A.TMLN_SEQ < #{tmlnSeq}
+								                                UNION ALL 
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A, PSN_USER_GRP_FRIEND_MAP B
+								                                WHERE A.USER_ID = B.USER_ID
+								                                  AND A.OBJR_ID = B.GRP_SEQ
+								                                  AND B.FRIEND_ID = #{userId}
+								                                  AND A.OBJR_DIV = 'GRP'
+								                                  AND TMLN_DIV= '010'
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+								                                UNION ALL 
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A
+								                                WHERE A.USER_ID = #{userId}
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+		]]>
+		</if>
+		<if test="viewMode == 'USER' ">
+		<![CDATA[
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A
+								                                WHERE A.USER_ID = #{userId}
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+		]]>
+		</if>	
+		<![CDATA[
+								                              ) B
+								                        WHERE S.TMLN_SEQ = B.TMLN_SEQ
+		]]>
+		<if test="tmlnDiv != null and tmlnDiv != ''">
+		<![CDATA[
+														  AND S.TMLN_DIV = #{tmlnDiv}
+		]]>
+		</if>
+		<![CDATA[
+								                        )) Z
+								 WHERE ROW_NUM <= #{rowNum} 
+			     )
+		   ORDER BY 1	     
+		]]>
+	</select>
+	
+
+	<select id="getBbsNotiSurveyExmplList" resultMap="bbsNotiSurveyExmplResult">
+		<![CDATA[
+			SELECT SURVEY_NO
+			, EXMPL_NO
+			, EXMPL_CONTS
+			, IMG_PATH
+			, IMG_NAME
+			, PRVW_PATH
+			, PRVW_NAME
+			, TOT_CNT
+			, RSLT_CNT
+			, RSLT_RTO
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, TO_CHAR(REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, NVL((SELECT EXMPL_NO FROM BBS_NOTI_SURVEY_ANSW B WHERE A.EXMPL_NO = B.ANSW_EXMPL_NO AND B.ANSWMAN_ID = #{userId}),0) AS ANSW_EXMPL_NO
+			FROM BBS_NOTI_SURVEY_EXMPL A
+			WHERE SURVEY_NO IN (
+				SELECT SURVEY_NO				
+				  FROM Bbs_NOTI_SURVEY
+				 WHERE TMLN_SEQ IN (
+					    		SELECT Z.TMLN_SEQ
+								  FROM (SELECT ROW_NUMBER() OVER(ORDER BY TMLN_SEQ DESC) as ROW_NUM
+								             , TMLN_SEQ
+								          FROM PSN_TMLN_INFO S
+								         WHERE EXISTS (SELECT 1 
+								                         FROM (
+		]]>
+		<if test="viewMode == 'ALL' "> 
+		<![CDATA[
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A, PSN_USER_FRIEND_INFO B
+								                                WHERE A.USER_ID = B.FRIEND_ID
+								                                  AND B.USER_ID = #{userId}
+								                                  AND A.OBJR_DIV != 'GRP'
+								                                  AND A.TMLN_DIV= '010'
+								                                  AND A.TMLN_SEQ < #{tmlnSeq}
+								                                UNION ALL 
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A, PSN_USER_GRP_FRIEND_MAP B
+								                                WHERE A.USER_ID = B.USER_ID
+								                                  AND A.OBJR_ID = B.GRP_SEQ
+								                                  AND B.FRIEND_ID = #{userId}
+								                                  AND A.OBJR_DIV = 'GRP'
+								                                  AND TMLN_DIV= '010'
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+								                                UNION ALL 
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A
+								                                WHERE A.USER_ID = #{userId}
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+		]]>
+		</if>
+		<if test="viewMode == 'USER' ">
+		<![CDATA[
+								                               SELECT TMLN_SEQ
+								                                 FROM PSN_TMLN_INFO A
+								                                WHERE A.USER_ID = #{userId}
+								                                  AND TMLN_SEQ < #{tmlnSeq}
+		]]>
+		</if>	
+		<![CDATA[
+								                              ) B
+								                        WHERE S.TMLN_SEQ = B.TMLN_SEQ
+		]]>
+		<if test="tmlnDiv != null and tmlnDiv != ''">
+		<![CDATA[
+														  AND S.TMLN_DIV = #{tmlnDiv}
+		]]>
+		</if>
+		<![CDATA[
+								                        )) Z
+								 WHERE ROW_NUM <= #{rowNum}				     
+				     )
+			)
+			order by 2 desc
+		]]>
+	</select>
+	
+	<insert id="insertBbsNotiSurveyAnsw" >
+		<![CDATA[
+			INSERT INTO Bbs_NOTI_SURVEY_ANSW(
+			 SURVEY_NO
+			, ANSWMAN_ID
+			, ANSWMAN_NAME
+			, ANSW_EXMPL_NO
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			) VALUES (
+			 #{surveyNo}
+			, #{answmanId}
+			, #{answmanName}
+			, #{answExmplNo}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			)
+		]]>
+	</insert>
+
+
+	<update id="updatePsnTmlnOpn">
+		<![CDATA[
+			UPDATE PSN_TMLN_OPN SET OPN_CONTS = #{opnConts}, UPDR_ID = #{updrId}, UPDR_NAME = #{updrName}, UPD_DTTM = sysdate
+		]]>
+		WHERE TMLN_SEQ = #{tmlnSeq}
+		AND TMLN_OPN_SEQ = #{tmlnOpnSeq}
+	</update>
+	
+	<delete id="deleteTmlnOpn" >
+		<![CDATA[
+		DELETE FROM PSN_TMLN_OPN
+		 WHERE TMLN_OPN_SEQ = #{tmlnOpnSeq}
+		]]>
+	</delete>
+	
+	<insert id="insertPsnTmlnEvalInfo" >		
+		<![CDATA[
+			INSERT INTO PSN_TMLN_EVAL_INFO(
+			 TMLN_SEQ
+			, TMLN_EVAL_DIV
+			, USER_ID
+			, EVAL_SEQ
+			, USER_NAME
+			, EVAL_DTTM
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, USER_NICK
+			) VALUES (
+			 #{tmlnSeq}
+			, #{tmlnEvalDiv}
+			, #{userId}
+			, #{evalSeq}
+			, #{userName}
+			, sysdate
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, #{updDttm}
+			, #{userNick}
+			)
+		]]>
+	</insert>
+	
+
+	<select id="getPsnTmlnEvalInfoList" resultType="int">
+		<![CDATA[
+			SELECT count(1)
+			FROM PSN_TMLN_EVAL_INFO
+			WHERE TMLN_SEQ = #{tmlnSeq}
+			  AND TMLN_EVAL_DIV = '030'
+		]]>
+		<if test="userId != null and userId != ''"> AND USER_ID = #{userId} </if>
+	</select>
+	
+	
+	<select id="getPsnTmlnEvalUserList" resultMap="psnTmlnEvalInfoResult">
+		<![CDATA[
+		SELECT A.USER_ID, A.USER_NAME, A.USER_NICK, '('||B.DEPT_CODE||')' OU
+			FROM PSN_TMLN_EVAL_INFO A, PSN_USER_INFO B
+			WHERE A.USER_ID = B.USER_ID(+)
+			  AND TMLN_SEQ = #{tmlnSeq}
+			  AND TMLN_EVAL_DIV = '030'
+		]]>		
+	</select>
+			
+	<update id="updatePsnTmlnReadYn" >
+		<![CDATA[
+		UPDATE PSN_USER_INFO SET tmln_read_dttm = sysdate
+		]]>
+		WHERE user_id = #{id}
+	</update>
+	
+	<select id="getSurveyResultTitle" resultMap="psnSurveyResult">
+		<![CDATA[]]>		
+		SELECT (SELECT TO_CHAR(REG_DTTM,'yyyy-mm-dd') FROM BBS_NOTI_SURVEY 
+				<if test="tmlnSeq != null and tmlnSeq != '' ">
+				WHERE TMLN_SEQ = #{tmlnSeq} AND ROWNUM = 1) BEGIN_DATE,
+				</if> 
+				<if test="notiId != null and notiId != '' ">
+				WHERE NOTI_ID = #{notiId} AND ROWNUM = 1) BEGIN_DATE,
+				</if>
+       (SELECT TO_CHAR(SURVEY_CLOS_DTTM,'yyyy-mm-dd') FROM BBS_NOTI_SURVEY 
+       			<if test="tmlnSeq != null and tmlnSeq != '' ">
+       			WHERE TMLN_SEQ = #{tmlnSeq} AND ROWNUM = 1) END_DATE, CNT
+       			</if>      
+       			<if test="notiId != null and notiId != '' ">
+       			WHERE NOTI_ID = #{notiId} AND ROWNUM = 1) END_DATE, CNT
+       			</if>  			
+          FROM(
+			SELECT COUNT(1) CNT 
+				FROM (
+					SELECT A.TMLN_SEQ, B.ANSWMAN_ID  
+				  	  FROM BBS_NOTI_SURVEY A, BBS_NOTI_SURVEY_ANSW B
+				  	 WHERE A.SURVEY_NO = B.SURVEY_NO
+					   <if test="tmlnSeq != null and tmlnSeq != '' ">
+					       AND A.TMLN_SEQ = #{tmlnSeq}
+					   </if>
+					   <if test="notiId != null and notiId != '' ">
+					       AND A.NOTI_ID = #{notiId}
+					   </if>
+				GROUP BY TMLN_SEQ, B.ANSWMAN_ID ))
+		
+	</select>
+	
+	<select id="getSurveyResultExmpl" resultMap="bbsNotiSurveyExmplResult">
+		<![CDATA[
+		
+		SELECT A.SURVEY_NO, A.EXMPL_NO, A.EXMPL_CONTS, A.IMG_PATH, A.IMG_NAME, DECODE(IMG_NAME, NULL, '1','2') AS SURVEY_TP
+    		  ,(SELECT COUNT(1) FROM BBS_NOTI_SURVEY_ANSW B WHERE A.SURVEY_NO = B.SURVEY_NO) AS TOT_CNT
+    		  ,(SELECT COUNT(1) FROM BBS_NOTI_SURVEY_ANSW BB WHERE A.SURVEY_NO = BB.SURVEY_NO AND A.EXMPL_NO = BB.ANSW_EXMPL_NO) AS RSLT_CNT
+    		  ,CASE WHEN (SELECT COUNT(1) FROM BBS_NOTI_SURVEY_ANSW BB WHERE A.SURVEY_NO = BB.SURVEY_NO AND A.EXMPL_NO = BB.ANSW_EXMPL_NO) = 0 THEN 0 ELSE  
+     		  (SELECT COUNT(1) FROM BBS_NOTI_SURVEY_ANSW BB WHERE A.SURVEY_NO = BB.SURVEY_NO AND A.EXMPL_NO = BB.ANSW_EXMPL_NO) / (SELECT COUNT(1) FROM BBS_NOTI_SURVEY_ANSW B WHERE A.SURVEY_NO = B.SURVEY_NO) * 100 END AS RSLT_RTO 
+		 FROM BBS_NOTI_SURVEY_EXMPL A 
+		WHERE EXISTS (SELECT 1 FROM BBS_NOTI_SURVEY C WHERE A.SURVEY_NO = C.SURVEY_NO 
+		]]>		
+		<if test="tmlnSeq != null and tmlnSeq != '' ">
+			AND TMLN_SEQ = #{tmlnSeq}
+		</if>
+		<if test="notiId != null and notiId != '' ">
+			AND NOTI_ID = #{notiId}
+		</if>
+		)
+		ORDER BY 1, 2
+			
+		
+	</select>
+	
+	<select id="getBbsNotiSurveyResultList" resultMap="bbsNotiSurveyResult">
+		<![CDATA[
+		SELECT SURVEY_NO
+		, RELA_NOTI_KIND
+		, NOTI_ID
+		, TMP_NOTI_SEQ
+		, TMLN_SEQ
+		, USER_NOTI_SEQ
+		, SURVEY_CLOS_DTTM
+		, SURVEY_RSLT_OPEN_YN
+		, SURVEY_CONTS
+		, SURVEY_TP
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		FROM BBS_NOTI_SURVEY
+		]]>	
+		<if test="tmlnSeq != null and tmlnSeq != '' ">
+		WHERE TMLN_SEQ = #{tmlnSeq}
+		</if>
+		<if test="notiId != null and notiId != '' ">
+		WHERE NOTI_ID = #{notiId}
+		</if>
+		ORDER BY 1
+		
+	</select>
+	
+	<select id="getBbsNotiSurveyExmplUpdateList" resultMap="bbsNotiSurveyExmplResult">
+		<![CDATA[
+		SELECT SURVEY_NO
+		, EXMPL_NO
+		, EXMPL_CONTS
+		, IMG_PATH
+		, IMG_NAME
+		, PRVW_PATH
+		, PRVW_NAME
+		, TOT_CNT
+		, RSLT_CNT
+		, RSLT_RTO
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		FROM BBS_NOTI_SURVEY_EXMPL
+		WHERE SURVEY_NO IN ( SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE TMLN_SEQ = #{tmlnSeq})
+		ORDER BY 1,2
+		]]>	
+	</select>
+		
+	
+	
+	
+	<select id="getBbsNotiSurveyResultYN" resultType="int">
+		<![CDATA[
+		SELECT COUNT(1)
+		FROM BBS_NOTI_SURVEY_ANSW
+		WHERE SURVEY_NO = #{surveyNo}
+		  AND ANSWMAN_ID = #{answmanId}
+		]]>	
+	</select>
+	
+	 <delete id="deleteBbsNotiSurvey" >
+		<![CDATA[
+		DELETE FROM BBS_NOTI_SURVEY
+		 WHERE TMLN_SEQ = #{tmlnSeq}
+		]]>
+	</delete>
+	
+	<delete id="deleteBbsNotiSurveyExmpl" >
+		<![CDATA[
+		 DELETE FROM BBS_NOTI_SURVEY_EXMPL
+		  WHERE SURVEY_NO IN ( SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE TMLN_SEQ = #{tmlnSeq})
+		]]>
+	</delete>
+	
+	<select id="getBbsNotiSurveyResultCnt" resultType="int">
+		<![CDATA[
+		SELECT COUNT(1)
+		FROM BBS_NOTI_SURVEY_ANSW
+		WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE TMLN_SEQ = #{tmlnSeq})
+		]]>	
+	</select>
+	
+	
+
+	<update id="updateBbsNotiSurvey" >
+	<![CDATA[
+		UPDATE BBS_NOTI_SURVEY 
+		SET SURVEY_CLOS_DTTM = TO_DATE(#{surveyClosDttm}, 'YYYY-MM-DD HH24:MI:SS'),		                       
+			UPD_DTTM = sysdate, 
+			UPDR_ID = #{updrId}, 
+			UPDR_NAME = #{updrName}	
+		WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE TMLN_SEQ = #{tmlnSeq})
+	]]>
+	</update>
+	
+	
+	
+	<select id="getNotilnInfoList" resultMap="bbsNotiInfoResult">
+	<!-- 
+	<![CDATA[
+		SELECT S.*
+		FROM
+		(
+			SELECT ROW_NUMBER() OVER(ORDER BY SORT_SEQ DESC) AS ROW_NUM
+			       , NVL(A.NOTI_TITLE_ORGN, A.NOTI_TITLE) NOTI_TITLE_ORGN
+			       , A.NOTI_CONTS
+			       , TO_CHAR(A.REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+			       , A.BOARD_ID
+			       , A.NOTI_ID
+			       , A.SORT_SEQ
+			       , C.BOARD_NAME BF_BOARD_ID
+			       , C.REGR_NAME
+			FROM BBS_NOTI_INFO A
+			     ,BBS_BOARD_INFO C
+			WHERE EXISTS (SELECT 1 FROM BBS_BOARD_USER_MAP B WHERE A.BOARD_ID = B.BOARD_ID AND USER_ID = 'ALL')
+			AND A.DEL_YN = 'N'
+			AND A.NOTI_BGN_DTTM <= SYSDATE
+			AND A.NOTI_END_DTTM >= SYSDATE
+			AND A.BOARD_ID IN (SELECT BOARD_ID FROM PSN_USER_CNCR_BOARD_SET WHERE USER_ID = #{userId} AND DEL_YN = 'N')
+			AND A.BOARD_ID = C.BOARD_ID
+			AND C.DEL_YN = 'N'
+			                     
+		AND SORT_SEQ < #{sortSeq}
+			
+		) S
+	        
+		where ROW_NUM <= #{rnum}    		
+	]]>	 -->
+		
+		<![CDATA[	
+		                  	
+		SELECT ROW_NUM, NOTI_TITLE_ORGN, NOTI_CONTS, REG_DTTM, BOARD_ID, NOTI_ID, SORT_SEQ, REGR_NAME, BOARD_DIV
+              , CASE WHEN K.BOARD_DIV ='PBS' THEN ( SELECT BOARD_NAME FROM PBS_USER_BOARD_INFO Z WHERE Z.BOARD_ID = K.BOARD_ID ) ELSE ( SELECT BOARD_NAME FROM BBS_BOARD_INFO Z WHERE Z.BOARD_ID = K.BOARD_ID ) END AS BOARD_NAME
+  FROM (SELECT ROW_NUMBER() OVER(ORDER BY SORT_SEQ DESC) AS ROW_NUM
+             , S.*
+          FROM (SELECT NVL(A.NOTI_TITLE_ORGN, A.NOTI_TITLE) NOTI_TITLE_ORGN
+                     , A.NOTI_CONTS
+                     , TO_CHAR(A.REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+                     , A.BOARD_ID
+                     , A.NOTI_ID
+                     , A.SORT_SEQ
+                     , DECODE(A.NICK_USE_YN, 'Y', A.USER_NICK, A.REGR_NAME) REGR_NAME
+                     , 'BBS' AS BOARD_DIV
+                  FROM BBS_NOTI_INFO A,
+                       (SELECT A.NOTI_ID
+                          FROM BBS_NOTI_INFO A, BBS_BOARD_INFO B, PSN_USER_CNCR_BOARD_SET C, BBS_BOARD_USER_MAP D
+                         WHERE A.DEL_YN = 'N'
+                           AND A.NOTI_BGN_DTTM <= SYSDATE
+                           AND A.NOTI_END_DTTM >= SYSDATE -1
+                           AND A.BOARD_ID = B.BOARD_ID
+                           AND B.BOARD_ID = C.BOARD_ID
+                           AND C.USER_ID  = #{userId}
+                           AND B.DEL_YN = 'N'
+                           AND C.BOARD_DIV = 'BBS'
+                           AND A.BOARD_ID = D.BOARD_ID
+                           AND D.USER_ID IN (${userMap})
+                           AND A.SORT_SEQ < #{sortSeq}
+                           AND B.BOARD_KIND != '020'
+                         UNION
+                        SELECT A.NOTI_ID
+                          FROM BBS_NOTI_INFO A, BBS_BOARD_INFO B, PSN_USER_CNCR_BOARD_SET C, BBS_NOTI_USER_MAP D
+                         WHERE A.DEL_YN = 'N'
+                           AND A.NOTI_BGN_DTTM <= SYSDATE
+                           AND A.NOTI_END_DTTM >= SYSDATE -1
+                           AND A.BOARD_ID = B.BOARD_ID
+                           AND B.BOARD_ID = C.BOARD_ID
+                           AND C.USER_ID  = #{userId}
+                           AND B.DEL_YN = 'N'
+                           AND C.BOARD_DIV = 'BBS'
+                           AND A.NOTI_ID = D.NOTI_ID
+                           AND D.USER_ID IN (${userMap})
+                           AND A.SORT_SEQ < #{sortSeq}
+                           AND B.BOARD_KIND != '020'
+                         UNION                                              
+                        SELECT NOTI_ID
+                          FROM (SELECT NOTI_ID
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 1), 1) AS TAG1_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 2), 1) AS TAG2_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 3), 1) AS TAG3_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 4), 1) AS TAG4_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 5), 1) AS TAG5_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 6), 1) AS TAG6_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 7), 1) AS TAG7_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 8), 1) AS TAG8_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 9), 1) AS TAG9_CNT
+                                     , INSTR(NOTI_TAG_LST, (SELECT CNCR_TAG FROM (SELECT ROWNUM AS NUM, CNCR_TAG FROM PSN_USER_CNCR_TAG WHERE USER_ID = #{userId}) WHERE NUM = 10), 1) AS TAG10_CNT
+                                  FROM BBS_NOTI_INFO A, BBS_BOARD_INFO B, BBS_BOARD_USER_MAP C
+                                 WHERE A.BOARD_ID = B.BOARD_ID
+                                   AND A.BOARD_ID = C.BOARD_ID
+                                   AND A.NOTI_TAG_LST IS NOT NULL
+                                   AND A.DEL_YN = 'N'
+                                   AND A.NOTI_BGN_DTTM <= SYSDATE
+                                   AND A.NOTI_END_DTTM >= SYSDATE -1
+                                   AND B.DEL_YN = 'N'
+                                   AND C.DEL_YN = 'N'
+                                   AND B.BOARD_KIND != '020'
+                                   AND A.SORT_SEQ < #{sortSeq}
+                                   AND C.USER_ID IN (${userMap}))
+                         WHERE NVL(TAG1_CNT, 0) + NVL(TAG2_CNT, 0) + NVL(TAG3_CNT, 0) + NVL(TAG4_CNT, 0) + NVL(TAG5_CNT, 0) + NVL(TAG6_CNT, 0) + NVL(TAG7_CNT, 0) + NVL(TAG8_CNT, 0) + NVL(TAG9_CNT, 0) + NVL(TAG10_CNT, 0) > 0) B
+                 WHERE A.NOTI_ID = B.NOTI_ID
+                 UNION ALL                 
+                SELECT NVL(A.NOTI_TITLE_ORGN, A.NOTI_TITLE) NOTI_TITLE_ORGN
+                     , A.NOTI_CONTS
+                     , TO_CHAR(A.REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+                     , A.BOARD_ID
+                     , '' AS NOTI_ID
+                     , A.USER_NOTI_SEQ AS SORT_SEQ
+                     , DECODE(A.NICK_USE_YN, 'Y', A.USER_NICK, A.REGR_NAME) REGR_NAME
+                     , 'PBS' AS BOARD_DIV
+                  FROM PBS_USER_NOTI_INFO A, PBS_USER_BOARD_INFO B, PBS_USER_BOARD_PART_INFO C, PSN_USER_CNCR_BOARD_SET D
+                 WHERE A.BOARD_ID = B.BOARD_ID 
+                   AND B.BOARD_ID = C.BOARD_ID
+                   AND B.BOARD_ID = D.BOARD_ID
+                   AND C.USER_ID IN (${userMap})
+                   AND D.USER_ID  = #{userId}
+                   AND B.DEL_YN = 'N'
+                   AND D.BOARD_DIV = 'PBS'            
+                   AND A.DEL_YN = 'N'
+                   AND A.NOTI_BGN_DTTM <= SYSDATE
+                   AND A.NOTI_END_DTTM >= SYSDATE -1
+                   AND USER_NOTI_SEQ < #{sortSeq}) S ) K
+ WHERE ROW_NUM <= #{rnum}                   	
+	]]>
+		
+	</select>	
+	
+	
+	<select id="getNotiOpnInfoList" resultMap="bbsNotiOpnResult">
+	
+	<![CDATA[
+		SELECT S.*
+		FROM
+		(
+			SELECT ROW_NUMBER() OVER(ORDER BY A.UPD_DTTM DESC) AS ROW_NUM
+				   , A.NOTI_ID
+				   , A.NOTI_OPN_SEQ
+				   , A.OPN_CONTS
+				   , A.REGR_NAME USER_NAME
+			       , B.REGR_NAME
+			       , TO_CHAR(A.REG_DTTM, 'YYYY-MM-DD HH24:MI') REG_DTTM
+			       , A.UPDR_NAME
+			       , TO_CHAR(A.UPD_DTTM, 'YYYY-MM-DD HH24:MI:SSSSS') UPD_DTTM
+			       , B.BOARD_NAME
+			       , B.BOARD_ID
+			       , C.NOTI_TITLE_ORGN
+			FROM BBS_NOTI_OPN A
+			    ,BBS_BOARD_INFO B
+			    ,BBS_NOTI_INFO C
+			WHERE C.USER_ID = #{userId}
+			 AND C.NOTI_BGN_DTTM <= SYSDATE  
+			 AND C.NOTI_END_DTTM >= SYSDATE
+			 AND A.USER_ID <> #{userId} 
+			AND A.DEL_YN ='N'
+			AND B.DEL_YN ='N'
+			AND C.DEL_YN ='N'
+			AND A.NOTI_ID = C.NOTI_ID
+			AND C.BOARD_ID = B.BOARD_ID
+	]]>
+	<![CDATA[		                     
+		AND A.UPD_DTTM < TO_DATE(#{updDttm}, 'YYYY-MM-DD HH24:MI:SSSSS')
+	]]>		
+		) S
+	<![CDATA[        
+		where ROW_NUM <= #{rnum}    		
+	]]>	
+		
+	</select>	
+	
+	<select id="getPsnTmlnInfoForUpdate" resultType="portalxpert.person.person300.vo.PsnTmlnInfoVO"  >
+		<![CDATA[
+		SELECT         TMLN_SEQ
+		             , UP_TMLN_SEQ
+		             , OBJR_DIV
+		             , OBJR_ID
+		             , USER_ID
+		             , USER_NICK
+		             , USER_NAME
+		             , TMLN_DIV
+		             , TMLN_KIND
+		             , TMLN_TITLE
+		             , TMLN_CONTS
+		             , TMLN_SRC
+		             , RELA_URL
+		             , OPN_CNT
+		             , AGRM_CNT
+		             , OPP_CNT
+		             , LIKE_CNT
+		             , DEL_YN
+		             , REGR_ID
+		             , REGR_NAME
+		             , REG_DTTM
+		             , UPDR_ID
+		             , UPDR_NAME
+		             , UPD_DTTM
+		FROM PSN_TMLN_INFO 
+		WHERE TMLN_SEQ = #{tmlnSeq}
+		]]>
+	</select>	
+	
+	<select id="getPsnTmlnOpnForUpdate" resultType="portalxpert.person.person300.vo.PsnTmlnOpnVO"  >
+		<![CDATA[
+		SELECT  TMLN_SEQ
+			, TMLN_OPN_SEQ
+			, UP_OPN_SEQ
+			, USER_ID
+			, USER_NAME
+			, USER_NICK
+			, OPN_CONTS
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+		FROM PSN_TMLN_OPN
+		WHERE TMLN_SEQ = #{tmlnSeq}
+		AND TMLN_OPN_SEQ = #{tmlnOpnSeq}
+		]]>
+	</select>	
+	
+	<select id="getPsnTmlnUser" resultType="portalxpert.person.person300.vo.PsnTmlnInfoVO"  >
+		<![CDATA[
+		SELECT TMLN_SEQ
+		     , USER_ID
+		FROM PSN_TMLN_INFO
+		WHERE TMLN_SEQ = #{tmlnSeq}
+		]]>
+	</select>	
+	
+</mapper>

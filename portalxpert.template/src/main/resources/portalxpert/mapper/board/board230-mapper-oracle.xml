@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.board.board230.mapper.Board230Mapper">
+	
+	
+	<resultMap id="bbsTmpNotiInfoResult" type="portalxpert.board.board230.vo.BbsTmpNotiInfoVO">
+		<result property="tmpNotiSeq" column="TMP_NOTI_SEQ" />
+		<result property="upNotiId" column="UP_NOTI_ID" />
+		<result property="boardId" column="BOARD_ID" />
+		<result property="emgcYn" column="EMGC_YN" />
+		<result property="anmtYn" column="ANMT_YN" />
+		<result property="popupYn" column="POPUP_YN" />
+		<result property="briefYn" column="BRIEF_YN" />
+		<result property="moblOpenDiv" column="MOBL_OPEN_DIV" />
+		<result property="notiTitle" column="NOTI_TITLE" />
+		<result property="notiTitleOrgn" column="NOTI_TITLE_ORGN" />
+		<result property="titleBoldYn" column="TITLE_BOLD_YN" />
+		<result property="titleColorDiv" column="TITLE_COLOR_DIV" />
+		<result property="notiConts" column="NOTI_CONTS" />
+		<result property="linkUrl" column="LINK_URL" />
+		<result property="notiTp" column="NOTI_TP" />
+		<result property="notiKind" column="NOTI_KIND" />
+		<result property="nickUseYn" column="NICK_USE_YN" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="userName" column="USER_NAME" />
+		<result property="editDiv" column="EDIT_DIV" />
+		<result property="rsrvYn" column="RSRV_YN" />
+		<result property="notiBgnDttm" column="NOTI_BGN_DTTM" />
+		<result property="notiEndDttm" column="NOTI_END_DTTM" />
+		<result property="notiOpenDiv" column="NOTI_OPEN_DIV" />
+		<result property="notiOpenDivSpec" column="NOTI_OPEN_DIV_SPEC" />
+		<result property="publAsgnDiv" column="PUBL_ASGN_DIV" />
+		<result property="publAsgnDivSpec" column="PUBL_ASGN_DIV_SPEC" />
+		<result property="replyPrmsYn" column="REPLY_PRMS_YN" />
+		<result property="replyMakrRealnameYn" column="REPLY_MAKR_REALNAME_YN" />
+		<result property="opnPrmsYn" column="OPN_PRMS_YN" />
+		<result property="opnMakrRealnameYn" column="OPN_MAKR_REALNAME_YN" />
+		<result property="notiTagLst" column="NOTI_TAG_LST" />
+		<result property="statCode" column="STAT_CODE" />
+		<result property="deptCode" column="DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="deptFname" column="DEPT_FNAME" />
+		<result property="makrIp" column="MAKR_IP" />
+		<result property="brghCode" column="BRGH_CODE" />
+		<result property="cdlnDeptCode" column="CDLN_DEPT_CODE" />
+		<result property="cdlnDeptName" column="CDLN_DEPT_NAME" />
+		<result property="cdlnDeptFname" column="CDLN_DEPT_FNAME" />
+		<result property="cdlnObjr" column="CDLN_OBJR" />
+		<result property="cdlnEvntCode" column="CDLN_EVNT_CODE" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="boardName" column="BOARD_NAME" />
+		<result property="boardKind" column="BOARD_KIND" />
+		<result property="agrmOppYn" column="AGRM_OPP_YN" />
+		<result property="notiReadmanAsgnYn" column="NOTI_READMAN_ASGN_YN" />
+	</resultMap>
+	
+	<resultMap id="bbsTmpNotiApndFileResult" type="portalxpert.board.board230.vo.BbsTmpNotiApndFileVO">
+		<result property="tmpNotiSeq" column="TMP_NOTI_SEQ" />
+		<result property="apndFileSeq" column="APND_FILE_SEQ" />
+		<result property="apndFileTp" column="APND_FILE_TP" />
+		<result property="apndFileSz" column="APND_FILE_SZ" />
+		<result property="apndFileOrgn" column="APND_FILE_ORGN" />
+		<result property="apndFileName" column="APND_FILE_NAME" />
+		<result property="apndFilePath" column="APND_FILE_PATH" />
+		<result property="apndFilePrvwPath" column="APND_FILE_PRVW_PATH" />
+		<result property="apndFilePrvwName" column="APND_FILE_PRVW_NAME" />
+		<result property="sourceCodeInput" column="SOURCE_CODE_INPUT" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="mvpKey" column="MVP_KEY" />
+	</resultMap>
+		
+	<resultMap id="bbsTmpNotiUserMapResult" type="portalxpert.board.board230.vo.BbsTmpNotiUserMapVO">
+		<result property="tmpNotiSeq" column="TMP_NOTI_SEQ" />
+		<result property="userDiv" column="USER_DIV" />
+		<result property="userId" column="USER_ID" />
+		<result property="mngAuth" column="MNG_AUTH" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="displayName" column="DISPLAY_NAME" /> 
+		
+	</resultMap>
+	
+	<resultMap id="bbsNotiSurveyResult" type="portalxpert.board.board100.vo.BbsNotiSurveyVO">
+		<result property="surveyNo" column="SURVEY_NO" />
+		<result property="relaNotiKind" column="RELA_NOTI_KIND" />
+		<result property="notiId" column="NOTI_ID" />
+		<result property="tmpNotiSeq" column="TMP_NOTI_SEQ" />
+		<result property="tmlnSeq" column="TMLN_SEQ" />
+		<result property="userNotiSeq" column="USER_NOTI_SEQ" />
+		<result property="surveyClosDttm" column="SURVEY_CLOS_DTTM" />
+		<result property="surveyRsltOpenYn" column="SURVEY_RSLT_OPEN_YN" />
+		<result property="surveyConts" column="SURVEY_CONTS" />
+		<result property="surveyTp" column="SURVEY_TP" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+	</resultMap>
+	
+	<resultMap id="bbsNotiSurveyExmplResult" type="portalxpert.board.board100.vo.BbsNotiSurveyExmplVO">
+		<result property="surveyNo" column="SURVEY_NO" />
+		<result property="exmplNo" column="EXMPL_NO" />
+		<result property="exmplConts" column="EXMPL_CONTS" />
+		<result property="imgPath" column="IMG_PATH" />
+		<result property="imgName" column="IMG_NAME" />
+		<result property="prvwPath" column="PRVW_PATH" />
+		<result property="prvwName" column="PRVW_NAME" />
+		<result property="totCnt" column="TOT_CNT" />
+		<result property="rsltCnt" column="RSLT_CNT" />
+		<result property="rsltRto" column="RSLT_RTO" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="answExmplNo" column="ANSW_EXMPL_NO" />
+	</resultMap>
+	
+	<resultMap id="bbsNotiInfoResult" type="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		<result property="notiId" column="NOTI_ID" />
+		<result property="upNotiId" column="UP_NOTI_ID" />
+		<result property="sortSeq" column="SORT_SEQ" />
+		<result property="boardId" column="BOARD_ID" />
+		<result property="emgcYn" column="EMGC_YN" />
+		<result property="anmtYn" column="ANMT_YN" />
+		<result property="popupYn" column="POPUP_YN" />
+		<result property="briefYn" column="BRIEF_YN" />
+		<result property="moblOpenDiv" column="MOBL_OPEN_DIV" />
+		<result property="notiTitle" column="NOTI_TITLE" />
+		<result property="notiTitleOrgn" column="NOTI_TITLE_ORGN" />
+		<result property="titleBoldYn" column="TITLE_BOLD_YN" />
+		<result property="titleColorDiv" column="TITLE_COLOR_DIV" />
+		<result property="notiConts" column="NOTI_CONTS" />
+		<result property="linkUrl" column="LINK_URL" />
+		<result property="notiTp" column="NOTI_TP" />
+		<result property="notiKind" column="NOTI_KIND" />
+		<result property="nickUseYn" column="NICK_USE_YN" />
+		<result property="userId" column="USER_ID" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="userName" column="USER_NAME" />
+		<result property="editDiv" column="EDIT_DIV" />
+		<result property="rsrvYn" column="RSRV_YN" />
+		<result property="notiBgnDttm" column="NOTI_BGN_DTTM" />
+		<result property="notiEndDttm" column="NOTI_END_DTTM" />
+		<result property="notiOpenDiv" column="NOTI_OPEN_DIV" />
+		<result property="notiOpenDivSpec" column="NOTI_OPEN_DIV_SPEC" />
+		<result property="publAsgnDiv" column="PUBL_ASGN_DIV" />
+		<result property="publAsgnDivSpec" column="PUBL_ASGN_DIV_SPEC" />
+		<result property="replyPrmsYn" column="REPLY_PRMS_YN" />
+		<result property="replyMakrRealnameYn" column="REPLY_MAKR_REALNAME_YN" />
+		<result property="opnPrmsYn" column="OPN_PRMS_YN" />
+		<result property="opnMakrRealnameYn" column="OPN_MAKR_REALNAME_YN" />
+		<result property="notiReadCnt" column="NOTI_READ_CNT" />
+		<result property="notiOpnCnt" column="NOTI_OPN_CNT" />
+		<result property="notiAgrmCnt" column="NOTI_AGRM_CNT" />
+		<result property="notiOppCnt" column="NOTI_OPP_CNT" />
+		<result property="notiLikeCnt" column="NOTI_LIKE_CNT" />
+		<result property="bfBoardId" column="BF_BOARD_ID" />
+		<result property="bfNotiId" column="BF_NOTI_ID" />
+		<result property="statCode" column="STAT_CODE" />
+		<result property="deptCode" column="DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="deptFname" column="DEPT_FNAME" />
+		<result property="makrIp" column="MAKR_IP" />
+		<result property="brghCode" column="BRGH_CODE" />
+		<result property="cdlnDeptCode" column="CDLN_DEPT_CODE" />
+		<result property="cdlnDeptName" column="CDLN_DEPT_NAME" />
+		<result property="cdlnDeptFname" column="CDLN_DEPT_FNAME" />
+		<result property="cdlnObjrName" column="CDLN_OBJR_NAME" />
+		<result property="cdlnEvntCode" column="CDLN_EVNT_CODE" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="oldBrdId" column="OLD_BRD_ID" />
+		<result property="oldHeaderId" column="OLD_HEADER_ID" />
+		<result property="oldOrignalId" column="OLD_ORIGNAL_ID" />
+		<result property="oldNoticeSeq" column="OLD_NOTICE_SEQ" />
+		<result property="notiTagLst" column="NOTI_TAG_LST" />
+		<result property="agrmOppYn" column="AGRM_OPP_YN" />
+	</resultMap>
+		
+	<resultMap id="bbsNotiApndFileResult" type="portalxpert.board.board100.vo.BbsNotiApndFileVO">
+		<result property="notiId" column="NOTI_ID" />
+		<result property="apndFileSeq" column="APND_FILE_SEQ" />
+		<result property="apndFileTp" column="APND_FILE_TP" />
+		<result property="apndFileSz" column="APND_FILE_SZ" />
+		<result property="apndFileOrgn" column="APND_FILE_ORGN" />
+		<result property="apndFileName" column="APND_FILE_NAME" />
+		<result property="apndFilePath" column="APND_FILE_PATH" />
+		<result property="apndFilePrvwPath" column="APND_FILE_PRVW_PATH" />
+		<result property="apndFilePrvwName" column="APND_FILE_PRVW_NAME" />
+		<result property="sourceCodeInput" column="SOURCE_CODE_INPUT" />
+		<result property="adminRcmdYn" column="ADMIN_RCMD_YN" />
+		<result property="adminRcmdDttm" column="ADMIN_RCMD_DTTM" />
+		<result property="readCnt" column="READ_CNT" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="mvpKey" column="MVP_KEY" />
+	</resultMap>
+	
+	
+	<select id="getMovieKey" resultType="int">
+		<![CDATA[
+			SELECT SEQ_MVP_KEY.NEXTVAL 
+			FROM DUAL
+		]]>
+	</select>
+	
+	<insert id="insertBbsTmpNotiInfo">
+	<selectKey keyProperty="tmpNotiSeq" resultType="int" order="BEFORE" >
+		  SELECT SEQ_TMP_NOTI_INFO.NEXTVAL As tmpNotiSeq 
+			FROM DUAL	     	    
+    </selectKey>	
+		<![CDATA[
+		INSERT INTO BBS_TMP_NOTI_INFO(
+		 TMP_NOTI_SEQ
+		, UP_NOTI_ID
+		, BOARD_ID
+		, EMGC_YN
+		, ANMT_YN
+		, POPUP_YN
+		, BRIEF_YN
+		, MOBL_OPEN_DIV
+		, NOTI_TITLE
+		, NOTI_TITLE_ORGN
+		, TITLE_BOLD_YN
+		, TITLE_COLOR_DIV
+		, NOTI_CONTS
+		, LINK_URL
+		, NOTI_TP
+		, NOTI_KIND
+		, NICK_USE_YN
+		, USER_NICK
+		, USER_NAME
+		, EDIT_DIV
+		, RSRV_YN
+		, NOTI_BGN_DTTM
+		, NOTI_END_DTTM
+		, NOTI_OPEN_DIV
+		, NOTI_OPEN_DIV_SPEC
+		, PUBL_ASGN_DIV
+		, PUBL_ASGN_DIV_SPEC
+		, REPLY_PRMS_YN
+		, REPLY_MAKR_REALNAME_YN
+		, OPN_PRMS_YN
+		, OPN_MAKR_REALNAME_YN
+		, STAT_CODE
+		, DEPT_CODE
+		, DEPT_NAME
+		, DEPT_FNAME
+		, MAKR_IP
+		, BRGH_CODE
+		, CDLN_DEPT_CODE
+		, CDLN_DEPT_NAME
+		, CDLN_DEPT_FNAME
+		, CDLN_OBJR
+		, CDLN_EVNT_CODE
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, USER_ID
+		, AGRM_OPP_YN
+		) VALUES (
+		 #{tmpNotiSeq}
+		, #{upNotiId}
+		, #{boardId}
+		, #{emgcYn}
+		, #{anmtYn}
+		, #{popupYn}
+		, #{briefYn}
+		, #{moblOpenDiv}
+		, #{notiTitle}
+		, #{notiTitleOrgn}
+		, #{titleBoldYn}
+		, #{titleColorDiv}
+		, #{notiConts}
+		, #{linkUrl}
+		, #{notiTp}
+		, #{notiKind}
+		, #{nickUseYn}
+		, #{userNick}
+		, #{userName}
+		, #{editDiv}
+		, #{rsrvYn}
+		, CASE WHEN #{rsrvYn} = 'Y' THEN TO_DATE(#{notiBgnDttm}, 'YYYY-MM-DD HH24:MI:SS') ELSE sysdate END		
+		, TO_DATE(#{notiEndDttm}, 'YYYY-MM-DD HH24:MI:SS')		
+		, #{notiOpenDiv}
+		, #{notiOpenDivSpec}
+		, #{publAsgnDiv}
+		, #{publAsgnDivSpec}
+		, #{replyPrmsYn}
+		, #{replyMakrRealnameYn}
+		, #{opnPrmsYn}
+		, #{opnMakrRealnameYn}
+		, #{statCode}
+		, #{deptCode}
+		, #{deptName}
+		, #{deptFname}
+		, #{makrIp}
+		, #{brghCode}
+		, #{cdlnDeptCode}
+		, #{cdlnDeptName}
+		, #{cdlnDeptFname}
+		, #{cdlnObjr}
+		, #{cdlnEvntCode}
+		, #{delYn}
+		, #{regrId}
+		, #{regrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		, #{userId}
+		, #{agrmOppYn}
+		)
+		]]>
+	</insert>
+	
+	<insert id="insertBbsTmpNotiApndFile">
+	<selectKey keyProperty="apndFileSeq" resultType="int" order="BEFORE" >
+		  SELECT SEQ_TMP_NOTI_APND.NEXTVAL As apndFileSeq 
+			FROM DUAL	     	    
+    </selectKey>
+		<![CDATA[
+		INSERT INTO BBS_TMP_NOTI_APND_FILE(
+			  TMP_NOTI_SEQ
+			, APND_FILE_SEQ
+			, APND_FILE_TP
+			, APND_FILE_SZ
+			, APND_FILE_ORGN
+			, APND_FILE_NAME
+			, APND_FILE_PATH
+			, APND_FILE_PRVW_PATH
+			, APND_FILE_PRVW_NAME
+			, SOURCE_CODE_INPUT
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, MVP_KEY
+			) VALUES (
+			 #{tmpNotiSeq}
+			, #{apndFileSeq}
+			, #{apndFileTp}
+			, #{apndFileSz}
+			, #{apndFileOrgn}
+			, #{apndFileName}
+			, #{apndFilePath}
+			, #{apndFilePrvwPath}
+			, #{apndFilePrvwName}
+			, #{sourceCodeInput}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			, #{mvpKey}
+			)
+		]]>
+	</insert>
+	
+	<insert id="insertBbsTmpNotiSurvey">
+		<selectKey keyProperty="surveyNo" resultType="int" order="BEFORE" >
+		  SELECT SEQ_NOTI_SURVEY.NEXTVAL As surveyNo 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+			INSERT INTO BBS_NOTI_SURVEY(
+			 SURVEY_NO
+			, RELA_NOTI_KIND
+			, NOTI_ID
+			, TMP_NOTI_SEQ
+			, TMLN_SEQ
+			, USER_NOTI_SEQ
+			, SURVEY_CLOS_DTTM
+			, SURVEY_RSLT_OPEN_YN
+			, SURVEY_CONTS
+			, SURVEY_TP
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			) VALUES (
+			 #{surveyNo}
+			, #{relaNotiKind}
+			, #{notiId}
+			, #{tmpNotiSeq}
+			, #{tmlnSeq}
+			, #{userNotiSeq}
+			, TO_DATE(#{surveyClosDttm}, 'YYYY-MM-DD HH24:MI:SS')
+			, #{surveyRsltOpenYn}
+			, #{surveyConts}
+			, #{surveyTp}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			)
+		]]>
+	</insert>
+	
+	
+	<insert id="insertBbsTmpNotiSurveyExmpl" >
+		<selectKey keyProperty="exmplNo" resultType="int" order="BEFORE" >
+		  SELECT SEQ_NOTI_EXMPL.NEXTVAL As exmplNo 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+		INSERT INTO BBS_NOTI_SURVEY_EXMPL(
+		 SURVEY_NO
+		, EXMPL_NO
+		, EXMPL_CONTS
+		, IMG_PATH
+		, IMG_NAME
+		, PRVW_PATH
+		, PRVW_NAME
+		, TOT_CNT
+		, RSLT_CNT
+		, RSLT_RTO
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		) VALUES (
+		 #{surveyNo}
+		, #{exmplNo}
+		, #{exmplConts}
+		, #{imgPath}
+		, #{imgName}
+		, #{prvwPath}
+		, #{prvwName}
+		, #{totCnt}
+		, #{rsltCnt}
+		, #{rsltRto}
+		, #{delYn}
+		, #{regrId}
+		, #{regrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		)
+		]]>
+	</insert>
+		
+	<insert id="insertBbsTmpNotiUserMap" >
+		<![CDATA[
+			INSERT INTO BBS_TMP_NOTI_USER_MAP(
+			 TMP_NOTI_SEQ
+			, USER_DIV
+			, USER_ID
+			, MNG_AUTH
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			) VALUES (
+			 #{tmpNotiSeq}
+			, #{userDiv}
+			, #{userId}
+			, #{mngAuth}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			)
+		]]>
+	</insert>
+	
+	<select id="getBbsTmpNotiInfoList" resultMap="bbsTmpNotiInfoResult">
+		<![CDATA[
+		SELECT TMP_NOTI_SEQ
+		, UP_NOTI_ID
+		, BOARD_ID
+		, EMGC_YN
+		, ANMT_YN
+		, POPUP_YN
+		, BRIEF_YN
+		, MOBL_OPEN_DIV
+		, NOTI_TITLE
+		, NOTI_TITLE_ORGN
+		, TITLE_BOLD_YN
+		, TITLE_COLOR_DIV
+		, NOTI_CONTS
+		, LINK_URL
+		, NOTI_TP
+		, NOTI_KIND
+		, NICK_USE_YN
+		, USER_NICK
+		, USER_NAME
+		, EDIT_DIV
+		, RSRV_YN
+		, TO_CHAR(NOTI_BGN_DTTM, 'yyyy-mm-dd') NOTI_BGN_DTTM
+		, TO_CHAR(NOTI_END_DTTM, 'yyyy-mm-dd') NOTI_END_DTTM
+		, NOTI_END_DTTM
+		, NOTI_OPEN_DIV
+		, NOTI_OPEN_DIV_SPEC
+		, PUBL_ASGN_DIV
+		, PUBL_ASGN_DIV_SPEC
+		, REPLY_PRMS_YN
+		, REPLY_MAKR_REALNAME_YN
+		, OPN_PRMS_YN
+		, OPN_MAKR_REALNAME_YN
+		, NOTI_TAG_LST
+		, STAT_CODE
+		, DEPT_CODE
+		, DEPT_NAME
+		, DEPT_FNAME
+		, MAKR_IP
+		, BRGH_CODE
+		, CDLN_DEPT_CODE
+		, CDLN_DEPT_NAME
+		, CDLN_DEPT_FNAME
+		, CDLN_OBJR
+		, CDLN_EVNT_CODE
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, AGRM_OPP_YN
+		, (SELECT BOARD_NAME FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID) BOARD_NAME 
+		, (SELECT BOARD_KIND FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID) BOARD_KIND 
+		, (SELECT NOTI_READMAN_ASGN_YN FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID) NOTI_READMAN_ASGN_YN 
+		FROM BBS_TMP_NOTI_INFO A
+		WHERE TMP_NOTI_SEQ = #{tmpNotiSeq}
+		]]>
+	 
+	</select>
+		
+	<select id="getBbsTmpNotiApndFileList" resultMap="bbsTmpNotiApndFileResult">
+		<![CDATA[
+			SELECT TMP_NOTI_SEQ
+			, APND_FILE_SEQ
+			, APND_FILE_TP
+			, APND_FILE_SZ
+			, APND_FILE_ORGN
+			, APND_FILE_NAME
+			, APND_FILE_PATH
+			, APND_FILE_PRVW_PATH
+			, APND_FILE_PRVW_NAME
+			, SOURCE_CODE_INPUT
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, MVP_KEY
+			FROM BBS_TMP_NOTI_APND_FILE
+			WHERE TMP_NOTI_SEQ = #{tmpNotiSeq}
+		]]>	
+	</select>
+			
+	<select id="getBbsTmpNotiUserMapList" resultMap="bbsTmpNotiUserMapResult">
+		<![CDATA[
+   SELECT A.TMP_NOTI_SEQ
+        , A.USER_DIV
+        , A.USER_ID
+        , A.MNG_AUTH
+        , A.DEL_YN
+        , A.REGR_ID
+        , A.REGR_NAME
+        , A.REG_DTTM
+        , A.UPDR_ID
+        , A.UPDR_NAME
+        , A.UPD_DTTM
+        ,CASE WHEN A.USER_DIV = 'DPT' THEN C.DEPT_NAME WHEN A.USER_DIV = 'EMP' THEN B.USER_NAME ELSE A.USER_ID END as DISPLAY_NAME   
+        from BBS_TMP_NOTI_USER_MAP A, PSN_USER_INFO B, PSN_DEPT_INFO C
+        where A.USER_ID = B.USER_ID (+)
+          AND A.USER_ID = C.DEPT_CODE (+)
+          AND A.TMP_NOTI_SEQ = #{tmpNotiSeq}
+		]]>	
+	</select>
+			
+	<select id="getBbsNotiSurveyList" resultMap="bbsNotiSurveyResult">
+		<![CDATA[
+			SELECT SURVEY_NO
+			, RELA_NOTI_KIND
+			, NOTI_ID
+			, TMP_NOTI_SEQ
+			, TMLN_SEQ
+			, USER_NOTI_SEQ
+			, SURVEY_CLOS_DTTM
+			, SURVEY_RSLT_OPEN_YN
+			, SURVEY_CONTS
+			, SURVEY_TP
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			FROM BBS_NOTI_SURVEY
+		]]>
+	<if test="tmpNotiSeq != null and tmpNotiSeq != ''"> WHERE TMP_NOTI_SEQ = #{tmpNotiSeq} </if>
+	<if test="notiId != null and notiId != ''"> WHERE NOTI_ID = #{notiId} </if>
+	<if test="userNotiSeq != null and userNotiSeq != ''"> WHERE USER_NOTI_SEQ = #{userNotiSeq} </if>
+	</select>
+				
+	<select id="getBbsNotiSurveyExmplList" resultMap="bbsNotiSurveyExmplResult">
+		<![CDATA[
+			SELECT SURVEY_NO
+			, EXMPL_NO
+			, EXMPL_CONTS
+			, IMG_PATH
+			, IMG_NAME
+			, PRVW_PATH
+			, PRVW_NAME
+			, TOT_CNT
+			, RSLT_CNT
+			, RSLT_RTO
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+		]]>		
+			<if test="userId != null and userId != ''">
+			, NVL((SELECT EXMPL_NO FROM BBS_NOTI_SURVEY_ANSW B WHERE E.EXMPL_NO = B.ANSW_EXMPL_NO AND B.ANSWMAN_ID = #{userId}),0) AS ANSW_EXMPL_NO
+			</if>
+			FROM BBS_NOTI_SURVEY_EXMPL E
+				
+			<if test="tmpNotiSeq != null and tmpNotiSeq != 0">
+				WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE TMP_NOTI_SEQ = #{tmpNotiSeq})
+			</if>
+			<if test="notiId != null and notiId != ''"> 
+				WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE NOTI_ID = #{notiId})
+			</if>
+			<if test="userNotiSeq != null and userNotiSeq != 0"> 
+				WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE USER_NOTI_SEQ = #{userNotiSeq})
+			</if>
+		<![CDATA[	
+			ORDER BY 1,2
+		]]>
+		
+	</select>
+	
+	<select id="getBbsNotiInfoList" resultMap="bbsNotiInfoResult">
+		<![CDATA[
+		SELECT NOTI_ID
+		, UP_NOTI_ID
+		, SORT_SEQ
+		, BOARD_ID
+		, EMGC_YN
+		, ANMT_YN
+		, POPUP_YN
+		, BRIEF_YN
+		, MOBL_OPEN_DIV
+		, NOTI_TITLE
+		, NOTI_TITLE_ORGN
+		, TITLE_BOLD_YN
+		, TITLE_COLOR_DIV
+		, NOTI_CONTS
+		, LINK_URL
+		, NOTI_TP
+		, NOTI_KIND
+		, NICK_USE_YN
+		, USER_ID
+		, USER_NICK
+		, USER_NAME
+		, EDIT_DIV
+		, RSRV_YN
+		, TO_CHAR(NOTI_BGN_DTTM, 'yyyy-mm-dd:hh24:mi') NOTI_BGN_DTTM
+		, TO_CHAR(NOTI_END_DTTM, 'yyyy-mm-dd') NOTI_END_DTTM
+		, NOTI_OPEN_DIV
+		, NOTI_OPEN_DIV_SPEC
+		, PUBL_ASGN_DIV
+		, PUBL_ASGN_DIV_SPEC
+		, REPLY_PRMS_YN
+		, REPLY_MAKR_REALNAME_YN
+		, OPN_PRMS_YN
+		, OPN_MAKR_REALNAME_YN
+		, NOTI_READ_CNT
+		, NOTI_OPN_CNT
+		, NOTI_AGRM_CNT
+		, NOTI_OPP_CNT
+		, NOTI_LIKE_CNT
+		, BF_BOARD_ID
+		, BF_NOTI_ID
+		, STAT_CODE
+		, DEPT_CODE
+		, DEPT_NAME
+		, DEPT_FNAME
+		, MAKR_IP
+		, BRGH_CODE
+		, CDLN_DEPT_CODE
+		, CDLN_DEPT_NAME
+		, CDLN_DEPT_FNAME
+		, CDLN_OBJR_NAME
+		, CDLN_EVNT_CODE
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, OLD_BRD_ID
+		, OLD_HEADER_ID
+		, OLD_ORIGNAL_ID
+		, OLD_NOTICE_SEQ
+		, NOTI_TAG_LST
+		, AGRM_OPP_YN
+		FROM BBS_NOTI_INFO
+		WHERE NOTI_ID = #{notiId}
+		AND BOARD_ID = #{boardId}
+	]]>	
+	</select>
+	
+	<select id="getBbsNotiApndFileList" resultMap="bbsNotiApndFileResult">
+		<![CDATA[
+		SELECT NOTI_ID
+		, APND_FILE_SEQ
+		, APND_FILE_TP
+		, APND_FILE_SZ
+		, APND_FILE_ORGN
+		, APND_FILE_NAME
+		, APND_FILE_PATH
+		, APND_FILE_PRVW_PATH
+		, APND_FILE_PRVW_NAME
+		, SOURCE_CODE_INPUT
+		, ADMIN_RCMD_YN
+		, ADMIN_RCMD_DTTM
+		, READ_CNT
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, MVP_KEY
+		FROM BBS_NOTI_APND_FILE
+		WHERE NOTI_ID = #{notiId}
+		ORDER BY 2
+		]]>
+	
+	</select>
+		
+	
+	<update id="updateBbsTmpNotiInfo" >
+		<![CDATA[
+			UPDATE BBS_TMP_NOTI_INFO SET UPDR_ID = #{updrId}, UPD_DTTM = sysdate
+		]]>
+		<if test="upNotiId != null and upNotiId != ''"> , UP_NOTI_ID = #{upNotiId} </if>		
+		<if test="emgcYn != null and emgcYn != ''"> , EMGC_YN = #{emgcYn} </if>
+		<if test="anmtYn != null and anmtYn != ''"> , ANMT_YN = #{anmtYn} </if>
+		<if test="popupYn != null and popupYn != ''"> , POPUP_YN = #{popupYn} </if>
+		<if test="briefYn != null and briefYn != ''"> , BRIEF_YN = #{briefYn} </if>
+		<if test="moblOpenDiv != null and moblOpenDiv != ''"> , MOBL_OPEN_DIV = #{moblOpenDiv} </if>
+		<if test="notiTitle != null and notiTitle != ''"> , NOTI_TITLE = #{notiTitle} </if>
+		<if test="notiTitleOrgn != null and notiTitleOrgn != ''"> , NOTI_TITLE_ORGN = #{notiTitleOrgn} </if>
+		<if test="titleBoldYn != null and titleBoldYn != ''"> , TITLE_BOLD_YN = #{titleBoldYn} </if>
+		<if test="titleColorDiv != null and titleColorDiv != ''"> , TITLE_COLOR_DIV = #{titleColorDiv} </if>
+		<if test="notiConts != null and notiConts != ''"> , NOTI_CONTS = #{notiConts} </if>
+		<if test="linkUrl != null and linkUrl != ''"> , LINK_URL = #{linkUrl} </if>
+		<if test="notiTp != null and notiTp != ''"> , NOTI_TP = #{notiTp} </if>
+		<if test="notiKind != null and notiKind != ''"> , NOTI_KIND = #{notiKind} </if>
+		<if test="nickUseYn != null and nickUseYn != ''"> , NICK_USE_YN = #{nickUseYn} </if>
+		<if test="userNick != null and userNick != ''"> , USER_NICK = #{userNick} </if>
+		<if test="userName != null and userName != ''"> , USER_NAME = #{userName} </if>
+		<if test="editDiv != null and editDiv != ''"> , EDIT_DIV = #{editDiv} </if>
+		<if test="rsrvYn != null and rsrvYn != ''"> , RSRV_YN = #{rsrvYn} </if>
+		<if test="notiBgnDttm != null and notiBgnDttm != ''"> , NOTI_BGN_DTTM = TO_DATE(#{notiBgnDttm}, 'YYYY-MM-DD HH24:MI:SS') </if>
+		<if test="notiEndDttm != null and notiEndDttm != ''"> , NOTI_END_DTTM = TO_DATE(#{notiEndDttm}, 'YYYY-MM-DD HH24:MI:SS') </if>
+		<if test="notiOpenDiv != null and notiOpenDiv != ''"> , NOTI_OPEN_DIV = #{notiOpenDiv} </if>
+		<if test="notiOpenDivSpec != null and notiOpenDivSpec != ''"> , NOTI_OPEN_DIV_SPEC = #{notiOpenDivSpec} </if>
+		<if test="publAsgnDiv != null and publAsgnDiv != ''"> , PUBL_ASGN_DIV = #{publAsgnDiv} </if>
+		<if test="publAsgnDivSpec != null and publAsgnDivSpec != ''"> , PUBL_ASGN_DIV_SPEC = #{publAsgnDivSpec} </if>
+		<if test="replyPrmsYn != null and replyPrmsYn != ''"> , REPLY_PRMS_YN = #{replyPrmsYn} </if>
+		<if test="replyMakrRealnameYn != null and replyMakrRealnameYn != ''"> , REPLY_MAKR_REALNAME_YN = #{replyMakrRealnameYn} </if>
+		<if test="opnPrmsYn != null and opnPrmsYn != ''"> , OPN_PRMS_YN = #{opnPrmsYn} </if>
+		<if test="opnMakrRealnameYn != null and opnMakrRealnameYn != ''"> , OPN_MAKR_REALNAME_YN = #{opnMakrRealnameYn} </if>
+		<if test="notiTagLst != null and notiTagLst != ''"> , NOTI_TAG_LST = #{notiTagLst} </if>
+		<if test="statCode != null and statCode != ''"> , STAT_CODE = #{statCode} </if>
+		<if test="deptCode != null and deptCode != ''"> , DEPT_CODE = #{deptCode} </if>
+		<if test="deptName != null and deptName != ''"> , DEPT_NAME = #{deptName} </if>
+		<if test="deptFname != null and deptFname != ''"> , DEPT_FNAME = #{deptFname} </if>
+		<if test="makrIp != null and makrIp != ''"> , MAKR_IP = #{makrIp} </if>
+		<if test="brghCode != null and brghCode != ''"> , BRGH_CODE = #{brghCode} </if>
+		<if test="cdlnDeptCode != null and cdlnDeptCode != ''"> , CDLN_DEPT_CODE = #{cdlnDeptCode} </if>
+		<if test="cdlnDeptName != null and cdlnDeptName != ''"> , CDLN_DEPT_NAME = #{cdlnDeptName} </if>
+		<if test="cdlnDeptFname != null and cdlnDeptFname != ''"> , CDLN_DEPT_FNAME = #{cdlnDeptFname} </if>
+		<if test="cdlnObjr != null and cdlnObjr != ''"> , CDLN_OBJR = #{cdlnObjr} </if>
+		<if test="cdlnEvntCode != null and cdlnEvntCode != ''"> , CDLN_EVNT_CODE = #{cdlnEvntCode} </if>
+		<if test="delYn != null and delYn != ''"> , DEL_YN = #{delYn} </if>
+		<if test="regrName != null and regrName != ''"> , REGR_NAME = #{regrName} </if>
+		<if test="updrName != null and updrName != ''"> , UPDR_NAME = #{updrName} </if>
+		<if test="userId != null and userId != ''"> , USER_ID = #{userId} </if>
+		<if test="userId != null and userId != ''"> , AGRM_OPP_YN = #{agrmOppYn} </if>
+		WHERE TMP_NOTI_SEQ = #{tmpNotiSeq}
+	</update>
+	
+	
+	<!-- 임시 게시물 정보 삭제 -->
+	<delete id="deleteBbsTmpNotiInfo">
+		<![CDATA[
+		DELETE FROM BBS_TMP_NOTI_INFO
+		 WHERE TMP_NOTI_SEQ = #{tmpNotiSeq}
+		]]>
+	</delete>	
+	
+	<!-- 임시 파일정보 정보 삭제 -->
+	<delete id="deleteBbsTmpNotiApndFile">
+		<![CDATA[
+		DELETE FROM BBS_TMP_NOTI_APND_FILE
+		 WHERE TMP_NOTI_SEQ = #{tmpNotiSeq}
+		]]>
+	</delete>	
+	
+	<!-- 임시 설문 보기 정보 삭제 -->
+	<delete id="deleteBbsTmpNotiSurveyExmpl">
+		<![CDATA[
+		DELETE FROM BBS_NOTI_SURVEY_EXMPL
+			WHERE SURVEY_NO IN 
+			(
+			    SELECT SURVEY_NO 
+			      FROM BBS_NOTI_SURVEY
+			     WHERE TMP_NOTI_SEQ = #{tmpNotiSeq}
+			)
+		]]>
+	</delete>
+	
+	<!-- 임시 설문 정보 삭제 -->
+	<delete id="deleteBbsTmpNotiSurvey">
+		<![CDATA[
+		DELETE FROM BBS_NOTI_SURVEY
+		 WHERE TMP_NOTI_SEQ = #{tmpNotiSeq}
+		]]>
+	</delete>		
+	
+	<!-- 임시 설문 정보 삭제 -->
+	<delete id="deleteBbsTmpNotiUserMap">
+		<![CDATA[
+		DELETE FROM BBS_TMP_NOTI_USER_MAP
+		 WHERE TMP_NOTI_SEQ = #{tmpNotiSeq}
+		]]>
+	</delete>
+	
+		
+</mapper>

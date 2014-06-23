@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.adm.sys.mapper.AdmSysMapper">
+	
+	<!-- 동영상관리 목록 -->
+	<select id="getAdmSysMainMovieList" parameterType="portalxpert.adm.sys.vo.AdmSysBbsNotiApndFileVO" resultType="portalxpert.adm.sys.vo.AdmSysBbsNotiApndFileVO">
+			SELECT
+			    B.NOTI_TITLE
+			    ,A.APND_FILE_SEQ
+			    ,A.NOTI_ID
+			    ,A.APND_FILE_TP/*첨부_파일_유형*/
+			    ,A.APND_FILE_SZ/*첨부_파일_사이즈*/
+			    ,A.APND_FILE_ORGN
+			    ,A.APND_FILE_NAME/*첨부_파일_명*/
+			    ,A.ADMIN_RCMD_YN/*관리자_추천_여부*/
+			    ,NVL(B.NOTI_READ_CNT ,0) READ_CNT
+			    ,TO_CHAR(A.ADMIN_RCMD_DTTM,'YYYY-MM-DD') AS ADMIN_RCMD_DTTM/*관리자_추천_일시*/
+			    ,A.REGR_NAME/*등록자_명*/
+			    ,TO_CHAR(A.REG_DTTM,'YYYY-MM-DD') AS REG_DTTM/*등록_일시*/
+			    ,A.UPDR_NAME/*수정자_명*/
+			    ,TO_CHAR(A.UPD_DTTM,'YYYY-MM-DD') AS UPD_DTTM/*수정_일시*/
+			FROM	BBS_NOTI_APND_FILE A, BBS_NOTI_INFO B
+			WHERE	A.NOTI_ID = B.NOTI_ID
+			AND	A.DEL_YN = 'N'
+			AND	A.APND_FILE_TP = #{apndFileTp}
+			AND	A.ADMIN_RCMD_YN = 'Y'
+			AND	B.BOARD_ID = DECODE(#{apndFileTp} ,'030' ,'SPT000009' ,'020' ,'SPT000010')
+			AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = B.BOARD_ID AND BOARD_FORM = '030'
+			       	               AND BOARD_FORM_SPEC = DECODE(#{apndFileTp} ,'030','020' ,'020','010')
+			       	  )
+			UNION ALL
+		   SELECT	P.NOTI_TITLE
+						,P.APND_FILE_SEQ
+						,P.NOTI_ID
+						,P.APND_FILE_TP
+						,P.APND_FILE_SZ
+						,P.APND_FILE_ORGN
+						,P.APND_FILE_NAME
+						,P.ADMIN_RCMD_YN
+						,P.READ_CNT
+						,P.ADMIN_RCMD_DTTM
+						,P.REGR_NAME
+						,P.REG_DTTM
+						,P.UPDR_NAME
+						,P.UPD_DTTM
+			FROM (
+			     SELECT  ROWNUM RNUM, S.*
+				   FROM (
+						SELECT
+						    B.NOTI_TITLE
+						    ,A.APND_FILE_SEQ
+						    ,A.NOTI_ID
+						    ,A.APND_FILE_TP/*첨부_파일_유형*/
+						    ,A.APND_FILE_SZ/*첨부_파일_사이즈*/
+						    ,A.APND_FILE_ORGN
+						    ,A.APND_FILE_NAME/*첨부_파일_명*/
+						    ,A.ADMIN_RCMD_YN/*관리자_추천_여부*/
+						    ,NVL(B.NOTI_READ_CNT ,0) READ_CNT
+						    ,TO_CHAR(A.ADMIN_RCMD_DTTM,'YYYY-MM-DD') AS ADMIN_RCMD_DTTM/*관리자_추천_일시*/
+						    ,A.REGR_NAME/*등록자_명*/
+						    ,TO_CHAR(B.REG_DTTM,'YYYY-MM-DD') AS REG_DTTM/*등록_일시*/
+						    ,A.UPDR_NAME/*수정자_명*/
+						    ,TO_CHAR(B.UPD_DTTM,'YYYY-MM-DD') AS UPD_DTTM/*수정_일시*/
+						FROM BBS_NOTI_APND_FILE A, BBS_NOTI_INFO B
+						WHERE A.NOTI_ID = B.NOTI_ID
+						    AND A.DEL_YN = 'N'
+						    AND A.APND_FILE_TP = #{apndFileTp}
+						    AND (A.ADMIN_RCMD_YN IS NULL OR A.ADMIN_RCMD_YN='N')
+						    AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = B.BOARD_ID AND BOARD_FORM = '030'
+			       	               			AND BOARD_FORM_SPEC = DECODE(#{apndFileTp} ,'030','020' ,'020','010')
+			       	  					)
+			       	  	AND	B.BOARD_ID = DECODE(#{apndFileTp} ,'030' ,'SPT000009' ,'020' ,'SPT000010')
+						    <if test="searchCondition == 'TITLE'">
+						    AND B.NOTI_TITLE LIKE '%' || #{searchKeyword} || '%'
+						    </if>
+						    <if test="searchCondition == 'FILENAME'">
+						    AND A.APND_FILE_ORGN LIKE '%' || #{searchKeyword} || '%'
+						    </if>
+						    <if test="searchCondition == 'REGNAME'">
+						    AND A.REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+						    </if>
+						<if test="remark=='NEWEST'">
+						ORDER BY NVL(B.UPD_DTTM ,B.REG_DTTM) DESC
+						</if>
+						<if test="remark=='CLICK'">
+						ORDER BY NVL(B.NOTI_READ_CNT ,0) DESC ,NVL(B.UPD_DTTM ,B.REG_DTTM) DESC
+						</if>
+				) S
+			) P
+			<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage}  and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	<!-- 동영상관리 목록 갯수 -->
+	<select id="getAdmSysMainMovieCnt" parameterType="portalxpert.adm.sys.vo.AdmSysBbsNotiApndFileVO" resultType="int">
+		SELECT COUNT(A.NOTI_ID) totcnt
+		FROM BBS_NOTI_APND_FILE A, BBS_NOTI_INFO B
+		WHERE A.NOTI_ID = B.NOTI_ID
+		    AND A.DEL_YN = 'N'
+		    AND A.APND_FILE_TP = #{apndFileTp}
+		    AND	B.BOARD_ID = DECODE(#{apndFileTp} ,'030' ,'SPT000009' ,'020' ,'SPT000010')
+		    <if test="searchCondition == 'TITLE'">
+		    AND B.NOTI_TITLE LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    <if test="searchCondition == 'FILENAME'">
+		    AND A.APND_FILE_ORGN LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    <if test="searchCondition == 'REGNAME'">
+		    AND A.REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    
+	</select>
+	
+	<!-- 동영상관리 수정 -->
+	<update id="updateAdmSysMainMovie" parameterType="portalxpert.adm.sys.vo.AdmSysBbsNotiApndFileVO">
+		UPDATE BBS_NOTI_APND_FILE SET
+			ADMIN_RCMD_YN = #{adminRcmdYn}
+			,ADMIN_RCMD_DTTM = SYSDATE
+			,UPDR_ID = #{updrId}
+			,UPDR_NAME = #{updrName}
+			,UPD_DTTM = SYSDATE
+		WHERE NOTI_ID = #{notiId}
+			AND APND_FILE_SEQ = #{apndFileSeq}
+	</update>
+
+
+	<!-- 개인쿼터관리 목록 -->
+	<select id="getAdmSysPsnQtyList" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO" resultType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		   SELECT
+			  	P.USER_ID
+			    ,P.USER_NAME
+				,P.USER_JOB
+			    ,P.DEPT_CODE
+			    ,P.DEPT_NAME
+			    ,P.PSN_SAVE_QTY
+			FROM (
+			     SELECT  ROWNUM RNUM, S.*
+				   FROM (
+			
+							SELECT
+							    A.USER_ID
+							    ,A.USER_NAME
+							    ,A.USER_JOB
+							    ,A.DEPT_CODE
+							    ,B.DEPT_NAME
+							    ,A.PSN_SAVE_QTY
+							FROM PSN_USER_INFO A, PSN_DEPT_INFO B
+							WHERE A.DEPT_CODE = B.DEPT_CODE
+							    AND A.DEL_YN = 'N'
+							    
+							    <if test="searchCondition == 'NAME'">
+							    AND A.USER_NAME LIKE '%' || #{searchKeyword} || '%'
+							    </if>
+							    <if test="searchCondition == 'DEPT'">
+							    AND B.DEPT_NAME LIKE '%' || #{searchKeyword} || '%'
+							    </if>
+							    
+							ORDER BY A.REG_DTTM DESC, A.UPD_DTTM DESC
+			
+				) S
+			) P
+			<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage}  and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	<!-- 개인쿼터관리 목록 총 갯수 -->
+	<select id="getAdmSysPsnQtyCnt" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO" resultType="int">
+		SELECT COUNT(A.USER_ID) totcnt
+		FROM PSN_USER_INFO A, PSN_DEPT_INFO B
+		WHERE A.DEPT_CODE = B.DEPT_CODE
+		    AND A.DEL_YN = 'N'
+		    
+		    <if test="searchCondition == 'NAME'">
+		    AND A.USER_NAME LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    <if test="searchCondition == 'DEPT'">
+		    AND B.DEPT_NAME LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    
+	</select>
+	
+	<!-- 개인쿼터관리 쿼터 수정 -->
+	<update id="updateAdmSysPsnQty" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		UPDATE PSN_USER_INFO SET
+			PSN_SAVE_QTY = #{psnSaveQty}
+			,UPDR_ID = #{updrId}
+			,UPDR_NAME = #{updrName}
+			,UPD_DTTM = SYSDATE
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<!-- SMS쿼터관리 목록 -->
+	<select id="getAdmSysSmsQtyList" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO" resultType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		   SELECT
+			  	P.USER_ID
+			    ,P.USER_NAME
+			    ,P.USER_JOB
+			    ,P.DEPT_CODE
+			    ,P.DEPT_NAME
+			    ,P.SMS_BAL_CNT
+			    ,P.SMS_ALL_CNT
+			FROM (
+			     SELECT  ROWNUM RNUM, S.*
+				   FROM (
+			
+							SELECT
+							    A.USER_ID
+							    ,A.USER_NAME
+							    ,A.USER_JOB
+							    ,A.DEPT_CODE
+							    ,B.DEPT_FNAME AS DEPT_NAME
+							    ,A.SMS_BAL_CNT
+							    ,A.SMS_ALL_CNT
+							FROM PSN_USER_INFO A, PSN_DEPT_INFO B
+							WHERE A.DEPT_CODE = B.DEPT_CODE
+							    AND A.DEL_YN = 'N'
+							    
+							    <if test="searchCondition == 'NAME'">
+							    AND A.USER_NAME LIKE '%' || #{searchKeyword} || '%'
+							    </if>
+							    <if test="searchCondition == 'DEPT'">
+							    AND B.DEPT_NAME LIKE '%' || #{searchKeyword} || '%'
+							    </if>
+							    
+							ORDER BY A.REG_DTTM DESC, A.UPD_DTTM DESC
+			
+				) S
+			) P
+			<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage}  and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	<!-- SMS쿼터관리 목록 총 갯수 -->
+	<select id="getAdmSysSmsQtyCnt" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO" resultType="int">
+		SELECT COUNT(A.USER_ID) totcnt
+		FROM PSN_USER_INFO A, PSN_DEPT_INFO B
+		WHERE A.DEPT_CODE = B.DEPT_CODE
+		    AND A.DEL_YN = 'N'
+		    
+		    <if test="searchCondition == 'NAME'">
+		    AND A.USER_NAME LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    <if test="searchCondition == 'DEPT'">
+		    AND B.DEPT_NAME LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    
+	</select>
+	
+	<!-- SMS쿼터관리 쿼터 수정 -->
+	<update id="updateAdmSysSmsQty" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		UPDATE PSN_USER_INFO SET
+			SMS_BAL_CNT = #{smsBalCnt}
+			,SMS_ALL_CNT = #{smsAllCnt}
+			,UPDR_ID = #{updrId}
+			,UPDR_NAME = #{updrName}
+			,UPD_DTTM = SYSDATE
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<!-- 태그클라우드관리 목록 -->
+	<select id="getAdmSysTagCloudList" parameterType="portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO" resultType="portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO">
+		SELECT
+		  	P.TAG_DIV
+		    ,P.REG_DIV
+			,P.TAG_SEQ
+			,P.LINK_NAME
+			,P.VISIT_CNT
+			,P.LINK_CATE_NAME
+			,P.LINK_URL
+			,P.TAG_FONT
+			,P.BOLD_YN
+			,P.FONT_SIZE
+			,P.FONT_COLOR
+			,P.BKGD_COLOR
+			,P.REGR_NAME
+			,P.REG_DTTM
+			,P.UPDR_NAME
+			,P.UPD_DTTM
+		FROM (
+		     SELECT  ROWNUM RNUM, S.*
+			   FROM (
+					SELECT
+					    TAG_DIV
+					    ,REG_DIV
+					    ,TAG_SEQ
+					    ,LINK_NAME
+					    ,VISIT_CNT
+					    ,LINK_CATE_NAME
+					    ,LINK_URL
+					    ,TAG_FONT
+					    ,BOLD_YN
+					    ,FONT_SIZE
+					    ,FONT_COLOR
+					    ,BKGD_COLOR
+					    ,REGR_NAME
+					    ,TO_CHAR(REG_DTTM,'YYY-MM-DD') AS REG_DTTM
+					    ,UPDR_NAME
+					    ,TO_CHAR(UPD_DTTM,'YYY-MM-DD') AS UPD_DTTM
+					FROM ADM_TAG_CLOUD_INFO
+					WHERE DEL_YN = 'N'
+					
+					<if test="tagDiv!=null and tagDiv!=''">
+					AND TAG_DIV = #{tagDiv} 
+					</if>
+					
+					<if test="searchCondition == 'NAME'">
+					AND REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					<if test="searchCondition == 'LINAME'">
+					AND LINK_NAME LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					<if test="searchCondition == 'LICANAME'">
+					AND LINK_CATE_NAME LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					<if test="searchCondition == 'LIURL'">
+					AND LINK_URL LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					
+					ORDER BY REG_DIV ,TAG_SEQ ASC
+			) S
+		) P
+		<![CDATA[
+		WHERE ROWNUM <= #{recordCountPerPage} and RNUM > #{firstIndex}
+		]]>
+	</select>
+  
+  	<!-- 태그클라우드관리 목록 Count -->
+	<select id="getAdmSysTagCloudCnt" parameterType="portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO" resultType="int">
+		SELECT COUNT(1)
+  		FROM ADM_TAG_CLOUD_INFO
+  		WHERE DEL_YN = 'N'
+			<if test="tagDiv!=null and tagDiv!=''">
+			AND TAG_DIV = #{tagDiv} 
+			</if>
+			<if test="searchCondition == 'NAME'">
+			AND REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test="searchCondition == 'LINAME'">
+			AND LINK_NAME LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test="searchCondition == 'LICANAME'">
+			AND LINK_CATE_NAME LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test="searchCondition == 'LIURL'">
+			AND LINK_URL LIKE '%' || #{searchKeyword} || '%'
+			</if>
+	</select>
+	
+	<!-- 태그클라우드관리 단건 -->
+	<select id="getAdmSysTagCloud" parameterType="portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO" resultType="portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO">
+		SELECT
+		    TAG_DIV
+		    ,REG_DIV
+		    ,TAG_SEQ
+		    ,LINK_CATE_CODE
+		    ,LINK_CODE
+		    ,LINK_NAME
+		    ,VISIT_CNT
+		    ,LINK_CATE_NAME
+		    ,LINK_URL
+		    ,TAG_FONT
+		    ,BOLD_YN
+		    ,FONT_SIZE
+		    ,FONT_COLOR
+		    ,BKGD_COLOR
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,TO_CHAR(REG_DTTM,'YYY-MM-DD') AS REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,TO_CHAR(UPD_DTTM,'YYY-MM-DD') AS UPD_DTTM
+		FROM ADM_TAG_CLOUD_INFO
+		WHERE DEL_YN = 'N'
+			AND TAG_DIV = #{tagDiv}
+			AND REG_DIV = #{regDiv}
+			AND TAG_SEQ = #{tagSeq}
+	</select>
+	
+	<!-- 링크분류조회 combo -->
+	<select id="getAdmSysTagCloudLinkCtlgList" resultType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		SELECT	LINK_CAT_ID
+					,LINK_CAT_NM
+					,LINK_CAT_ORDER
+		FROM	BIZ_LINK_CATEGORY
+		WHERE	END_DATE IS NULL
+		ORDER BY LINK_CAT_ORDER
+	</select>
+	
+	<!-- 링크조회 combo -->
+	<select id="getAdmSysTagCloudLinkList" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="portalxpert.adm.gen.vo.AdmGenLinkVO">
+		SELECT	LINK_CAT_ID
+					,LINK_CD
+					,LINK_ORDER
+					,LINK_ADDRESS
+					,LINK_NM
+					,LINK_SNM
+					,POPUP_USE_GB
+		FROM	BIZ_LINK
+		WHERE	LINK_CAT_ID = #{linkCatId}
+		AND	END_DATE IS NULL
+		ORDER BY LINK_ORDER
+	</select>
+	
+	<!-- 태그클라우드관리 등록 -->
+	<insert id="insertAdmSysTagCloud" parameterType="portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO">
+		INSERT INTO ADM_TAG_CLOUD_INFO
+		    (
+		    TAG_DIV
+		    ,REG_DIV
+		    ,TAG_SEQ
+		    ,LINK_CATE_CODE
+		    ,LINK_CODE
+		    ,LINK_NAME
+		    ,VISIT_CNT
+		    ,LINK_CATE_NAME
+		    ,LINK_URL
+		    ,TAG_FONT
+		    ,BOLD_YN
+		    ,FONT_SIZE
+		    ,FONT_COLOR
+		    ,BKGD_COLOR
+		    ,DEL_YN
+		    ,REGR_ID
+		    ,REGR_NAME
+		    ,REG_DTTM
+		    ,UPDR_ID
+		    ,UPDR_NAME
+		    ,UPD_DTTM
+		    )
+		VALUES
+		    (
+		    #{tagDiv}
+		    ,'ADM'
+		    ,(SELECT (NVL(MAX(TAG_SEQ),0)+1) FROM ADM_TAG_CLOUD_INFO)
+		    ,#{linkCateCode, javaType=String, jdbcType=VARCHAR}
+		    ,#{linkCode, javaType=String, jdbcType=VARCHAR}
+		    ,#{linkName, javaType=String, jdbcType=VARCHAR}
+		    ,(SELECT VISIT_CNT FROM ADM_TAG_CLOUD_INFO WHERE LINK_CODE=#{linkCode, javaType=String, jdbcType=VARCHAR} AND TAG_DIV=#{tagDiv} AND REG_DIV='SYS')
+		    ,#{linkCateName, javaType=String, jdbcType=VARCHAR}
+		    ,#{linkUrl, javaType=String, jdbcType=VARCHAR}
+		    ,#{tagFont, javaType=String, jdbcType=VARCHAR}
+		    ,#{boldYn, javaType=String, jdbcType=VARCHAR}
+		    ,#{fontSize, javaType=Long, jdbcType=NUMERIC}
+		    ,#{fontColor, javaType=String, jdbcType=VARCHAR}
+		    ,#{bkgdColor, javaType=String, jdbcType=VARCHAR}
+		    ,'N'
+		    ,#{regrId}
+		    ,#{regrName}
+		    ,SYSDATE
+		    ,#{regrId}
+		    ,#{regrName}
+		    ,SYSDATE
+		    )
+	</insert>
+	
+	<!-- 태그클라우드관리 수정 -->
+ 	<update id="updateAdmSysTagCloud" parameterType="portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO">
+ 		UPDATE ADM_TAG_CLOUD_INFO SET
+		    LINK_CATE_CODE = #{linkCateCode}
+		    ,LINK_CODE = #{linkCode}
+		    ,LINK_NAME = #{linkName}
+		    ,LINK_CATE_NAME = #{linkCateName}
+		    ,LINK_URL = #{linkUrl}
+		    ,TAG_FONT = #{tagFont}
+		    ,BOLD_YN = #{boldYn}
+		    ,FONT_SIZE = #{fontSize}
+		    ,FONT_COLOR = #{fontColor}
+		    ,BKGD_COLOR = #{bkgdColor}
+		    ,UPDR_ID = #{updrId}
+		    ,UPDR_NAME = #{updrName}
+		    ,UPD_DTTM = SYSDATE
+		WHERE TAG_DIV = #{tagDiv}
+		    AND REG_DIV = #{regDiv}
+		    AND TAG_SEQ = #{tagSeq}
+ 	</update>
+		
+	<!-- 태그클라우드관리 삭제 -->
+	<update id="deleteAdmSysTagCloud" parameterType="portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO">
+		UPDATE ADM_TAG_CLOUD_INFO SET
+		    DEL_YN = 'Y'
+		    ,UPDR_ID = #{updrId}
+		    ,UPDR_NAME = #{updrName}
+		    ,UPD_DTTM = SYSDATE
+		WHERE TAG_DIV = #{tagDiv}
+		    AND REG_DIV = #{regDiv}
+		    AND TAG_SEQ = #{tagSeq}
+	</update>
+			
+</mapper>

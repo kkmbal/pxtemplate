@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--	version			날짜 				수정자					내용
+*******************************************************************************************
+		v1.0		2013.04.23			crossent				최초작성
+ -->
+ 
+<mapper namespace="portalxpert.main.mapper.MainMapper">
+	<resultMap id="getPromoteBannerList" type="portalxpert.main.vo.MainVO">
+		<result property="bnrId" column="BNR_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="linkUrl" column="LINK_URL"/>
+		<result property="altTxt" column="ALT_TXT"/>
+		<result property="setWidth" column="SET_WIDTH"/>
+		<result property="setHeight" column="SET_HEIGHT"/>
+		<result property="imgNameOrg" column="IMG_NAME_ORG"/>
+		<result property="imgNameReal" column="IMG_NAME_REAL"/>
+		<result property="imgPath" column="IMG_PATH"/>
+	</resultMap>
+	
+	<resultMap id="getNoticeBoardList" type="portalxpert.main.vo.MainVO">
+		<result property="stndBoardSeq" column="STND_BOARD_SEQ"/>
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="boardName" column="BOARD_NAME"/>
+		<result property="mndtYn" column="MNDT_YN"/>
+	</resultMap> 
+       		  	   	     
+    <resultMap id="getTotalNoticeList" type="portalxpert.main.vo.MainVO">
+    	<result property="notiId" column="NOTI_ID"/>
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="notiTitle" column="NOTI_TITLE"/>
+		<result property="notiTitleOrgn" column="NOTI_TITLE_OGRN"/>		
+		<result property="notiConts" column="NOTI_CONTS" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="titleBoldYn" column="TITLE_BOLD_YN"/>
+		<result property="titleColorDiv" column="TITLE_COLOR_DIV"/>
+		<result property="linkUrl" column="LINK_URL"/>
+		<result property="nickUseYn" column="NICK_USE_YN"/>
+		<result property="userNick" column="USER_NICK"/>
+		<result property="notiKind" column="NOTI_KIND"/>
+		<result property="notiOpnCnt" column="NOTI_OPN_CNT"/>		
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="deptFname" column="DEPT_FNAME"/>
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM"/>
+		<result property="updDttm" column="UPD_DTTM"/>
+		<result property="makrDispDiv" column="MAKR_DISP_DIV"/>
+		<result property="notiReadYn" column="EVAL_READ_YN"/>
+	</resultMap>
+	
+	 <resultMap id="getBoardList" type="portalxpert.main.vo.MainVO">
+		<result property="notiId" column="NOTI_ID"/>
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="notiTitle" column="NOTI_TITLE"/>
+		<result property="notiTitleOrgn" column="NOTI_TITLE_OGRN"/>		
+		<result property="notiConts" column="NOTI_CONTS" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="titleBoldYn" column="TITLE_BOLD_YN"/>
+		<result property="titleColorDiv" column="TITLE_COLOR_DIV"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="deptFname" column="DEPT_FNAME"/>
+		<result property="regDttm" column="REG_DTTM"/>
+		<result property="updDttm" column="UPD_DTTM"/>
+	</resultMap>
+                 
+	<resultMap id="getNoticePreview" type="portalxpert.main.vo.MainVO">
+		<result property="notiId" column="NOTI_ID"/>
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="notiTitle" column="NOTI_TITLE"/>
+		<result property="notiTitleOrgn" column="NOTI_TITLE_OGRN"/>
+		<result property="notiConts" column="NOTI_CONTS" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="deptFname" column="DEPT_FNAME"/>
+	</resultMap>
+	
+	<resultMap id="getTagCloudList" type="portalxpert.main.vo.MainVO">
+		<result property="linkCateCode" column="LINK_CATE_CODE"/>
+		<result property="linkCode" column="LINK_CODE"/>
+		<result property="linkName" column="LINK_NAME"/>
+		<result property="linkUrl" column="LINK_URL"/>
+		<result property="tagFont" column="TAG_FONT"/>
+		<result property="boldYn" column="BOLD_YN"/>
+		<result property="fontSize" column="FONT_SIZE"/>
+		<result property="fontColor" column="FONT_COLOR"/>
+		<result property="bkgdColor" column="BKGD_COLOR"/>
+	</resultMap>
+	
+	<resultMap id="getUserWorkDeskList" type="portalxpert.main.vo.MainVO">
+		<result property="linkCatId" column="LINK_CAT_ID"/>
+		<result property="linkCatNm" column="LINK_CAT_NM"/>
+		<result property="linkCd" column="LINK_CD"/>
+		<result property="linkOrder" column="LINK_ORDER"/>
+		<result property="linkAddress" column="LINK_ADDRESS"/>
+		<result property="linkNm" column="LINK_NM"/>
+		<result property="popupUseGb" column="POPUP_USE_GB"/>
+		<result property="mainDspGb" column="MAIN_DSP_GB"/>
+		<result property="psnCatId" column="PSN_CAT_ID"/>
+		<result property="psnCd" column="PSN_CD"/>
+	</resultMap>
+	
+	<resultMap id="getVodImageList" type="portalxpert.main.vo.MainVO">
+		<result property="notiId" column="NOTI_ID"/>
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="notiTitle" column="NOTI_TITLE"/>
+		<result property="notiTitleOrgn" column="NOTI_TITLE_ORGN"/>
+		<result property="apndFileName" column="APND_FILE_NAME"/>
+		<result property="apndFileOrgn" column="APND_FILE_ORGN"/>
+		<result property="apndFilePath" column="APND_FILE_PATH"/>
+	</resultMap>
+	
+	<resultMap id="getNotiPopup" type="portalxpert.main.vo.MainVO">
+		<result property="notiId" column="NOTI_ID"/>
+		<result property="boardId" column="BOARD_ID"/>
+		<result property="notiTitle" column="NOTI_TITLE"/>
+		<result property="notiTitleOrgn" column="NOTI_TITLE_ORGN"/>
+		<result property="notiConts" column="NOTI_CONTS" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="regDttm" column="REG_DTTM"/>
+	</resultMap>
+	
+	<resultMap id="getHotBriefingPopup" type="portalxpert.main.vo.MainVO">
+		<result property="bnrId" column="BNR_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="linkUrl" column="LINK_URL"/>
+		<result property="targeting" column="TARGETING"/>
+		<result property="contents" column="CONTENTS"/>
+		<result property="imguseYn" column="IMGUSE_YN"/> 	
+		<result property="altTxt" column="ALT_TXT"/>
+		<result property="imgWidth" column="IMG_WIDTH"/>
+		<result property="imgHeight" column="IMG_HEIGHT"/>
+		<result property="insDts" column="INS_DTS"/>
+		<result property="imgNameOrg" column="IMG_NAME_ORG"/>
+		<result property="imgNameReal" column="IMG_NAME_REAL"/>
+		<result property="imgSize" column="IMG_SIZE"/>
+		<result property="imgPath" column="IMG_PATH"/>
+	</resultMap>
+	
+	<select id="getPromoteBannerList" resultMap="getPromoteBannerList">
+		/* === MainMapper.getPromoteBannerList === */
+			SELECT A.BNR_ID                                                                               
+			     , A.TITLE                                                                              
+			     , A.LINK_URL                                                                           
+			     , A.ALT_TXT                                                                             
+			     , A.IMG_WIDTH AS SET_WIDTH                                                             
+			     , A.IMG_HEIGHT AS SET_HEIGHT                                                            
+			     , B.IMG_NAME_ORG                                                                        
+			     , B.IMG_NAME_REAL                                                                      
+			     , B.IMG_PATH                                                                            
+			  FROM INFO_BANNER A,                                                                         
+			       INFO_BANNER_FILE B                                                                     
+			 WHERE A.BNR_ID = B.BNR_ID                                                                    
+			   AND B.FILE_ID = (SELECT MAX(FILE_ID) FROM INFO_BANNER_FILE WHERE BNR_ID = B.BNR_ID)
+			   AND A.USE_YN = 'Y'                                                  
+			   AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN A.FROM_DTS AND A.TO_DTS                       
+			 ORDER BY BNR_ID DESC 	
+	</select>
+	
+	<select id="getUserBoardList" parameterType="portalxpert.common.vo.UserInfoVO" resultMap="getNoticeBoardList">
+		/* === MainMapper.getUserBoardList === */	
+		<![CDATA[	
+			SELECT ROW_NUMBER() OVER(ORDER BY STND_BOARD_SEQ) AS STND_BOARD_SEQ
+				 , BOARD_ID
+				 , BOARD_NAME
+				 , MNDT_YN 
+			  FROM COM_STND_BOARD_INFO
+			 WHERE MNDT_YN = 'Y'
+			   AND DEL_YN = 'N'
+			   AND BOARD_USE_DIV = 'TAB'
+			 UNION ALL
+			SELECT ROW_NUMBER() OVER(ORDER BY STND_BOARD_SEQ) AS STND_BOARD_SEQ
+			 	 , BOARD_ID
+			 	 , BOARD_NAME
+			 	 , 'D' AS MNDT_YN 
+			  FROM COM_STND_BOARD_INFO
+			 WHERE MNDT_YN <> 'Y'
+			   AND DEL_YN = 'N'
+			   AND BOARD_USE_DIV = 'TAB'
+			   AND NOT EXISTS (
+			   					SELECT 1 
+			   					  FROM PSN_USER_BOARD_SET 
+			   					 WHERE USER_ID = #{id}
+			   					   AND BOARD_USE_DIV = 'TAB'
+			   				  )
+			 UNION ALL
+			SELECT ROW_NUMBER() OVER(ORDER BY STND_BOARD_SEQ) AS STND_BOARD_SEQ
+				 , BOARD_ID
+				 , BOARD_NAME
+				 , 'U' AS MNDT_YN
+			  FROM PSN_USER_BOARD_SET
+			 WHERE USER_ID = #{id}
+			   AND BOARD_USE_DIV = 'TAB'
+			   AND USE_YN = 'Y'
+               AND DEL_YN = 'N'
+			   AND BOARD_ID NOT IN (
+			   						SELECT BOARD_ID 
+			   						  FROM COM_STND_BOARD_INFO 
+			   						 WHERE MNDT_YN = 'Y'
+			   						   AND DEL_YN = 'N'
+			   						)
+		]]>			   						
+	</select>
+	
+	<select id="getUserBoardSetCnt" parameterType="portalxpert.common.vo.UserInfoVO" resultType="int">
+		/* === MainMapper.getUserBoardSetCnt === */
+			SELECT COUNT(1) AS CNT
+              FROM PSN_USER_BOARD_SET
+             WHERE USER_ID = #{id}
+               AND BOARD_USE_DIV = 'TAB'
+	</select>
+	
+	<delete id="deleteUserBoardSet">
+		/* === MainMapper.deleteUserBoardSet === */
+			DELETE FROM PSN_USER_BOARD_SET
+			 WHERE USER_ID = #{id}
+			   AND BOARD_USE_DIV = 'TAB'
+	</delete>
+	
+	<insert id="insertUserBoardSet">
+		/* === MainMapper.insertUserBoardSet === */
+			 INSERT INTO PSN_USER_BOARD_SET 
+			 (
+			 	USER_ID
+			  , BOARD_USE_DIV
+			  , STND_BOARD_SEQ
+			  , BOARD_ID
+			  , BOARD_NAME
+			  , BOARD_URL
+			  , USE_YN
+			  , DEL_YN
+			  , REGR_ID
+			  , REGR_NAME
+			  , REG_DTTM
+			  , UPDR_ID
+			  , UPDR_NAME
+			  , UPD_DTTM
+			 ) 
+			 VALUES
+			 ( 
+			 	#{userId}
+		 	  , 'TAB'
+		 	  , #{stndBoardSeq}
+		 	  , #{boardId}
+		      , #{boardName}
+		      , ''
+		      , 'Y'
+		      , 'N'
+		      , #{userId}
+		      , #{userName}
+		      , SYSDATE
+		      , #{userId}
+		      , #{userName}
+		      , SYSDATE 
+			 )
+	</insert>
+	
+	<select id="getTotalNoticeList" parameterType="portalxpert.main.vo.MainVO" resultMap="getTotalNoticeList">
+		/* === MainMapper.getTotalNoticeList === */
+		<![CDATA[
+			SELECT RNUM
+			     , N.*
+			  FROM (SELECT ROW_NUMBER () OVER (ORDER BY A.ANMT_YN DESC, A.UPD_DTTM DESC, SORT_SEQ DESC) AS RNUM
+			             , A.NOTI_ID
+			             , A.BOARD_ID
+			             , A.NOTI_TITLE
+			             , A.NOTI_TITLE_ORGN
+			             , A.NOTI_CONTS
+			             , CASE WHEN A.TITLE_BOLD_YN = 'Y' THEN 'font-weight:bold;' END AS TITLE_BOLD_YN
+			             , CASE WHEN A.TITLE_COLOR_DIV = 'BLU' THEN 'color:blue;'
+			                    WHEN A.TITLE_COLOR_DIV = 'RED' THEN 'color:red;' END AS TITLE_COLOR_DIV
+			             , A.LINK_URL
+			             , A.NICK_USE_YN
+			             , A.USER_NICK
+			             , A.NOTI_KIND
+			             , (SELECT COUNT(NOTI_ID) FROM BBS_NOTI_OPN WHERE DEL_YN = 'N' AND NOTI_ID = A.NOTI_ID) AS NOTI_OPN_CNT
+			             , A.DEPT_CODE
+			             , A.DEPT_NAME
+			             , A.DEPT_FNAME
+			             , A.REGR_ID
+			             , A.REGR_NAME
+			             , TO_CHAR (A.REG_DTTM, 'YYYY-MM-DD') AS REG_DTTM
+			             , TO_CHAR (A.UPD_DTTM, 'YYYY-MM-DD') AS UPD_DTTM
+			             , NVL((SELECT 'Y' FROM DUAL WHERE EXISTS (SELECT 1 FROM BBS_NOTI_EVAL_INFO BB WHERE A.NOTI_ID = BB.NOTI_ID AND BB.USER_ID = #{userId} AND BB.NOTI_EVAL_DIV = '040')), 'N') AS EVAL_READ_YN
+			             , C.MAKR_DISP_DIV
+			          FROM BBS_NOTI_INFO A
+			          	 , BBS_BOARD_INFO C
+			         WHERE A.BOARD_ID = C.BOARD_ID                       
+			           AND A.DEL_YN = 'N'
+			           AND A.BOARD_ID = ANY (
+			           						 SELECT BOARD_ID 
+			           						   FROM BBS_BOARD_USER_MAP 
+			           						  WHERE USER_ID IN (${auth})
+			           						 )
+			           AND A.BOARD_ID IN ( 
+			           					    SELECT BOARD_ID
+			                                  FROM COM_STND_BOARD_INFO
+			                                 WHERE BOARD_USE_DIV = 'TAB'
+			                                   AND MNDT_YN = 'Y'
+			                             UNION ALL
+			                                SELECT BOARD_ID
+			                                  FROM COM_STND_BOARD_INFO
+			                                 WHERE BOARD_USE_DIV = 'TAB'
+			                                   AND MNDT_YN = 'N'
+			                                   AND NOT EXISTS(SELECT 1 FROM  PSN_USER_BOARD_SET WHERE USER_ID = #{userId})
+			                             UNION ALL
+			                                SELECT BOARD_ID
+			                                  FROM PSN_USER_BOARD_SET
+			                                 WHERE EXISTS(SELECT 1 FROM  PSN_USER_BOARD_SET WHERE USER_ID = #{userId})
+			                                   AND USER_ID = #{userId} 
+			                             )
+                       AND A.NOTI_BGN_DTTM <= SYSDATE
+                       AND A.NOTI_END_DTTM >= SYSDATE
+                       AND A.UP_NOTI_ID = '*'                       
+                    ) N
+        	 WHERE RNUM <= 20
+		]]>			
+	</select>
+	
+	<select id="getBoardList" parameterType="portalxpert.main.vo.MainVO" resultMap="getBoardList">
+		/* === MainMapper.getBoardList === */	
+	 	<![CDATA[
+			SELECT * 
+			  FROM (
+					SELECT ROW_NUMBER() OVER (ORDER BY A.ANMT_YN DESC, A.UPD_DTTM DESC, SORT_SEQ DESC) AS RNUM
+	     				 , A.NOTI_ID
+	     				 , A.BOARD_ID
+	     	    	     , A.NOTI_TITLE
+	     	    	     , A.NOTI_TITLE_ORGN
+	     	    	     , A.NOTI_CONTS
+	     				 , CASE WHEN A.TITLE_BOLD_YN = 'Y' THEN 'font-weight:bold;'
+                                 END AS TITLE_BOLD_YN
+                               , CASE WHEN A.TITLE_COLOR_DIV = 'BLU' THEN 'color:blue;'
+                                      WHEN A.TITLE_COLOR_DIV = 'RED' THEN 'color:red;'
+                                 END AS TITLE_COLOR_DIV
+                               , (SELECT COUNT(NOTI_ID) FROM BBS_NOTI_OPN WHERE DEL_YN = 'N' AND NOTI_ID = A.NOTI_ID) AS NOTI_OPN_CNT
+                               , A.DEPT_NAME                                                      
+                               , A.DEPT_FNAME
+                               , TO_CHAR(A.REG_DTTM,'YYYY-MM-DD') REG_DTTM
+					     , TO_CHAR(A.UPD_DTTM,'YYYY-MM-DD') UPD_DTTM                                                          
+					  FROM BBS_NOTI_INFO A
+					 WHERE DEL_YN = 'N'
+	 				   AND A.BOARD_ID = #{boardId}
+	 				   AND A.NOTI_BGN_DTTM <= SYSDATE
+                       AND A.NOTI_END_DTTM >= SYSDATE
+				  ) N
+			 WHERE RNUM <= 4
+		]]>
+	</select>
+	
+	<select id="getNoticePreview" parameterType="portalxpert.main.vo.MainVO" resultMap="getNoticePreview">
+		/* === MainMapper.getNoticePreview === */	
+		<![CDATA[
+			SELECT NOTI_ID 
+			     , BOARD_ID  
+			     , NOTI_TITLE
+			     , NOTI_TITLE_ORGN
+			     , NOTI_CONTS
+			     , DEPT_NAME
+			     , DEPT_FNAME
+			  FROM BBS_NOTI_INFO
+			 WHERE NOTI_ID = #{notiId}				
+		]]>
+	</select>
+	
+	<select id="getBbsNotiEvalInfoCnt" parameterType="portalxpert.main.vo.MainVO" resultType="int">
+		/* === MainMapper.getBbsNotiEvalInfoCnt === */	
+			SELECT COUNT(NOTI_ID) CNT 
+			  FROM BBS_NOTI_EVAL_INFO
+			 WHERE USER_ID = #{userId}
+			   AND NOTI_ID = #{notiId}
+	</select>
+	
+	<insert id="insertBbsNotiEvalInfo">
+		/* === MainMapper.insertBbsNotiEvalInfo === */	
+		INSERT INTO BBS_NOTI_EVAL_INFO 
+		(
+   			NOTI_ID
+   		  , NOTI_EVAL_DIV
+   		  , USER_ID
+   		  , EVAL_SEQ
+		  , USER_NAME
+		  , EVAL_DTTM
+		  , DEL_YN
+		  , REGR_ID
+		  , REGR_NAME
+		  , REG_DTTM
+		  , UPDR_ID
+		  , UPDR_NAME
+		  , UPD_DTTM
+		) 
+		VALUES
+		( 
+			#{notiId}
+		  , '040'
+		  , #{userId}
+		  , '1'
+    	  , #{userName}
+    	  , SYSDATE
+    	  , 'N'
+    	  , #{userId}
+    	  , #{userName}
+    	  , SYSDATE
+    	  , #{userId}
+    	  , #{userName}
+    	  , SYSDATE 
+    	)
+	</insert>
+	
+	<update id="updateBbsNotiInfoReadCnt">
+		/* === MainMapper.updateBbsNotiInfoReadCnt === */
+		UPDATE BBS_NOTI_INFO
+		   SET NOTI_READ_CNT = NOTI_READ_CNT + 1
+		 WHERE NOTI_ID = #{notiId}
+	</update>
+
+	<select id="getTagCloudList" parameterType="portalxpert.main.vo.MainVO" resultMap="getTagCloudList">
+		/* === MainMapper.getTagCloudList === */	
+		<![CDATA[
+			SELECT LINK_CATE_CODE
+				 , LINK_CODE
+				 , LINK_NAME
+				 , LINK_URL
+				 , TAG_FONT
+				 , BOLD_YN
+				 , FONT_SIZE
+				 , FONT_COLOR
+				 , BKGD_COLOR
+			  FROM ( 
+					SELECT T.LINK_CATE_CODE
+				 		 , T.LINK_CODE
+						 , T.LINK_NAME
+						 , T.LINK_URL
+						 , T.TAG_FONT
+						 , T.BOLD_YN
+						 , T.FONT_SIZE
+						 , T.FONT_COLOR
+						 , T.BKGD_COLOR						 
+					  FROM (
+							SELECT ROW_NUMBER() OVER (ORDER BY TAG_SEQ ASC) AS RNUM
+								 , TAG_DIV
+								 , REG_DIV
+								 , TAG_SEQ
+								 , LINK_CATE_CODE
+								 , LINK_CODE
+								 , LINK_NAME
+								 , VISIT_CNT
+								 , LINK_CATE_NAME
+								 , LINK_URL
+								 , TAG_FONT
+								 , BOLD_YN
+								 , FONT_SIZE
+								 , FONT_COLOR
+								 , BKGD_COLOR
+							  FROM ADM_TAG_CLOUD_INFO
+							 WHERE TAG_DIV = #{tagDiv}
+							   AND REG_DIV = 'ADM'
+							   AND DEL_YN = 'N'
+						 UNION ALL
+							SELECT ROW_NUMBER() OVER (ORDER BY A.TAG_SEQ ASC) AS RNUM 
+								 , A.TAG_DIV
+								 , A.REG_DIV
+								 , A.TAG_SEQ
+								 , A.LINK_CATE_CODE
+								 , A.LINK_CODE
+								 , A.LINK_NAME
+								 , A.VISIT_CNT
+								 , A.LINK_CATE_NAME
+								 , A.LINK_URL
+								 , B.TAG_FONT
+ 								 , B.BOLD_YN
+								 , B.FONT_SIZE
+								 , B.FONT_COLOR
+								 , B.BKGD_COLOR
+							  FROM ADM_TAG_CLOUD_INFO A
+							  	 , ADM_TAG_CLOUD_RANK_INFO B  
+							 WHERE A.TAG_SEQ = B.TAG_SEQ 
+							   AND A.TAG_DIV = #{tagDiv} 
+							   AND A.REG_DIV = 'SYS'
+							   AND A.DEL_YN = 'N'
+							   AND A.TAG_SEQ <= ( 
+							   					 SELECT SUM(MAX_VAL) - SUM(ADM_CNT) 
+							   	             	   FROM ( 
+							   	             	   		 SELECT MAX(TAG_SEQ) AS MAX_VAL
+							   	             	   		 	  , 0 AS ADM_CNT
+							                           	   FROM ADM_TAG_CLOUD_INFO
+							                          	  WHERE TAG_DIV = #{tagDiv}
+							                                AND REG_DIV = 'SYS'
+							  								AND DEL_YN = 'N'
+							                          UNION ALL
+							                         	 SELECT 0 AS MAX_VAL, COUNT(1) AS ADM_CNT
+							                               FROM ADM_TAG_CLOUD_INFO
+							                          	  WHERE TAG_DIV = #{tagDiv}
+							                            	AND REG_DIV = 'ADM'
+							   								AND DEL_YN = 'N'
+							                       		) 
+							               		) 
+							) T					      
+				)
+			 WHERE ROWNUM <= 26
+		]]>
+	</select>
+	
+	<select id="getUserWorkDeskList" parameterType="portalxpert.common.vo.UserInfoVO" resultMap="getUserWorkDeskList">
+		/* === MainMapper.getUserWorkDeskList === */	
+			SELECT A.LINK_CAT_ID                     
+			     , B.LINK_CAT_NM                     
+			     , A.LINK_CD                         
+			     , A.LINK_ORDER                      
+			     , A.LINK_ADDRESS                    
+			     , A.LINK_NM                         
+			     , A.POPUP_USE_GB                    
+			     , A.MAIN_DSP_GB                     
+				 , C.LINK_CAT_ID PSN_CAT_ID          
+				 , C.LINK_CD PSN_CD                  
+			  FROM BIZ_LINK A                        
+			     , BIZ_LINK_CATEGORY B               
+			     , PSN_JOB_DESK C                    
+			 WHERE B.LINK_CAT_ID (+) = A.LINK_CAT_ID 
+			   AND A.LINK_CAT_ID = C.LINK_CAT_ID (+) 
+			   AND A.LINK_CD = C.LINK_CD (+)     
+			   AND C.USER_ID (+) = #{id}             
+			   AND A.END_DATE IS NULL                
+		  ORDER BY B.LINK_CAT_ORDER ASC, A.LINK_NM ASC  
+	</select>
+		
+	<select id="getUserWorkDeskCnt" parameterType="portalxpert.common.vo.UserInfoVO" resultType="int">
+		/* === MainMapper.getUserWorkDeskCnt === */
+			SELECT COUNT(A.LINK_CAT_ID) CNT         
+			  FROM BIZ_LINK A
+			     , PSN_JOB_DESK B                   
+			 WHERE A.LINK_CAT_ID = B.LINK_CAT_ID    
+			   AND A.LINK_CD = B.LINK_CD        
+			   AND B.USER_ID = #{id}       	
+	</select>
+	
+	<select id="getDefaultWorkDeskCnt" resultType="int">
+		/* === MainMapper.getDefaultWorkDeskCnt === */	
+			SELECT COUNT(1) AS CNT                        
+			  FROM BIZ_LINK 
+			 WHERE MAIN_DSP_GB = 'Y'   
+	</select>
+                      
+	<delete id="deleteUserWorkDesk">
+		/* === MainMapper.deleteUserWorkDesk === */
+			DELETE FROM PSN_JOB_DESK     
+	 		 WHERE USER_ID = #{id} 
+	</delete>
+	
+	<insert id="insertUserWorkDesk">
+		/* === MainMapper.insertUserWorkDesk === */	
+			INSERT INTO PSN_JOB_DESK
+			(
+				USER_ID
+			  , LINK_CAT_ID
+			  , LINK_CD
+			  , REG_DTTM
+			  , REGR_ID
+			  , UPD_DTTM
+			  , UPDR_ID
+			) 
+			VALUES
+			(
+				#{userId}
+			  , #{linkCatId}
+			  , #{linkCd}
+			  , SYSDATE
+			  , #{userId}
+			  , SYSDATE
+			  , #{userId}
+			)	
+	</insert> 
+	
+	<select id="getRecentVodImageList" resultMap="getVodImageList">
+		/* === MainMapper.getRecentVodImageList === */	
+		<![CDATA[
+			SELECT * 
+		      FROM (
+		   			SELECT ROW_NUMBER() OVER(ORDER BY A.UPD_DTTM DESC) AS RNUM
+			       		 , A.NOTI_ID
+			       		 , A.BOARD_ID
+			       		 , A.NOTI_TITLE
+			       		 , A.NOTI_TITLE_ORGN 
+			       		 , B.APND_FILE_TP
+			       		 , B.APND_FILE_NAME
+			       		 , B.APND_FILE_ORGN
+			       		 , B.APND_FILE_PATH
+			       	  FROM BBS_NOTI_INFO A
+			       	     , BBS_NOTI_APND_FILE B
+			       	 WHERE A.NOTI_ID = B.NOTI_ID
+			       	   AND A.BOARD_ID = 'BBS000010' 
+			       	   AND A.DEL_YN = 'N'
+			       	   AND B.ADMIN_RCMD_YN = 'Y'
+			       	   AND B.APND_FILE_TP = '030'
+			       	   AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_FORM = '030'
+			       	               AND BOARD_FORM_SPEC = '020')
+			     UNION ALL
+				    SELECT ROW_NUMBER() OVER(ORDER BY A.UPD_DTTM DESC) AS RNUM
+						 , A.NOTI_ID
+						 , A.BOARD_ID
+						 , A.NOTI_TITLE
+						 , A.NOTI_TITLE_ORGN 
+						 , B.APND_FILE_TP
+						 , B.APND_FILE_NAME
+						 , B.APND_FILE_ORGN
+						 , B.APND_FILE_PATH
+					  FROM BBS_NOTI_INFO A
+					     , BBS_NOTI_APND_FILE B
+					 WHERE A.NOTI_ID = B.NOTI_ID
+					   AND A.BOARD_ID = 'BBS000010' 
+					   AND A.DEL_YN = 'N'
+					   AND NVL(B.ADMIN_RCMD_YN, 'N') <> 'Y'
+					   AND B.APND_FILE_TP = '030'
+					   AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_FORM = '030'
+			       	               AND BOARD_FORM_SPEC = '020')
+		     		)
+		      WHERE ROWNUM <= 3
+	      UNION ALL
+		     SELECT * 
+		       FROM (
+					 SELECT ROW_NUMBER() OVER(ORDER BY A.UPD_DTTM DESC) AS RNUM
+						  , A.NOTI_ID
+						  , A.BOARD_ID
+						  , A.NOTI_TITLE
+						  , A.NOTI_TITLE_ORGN 
+						  , B.APND_FILE_TP
+						  , B.APND_FILE_NAME
+						  , B.APND_FILE_ORGN
+						  , B.APND_FILE_PATH
+					   FROM BBS_NOTI_INFO A
+					      , BBS_NOTI_APND_FILE B
+					  WHERE A.NOTI_ID = B.NOTI_ID
+					    AND A.BOARD_ID = 'BBS000011' 
+					    AND A.DEL_YN = 'N'
+					    AND B.ADMIN_RCMD_YN = 'Y'
+					    AND B.APND_FILE_TP = '020'
+					    AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_FORM = '030'
+			       	                AND BOARD_FORM_SPEC = '010')
+				  UNION ALL
+		     		 SELECT ROW_NUMBER() OVER(ORDER BY A.UPD_DTTM DESC) AS RNUM
+					 	  , A.NOTI_ID
+					 	  , A.BOARD_ID
+					 	  , A.NOTI_TITLE
+					 	  , A.NOTI_TITLE_ORGN 
+					 	  , B.APND_FILE_TP
+					 	  , B.APND_FILE_NAME
+					 	  , B.APND_FILE_ORGN
+					 	  , B.APND_FILE_PATH
+					   FROM BBS_NOTI_INFO A
+					      , BBS_NOTI_APND_FILE B
+					  WHERE A.NOTI_ID = B.NOTI_ID 
+					    AND A.BOARD_ID = 'BBS000011'
+					    AND A.DEL_YN = 'N'
+					    AND NVL(B.ADMIN_RCMD_YN, 'N') <> 'Y'
+					    AND B.APND_FILE_TP = '020'
+					    AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_FORM = '030'
+			       	                AND BOARD_FORM_SPEC = '010')
+		    		)
+		      WHERE ROWNUM <= 2
+		]]>
+	</select>
+	
+	<select id="getMostViewedVodImageList" resultMap="getVodImageList">
+		/* === MainMapper.getMostViewedVodImageList === */	
+		<![CDATA[
+			SELECT * 
+		      FROM (
+		   			SELECT ROW_NUMBER() OVER(ORDER BY A.NOTI_READ_CNT DESC, A.UPD_DTTM DESC) AS RNUM
+			       		 , A.NOTI_ID
+			       		 , A.BOARD_ID
+			       		 , A.NOTI_TITLE
+			       		 , A.NOTI_TITLE_ORGN 
+			       		 , B.APND_FILE_TP
+			       		 , B.APND_FILE_NAME
+			       		 , B.APND_FILE_ORGN
+			       		 , B.APND_FILE_PATH
+			       	  FROM BBS_NOTI_INFO A
+			       	     , BBS_NOTI_APND_FILE B
+			       	 WHERE A.NOTI_ID = B.NOTI_ID
+			       	   AND A.BOARD_ID = 'BBS000010' 
+			       	   AND A.DEL_YN = 'N'
+			       	   AND B.ADMIN_RCMD_YN = 'Y'
+			       	   AND B.APND_FILE_TP = '030'
+			       	   AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_FORM = '030'
+			       	               AND BOARD_FORM_SPEC = '020')
+			     UNION ALL
+				    SELECT ROW_NUMBER() OVER(ORDER BY A.NOTI_READ_CNT DESC, A.UPD_DTTM DESC) AS RNUM
+						 , A.NOTI_ID
+						 , A.BOARD_ID
+						 , A.NOTI_TITLE
+						 , A.NOTI_TITLE_ORGN 
+						 , B.APND_FILE_TP
+						 , B.APND_FILE_NAME
+						 , B.APND_FILE_ORGN
+						 , B.APND_FILE_PATH
+					  FROM BBS_NOTI_INFO A
+					     , BBS_NOTI_APND_FILE B
+					 WHERE A.NOTI_ID = B.NOTI_ID
+					   AND A.BOARD_ID = 'BBS000010' 
+					   AND A.DEL_YN = 'N'
+					   AND NVL(B.ADMIN_RCMD_YN, 'N') <> 'Y'
+					   AND B.APND_FILE_TP = '030'
+					   AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_FORM = '030'
+			       	               AND BOARD_FORM_SPEC = '020')
+		     		)
+		      WHERE ROWNUM <= 3
+		  UNION ALL
+		     SELECT * 
+		       FROM (
+					 SELECT ROW_NUMBER() OVER(ORDER BY A.NOTI_READ_CNT DESC, A.UPD_DTTM DESC) AS RNUM
+						  , A.NOTI_ID
+						  , A.BOARD_ID
+						  , A.NOTI_TITLE
+						  , A.NOTI_TITLE_ORGN 
+						  , B.APND_FILE_TP
+						  , B.APND_FILE_NAME
+						  , B.APND_FILE_ORGN
+						  , B.APND_FILE_PATH
+					   FROM BBS_NOTI_INFO A
+					      , BBS_NOTI_APND_FILE B
+					  WHERE A.NOTI_ID = B.NOTI_ID
+					    AND A.BOARD_ID = 'BBS000011' 
+					    AND A.DEL_YN = 'N'
+					    AND B.ADMIN_RCMD_YN = 'Y'
+					    AND B.APND_FILE_TP = '020'
+					    AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_FORM = '030'
+			       	                AND BOARD_FORM_SPEC = '010')
+				  UNION ALL
+		     		 SELECT ROW_NUMBER() OVER(ORDER BY A.NOTI_READ_CNT DESC, A.UPD_DTTM DESC) AS RNUM
+					 	  , A.NOTI_ID
+					 	  , A.BOARD_ID
+					 	  , A.NOTI_TITLE
+					 	  , A.NOTI_TITLE_ORGN 
+					 	  , B.APND_FILE_TP
+					 	  , B.APND_FILE_NAME
+					 	  , B.APND_FILE_ORGN
+					 	  , B.APND_FILE_PATH
+					   FROM BBS_NOTI_INFO A
+					      , BBS_NOTI_APND_FILE B
+					  WHERE A.NOTI_ID = B.NOTI_ID
+					    AND A.BOARD_ID = 'BBS000011' 
+					    AND A.DEL_YN = 'N'
+					    AND NVL(B.ADMIN_RCMD_YN, 'N') <> 'Y'
+					    AND B.APND_FILE_TP = '020'
+					    AND EXISTS (SELECT 1 FROM BBS_BOARD_INFO WHERE BOARD_ID = A.BOARD_ID AND BOARD_FORM = '030'
+			       	                AND BOARD_FORM_SPEC = '010')
+		    		)
+		      WHERE ROWNUM <= 2
+		]]>
+	</select>
+	
+	<select id="getNotiPopupCnt" resultType="int">
+		/* === MainMapper.getNoticePopupCount === */	
+			SELECT COUNT(1) AS COUNT
+			  FROM BBS_NOTI_POPUP_INFO
+			 WHERE EXPO_YN = 'Y'
+	</select>
+	
+	<select id="getHotBriefingPopupCnt" resultType="int">
+		/* === MainMapper.getHotBriefingPopupCnt === */	
+			SELECT COUNT(1) AS COUNT
+			  FROM HOT_BRIEFING
+			 WHERE USE_YN = 'Y'
+	</select>
+	
+	<select id="getNotiPopup" resultMap="getNotiPopup">
+		/* === MainMapper.getNoticePopup === */	
+		<![CDATA[
+			SELECT A.NOTI_ID
+				 , B.BOARD_ID
+				 , B.NOTI_TITLE
+				 , B.NOTI_TITLE_ORGN
+				 , B.NOTI_CONTS
+				 , TO_CHAR(B.REG_DTTM, 'YYYY-MM-DD') AS REG_DTTM
+			  FROM BBS_NOTI_POPUP_INFO A
+			  	 , BBS_NOTI_INFO B
+			 WHERE A.NOTI_ID = B.NOTI_ID
+			   AND A.EXPO_YN = 'Y'
+			   AND A.POPUP_DIV = 'POP'
+			   AND A.EXPO_DTTM_BGN <= SYSDATE
+		 	   AND A.EXPO_DTTM_END >= SYSDATE
+          ORDER BY A.REG_DTTM DESC
+		]]>
+	</select>
+	
+	<select id="getHotBriefingPopup" resultMap="getHotBriefingPopup">
+		/* === MainMapper.getHotBriefingPopup === */
+			SELECT A.BNR_ID 																		   
+			     , A.TITLE                                                                          
+			     , A.LINK_URL                                                                       
+			     , A.TARGETING															             
+			     , A.CONTENTS															             
+			     , A.IMGUSE_YN																           
+			     , A.ALT_TXT                                                                       
+			     , A.IMG_WIDTH                                                     
+			     , A.IMG_HEIGHT                                                      
+			     , A.INS_DTS                                                                  
+			     , B.IMG_NAME_ORG                                                                   
+			     , B.IMG_NAME_REAL                                                                  
+			     , B.IMG_SIZE                                                                       
+			     , B.IMG_PATH                                                                       
+			  FROM HOT_BRIEFING A                                                                   
+			     , HOT_BRIEFING_FILE B                                                               
+			 WHERE A.BNR_ID = B.BNR_ID(+)                                                            
+			   AND A.USE_YN = 'Y'    
+			   AND TO_CHAR(SYSDATE, 'YYYYMMDDHH24MM') BETWEEN A.FROM_DTS AND A.TO_DTS            
+		  ORDER BY A.BNR_ID DESC
+	</select>
+</mapper>

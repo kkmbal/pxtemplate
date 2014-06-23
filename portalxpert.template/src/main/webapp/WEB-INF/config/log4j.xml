@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- OFF ,FATAL ,ERROR ,WARN ,INFO ,DEBUG ,ALL。 -->
+	<!-- # Console output... -->
+	<appender name="CONSOLE-DEBUG" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- <param name="ConversionPattern" value="[%-5p: %d{yyyy-MM-dd HH:mm:ss.SSS}] [%C:%L] %m %n" /> -->
+			 <param name="ConversionPattern" value="[%-5p: %d{HH:mm:ss.SSS}] [%F:%L] %m %n" />  
+		</layout>
+	</appender>
+	
+	<!-- # File output... -->
+<!-- 	<appender name="errorLogAppender" class="org.apache.log4j.DailyRollingFileAppender"> -->
+<!-- 		<param name="File" value="${portal.errorLog.filename}" /> -->
+<!-- 		<param name="DatePattern" value="'.'yyyyMMdd'.log'" /> -->
+<!-- 		<param name="Encoding" value="euc-kr"/> -->
+<!-- 		<layout class="org.apache.log4j.PatternLayout"> -->
+<!-- 			<param name="ConversionPattern" value="[%-5p: %d{yyyy-MM-dd HH:mm:ss.SSS}] [%F:%L] %m %n" /> -->
+<!-- 		</layout>  -->
+<!-- 	</appender> -->
+	
+  	<logger name="egovframework" additivity="false">
+        <level value="INFO"/>
+    </logger>
+	
+	<!-- # Spring logging configuration...  -->
+	<logger name="org.springframework.core">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.beans">
+		<level value="info" />
+
+	</logger>
+
+	<logger name="org.springframework.context">
+		<level value="info" />
+	</logger>
+
+	<logger	name="org.springframework.web.servlet.handler.AbstractUrlHandlerMapping">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.aop.framework.Cglib2AopProxy">
+		<level value="warn" />
+	</logger>
+
+	<logger name="org.springframework.web.servlet.view.tiles2.TilesViewResolver">
+		<level value="info" />
+	</logger>
+	<logger name="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<level value="info" />
+	</logger>
+
+	<logger name="java.sql">
+		<level value="debug" />
+	</logger>
+
+	<logger name="org.mybatis.spring">
+		<level value="debug" />
+	</logger>
+	<logger name="org.apache.ibatis">
+		<level value="info" />
+	</logger>
+
+	<logger name="java.sql.Connection">
+		<level value="debug" />
+	</logger>
+
+	<logger name="java.sql.Statement">
+		<level value="debug" />
+	</logger>
+
+	<logger name="java.sql.PreparedStatement">
+		<level value="debug" />
+	</logger>
+
+	<logger name="java.sql.ResultSet">
+		<level value="info"></level>
+	</logger>
+
+	<logger name="org.apache.commons.digester">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.apache.commons.beanutils">
+		<level value="info" />
+	</logger>
+
+	<logger name="jdbc.sqlonly">
+		<level value="debug" />
+	</logger>
+
+	<logger name="jdbc.sqltiming">
+		<level value="fatal" />
+	</logger>
+
+	<logger name="jdbc.audit">
+		<level value="fatal" />
+	</logger>
+
+	<!-- log the jdbc ResultSet calls -->
+	<logger name="jdbc.resultset">
+		<level value="fatal" />
+	</logger>
+
+	<logger name="jdbc.connection">
+		<level value="fatal" />
+	</logger>
+
+	<!-- debug logging for log4jdbc itself -->
+	<logger name="log4jdbc.debug">
+		<level value="debug" />
+	</logger>
+
+	<!-- log4jdbc option log the jdbc results as a table -->
+	<logger name="jdbc.resultsettable" additivity="true">
+		<level value="info" />
+	</logger> 
+
+<!-- 	<logger name="errorLog"> -->
+<!-- 		<level value="ERROR" /> -->
+<!-- 		<appender-ref ref="errorLogAppender" /> -->
+<!-- 	</logger> -->
+
+	<!-- # Global logging configuration -->
+	<root>
+		<level value="debug"/>
+		  <appender-ref ref="CONSOLE-DEBUG" />
+	</root>
+	
+	
+
+</log4j:configuration>

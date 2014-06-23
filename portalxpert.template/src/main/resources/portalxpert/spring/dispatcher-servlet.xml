@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    - DispatcherServlet application context for Application's web tier.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+    <!--
+        - The controllers are autodetected POJOs labeled with the @Controller annotation.
+      	  컨트롤러들은 @Contrller 어노테이션으로 표시된 포조들이 자동으로 인식된다.
+	  -->
+   
+    <context:component-scan base-package="portalxpert.**.web">
+      	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:exclude-filter type="annotation" expression="egovframework.rte.psl.dataaccess.mapper.Mapper"/>
+    </context:component-scan>
+  
+	<mvc:annotation-driven />
+
+ 	<mvc:interceptors>
+		<bean class="portalxpert.common.web.AuthInterceptor">
+			<property name="exceptLogin">
+				<list>
+					<value>/getLogin.do</value>
+					<value>/login/login.do</value>
+					<value>/doLogin.do</value>
+					<value>/logout.do</value>
+				</list>
+			</property>
+		</bean>
+	</mvc:interceptors> 
+      
+	<bean id="tilesconfigurer"	class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+<!-- 				<value>classpath:portalxpert/tiles/tiles-*.xml</value> -->
+				<value>classpath:portalxpert/tiles/tiles-def.xml</value>
+			</list>
+		</property>
+		<property name="checkRefresh" value="true"></property> 
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1" />
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="defaultContentType" value="text/html" />
+		<property name="favorPathExtension" value="false" />
+		<property name="favorParameter" value="true" />
+		<property name="parameterName" value="format" />
+
+		<property name="mediaTypes">
+			<map>
+			  	<entry key="atom" value="application/atom+xml" /> 
+				<entry key="json" value="application/json" />
+				<entry key="html" value="text/html" />
+			</map>
+		</property>
+ 		<property name="viewResolvers">
+			<list>
+<!-- 				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1" />      -->
+				 
+				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">     
+				    <property name="order" value="2"/>     
+					<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />      
+				</bean> 
+				
+				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">    
+					<property name="order" value="3"/>
+					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />            
+					<property name="prefix" value="/WEB-INF/jsp/" />          
+					<property name="suffix" value=".jsp" />      
+				</bean> 
+			</list>
+		</property>
+		 
+		<property name="defaultViews">
+			<list>
+				<!-- JSON VIEW -->
+				<bean name="jsonView"	class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+			</list>
+		</property>
+	</bean>
+
+    <!-- For Pagination Tag -->
+    <bean id="imageRenderer" class="portalxpert.common.web.PortalImgPaginationRenderer"/>
+
+    <bean id="paginationManager" class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
+        <property name="rendererType">
+            <map>
+                <entry key="image" value-ref="imageRenderer"/> 
+            </map>
+        </property>
+    </bean>
+	<!-- /For Pagination Tag -->
+	
+	  
+    <!-- ============================================================= -->
+	<!--  HandlerException Resolver                                    -->
+	<!--  Exception 형태에 따른 오류 처리 화면을 설정한다.                     -->
+    <!--  경로는 prefix (WEB-INF/jsp), suffix(.jsp) 기본 root 로 설정되어 있다.-->
+    <!--    ex) WEB-INF/jsp/common/error.jsp                           -->
+	<!-- ============================================================= -->
+<!--     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+    <bean class="portalxpert.common.web.PortalExceptionResolver">
+    	<property name="exceptionAttribute" value="exception"/>
+        <property name="defaultErrorView" value="portalxpert/common/bizError"/>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">portalxpert/common/bizError</prop>
+            </props>
+        </property>
+        <property name="order" value="0" />
+    </bean>
+	
+</beans>
