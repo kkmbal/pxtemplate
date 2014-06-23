@@ -235,7 +235,6 @@ public class Board210Controller {
  			@RequestParam(value="orderType",required = false, defaultValue="default") String orderType,
  			@RequestParam(value="isDesc",required = false) boolean isDesc,
  			@RequestParam(value="listYn",required = false) String listYn,
- 			@RequestParam(value="fh",required = false) String fh,
  			HttpSession session,
  			HttpServletRequest request
  			)
@@ -361,7 +360,6 @@ public class Board210Controller {
 
 //			logger.debug("http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort());
 		logger.debug("getBoardInfoList pageIndex : "+pageIndex);
-		modelMap.put("fh", fh);
 		//modelMap.put("btnViewYn", "Y");
 		modelMap.put("userId", info.getId());
 		modelMap.put("listYn", listYn);
