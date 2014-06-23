@@ -45,16 +45,19 @@ public class PortalImgPaginationRenderer extends AbstractPaginationRenderer {
 		//String strWebDir = "/egovframework.guideprogram.basic/images/egovframework/cmmn/"; // localhost
 		//String strWebDir = "/###ARTIFACT_ID###/images/cmmn/";
 		//첫페이지
-		firstPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class=\"ico_first\"></a>&nbsp;";
+		firstPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class=\"pbtn allprev\"><span class=\"hidden\">처음페이지</span></a>&nbsp;";
 		//이전페이지
-        previousPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class=\"btn_prev\"></a>&nbsp;";
+        previousPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class=\"pbtn prev\"><span class=\"hidden\">이전페이지</span></a>&nbsp;";
         //선택페이지
-        currentPageLabel = "<a href=\"#\" class=\"on\">{0}</a>&nbsp;";
+        currentPageLabel = "<a href=\"#\" class=\"on\"><span class=\"num\">{0}</span></a>&nbsp;";
         //미선택페이지
-        otherPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\">{2}</a>&nbsp;";
+        otherPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\"><span class=\"num\">{2}</span></a>&nbsp;";
         //다음페이지
-        nextPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class=\"btn_next\"></a>&nbsp;";
+        nextPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class=\"pbtn next\"><span class=\"hidden\">다음페이지</span></a>&nbsp;";
         //마지막페이지
-        lastPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class=\"ico_last\"></a>";
+        lastPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class=\"pbtn allnext\"><span class=\"hidden\">마지막페이지</span></a>";
+        
+        
+        
 	}
 }

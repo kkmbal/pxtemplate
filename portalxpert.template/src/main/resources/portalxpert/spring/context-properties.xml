@@ -17,7 +17,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	
-	<context:property-placeholder  system-properties-mode="OVERRIDE" />
+	<context:property-placeholder location="classpath:/portalxpert/config/portalxpert.properties" system-properties-mode="OVERRIDE" />
 
 	<util:properties id="default" location="classpath:/portalxpert/config/portalxpert.properties" />
 	
@@ -54,7 +54,7 @@ jsp
 		<property name="properties">
 	        <map>
 	        	<!-- paging 관련 -->
-	        	<entry key="pageUnit" value="${pageUnit:15}"/>
+	        	<entry key="pageUnit" value="${pageUnit:10}"/>
 	        	<entry key="pageSize" value="${pageSize:10}"/>
 	        	
 	        	<entry key="image.web.contextpath" value="${image.web.contextpath:/portalxpert.template}"/>
@@ -64,18 +64,15 @@ jsp
 	        	<!-- 업로드 첨부용량 제한 -->
 	        	<entry key="upload.file.size" value="${upload.file.size:1000}"/>
 	        	<!-- 미리보기 실경로 -->
-<!-- 	        	<entry key="upload.temp.dir" value="${upload.temp.dir:/home/wbswas/tomcat-portal/webapps/portalxpert/upload/temp/}"/> -->
-	        	<entry key="upload.temp.dir" value="C:/Work/workspace_crossent/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/portalxpert.template/upload/temp/"/>
+	        	<entry key="upload.temp.dir" value="${upload.temp.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/temp/}"/>
 	        	<!-- 미리보기 웹경로 -->
 	        	<entry key="upload.temp.web" value="${upload.temp.web:/upload/temp/}"/>
 	        	<!-- 업로드 실경로 -->
-<!-- 	        	<entry key="upload.real.dir" value="${upload.real.dir:/home/wbswas/tomcat-portal/webapps/portalxpert/upload/}"/> -->
-	        	<entry key="upload.real.dir" value="C:/Work/workspace_crossent/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/portalxpert.template/upload/"/>
+	        	<entry key="upload.real.dir" value="${upload.real.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/}"/>
 	        	<!-- 업로드 웹경로 -->
 	        	<entry key="upload.real.web" value="${upload.real.web:/upload/}"/>
 	        	<!-- 동영상 썸네일 실경로 -->
-<!-- 	        	<entry key="upload.thumbnail.dir" value="${upload.thumbnail.dir:/home/wbswas/tomcat-portal/webapps/portalxpert/upload/movie/}"/> -->
-	        	<entry key="upload.thumbnail.dir" value="${upload.thumbnail.dir:C:/Work/workspace_crossent/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/portalxpert.template/upload/movie/}"/>
+	        	<entry key="upload.thumbnail.dir" value="${upload.thumbnail.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/movie/}"/>
 	        	<!-- 동영상 썸네일 웹경로 -->
 	        	<entry key="upload.thumbnail.web" value="${upload.thumbnail.web:/upload/movie}"/>
 	        	<!-- 동영상 썸네일기본 이미지 -->
