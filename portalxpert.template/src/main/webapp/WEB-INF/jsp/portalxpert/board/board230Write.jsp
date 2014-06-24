@@ -241,6 +241,67 @@
 </tr>
 <tr>
 <td colspan="4"> 
+<ul style="list-style-type:none;float:left;">
+	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
+	    <input type="radio" name="seq">
+		<form id="bbsImgform1" name="bbsImgform1" enctype="multipart/form-data" method="post">
+		<input type="file" size="1" title="이미지추가" id="apndImg1" name="bbsUpImg1" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		</form>
+		</li>
+
+	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
+	    <input type="radio" name="seq">
+	    <form id="bbsImgform2" name="bbsImgform2" enctype="multipart/form-data" method="post">
+		<input type="file" size="1" title="이미지추가" id="apndImg2" name="bbsUpImg2" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		</form>
+		</li>
+
+	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
+	    <input type="radio" name="seq">
+	    <form id="bbsImgform3" name="bbsImgform3" enctype="multipart/form-data" method="post">
+		<input type="file" size="1" title="이미지추가" id="apndImg3" name="bbsUpImg3" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		</form>
+		</li>
+
+	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
+	    <input type="radio" name="seq">
+	    <form id="bbsImgform4" name="bbsImgform4" enctype="multipart/form-data" method="post">
+		<input type="file" size="1" title="이미지추가" id="apndImg4" name="bbsUpImg4" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		</form>
+		</li>
+
+	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
+	    <input type="radio" name="seq">
+	    <form id="bbsImgform5" name="bbsImgform5" enctype="multipart/form-data" method="post">
+		<input type="file" size="1" title="이미지추가" id="apndImg5" name="bbsUpImg5" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		</form>
+		</li>
+	</ul>
+
+
+	
+	<div style="clear:both">
+	
+	동영상파일올리기
+	<div id="movieImgformDiv">
+	<ul>
+	    <li>
+	    <form id="movieImgform" name="movieImgform" enctype="multipart/form-data" method="post">
+	    <input type="text" style="width:100px">
+		<input type="file" size="1" title="동영상추가" id="apndMovie" name="bbsUpMovie">
+		<input type="button" onclick="fnAddMovieFileList()" value="추가">
+		</form>
+		</li>	
+	</ul>
+	</div>
+	<div id="movieFileDiv" style="width:97%; height:130px; overflow:auto ">
+		<dl></dl>
+	</div>
+	</div>
+</td>
+</tr>
+<tr>
+<td colspan="4"> 
 	<textarea class="editor ma_none" id="editor" style="height:350px;"></textarea>
 </td>
 </tr>

@@ -26,9 +26,11 @@
 						
 					for (var i=0; i < json.length; i++)
 					{
-						var strNotiItem = '<tr><td><a href="javascript:fnLinkNotiItem(\''+ json[i].notiId +'\')"  class="fo_bold te_dot">'+ json[i].notiTitleOrgn +'</a></td>';
-							strNotiItem += '<td class="te_right fo_num">' + json[i].notiReadCnt + '<span class="num_gap">|</span>'+ json[i].updDttm+'</td>';
-						 $('#notiTableList tbody').append(strNotiItem);
+						var strNotiItem = '<tr><td><span class="btn_set ico_notice"><span>공지</span></span></td>';
+						    strNotiItem += '<td class="tit"><strong><a href="javascript:fnLinkNotiItem(\''+ json[i].notiId +'\')">'+ json[i].notiTitleOrgn +'</a></strong></td>';
+							strNotiItem += '<td>' + json[i].notiReadCnt + '</td>';
+							strNotiItem += '<td>' + json[i].updDttm+'</td></tr>';
+						 $('#notiTableList tbody').prepend(strNotiItem);
 	
 					}
 					
@@ -51,13 +53,20 @@
 
 
 </script>
-공지사항
-		<table id="notiTableList" summary="공지사항 리스트">
-			<colgroup>
-				<col>
-				<col width="20%">
-			</colgroup>
-			<tbody>
 
-			</tbody>
-		</table>
+
+	<table id="notiTableList" summary="" class="tbl_list">
+	<caption></caption>
+	<colgroup>
+	<col style="width:7%" />
+	<col style="width:*" />
+	<col style="width:11%" />
+	<col style="width:11%" />
+	</colgroup>
+	<tbody>
+	
+	</tbody>
+	</table>
+
+
+

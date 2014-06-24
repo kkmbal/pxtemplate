@@ -133,3 +133,17 @@ cursor:pointer;
 ul, li, ol {
 list-style-type: none;
 }
+
+
+
+.smallbox	{
+				border:1px solid #c3c3c3;
+				width:200px;height:230px;
+				margin-bottom:5px;margin-right:20px;
+				overflow:hidden;float:left;text-align:center;
+				padding:5px;
+			}
+.bigbox		{border:0px solid #c3c3c3;width:100%;overflow:hidden;margin-bottom:5px;}
+.imgbox		{border:1px solid #c3c3c3;width:100%;height:120px;margin-bottom:20px;}
+.texttitle	{overflow:hidden;font-weight:bold;font-size:11px;width:100%;color:black;border:0px;margin-bottom:30px;}
+.textdetail	{float:left;width:100%;margin-top:5px;}

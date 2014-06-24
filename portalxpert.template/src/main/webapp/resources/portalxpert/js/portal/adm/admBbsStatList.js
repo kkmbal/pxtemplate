@@ -50,6 +50,9 @@ $(document).ready(function () {
 				
 			});	
 	//$( "#sToDt" ).datepicker( "setDate", new Date() );
+	
+	$('#sFromDt').attr('disabled', 'true');
+	$('#sToDt').attr('disabled', 'true');
 
 	$('#list_cnt').val(pageUnit);
 	

@@ -303,6 +303,7 @@ button.ui-button::-moz-focus-inner {
 	width:198px; border:1px solid #d5d5d5;
 	background-color:#fff;
 	margin:3px;
+	display:none;
 }
 .ui-datepicker option {height:15px !important;}
 .ui-datepicker .ui-datepicker-header {
