@@ -1,3 +1,15 @@
+	var fnLoadPage = function()
+	{
+		fnFrameReload();
+	};
+	
+	//rePaint
+	var fnFrameReload = function()
+	{
+		parent.document.getElementById("bbsFrame").height = "700px";
+		parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
+	};
+
 	function fn_link_page(pageNo) {
 		document.listForm.pageIndex.value = pageNo;
 		document.listForm.pageUnit.value = pageUnit;
@@ -493,10 +505,16 @@
 			    	//var tskYmd = convertDate(date);
 			    	//fnDhxPopup('${pageContext.request.contextPath}/itpm2/hr/effortDayInfoPop?id=&tskYmd='+tskYmd, "일일업무등록", 554, 340);
 			    },
-				eventColor: '#eaf2f6'
+			    viewRender : function(){
+			    	parent.document.getElementById("bbsFrame").height = "700px";
+					parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";
+			    },
+				eventColor: '#99ccff'
 		    });			
 		}
 
 
 		
 	});
+	
+	window.onload = fnLoadPage;	

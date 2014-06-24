@@ -31,7 +31,7 @@ $(document).ready(function () {
 			{      
 				showOn: "button",
 				//showOn: "both",      
-				buttonImage: RES_HOME+'/images/img/btn_cal2.png',      
+				buttonImage: RES_HOME+'/images/ico_calendar_off.png',      
 				buttonImageOnly: true,
 				buttonText: "시작일자",
 				showButtonPanel: true
@@ -43,7 +43,7 @@ $(document).ready(function () {
 			{      
 				showOn: "button",
 				//showOn: "both",      
-				buttonImage: RES_HOME+'/images/img/btn_cal2.png',      
+				buttonImage: RES_HOME+'/images/ico_calendar_off.png',      
 				buttonImageOnly: true,
 				buttonText: "종료일자",
 				showButtonPanel: true
@@ -69,5 +69,11 @@ $(document).ready(function () {
 		location.href = WEB_HOME+"/board100/createAdminBbsView.do";
 	});	
 	
+	$("#reset").click(function(){
+		listForm.reset();
+	});
+	
+	parent.document.getElementById("admFrame").height = "700px";
+	parent.document.getElementById("admFrame").height = $(document).height()+"px";
 });
 

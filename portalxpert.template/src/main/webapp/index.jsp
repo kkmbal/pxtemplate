@@ -16,7 +16,7 @@
 <a href="${pageContext.request.contextPath}/board100/createAdminBbsView.do" target="_blank">10. 게시판생성</a>			(O)<br>
 <a href="${pageContext.request.contextPath}/adm/sys/admFrame.do?url=adm/board/getAdmBoardNotiDelList.do" target="_blank">11. 삭제게시물</a>			(O)<br>
 <a href="${pageContext.request.contextPath}/">12. 삭제게시물보기</a>		(O)<br>
-<a href="${pageContext.request.contextPath}/board100/boardFrame.do?boardId=BBS000007" target="_blank">13. 교육안내목록</a>		(O)<br>
+<a href="${pageContext.request.contextPath}/board100/boardFrame.do?boardId=BBS000004" target="_blank">13. 교육안내목록</a>		(O)<br>
 <a href="">14. 교육안내등록</a>		(O)<br>
 <a href="">15. 교육안내보기</a>		(O)<br>
 <a href="${pageContext.request.contextPath}/board100/boardFrame.do?boardId=BBS000002" target="_blank">16. 게시판목록</a>			(O)<br>
@@ -44,5 +44,6 @@
 portalxpert.common.vo.UserInfoVO vo = new portalxpert.common.vo.UserInfoVO();
 vo.setName("tester");
 vo.setId("1");
+vo.setOu("일반부서");
 session.setAttribute("pxLoginInfo", vo);
 %>

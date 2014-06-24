@@ -1,11 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/taglibs.jsp"%>
 <script type="text/javascript">	
+$(function() {
+	$("#btnLogOut").click(function() {
+		parent.location.href = "${pageContext.request.contextPath}/logout.do";
+	});
+	
+	$("#btnAdmin").click(function() {
+		$(this).attr("href", "${WEB_HOME}/adm/sys/admFrame.do?url=adm/stat/getAdmBbsStatList.do");
+	});	
+});
 </script>
 
 
 	<!--header-->
 	<div id="header">
+		<div class="m_setarea">
+			<div class="m_set">
+				<a id="btnLogOut" class="btn_logout">로그아웃</a>
+				<a id="btnAdmin" class="btn_logout" title="관리자버튼">관리자</a>
+			</div>
+		</div>
 		<div class="head_con">
 			<h1><a>LOGO</a></h1>
 		</div>

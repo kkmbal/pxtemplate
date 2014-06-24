@@ -98,7 +98,7 @@
 		{      
 			showOn: "button",
 			//showOn: "both",      
-			buttonImage: RES_HOME+'/images/img/btn_cal2.png',      
+			buttonImage: RES_HOME+'/images/ico_calendar_off.png',      
 			buttonImageOnly: true,
 			buttonText: "시작일자",
 			showButtonPanel: true
@@ -110,7 +110,7 @@
 	 	{      
 			showOn: "button",
 			//showOn: "both",      
-			buttonImage: RES_HOME+'/images/img/btn_cal2.png',      
+			buttonImage: RES_HOME+'/images/ico_calendar_off.png',      
 			buttonImageOnly: true,
 			buttonText: "종료일자",
 			showButtonPanel: true
@@ -779,7 +779,13 @@
    var fnCustomBbsType = function(BbsType){
 	   if ($("#boardForm_040").is(":checked")){
 		   BbsType = '040';
-	   }
+	   }else if ($("#boardKind_110").is(":checked")){
+		   BbsType = '010';
+		}else if ($("#boardKind_120").is(":checked")){
+			BbsType = '010';
+		}else if ($("#boardKind_130").is(":checked")){
+			BbsType = '010';
+		}
 	   return BbsType;
    };
    

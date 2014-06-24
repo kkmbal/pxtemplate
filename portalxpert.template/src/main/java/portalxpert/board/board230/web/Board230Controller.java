@@ -249,12 +249,14 @@ public class Board230Controller {
 	     			{
 	     				BbsNotiInfoVO noti = (BbsNotiInfoVO)noti_list.get(0);
 	     				modelMap.put("userName", noti.getUserName());
+	     				modelMap.put("deptName", noti.getDeptName());
 	     				moblOpenDiv = noti.getMoblOpenDiv();
 	     				notiWriteId = noti.getRegrId();
 	     			}
 	     			else
 	     			{
 	     				modelMap.put("userName", info.getName());
+	     				modelMap.put("deptName", info.getOu());
 	     			}
 	    		}
 	    		else

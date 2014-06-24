@@ -3591,3 +3591,4 @@ var loadMovieList = function(obj)
 	
 });
 
+window.onload = fnLoadPage;

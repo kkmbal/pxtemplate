@@ -68,6 +68,7 @@
 	
 	<c:if test="${boardForm == '040'}">
 		<div id='calendar'></div>
+		</br>
 	</c:if>
 
 <div class="rbox">

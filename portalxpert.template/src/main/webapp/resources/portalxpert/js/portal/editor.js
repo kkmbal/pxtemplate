@@ -5,7 +5,7 @@ var tinymce_setting = {
         script_url : '/js/lib/tinymce/tinymce.js',
         theme : "modern",
 		language : "ko_KR",
-		height : "100",
+		height : "350",
 		//width : "472", 
 		statusbar: false,
         plugins: [
@@ -15,7 +15,8 @@ var tinymce_setting = {
           ],
 
           toolbar1: "newdocument | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | forecolor backcolor",
-          toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent | undo redo | link unlink image media code | table | hr | charmap emoticons | ltr rtl | mybutton | preview | print",
+          toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent | undo redo | link unlink image media code | table | charmap emoticons | ltr rtl | mybutton | preview",
+          //toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent | undo redo | link unlink image media code | table | hr | charmap emoticons | ltr rtl | mybutton | preview | print",
 
           menubar: false,
           toolbar_items_size: 'small',

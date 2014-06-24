@@ -116,11 +116,12 @@ public class Board100Controller {
     			modelMap.put("userMapList", JSONUtils.objectToJSON(user_list));
     			modelMap.put("userId", info.getId());
     			modelMap.put("userNm", info.getName());
+    			modelMap.put("deptNm", info.getOu());
     			
     		}
   
     
-        return ".adm/board/createAdminBbsView";
+        return ".self/board/createAdminBbsView";
     }
     
     /**

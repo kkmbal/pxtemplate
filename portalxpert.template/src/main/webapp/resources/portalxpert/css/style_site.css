@@ -28,6 +28,38 @@ left: 0;
 /* background: url(../images/img/img_logo_cro.jpg) no-repeat 0 0; */
 }
 
+#header .m_setarea {
+background-color: #f4f4f4;
+border-bottom: 1px solid #e6e7eb;
+border-top: 1px solid #e6e7eb;
+}
+
+.m_set {
+width: 1000px;
+padding-top: 4px;
+height: 26px;
+text-align: right;
+margin: 0 auto;
+}
+
+.m_set a, .m_set a[class^="btn_"] {
+width: auto;
+min-width: 46px;
+height: 14px;
+padding: 4px 2px 0 3px;
+border: 1px solid #cdcfd2;
+text-align: center;
+display: inline-block;
+color: #000;
+font-size: 11px;
+letter-spacing: -0.1em;
+line-height: 1.1em;
+cursor:pointer;
+text-decoration:none;
+}
+
+
+
 #container {
 width: 1000px;
 min-height: 100%;
@@ -65,7 +97,7 @@ font-weight:bold;font-size:14px;color:#505050;text-align:center;padding:10px 0 0
 }
 
 .content_area {
-padding: 145px 0 120px;
+padding: 180px 0 120px;
 }
 .clearfix {
 display: block;

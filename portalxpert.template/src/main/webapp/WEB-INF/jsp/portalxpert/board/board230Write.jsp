@@ -161,6 +161,119 @@
 
 <body>
 
+<div class="container">
+<br/>
+<div class="header">
+	<h1>${boardName}</h1>
+	<div class="loc">
+		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
+		<span><a href="#">커뮤니티</a></span>
+		<span><strong>${boardName}</strong></span>
+	</div>
+</div>
+<ul style="font-size:13px; line-height:18px; color:#435454">
+	<li>게시판 게시기준에 맞지 않는 부적절한 게시물은 작성자의 동의 없이 삭제됩니다.</li>
+	
+</ul>
+
+<!-- 버튼영역 -->
+<div class="btn_board_sec">
+	<div class="fl">
+		<a href="#" class="btn_set bt_style2"><span>미리보기</span></a>
+		<a href="#" class="btn_set bt_style2" onclick="javascript:fnWriteTempInsert();"><span>임시저장</span></a>
+		<a href="#" class="btn_set bt_style2" onclick="javascript:fnWriteCancel();"><span>취소</span></a>
+	</div>
+	<div class="fr">
+		<a href="#" class="btn_set bt_style3" onclick="javascript:fnWriteInsert();"><span>등록</span></a>
+		<a href="#" class="btn_set bt_style4" id="btn_item_list"><span>목록</span></a>
+	</div>
+</div>
+<!-- //버튼영역 -->
+<br/>
+
+<table class="tbl_form" summary="제목에 대한 입력테이블입니다.">
+<caption>제목</caption>
+<colgroup>
+	<col style="width:15%" />
+	<col style="width:35%" />
+	<col style="width:15%" />
+	<col style="width:35%" />
+</colgroup>
+<tbody>
+<tr>
+	<th scope="row"><label for="input02">소속기관</label></th>
+	<td>${deptName}</td>
+	<th scope="row"><label for="input03">작성자</label></th>
+	<td>${userName}</td>
+</tr>
+<tr>
+	<th scope="row"><label for="input01">제목</label></th>
+	<td colspan="3">
+		<input type="text" id="txt_title" class="text" style="width:500px" title="제목을 입력합니다." />
+		<div class ="fr">
+			<input type="checkbox" id="rt4" title="선택합니다." />
+			<label for="check01">공지</label>
+		</div>
+	</td>
+</tr>
+<tr>
+	<th scope="row"><label for="input04">공개 대상</label></th>
+	<td colspan="3">
+		<select name="notiOpenDiv" id="notiOpenDiv">
+			<option value="010" selected>전체공개
+			<option value="020">운영자만공개
+			<option value="030">부서지정
+		</select>
+<!-- 		<a href="#" class="btn_set bt_style1" onclick=""><span>조직도</span></a> -->
+	</td>
+</tr>
+<tr>
+	<th scope="row">
+	<td colspan="3">
+		<div>
+			<ul id="OpenDeptCategories">
+			</ul>
+			<ul id="OpenEmpCategories" style="display:none;">
+			</ul>
+		</div>	
+<!-- 		<textarea id="textbox01" cols="100" rows="5" maxlength="300" class="textbox" title="선택조직도">선택조직도.</textarea> -->
+	</td>
+</tr>
+<tr>
+<td colspan="4"> 
+	<textarea class="editor ma_none" id="editor" style="height:350px;"></textarea>
+</td>
+</tr>
+</tbody>
+</table>
+
+<!-- 버튼영역 -->
+<div class="btn_board_sec">
+	<div class="fl">
+		<a href="#" class="btn_set bt_style2"><span>미리보기</span></a>
+		<a href="#" class="btn_set bt_style2" onclick="javascript:fnWriteTempInsert();"><span>임시저장</span></a>
+		<a href="#" class="btn_set bt_style2" onclick="javascript:fnWriteCancel();"><span>취소</span></a>
+	</div>
+	<div class="fr">
+		<a href="#" class="btn_set bt_style3" onclick="javascript:fnWriteInsert();"><span>등록</span></a>
+		<a href="#" class="btn_set bt_style4" id="btn_item_list"><span>목록</span></a>
+	</div>
+</div>
+<!-- //버튼영역 -->
+</div>
+
+<div style="display:none;">
+	<input type="radio" name="apndKind" value="010" checked>일반
+	<input type="radio" name="apndKind" value="020">이미지
+	<input type="radio" name="apndKind" value="030">동영상
+</div>
+
+</body>
+</html>		
+
+<%--
+
+
 	<div>${boardName}</div>
 	<div><input type="button" value="임시저장" onclick="javascript:fnWriteTempInsert();"><input type="button" value="목록" id="btn_item_list"><input type="button" value="완료" onclick="javascript:fnWriteInsert();"></div>
 	<div>제목 <input type="text" id="txt_title"></div>
@@ -267,5 +380,5 @@
 	</div>	
 	
 	<div><input type="button" value="임시저장" onclick="javascript:fnWriteTempInsert();"><input type="button" value="목록" id="btn_item_list"><input type="button" value="완료" onclick="javascript:fnWriteInsert();"></div>
-</body>
-</html>			 
+
+ --%>	 
