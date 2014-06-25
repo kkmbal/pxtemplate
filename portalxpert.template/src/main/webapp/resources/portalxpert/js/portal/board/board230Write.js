@@ -14,7 +14,6 @@ var fnUnLoadPage = function()
 var fnFrameReload = function()
 {
 	parent.document.getElementById("bbsFrame").height = "700px";
-	
 	parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
 	
 	
@@ -243,12 +242,13 @@ var callbackOpenDept = function(data){
     			break;
 			}
     	}	    	
-    	if (!contains) $('#OpenDeptCategories').append('<li id="'+json[i].id+'"><a class="ico_del2" style="cursor:pointer;" onclick="javascript:fnOpenDeptListRemove(\''+json[i].id+'\')" ></a>'+json[i].name+'</li>');
+    	if (!contains) $('#OpenDeptCategories').append('<li id="'+json[i].id+'"><a class="ico_del" style="cursor:pointer;" onclick="javascript:fnOpenDeptListRemove(\''+json[i].id+'\')" ></a>'+json[i].name+'</li>');
 	}
 };
 
 //공개여부 조직도(개인)
 var callbackOpenPerson = function(data){
+
 	var json = $.parseJSON(data);		
 	for (var i=0; i < json.length; i++)
 	{
@@ -262,7 +262,7 @@ var callbackOpenPerson = function(data){
     			break;
 			};
     	};	
-    	if (!contains) $('#OpenEmpCategories').append('<li id="'+json[i].id+'"><a class="ico_del2" style="cursor:pointer;" onclick="javascript:fnOpenPersonListRemove(\''+json[i].id+'\')" ></a>'+json[i].ou+' '+json[i].name+'</li>');
+    	if (!contains) $('#OpenEmpCategories').append('<li id="'+json[i].id+'"><a class="ico_del" style="cursor:pointer;" onclick="javascript:fnOpenPersonListRemove(\''+json[i].id+'\')" ></a>'+json[i].ou+' '+json[i].name+'</li>');
 	};
 };
 
@@ -1516,20 +1516,29 @@ var fnAddFileList = function()
 {
 	var id = Math.floor(Math.random() * (9999998))+2;
 	$("#apndFileform ul").append(
-	  '<li id="apnd-'+id+'" class="fo_11px ma_bot5">'
-      +'<span class="inp_file2">'
-      +'<input type="text" title="파일을 넣으세요">' 
-      +'<a href="#" class="btn_file"><input type="file" class="file2" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"></a>'
-      +'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_grid2"><span class="btn_text">삭제</span></a>'
-      +'</span>'
-      +'</li>'
+	  //'<li id="apnd-'+id+'" class="fo_11px ma_bot5">'
+      //+'<span class="inp_file2">'
+      //+'<input type="text" title="파일을 넣으세요">' 
+      //+'<a href="#" class="btn_file"><input type="file" class="file2" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"></a>'
+      //+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_grid2"><span class="btn_text">삭제</span></a>'
+      //+'</span>'
+      //+'</li>'
+			'<li id="apnd-'+id+'" class="ma_bot5"> '
+			+'<input type="text" class="text" style="width:476px" title="파일을 넣으세요" readonly> ' 
+			+'<a href="#" class="btn_set bt_style1 mv_file_a"><input type="file" class="mv_file" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"> '
+			+'<span>파일</span></a> '
+			+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_set bt_style1"><span>삭제</span></a> '
+			+'</li>'
 	);
 	
 	
 	$("#file-"+id).bind("change",function(e) {
 		$(this).parent().prev().val($(this).val());
 	});
+
+	parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
 	
+	return false;
 }	
 
 var fnDelFileList = function(id)
@@ -1877,6 +1886,15 @@ $(document).ready(function () {
 			$("#boardExpl").html(boardExpl);
 		}
 		
+		var notiKind = $(':radio[name="apndKind"]:checked').val();
+		if(notiKind == '020'){
+			//이미지
+			$("#div_img_view").show();
+		}else if(notiKind == '030'){
+			//동영상
+			$("#div_mv_view").show();
+		}
+		
 	};
 	
 	//부서지정
@@ -1892,7 +1910,7 @@ $(document).ready(function () {
     			break;
    			}
     	}
-    	if (!contains) $('#OpenDeptCategories').append('<li id="'+json.userId+'"><a class="ico_del2" style="cursor:pointer;" onclick="javascript:fnOpenPersonListRemove(\''+json.userId+'\')" ></a>'+json.displayName+'</li>');
+    	if (!contains) $('#OpenDeptCategories').append('<li id="'+json.userId+'"><a class="ico_del" style="cursor:pointer;" onclick="javascript:fnOpenPersonListRemove(\''+json.userId+'\')" ></a>'+json.displayName+'</li>');
 	};
 	
 	//조회자 지정
@@ -1907,7 +1925,7 @@ $(document).ready(function () {
     			break;
    			}
     	}
-    	if (!contains) $('#OpenEmpCategories').append('<li id="'+json.userId+'"><a class="ico_del2" style="cursor:pointer;" onclick="javascript:fnOpenPersonListRemove(\''+json.userId+'\')" ></a>'+json.displayName+'</li>');
+    	if (!contains) $('#OpenEmpCategories').append('<li id="'+json.userId+'"><a class="ico_del" style="cursor:pointer;" onclick="javascript:fnOpenPersonListRemove(\''+json.userId+'\')" ></a>'+json.displayName+'</li>');
 	};
 	
 	//추가 입력항목 클릭 처리	
@@ -1981,7 +1999,7 @@ $(document).ready(function () {
 		
     });
 	
-	//이미지 전송		
+	//이미지 전송	(동적)	
 	$("#apndImg").change(function(e) {
 		//jQuery.ajaxSetup({cache:false});
 		if (jsonAppendImgList.length >= imgUploadMax)
@@ -2012,7 +2030,7 @@ $(document).ready(function () {
 	});
 	
 	
-	//이미지 추가
+	//이미지 추가 (동적)
 	var loadImageList = function(obj)
 	{
 		var json = obj[0];
@@ -2062,6 +2080,68 @@ $(document).ready(function () {
 		
 		fnFrameReload();
 	};
+	
+	//이미지 전송	(정적)	
+	$("input[id^=apndImg]").change(function(e) {
+		var form_id = $(this).parent().attr("id");
+		
+		if(!PortalCommon.imgUploadFileCheck($(this).val())){
+			alert("추가할 수 없는 파일입니다.");
+			return;
+		}
+	
+		
+ 		$("#"+form_id).ajaxSubmit({
+			url : WEB_HOME+"/board230/bbsFileUpload.do",
+			type : 'POST',
+			data : $("#"+form_id).serialize(),
+			action: $("#dummy"),
+			success : function(data){			
+				loadImageList2(form_id, $.parseJSON(data));
+			},error : function(){
+				alert("전송 실패 했습니다.");
+			},
+			clearForm: true,
+			resetForm: true
+		});	
+	});
+	
+	//이미지 추가 (정적)
+	var loadImageList2 = function(form_id, obj)
+	{
+		var json = obj[0];
+		
+		$('<li id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'"  width="124" height="124"  alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#"+form_id));
+//			$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="/portalxpert.template/upload/test.jpg" width="124" height="124" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#"+form_id));
+
+		var jsonObject = {
+			 'notiId' : ''
+			, 'apndFileSeq' : jsonAppendImgList.length+1
+			, 'apndFileTp' : '020'
+			, 'apndFileSz' : json.saveFileSize
+			, 'apndFileOrgn' : json.original
+			, 'apndFileName' : json.saveFileName
+			, 'apndFilePath' : json.saveDir
+			, 'apndFilePrvwPath' : json.webDir
+			, 'apndFilePrvwName' : json.saveFileName
+			, 'sourceCodeInput' : ''
+			, 'adminRcmdYn' : ''
+			, 'adminRcmdDttm' : ''
+			, 'readCnt' : '0'
+			, 'delYn' : 'N'
+			, 'regrId' : ''
+			, 'regrName' : ''
+			, 'regDttm' : ''
+			, 'updrId' : ''
+			, 'updrName' : ''
+			, 'updDttm' : ''
+			, 'mvpKey' : ''
+		};		
+
+		
+		jsonAppendImgList.push(jsonObject);
+		
+	};	
 	
 	//이미지 위치조정 
 	var fnImgEffect = function(id)
@@ -2485,18 +2565,17 @@ $("#btn_item_list, #btn_item_list2").click(function(){
 });
 
 //동영상 전송		
-//$("input[id^=apndMovie]").change(function(e) {
+$("input[id^=apndMovie]").change(function(e) {
 //$("input[id^=apndMovie]").bind("change",function() {	alert('1');return;
-$(document).on("change","input[id^=apndMovie]",function() {
-	var form_id = $(this).parent().attr("id");
+//$(document).on("change","input[id^=apndMovie]",function() {
 	
-	/*
+	
 	if (jsonAppendMovList.length >= 1)
 	{
 		alert('최대 동영상 추가 개수는 '+1+'개입니다.\n 더이상 추가 할 수 없습니다.' );
 		return;
 	}
-	*/
+	
 
 	if(!PortalCommon.movieUploadFileCheck($(this).val())){
 		alert("추가할 수 없는 파일입니다.");
@@ -2504,10 +2583,10 @@ $(document).on("change","input[id^=apndMovie]",function() {
 	}
 
 	
-		$("#"+form_id).ajaxSubmit({
+		$("#movieImgform").ajaxSubmit({
 		url : WEB_HOME+"/board230/movieFileUpload.do",
 		type : 'POST',
-		data : $("#"+form_id).serialize(),
+		data : $("#movieImgform").serialize(),
 		action: $("#dummy"),
 		success : function(data){			
 			loadMovieList($.parseJSON(data));
@@ -2561,9 +2640,13 @@ var loadMovieList = function(obj)
 		fnMovieEffect(json.nkey);
 	});	
 	*/
-	$("#movieFileDiv dl").append('<dd id="del_movie_apnd-'+json.saveFileId+'" style="border: 0 !important;">'+json.original+' <a class="ico_del2" style="cursor:pointer;" onclick="javascript:fnMovieListRemove(\''+json.saveFileId+'\')" >삭제</a></dd>');	
+	$("#movieFileDiv dl").append('<dd id="del_movie_apnd-'+json.saveFileId+'" style="border: 0 !important;">'+json.original+' <a class="ico_del" style="cursor:pointer;" onclick="javascript:fnMovieListRemove(\''+json.saveFileId+'\')" ></a></dd>');	
 	
 };	
+
+$("input[name^=upFile]").change(function(e) {
+	$(this).parent().prev().val($(this).val());
+});
 
 	//이노AP 설정
 	//innApInstall();
@@ -2577,7 +2660,453 @@ var loadMovieList = function(obj)
 	//editor 설정
 	fnMakeWebEditor(RES_HOME, '#editor');
 	
+
 	
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//설문 보기 이미지 추가
+	var fnResearchAddImg2 = function(obj, cnt)
+	{
+		var json = obj[0];
+		
+		//기존에 선택한 이미지가 있으면 삭제하고 추가한다.
+		
+		if ($('#ol_view-'+cnt+" li").length > 1) $('#ol_view-'+cnt+" li").last().remove();
+		
+		$('#ol_view-'+cnt).append(
+			//'<li class="sns_img" id="'+json.saveFileId+'"><img id="rshimg-'+json.saveFileId+'" src="'+json.saveDir+json.saveFileName+'" alt="이미지"><input type="hidden" name='+json.saveDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+json.saveFileId+'\')"></a></li>'	
+				'<li class="sns_img" id="'+json.saveFileId+'"><img id="rshimg-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'" alt="이미지"><input type="hidden" name='+json.webDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+json.saveFileId+'\')"></a></li>'
+		);
+		
+		$("#rshimg-"+json.saveFileId).bind("load",function(){
+			fnImgTmpEffect();
+			fnFrameReload();
+		});
+		
+		//parent.document.getElementById("bbsFrame").height = $(document).height();
+	};	
+	
+	//설문 보기항목 추가
+	var fnAddTmpViewForm = function(cnt)
+	{
+		$("#research_body").append(
+				'<tr id="research-'+cnt+'">'
+				+'<th scope="row" class="ver_top">질문 입력</th>'
+				+'<td>'
+				+'	<ul class="h_list k2 clearfix">'
+				+'		<li><textarea cols="30" rows="3" style="width:97%;"></textarea></li>'
+				+'		<li class="fo_11px">보기개수 <input id="txt_view'+cnt+'" type="text" class="inp_mnum te_right ma_lef5" title="보기개수">개'
+				+'			<span class="ma_lef25">보기유형<input type="radio" value="010" id="radio_txt-'+cnt+'" name="radio_name-'+cnt+'" class="ma_lef10" checked><label for="radio_txt-'+cnt+'">텍스트</label><input type="radio" value="020" id="radio_img-'+cnt+'" name="radio_name-'+cnt+'"><label for="radio_img-'+cnt+'">이미지</label>'
+				+'			</span>'
+				+'		</li>'		    			
+				+'		<li id="li_view-'+cnt+'">'
+				+'		</li>'
+				+'</ul>' 
+				+'</td>'
+				+'</tr>'
+						
+			);
+    	
+    	$('#txt_view'+cnt).css('imeMode','disabled').bind("keyup", function(e)
+		{
+    		$(this).val( $(this).val().replace(/[^0-9]/g, '') );
+			if (e.keyCode == '13')
+			{
+				var b_cnt = $('#li_view-'+cnt+' ol').length;
+				var c_cnt = $('#txt_view'+cnt).val();
+				
+				if (c_cnt > surveyUploadView)
+				{
+					alert('보기의 최대개수는 '+surveyUploadView+'개 입니다.');
+					return;
+				}
+				
+				if (b_cnt - c_cnt > 0)  //이전에 입력한 보기가 많을경우
+					{
+					for(var i = b_cnt; i > c_cnt; i--)
+						{
+						$('#ol_view-'+cnt+'_'+i).remove();
+						}
+
+					}
+				else
+					{
+					var view_kind = $(':radio[name="radio_name-'+cnt+'"]:checked').val();
+					if (view_kind == '010')
+					{
+						for(var i = b_cnt+1; i <= c_cnt; i++)
+							{
+							$('#li_view-'+cnt).append(
+        							'<ol id="ol_view-'+cnt+'_'+i+'">'	
+        							+'<li class="fo_11px">보기'+i+'<input type="text" class="inp_half ma_lef25" title="항목 보기'+i+'"></li>'
+        							+'</ol>'
+        					);
+							}
+					}
+					else
+						{
+						//
+						for(var i = b_cnt+1; i <= c_cnt; i++)
+							{
+							//
+							$('#li_view-'+cnt).append(
+	       							   '<ol id="ol_view-'+cnt+'_'+i+'">'		
+	        						   +'<li class="fo_11px">보기'+i+''        						   
+	        						   +'	<span class="inp_file2">'        			               
+	        			               +'		<input type="text" title="파일을 넣으세요" readOnly >'
+	        			               +'		<a href="#" class="btn_file">'
+	        			               +'			<form id="view_form-'+cnt+'_'+i+'" enctype="multipart/form-data" method="post">'
+	        			               +'				<input type="file" class="file2" size="1" title="찾기" id="viewFile-'+cnt+'_'+i+'" name="viewFile-'+cnt+'_'+i+'">'
+	        			               +'			</form>'
+	        			               +'		</a>'        			               
+	        			               +'	</span>'        			               
+	        			               +'</li>'
+	        			               +'</ol>'
+	        						);
+	        						
+	        						$("#viewFile-"+cnt+'_'+i+"").bind("change",function() {
+	        							$(this).parent().parent().prev().val($(this).val());
+	        							    var formfile = $(this).parent();
+	        							    var idx = formfile.attr("id");
+	        							    idx = idx.substring(idx.indexOf("-")+1, idx.length);
+	        								$(formfile).ajaxSubmit({
+	        								url : WEB_HOME+"/board230/bbsFileUpload.do",
+	        								action: $("#dummy"),
+	        								type : 'POST',
+	        								data : $(formfile).serialize(),
+	        								success : function(data){
+	        									//var json = $.parseJSON(data);
+	        									fnResearchAddImg2($.parseJSON(data), idx);//$(formfile).attr("id"));
+	        								},error : function(){
+	        									alert("전송 실패 했습니다.");
+	        								},
+	        								clearForm: false,
+	        								resetForm: false
+	        							});
+	        						}); 
+							}
+
+						}
+					}
+				fnImgTmpEffect();
+			}
+    				
+    	});
+	
+			//
+	
+			
+		$("#radio_txt-"+cnt).bind("click",function() {
+			
+			var c_cnt = $('#txt_view'+cnt).val();
+			
+			if (c_cnt > surveyUploadView)
+			{
+				alert('보기의 최대개수는 '+surveyUploadView+'개 입니다.');
+				return;
+			}
+			
+			$('#li_view-'+cnt+' ol').remove();					
+			var e = jQuery.Event("keyup");
+			e.which = 13;
+			e.keyCode = 13
+			$('#txt_view'+cnt).trigger(e);
+		});
+		
+		
+		$("#radio_img-"+cnt).bind("click",function() {
+			
+			var c_cnt = $('#txt_view'+cnt).val();
+			
+			if (c_cnt > surveyUploadView)
+			{
+				alert('보기의 최대개수는 '+surveyUploadView+'개 입니다.');
+				return;
+			}
+			
+			$('#li_view-'+cnt+' ol').remove();					
+			var e = jQuery.Event("keyup");
+			e.which = 13;
+			e.keyCode = 13
+			$('#txt_view'+cnt).trigger(e);						
+		});
+		
+		
+		
+		$('#txt_view'+cnt).focusout(function(e) {
+			var e = jQuery.Event("keyup");
+			e.which = 13;
+			e.keyCode = 13
+			$('#txt_view'+cnt).trigger(e);
+			
+		});
+	};	
+		var fnImgUptEffect = function(id)
+		{
+			/*sns 이미지 등록 - sns 가로,세로 가로정렬*/
+		  //$obj = $('.sns_img');
+			
+			$obj = $('#'+id);
+		  for( var j=0; j < $obj.length; j++)
+		  {
+			    var li_list = $obj[j];
+			    $(li_list).find('img').each(function(){
+				//$('.sns_img img').each(function(){
+					if ($(this).width() >= $(li_list).width()){
+						//alert('1:'+$(this).width()+' '+$(this).parents('li').width());
+						$(this).css( {
+					    	 'width': '100%'
+						});
+					    $(this).css( {
+					    	 'width': '100%',
+					   		 'margin-left': "-" + $(this).width()/2 +"px",
+							 'margin-top': "-" + $(this).height()/2 +"px"
+						});
+					} else if($(this).width() < $(this).parents('li').width()){
+							$(this).css({
+								'width':'auto',
+								'margin-left': "-" + $(this).width()/2 +"px",
+								'margin-top': "-" + $(this).height()/2 +"px"		
+							});
+						};
+				});
+		   };
+		};		
+		
+		//동적
+		var loadUpdImageList = function(obj)
+		{
+			var json = obj;		
+		
+			$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.apndFileOrgn+'><img id="img-'+json.saveFileId+'" src="'+WEB_DIR+'/'+json.apndFilePath+'/'+json.apndFileName+'" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($('#div_image_view .sns_imgadd'));
+		
+			var jsonObject = {
+				 'notiId' : ''
+				, 'apndFileSeq' : jsonAppendImgList.length+1
+				, 'apndFileTp' : '020'
+				, 'apndFileSz' : json.apndFileSz
+				, 'apndFileOrgn' : json.apndFileOrgn
+				, 'apndFileName' : json.apndFileName
+				//, 'apndFilePath' : WEB_DIR+'/'+json.apndFilePath
+				, 'apndFilePath' : SAVE_DIR+'/'+json.apndFilePath
+				, 'apndFilePrvwPath' : json.apndFilePrvwPath
+				, 'apndFilePrvwName' : json.apndFilePrvwName
+				, 'sourceCodeInput' : ''
+				, 'adminRcmdYn' : ''
+				, 'adminRcmdDttm' : ''
+				, 'readCnt' : '0'
+				, 'delYn' : 'N'
+				, 'regrId' : ''
+				, 'regrName' : ''
+				, 'regDttm' : ''
+				, 'updrId' : ''
+				, 'updrName' : ''
+				, 'updDttm' : ''
+				, 'mvpKey' : ''
+			};		
+		
+			
+			jsonAppendImgList.push(jsonObject);
+			
+			$("#img-"+json.saveFileId).load(function(){
+				fnImgUptEffect(json.saveFileId);
+			});
+			
+			fnFrameReload();
+		};	
+		
+		//정적
+		var loadUpdImageList2 = function(obj, idx)
+		{
+			var json = obj;		
+
+			$('<li id="'+json.saveFileId+'" name= '+json.apndFileOrgn+'><img id="img-'+json.saveFileId+'" src="'+WEB_DIR+json.apndFilePath+'/'+json.apndFileName+'"  width="124" height="124"  alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#bbsImgform"+idx));
+			
+			var jsonObject = {
+					'notiId' : ''
+						, 'apndFileSeq' : jsonAppendImgList.length+1
+						, 'apndFileTp' : '020'
+							, 'apndFileSz' : json.apndFileSz
+							, 'apndFileOrgn' : json.apndFileOrgn
+							, 'apndFileName' : json.apndFileName
+							//, 'apndFilePath' : WEB_DIR+'/'+json.apndFilePath
+							, 'apndFilePath' : SAVE_DIR+'/'+json.apndFilePath
+							, 'apndFilePrvwPath' : json.apndFilePrvwPath
+							, 'apndFilePrvwName' : json.apndFilePrvwName
+							, 'sourceCodeInput' : ''
+							, 'adminRcmdYn' : ''
+							, 'adminRcmdDttm' : ''
+							, 'readCnt' : '0'
+							, 'delYn' : 'N'
+							, 'regrId' : ''
+							, 'regrName' : ''
+							, 'regDttm' : ''
+							, 'updrId' : ''
+							, 'updrName' : ''
+							, 'updDttm' : ''
+							, 'mvpKey' : ''
+					};		
+			
+			
+			jsonAppendImgList.push(jsonObject);
+			
+			//$("#img-"+json.saveFileId).load(function(){
+			//	fnImgUptEffect(json.saveFileId);
+			//});
+			
+			fnFrameReload();
+		};		
+		
+		
+		var loadTmpImageList = function(obj)
+		{
+			var json = obj;
+			$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.apndFilePrvwPath+json.apndFilePrvwName+'" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($('#div_image_view .sns_imgadd'));
+			
+			var jsonObject = {
+				 'notiId' : ''
+				, 'apndFileSeq' : jsonAppendImgList.length+1
+				, 'apndFileTp' : '020'
+				, 'apndFileSz' : json.apndFileSz
+				, 'apndFileOrgn' : json.apndFileOrgn
+				, 'apndFileName' : json.apndFileName
+				, 'apndFilePath' : json.apndFilePath
+				, 'apndFilePrvwPath' : json.apndFilePrvwPath
+				, 'apndFilePrvwName' : json.apndFilePrvwName
+				, 'sourceCodeInput' : ''
+				, 'adminRcmdYn' : ''
+				, 'adminRcmdDttm' : ''
+				, 'readCnt' : '0'
+				, 'delYn' : 'N'
+				, 'regrId' : ''
+				, 'regrName' : ''
+				, 'regDttm' : ''
+				, 'updrId' : ''
+				, 'updrName' : ''
+				, 'updDttm' : ''
+				, 'mvpKey' : ''
+			};
+			
+			jsonAppendImgList.push(jsonObject);
+			
+			$("#img-"+json.saveFileId).bind("load",function(){
+				fnImgUptEffect(json.saveFileId);
+			});
+			
+			fnFrameReload();
+		};
+		
+		var fnImgTmpEffect = function()
+		{
+			/*sns 이미지 등록 - sns 가로,세로 가로정렬*/
+		  $obj = $('.sns_img');
+			
+		  for( var j=0; j < $obj.length+1; j++)
+		  {
+				$('.sns_img img').each(function(){
+					if ($(this).width() >= $(this).parents('li').width()){
+						//alert('1:'+$(this).width()+' '+$(this).parents('li').width());
+					    $(this).css( {
+					    	 'width': '100%',
+					   		 'margin-left': "-" + $(this).width()/2 +"px",
+							 'margin-top': "-" + $(this).height()/2 +"px"
+						});
+					} else if($(this).width() < $(this).parents('li').width()){
+							$(this).css({
+								'width':'auto',
+								'margin-left': "-" + $(this).width()/2 +"px",
+								'margin-top': "-" + $(this).height()/2 +"px"		
+							});
+						};
+				});
+		   };
+		};
+		
+		//임시저장 설문보기 설정
+		var fnResearchTmpAddImg = function(obj, cnt)
+		{
+			var json = obj;		
+			var saveFileId = json.imgName;
+			$("#txt_survey-"+cnt).val(json.prvwPath+"\\"+json.prvwName);		
+			var strArr = saveFileId.split(".");
+			 $('#ol_view-'+cnt).append(
+					'<li class="sns_img" id="'+strArr[0]+'"><img id="rshimg-'+strArr[0]+'" src="'+json.imgPath+'/'+json.imgName+'" alt="이미지"><input type="hidden" name='+json.webDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+strArr[0]+'\')"></a></li>'
+			);
+			 
+			 
+			 
+			 
+			$("#rshimg-"+strArr[0]).bind("load",function(){
+				fnImgTmpEffect();
+			}); 
+			
+		};
+		
+		var fnResearchAddImgLoad = function(obj, cnt)
+		{
+			var json = obj;
+			
+			
+			//기존에 선택한 이미지가 있으면 삭제하고 추가한다.		
+			if ($('#ol_view-'+cnt+" li").length > 1) $('#ol_view-'+cnt+" li").last().remove();
+			
+			$('#ol_view-'+cnt).append(
+				//'<li class="sns_img" id="'+json.saveFileId+'"><img id="rshimg-'+json.saveFileId+'" src="'+json.saveDir+json.saveFileName+'" alt="이미지"><input type="hidden" name='+json.saveDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+json.saveFileId+'\')"></a></li>'	
+					'<li class="sns_img" id="'+json.saveFileId+'"><img id="rshimg-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'" alt="이미지"><input type="hidden" name='+json.webDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+json.saveFileId+'\')"></a></li>'
+			);
+ 
+			
+			$("#rshimg-"+json.saveFileId).bind("load",function(){
+				fnImgTmpEffect();
+				//fnFrameReload();
+			});
+			
+			fnImgTmpEffect();
+		};	
+		
+		var loadUpdMovieList = function(obj)
+		{ 
+			//var WEB_MOVIE_DIR = WEB_MOVIE_DIR;
+			var json = obj;	
+			
+		    var jsonObject = {
+					 'notiId' : ''
+					, 'apndFileSeq' : jsonAppendMovList.length+1
+					, 'apndFileTp' : '030'
+					, 'apndFileSz' : json.apndFileSz
+					, 'apndFileOrgn' : json.apndFileOrgn
+					, 'apndFileName' : json.apndFileName
+					, 'apndFilePath' : json.apndFilePath
+					, 'apndFilePrvwPath' : ''
+					, 'apndFilePrvwName' : ''
+					, 'sourceCodeInput' : ''
+					, 'adminRcmdYn' : ''
+					, 'adminRcmdDttm' : ''
+					, 'readCnt' : '0'
+					, 'delYn' : 'N'
+					, 'regrId' : ''
+					, 'regrName' : ''
+					, 'regDttm' : ''
+					, 'updrId' : ''
+					, 'updrName' : ''
+					, 'updDttm' : ''
+					, 'mvpKey' : json.mvpKey == null ? '' : json.mvpKey
+			};
+			
+			jsonAppendMovList.push(jsonObject);
+			
+			/*
+			$("#div_movie_add").prepend('<li class="sns_img" id="'+json.mvpKey+'"><img id="img-movie-'+json.mvpKey+'" src="'+WEB_MOVIE_DIR+'/'+json.apndFilePath+'/'+json.apndFileName+'" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnMovieListRemove(\''+json.mvpKey+'\')" ><!--삭제--></a></li>');
+			$("#img-movie-"+json.mvpKey).load(function(){
+				fnMovieEffect(json.mvpKey);
+			});	
+			*/
+			$("#movieFileDiv dl").append('<dd id="del_movie_apnd-'+json.mvpKey+'" style="border: 0 !important;">'+json.apndFileOrgn+' <a class="ico_del" style="cursor:pointer;" onclick="javascript:fnMovieListRemove(\''+json.mvpKey+'\')" ></a></dd>');	
+			
+			
+		};		
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////
 	
 		
 		if (notiId != "")  //글수정
@@ -2710,7 +3239,7 @@ var loadMovieList = function(obj)
 					var obj = apndList[i];
 					if (obj.apndFileTp == '020')
 					{
-						loadUpdImageList(obj);
+						loadUpdImageList2(obj, i);
 					}
 				}			
 			}
@@ -2851,11 +3380,14 @@ var loadMovieList = function(obj)
 				
 				if (obj.apndFileTp == '050')
 				{
-					$("#innoApDiv dl").append('<dd id="delapnd-'+obj.apndFileSeq+'" style="border: 0 !important;">'+obj.apndFileOrgn+' <a class="ico_del2" style="cursor:pointer;" onclick="javascript:fnApndFileListRemove(\''+obj.apndFileSeq+'\')" ></a></dd>');
+					$("#innoApDiv dl").append('<dd id="delapnd-'+obj.apndFileSeq+'" style="border: 0 !important;">'+obj.apndFileOrgn+' <a class="ico_del" style="cursor:pointer;" onclick="javascript:fnApndFileListRemove(\''+obj.apndFileSeq+'\')" ></a></dd>');
 				}
 			}
 			
 			makeAlreadyUploadFileList();
+			
+			//첨부목록
+			$("#innoApDiv").show();
 			
 			
 			if (boardKind == '030')  //경조사
@@ -2872,6 +3404,7 @@ var loadMovieList = function(obj)
 			{
 				$("#rt4").attr("checked", "true");
 			}
+			
 			
 			
 			
@@ -3008,7 +3541,7 @@ var loadMovieList = function(obj)
 					var obj = tmpApndList[i];				
 					if (obj.apndFileTp == '020')
 					{
-						loadTmpImageList(obj);
+						loadTmpImageList2(obj, (i+1));
 					}
 				}		
 				write_apnd_kind = '020';
@@ -3125,6 +3658,9 @@ var loadMovieList = function(obj)
 			}
 			makeAlreadyUploadFileList();
 			
+			//첨부목록
+			$("#innoApDiv").show();
+			
 			//공지
 			if (anmtYn  == 'Y')
 			{
@@ -3179,413 +3715,21 @@ var loadMovieList = function(obj)
 		}); */	
 
 		
-		//설문 보기 이미지 추가
-		var fnResearchAddImg2 = function(obj, cnt)
-		{
-			var json = obj[0];
-			
-			//기존에 선택한 이미지가 있으면 삭제하고 추가한다.
-			
-			if ($('#ol_view-'+cnt+" li").length > 1) $('#ol_view-'+cnt+" li").last().remove();
-			
-			$('#ol_view-'+cnt).append(
-				//'<li class="sns_img" id="'+json.saveFileId+'"><img id="rshimg-'+json.saveFileId+'" src="'+json.saveDir+json.saveFileName+'" alt="이미지"><input type="hidden" name='+json.saveDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+json.saveFileId+'\')"></a></li>'	
-					'<li class="sns_img" id="'+json.saveFileId+'"><img id="rshimg-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'" alt="이미지"><input type="hidden" name='+json.webDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+json.saveFileId+'\')"></a></li>'
-			);
-			
-			$("#rshimg-"+json.saveFileId).bind("load",function(){
-				fnImgTmpEffect();
-				fnFrameReload();
-			});
-			
-			//parent.document.getElementById("bbsFrame").height = $(document).height();
-		};	
 		
-		//설문 보기항목 추가
-		var fnAddTmpViewForm = function(cnt)
-		{
-			$("#research_body").append(
-					'<tr id="research-'+cnt+'">'
-					+'<th scope="row" class="ver_top">질문 입력</th>'
-					+'<td>'
-					+'	<ul class="h_list k2 clearfix">'
-					+'		<li><textarea cols="30" rows="3" style="width:97%;"></textarea></li>'
-					+'		<li class="fo_11px">보기개수 <input id="txt_view'+cnt+'" type="text" class="inp_mnum te_right ma_lef5" title="보기개수">개'
-					+'			<span class="ma_lef25">보기유형<input type="radio" value="010" id="radio_txt-'+cnt+'" name="radio_name-'+cnt+'" class="ma_lef10" checked><label for="radio_txt-'+cnt+'">텍스트</label><input type="radio" value="020" id="radio_img-'+cnt+'" name="radio_name-'+cnt+'"><label for="radio_img-'+cnt+'">이미지</label>'
-					+'			</span>'
-					+'		</li>'		    			
-					+'		<li id="li_view-'+cnt+'">'
-					+'		</li>'
-					+'</ul>' 
-					+'</td>'
-					+'</tr>'
-							
-				);
-	    	
-	    	$('#txt_view'+cnt).css('imeMode','disabled').bind("keyup", function(e)
-			{
-	    		$(this).val( $(this).val().replace(/[^0-9]/g, '') );
-				if (e.keyCode == '13')
-				{
-					var b_cnt = $('#li_view-'+cnt+' ol').length;
-					var c_cnt = $('#txt_view'+cnt).val();
-					
-					if (c_cnt > surveyUploadView)
-					{
-						alert('보기의 최대개수는 '+surveyUploadView+'개 입니다.');
-						return;
-					}
-					
-					if (b_cnt - c_cnt > 0)  //이전에 입력한 보기가 많을경우
-						{
-						for(var i = b_cnt; i > c_cnt; i--)
-							{
-							$('#ol_view-'+cnt+'_'+i).remove();
-							}
-
-						}
-					else
-						{
-						var view_kind = $(':radio[name="radio_name-'+cnt+'"]:checked').val();
-						if (view_kind == '010')
-						{
-							for(var i = b_cnt+1; i <= c_cnt; i++)
-								{
-								$('#li_view-'+cnt).append(
-	        							'<ol id="ol_view-'+cnt+'_'+i+'">'	
-	        							+'<li class="fo_11px">보기'+i+'<input type="text" class="inp_half ma_lef25" title="항목 보기'+i+'"></li>'
-	        							+'</ol>'
-	        					);
-								}
-						}
-						else
-							{
-							//
-							for(var i = b_cnt+1; i <= c_cnt; i++)
-								{
-								//
-								$('#li_view-'+cnt).append(
-		       							   '<ol id="ol_view-'+cnt+'_'+i+'">'		
-		        						   +'<li class="fo_11px">보기'+i+''        						   
-		        						   +'	<span class="inp_file2">'        			               
-		        			               +'		<input type="text" title="파일을 넣으세요" readOnly >'
-		        			               +'		<a href="#" class="btn_file">'
-		        			               +'			<form id="view_form-'+cnt+'_'+i+'" enctype="multipart/form-data" method="post">'
-		        			               +'				<input type="file" class="file2" size="1" title="찾기" id="viewFile-'+cnt+'_'+i+'" name="viewFile-'+cnt+'_'+i+'">'
-		        			               +'			</form>'
-		        			               +'		</a>'        			               
-		        			               +'	</span>'        			               
-		        			               +'</li>'
-		        			               +'</ol>'
-		        						);
-		        						
-		        						$("#viewFile-"+cnt+'_'+i+"").bind("change",function() {
-		        							$(this).parent().parent().prev().val($(this).val());
-		        							    var formfile = $(this).parent();
-		        							    var idx = formfile.attr("id");
-		        							    idx = idx.substring(idx.indexOf("-")+1, idx.length);
-		        								$(formfile).ajaxSubmit({
-		        								url : WEB_HOME+"/board230/bbsFileUpload.do",
-		        								action: $("#dummy"),
-		        								type : 'POST',
-		        								data : $(formfile).serialize(),
-		        								success : function(data){
-		        									//var json = $.parseJSON(data);
-		        									fnResearchAddImg2($.parseJSON(data), idx);//$(formfile).attr("id"));
-		        								},error : function(){
-		        									alert("전송 실패 했습니다.");
-		        								},
-		        								clearForm: false,
-		        								resetForm: false
-		        							});
-		        						}); 
-								}
-
-							}
-						}
-					fnImgTmpEffect();
-				}
-	    				
-	    	});
-		
-				//
-		
-				
-			$("#radio_txt-"+cnt).bind("click",function() {
-				
-				var c_cnt = $('#txt_view'+cnt).val();
-				
-				if (c_cnt > surveyUploadView)
-				{
-					alert('보기의 최대개수는 '+surveyUploadView+'개 입니다.');
-					return;
-				}
-				
-				$('#li_view-'+cnt+' ol').remove();					
-				var e = jQuery.Event("keyup");
-				e.which = 13;
-				e.keyCode = 13
-				$('#txt_view'+cnt).trigger(e);
-			});
-			
-			
-			$("#radio_img-"+cnt).bind("click",function() {
-				
-				var c_cnt = $('#txt_view'+cnt).val();
-				
-				if (c_cnt > surveyUploadView)
-				{
-					alert('보기의 최대개수는 '+surveyUploadView+'개 입니다.');
-					return;
-				}
-				
-				$('#li_view-'+cnt+' ol').remove();					
-				var e = jQuery.Event("keyup");
-				e.which = 13;
-				e.keyCode = 13
-				$('#txt_view'+cnt).trigger(e);						
-			});
-			
-			
-			
-			$('#txt_view'+cnt).focusout(function(e) {
-				var e = jQuery.Event("keyup");
-				e.which = 13;
-				e.keyCode = 13
-				$('#txt_view'+cnt).trigger(e);
-				
-			});
-		};	
-			var fnImgUptEffect = function(id)
-			{
-				/*sns 이미지 등록 - sns 가로,세로 가로정렬*/
-			  //$obj = $('.sns_img');
-				
-				$obj = $('#'+id);
-			  for( var j=0; j < $obj.length; j++)
-			  {
-				    var li_list = $obj[j];
-				    $(li_list).find('img').each(function(){
-					//$('.sns_img img').each(function(){
-						if ($(this).width() >= $(li_list).width()){
-							//alert('1:'+$(this).width()+' '+$(this).parents('li').width());
-							$(this).css( {
-						    	 'width': '100%'
-							});
-						    $(this).css( {
-						    	 'width': '100%',
-						   		 'margin-left': "-" + $(this).width()/2 +"px",
-								 'margin-top': "-" + $(this).height()/2 +"px"
-							});
-						} else if($(this).width() < $(this).parents('li').width()){
-								$(this).css({
-									'width':'auto',
-									'margin-left': "-" + $(this).width()/2 +"px",
-									'margin-top': "-" + $(this).height()/2 +"px"		
-								});
-							};
-					});
-			   };
-			};		
-			var loadUpdImageList = function(obj)
-			{
-				var json = obj;		
-			
-				$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.apndFileOrgn+'><img id="img-'+json.saveFileId+'" src="'+WEB_DIR+'/'+json.apndFilePath+'/'+json.apndFileName+'" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($('#div_image_view .sns_imgadd'));
-			
-				var jsonObject = {
-					 'notiId' : ''
-					, 'apndFileSeq' : jsonAppendImgList.length+1
-					, 'apndFileTp' : '020'
-					, 'apndFileSz' : json.apndFileSz
-					, 'apndFileOrgn' : json.apndFileOrgn
-					, 'apndFileName' : json.apndFileName
-					//, 'apndFilePath' : WEB_DIR+'/'+json.apndFilePath
-					, 'apndFilePath' : SAVE_DIR+'/'+json.apndFilePath
-					, 'apndFilePrvwPath' : json.apndFilePrvwPath
-					, 'apndFilePrvwName' : json.apndFilePrvwName
-					, 'sourceCodeInput' : ''
-					, 'adminRcmdYn' : ''
-					, 'adminRcmdDttm' : ''
-					, 'readCnt' : '0'
-					, 'delYn' : 'N'
-					, 'regrId' : ''
-					, 'regrName' : ''
-					, 'regDttm' : ''
-					, 'updrId' : ''
-					, 'updrName' : ''
-					, 'updDttm' : ''
-					, 'mvpKey' : ''
-				};		
-			
-				
-				jsonAppendImgList.push(jsonObject);
-				
-				$("#img-"+json.saveFileId).load(function(){
-					fnImgUptEffect(json.saveFileId);
-				});
-				
-				fnFrameReload();
-			};		
-			
-			
-			var loadTmpImageList = function(obj)
-			{
-				var json = obj;
-				$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.apndFilePrvwPath+json.apndFilePrvwName+'" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($('#div_image_view .sns_imgadd'));
-				
-				var jsonObject = {
-					 'notiId' : ''
-					, 'apndFileSeq' : jsonAppendImgList.length+1
-					, 'apndFileTp' : '020'
-					, 'apndFileSz' : json.apndFileSz
-					, 'apndFileOrgn' : json.apndFileOrgn
-					, 'apndFileName' : json.apndFileName
-					, 'apndFilePath' : json.apndFilePath
-					, 'apndFilePrvwPath' : json.apndFilePrvwPath
-					, 'apndFilePrvwName' : json.apndFilePrvwName
-					, 'sourceCodeInput' : ''
-					, 'adminRcmdYn' : ''
-					, 'adminRcmdDttm' : ''
-					, 'readCnt' : '0'
-					, 'delYn' : 'N'
-					, 'regrId' : ''
-					, 'regrName' : ''
-					, 'regDttm' : ''
-					, 'updrId' : ''
-					, 'updrName' : ''
-					, 'updDttm' : ''
-					, 'mvpKey' : ''
-				};
-				
-				jsonAppendImgList.push(jsonObject);
-				
-				$("#img-"+json.saveFileId).bind("load",function(){
-					fnImgUptEffect(json.saveFileId);
-				});
-				
-				fnFrameReload();
-			};
-			
-			var fnImgTmpEffect = function()
-			{
-				/*sns 이미지 등록 - sns 가로,세로 가로정렬*/
-			  $obj = $('.sns_img');
-				
-			  for( var j=0; j < $obj.length+1; j++)
-			  {
-					$('.sns_img img').each(function(){
-						if ($(this).width() >= $(this).parents('li').width()){
-							//alert('1:'+$(this).width()+' '+$(this).parents('li').width());
-						    $(this).css( {
-						    	 'width': '100%',
-						   		 'margin-left': "-" + $(this).width()/2 +"px",
-								 'margin-top': "-" + $(this).height()/2 +"px"
-							});
-						} else if($(this).width() < $(this).parents('li').width()){
-								$(this).css({
-									'width':'auto',
-									'margin-left': "-" + $(this).width()/2 +"px",
-									'margin-top': "-" + $(this).height()/2 +"px"		
-								});
-							};
-					});
-			   };
-			};
-			
-			//임시저장 설문보기 설정
-			var fnResearchTmpAddImg = function(obj, cnt)
-			{
-				var json = obj;		
-				var saveFileId = json.imgName;
-				$("#txt_survey-"+cnt).val(json.prvwPath+"\\"+json.prvwName);		
-				var strArr = saveFileId.split(".");
-				 $('#ol_view-'+cnt).append(
-						'<li class="sns_img" id="'+strArr[0]+'"><img id="rshimg-'+strArr[0]+'" src="'+json.imgPath+'/'+json.imgName+'" alt="이미지"><input type="hidden" name='+json.webDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+strArr[0]+'\')"></a></li>'
-				);
-				 
-				 
-				 
-				 
-				$("#rshimg-"+strArr[0]).bind("load",function(){
-					fnImgTmpEffect();
-				}); 
-				
-			};
-			
-			var fnResearchAddImgLoad = function(obj, cnt)
-			{
-				var json = obj;
-				
-				
-				//기존에 선택한 이미지가 있으면 삭제하고 추가한다.		
-				if ($('#ol_view-'+cnt+" li").length > 1) $('#ol_view-'+cnt+" li").last().remove();
-				
-				$('#ol_view-'+cnt).append(
-					//'<li class="sns_img" id="'+json.saveFileId+'"><img id="rshimg-'+json.saveFileId+'" src="'+json.saveDir+json.saveFileName+'" alt="이미지"><input type="hidden" name='+json.saveDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+json.saveFileId+'\')"></a></li>'	
-						'<li class="sns_img" id="'+json.saveFileId+'"><img id="rshimg-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'" alt="이미지"><input type="hidden" name='+json.webDir+json.saveFileName+'><a href="#" class="ico_clo" title="삭제" onclick="javascript:fnResearchListRemove(\''+json.saveFileId+'\')"></a></li>'
-				);
-	 
-				
-				$("#rshimg-"+json.saveFileId).bind("load",function(){
-					fnImgTmpEffect();
-					//fnFrameReload();
-				});
-				
-				fnImgTmpEffect();
-			};	
-			
-			var loadUpdMovieList = function(obj)
-			{ 
-				var WEB_MOVIE_DIR = WEB_MOVIE_DIR;
-				var json = obj;	
-				
-			    var jsonObject = {
-						 'notiId' : ''
-						, 'apndFileSeq' : jsonAppendMovList.length+1
-						, 'apndFileTp' : '030'
-						, 'apndFileSz' : json.apndFileSz
-						, 'apndFileOrgn' : json.apndFileOrgn
-						, 'apndFileName' : json.apndFileName
-						, 'apndFilePath' : json.apndFilePath
-						, 'apndFilePrvwPath' : ''
-						, 'apndFilePrvwName' : ''
-						, 'sourceCodeInput' : ''
-						, 'adminRcmdYn' : ''
-						, 'adminRcmdDttm' : ''
-						, 'readCnt' : '0'
-						, 'delYn' : 'N'
-						, 'regrId' : ''
-						, 'regrName' : ''
-						, 'regDttm' : ''
-						, 'updrId' : ''
-						, 'updrName' : ''
-						, 'updDttm' : ''
-						, 'mvpKey' : json.mvpKey == null ? '' : json.mvpKey
-				};
-				
-				jsonAppendMovList.push(jsonObject);
-				
-				$("#div_movie_add").prepend('<li class="sns_img" id="'+json.mvpKey+'"><img id="img-movie-'+json.mvpKey+'" src="'+WEB_MOVIE_DIR+'/'+json.apndFilePath+'/'+json.apndFileName+'" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnMovieListRemove(\''+json.mvpKey+'\')" ><!--삭제--></a></li>');
-				$("#img-movie-"+json.mvpKey).load(function(){
-					fnMovieEffect(json.mvpKey);
-				});	
-				
-			};			
 	
 	$("#notiOpenDiv").change(function(){
 		var div = $(this).val();
 		if(div == '020'){
 			//개인지정
-			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart2.do?type=2&callback=callbackOpenPerson', '개인선택',900,515);
+			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart2.do?type=2&callback=callbackOpenPerson', '개인선택',900,485);
 		}else if(div == '030'){
 			//부서지정
-			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart2.do?type=1&callback=callbackOpenDept', '부서선택',900,515);
+			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart2.do?type=1&callback=callbackOpenDept', '부서선택',900,485);
 		}
 	});		
 			
-	parent.document.getElementById("bbsFrame").height = "700px";
-	parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
+	//parent.document.getElementById("bbsFrame").height = "700px";
+	//parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
 	
 	
 	

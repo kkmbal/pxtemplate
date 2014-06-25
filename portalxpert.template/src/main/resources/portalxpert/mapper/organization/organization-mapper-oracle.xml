@@ -28,22 +28,25 @@
 		
 		SELECT *
         FROM (
-        SELECT ID,PID,NAME,DEPT_CODE FROM (                                           
+        SELECT ID,PID,NAME,DEPT_CODE,OUCODE FROM (  
+        /*                                         
             SELECT 0 RUM,                                              
-                   REPLACE (DEPT_CODE, '000000000', #{deptCode}) PID,    
-                   #{deptCode} ID,                                  
+                   REPLACE (DEPT_CODE, '000000000',  {deptCode}) PID,    
+                    {deptCode} ID,                                  
                    DEPT_NAME AS NAME,                                                
                    DEPT_CODE,
                    0 LVL                                        
               FROM PSN_DEPT_INFO                                       
-             WHERE PAR_DEPT_CODE = #{deptCode}                                
-            UNION                                                      
+             WHERE PAR_DEPT_CODE =  {deptCode}                                
+            UNION
+        */                                                      
             SELECT *                                                   
                   FROM (           
-                              SELECT ROWNUM,                          
+                              SELECT ROWNUM RUM,                          
                                    PAR_DEPT_CODE AS PID,                          
                                    DEPT_CODE AS ID,                         
                                    DEPT_NAME AS NAME,                             
+                                   DEPT_CODE DEPT_CODE,                          
                                    DEPT_CODE OUCODE,                          
                                    LEVEL LVL                            
                               FROM PSN_DEPT_INFO                    

@@ -87,73 +87,6 @@
 	var reply_list = ${reply_list};
 	
 	
-	// -------------------------------------------------------------------------------
-	
-	$(function(){
-		//이미지 전송		
-		$("input[id^=apndImg]").change(function(e) {
-			var form_id = $(this).parent().attr("id");
-			
-			if(!PortalCommon.imgUploadFileCheck($(this).val())){
-				alert("추가할 수 없는 파일입니다.");
-				return;
-			}
-		
-			
-	 		$("#"+form_id).ajaxSubmit({
-				url : WEB_HOME+"/board230/bbsFileUpload.do",
-				type : 'POST',
-				data : $("#"+form_id).serialize(),
-				action: $("#dummy"),
-				success : function(data){			
-					loadImageList2(form_id, $.parseJSON(data));
-				},error : function(){
-					alert("전송 실패 했습니다.");
-				},
-				clearForm: true,
-				resetForm: true
-			});	
-		});
-		
-		//이미지 추가
-		var loadImageList2 = function(form_id, obj)
-		{
-			var json = obj[0];
-			
-			$('<li id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'"  width="124" height="124"  alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#"+form_id));
-// 			$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="/portalxpert.template/upload/test.jpg" width="124" height="124" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#"+form_id));
-
-			var jsonObject = {
-				 'notiId' : ''
-				, 'apndFileSeq' : jsonAppendImgList.length+1
-				, 'apndFileTp' : '020'
-				, 'apndFileSz' : json.saveFileSize
-				, 'apndFileOrgn' : json.original
-				, 'apndFileName' : json.saveFileName
-				, 'apndFilePath' : json.saveDir
-				, 'apndFilePrvwPath' : json.webDir
-				, 'apndFilePrvwName' : json.saveFileName
-				, 'sourceCodeInput' : ''
-				, 'adminRcmdYn' : ''
-				, 'adminRcmdDttm' : ''
-				, 'readCnt' : '0'
-				, 'delYn' : 'N'
-				, 'regrId' : ''
-				, 'regrName' : ''
-				, 'regDttm' : ''
-				, 'updrId' : ''
-				, 'updrName' : ''
-				, 'updDttm' : ''
-				, 'mvpKey' : ''
-			};		
-
-			
-			jsonAppendImgList.push(jsonObject);
-			
-		};		
-		
-	});
-	
 </script>
 <script type="text/javascript" src="${RES_HOME}/js/portal/board/board230Write.js"></script>
 <script type="text/javascript" src="${RES_HOME}/js/portal/editor.js"></script>
@@ -179,7 +112,6 @@
 <!-- 버튼영역 -->
 <div class="btn_board_sec">
 	<div class="fl">
-		<a href="#" class="btn_set bt_style2"><span>미리보기</span></a>
 		<a href="#" class="btn_set bt_style2" onclick="javascript:fnWriteTempInsert();"><span>임시저장</span></a>
 		<a href="#" class="btn_set bt_style2" onclick="javascript:fnWriteCancel();"><span>취소</span></a>
 	</div>
@@ -224,77 +156,64 @@
 			<option value="020">운영자만공개
 			<option value="030">부서지정
 		</select>
-<!-- 		<a href="#" class="btn_set bt_style1" onclick=""><span>조직도</span></a> -->
-	</td>
-</tr>
-<tr>
-	<th scope="row">
-	<td colspan="3">
-		<div>
+ 
+		<div class="mv_file_div">
 			<ul id="OpenDeptCategories">
 			</ul>
-			<ul id="OpenEmpCategories" style="display:none;">
+			<ul id="OpenEmpCategories">
 			</ul>
 		</div>	
-<!-- 		<textarea id="textbox01" cols="100" rows="5" maxlength="300" class="textbox" title="선택조직도">선택조직도.</textarea> -->
 	</td>
 </tr>
-<tr>
-<td colspan="4"> 
+<tr id="div_img_view" style="display:none;">
+<th scope="row">이미지등록</th>
+<td colspan="3">
 <ul style="list-style-type:none;float:left;">
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
+	    <li class="img_imgadd">
 		<form id="bbsImgform1" name="bbsImgform1" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg1" name="bbsUpImg1" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		<input type="file" size="1" title="이미지추가" id="apndImg1" name="bbsUpImg1" class="img_file">
 		</form>
 		</li>
 
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
+	    <li class="img_imgadd">
 	    <form id="bbsImgform2" name="bbsImgform2" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg2" name="bbsUpImg2" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		<input type="file" size="1" title="이미지추가" id="apndImg2" name="bbsUpImg2" class="img_file">
 		</form>
 		</li>
 
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
+	    <li class="img_imgadd">
 	    <form id="bbsImgform3" name="bbsImgform3" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg3" name="bbsUpImg3" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		<input type="file" size="1" title="이미지추가" id="apndImg3" name="bbsUpImg3" class="img_file">
 		</form>
 		</li>
 
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
+	    <li class="img_imgadd">
 	    <form id="bbsImgform4" name="bbsImgform4" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg4" name="bbsUpImg4" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
+		<input type="file" size="1" title="이미지추가" id="apndImg4" name="bbsUpImg4" class="img_file">
 		</form>
 		</li>
 
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
-	    <form id="bbsImgform5" name="bbsImgform5" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg5" name="bbsUpImg5" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
-		</form>
-		</li>
 	</ul>
-
-
+</td>
+</tr>
+<tr id="div_mv_view" style="display:none;">
+<th scope="row">동영상등록</th>
+<td colspan="3">
 	
-	<div style="clear:both">
-	
-	동영상파일올리기
 	<div id="movieImgformDiv">
 	<ul>
 	    <li>
 	    <form id="movieImgform" name="movieImgform" enctype="multipart/form-data" method="post">
-	    <input type="text" style="width:100px">
-		<input type="file" size="1" title="동영상추가" id="apndMovie" name="bbsUpMovie">
-		<input type="button" onclick="fnAddMovieFileList()" value="추가">
+	    <input type="text" class="text" style="width:520px">
+	    <a href="#" class="btn_set bt_style1 mv_file_a">   
+		<input type="file" size="1" id="apndMovie" name="bbsUpMovie" class="mv_file">
+		<span>파일</span></a>
+<!-- 		<a href="#" class="btn_set bt_style1" onclick="fnAddMovieFileList()"><span>추가</span></a> -->
 		</form>
 		</li>	
 	</ul>
 	</div>
-	<div id="movieFileDiv" style="width:97%; height:130px; overflow:auto ">
+	<div id="movieFileDiv" class="mv_file_div">
 		<dl></dl>
 	</div>
 	</div>
@@ -302,16 +221,39 @@
 </tr>
 <tr>
 <td colspan="4"> 
-	<textarea class="editor ma_none" id="editor" style="height:350px;"></textarea>
+	<textarea class="editor ma_none" id="editor" style="height:360px;"></textarea>
+</td>
+</tr>
+<tr>
+<th scope="row">첨부파일</th>
+<td colspan="3">
+	
+	<div id="movieImgformDiv">
+	    <form id="apndFileform" name="apndFileform" enctype="multipart/form-data" method="post">
+		<ul>
+		    <li class="ma_bot5">
+		    <input type="text" class="text" style="width:476px" readonly>
+		    <a href="#" class="btn_set bt_style1 mv_file_a">
+		    <input type="file" size="1" name="upFile-" class="mv_file"><span>파일</span></a>
+		    <a style="cursor:pointer;" class="btn_set bt_style1" onclick="fnAddFileList();"><span>추가</span></a>
+		    </li>	
+		</ul>
+		</form>
+	</div>
+	<div id="innoApDiv" class="mv_file_div" style="display:none;">
+		<dl></dl>
+	</div>
+	</div>
 </td>
 </tr>
 </tbody>
 </table>
 
+
+
 <!-- 버튼영역 -->
 <div class="btn_board_sec">
 	<div class="fl">
-		<a href="#" class="btn_set bt_style2"><span>미리보기</span></a>
 		<a href="#" class="btn_set bt_style2" onclick="javascript:fnWriteTempInsert();"><span>임시저장</span></a>
 		<a href="#" class="btn_set bt_style2" onclick="javascript:fnWriteCancel();"><span>취소</span></a>
 	</div>

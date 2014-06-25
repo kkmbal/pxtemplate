@@ -5,7 +5,7 @@ var tinymce_setting = {
         script_url : '/js/lib/tinymce/tinymce.js',
         theme : "modern",
 		language : "ko_KR",
-		height : "350",
+		height : "300",
 		//width : "472", 
 		statusbar: false,
         plugins: [
