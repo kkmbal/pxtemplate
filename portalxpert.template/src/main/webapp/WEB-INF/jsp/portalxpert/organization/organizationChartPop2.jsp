@@ -37,7 +37,7 @@
 	 	<div class="pop_post clearfix">
 			<div class="p_left" style="width:40%">
 				<!--search-->
-				<div class="rbox_pop" style="margin-bottom:10px;">
+				<div class="attachbox" style="width:270px;margin-bottom:10px;">
 					<span class="rbox_top"></span>
 					<div class="rboxInner">
 						부서명
@@ -54,7 +54,7 @@
 			</div>
 			<div class="p_right" style="width:58%">
 				<!--search-->
-				<div class="rbox_pop" style="margin-bottom:10px;">
+				<div class="attachbox" style="width:300px;margin-bottom:10px;">
 					<span class="rbox_top"></span>
 					<div class="rboxInner">
 						사용자명

@@ -270,6 +270,16 @@
 	<input type="radio" name="apndKind" value="020">이미지
 	<input type="radio" name="apndKind" value="030">동영상
 </div>
+<div style="display:none;">
+	<div id ="replyPrmsTR">
+		<div>답글 허용</div>
+		<div><input type="checkbox" id="replyPrmsYn" name="opnPrmsYN" class="ma_none" title="허용" checked><label for="replyPrmsYn">허용</label></div>
+	</div>
+	<div id ="opnPrmsTR">
+		<div>의견 허용</div>
+		<div><input type="checkbox" id="opnPrmsYN" name="opnPrmsYN" class="ma_none" title="허용" checked><label for="opnPrmsYN">허용</label><input type="radio" id="opnMarkRealNameYN_Y" name="opnMarkRealNameYN" value="Y" checked ></div>
+	</div>
+</div>
 
 </body>
 </html>		

@@ -83,6 +83,290 @@ if('${btnViewYn}' == "X"){
 
 <body>
 
+<div class="container">
+
+	<div class="header">
+		<h1>${boardName}</h1>
+		<div class="loc">
+			<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
+			<span><a href="#">커뮤니티</a></span>
+			<span><strong>${boardName}</strong></span>
+		</div>
+	</div><!-- end of header -->
+
+
+
+
+	<!-- 테이블상단 버튼영역 -->
+	<div class="btn_board_top">
+		<div class="fl">
+			<c:if test="${btnViewYn == 'Y'}">
+			<a href="#" class="btn_write"><span>글쓰기</span></a>
+			<c:if test="${boardForm != '030'}">
+			<a href="#" class="btn_set bt_style5 btn_reply" style="display:none;"><span>답글쓰기</span></a>
+			</c:if>
+			<a href="#" class="btn_set bt_style2 btn_modify"><span>수정</span></a>
+			<a href="#" class="btn_set bt_style2 btn_delete"><span>삭제</span></a>
+			</c:if>
+			<a href="#" class="btn_set bt_style2 btn_print"><span>출력</span></a>
+			<a href="#" class="btn_set bt_style2 btn_boardMove"><span>게시물 이동</span></a>
+		</div>
+		<div class="fr">
+			<a href="#" class="btn_set bt_style7 btn_list"><span>목록</span></a>
+		</div>
+	</div>
+	<!-- //테이블상단 버튼영역 -->
+
+	<div>
+		<div class="toptable" >
+			<div class="fl">
+				<div class="innerbox tit">번호</div>
+				<div class="innerbox" id="notiNum">345,789</div>
+				<div class="innerbox"> &nbsp;</div>
+				<div class="innerbox tit">조회수</div>
+				<div class="innerbox" id="notiReadCnt">346,000</div>
+				<div class="innerbox"> &nbsp;</div>
+				<div class="innerbox tit">의견</div>
+				<div class="innerbox" id="opnCnt">35</div>		
+			</div>
+			<div class="fr">
+				<div class="innerbox">전체공개</div>
+			</div>	
+		</div>
+	</div>
+
+	
+
+	<div class="titlebox fl">
+		<div class="fl">
+			<h1 id="notiTitle" style="width:660px;"> </h1>
+			<div class="innerbox tit">작성자</div>
+			<div class="innerbox" id="userName"></div>
+			<div class="innerbox" id="deptName"></div>
+			<div class="innerbox" id="mailTo"></div>
+		</div>
+		<div class="fl">
+			<div class="innerbox tit">등록일</div>
+			<div class="innerbox" id="regDttm"></div>
+		</div>
+		<div class="fr">
+			<input type="checkbox" name="notice" class="disabled"><strong>공지</strong>
+		</div>
+	</div>
+
+
+	<!--  글내용 -->
+	<div class="view_post">
+		<ul id="imgNotiConts" class="sns_imgs" style="display:none"></ul><!-- 이미지형 게시판 -->		
+		<p class="te_center" id="movNotiConts" style="display:none"></p><!-- 동영상 게시판 -->
+		<span id="notiConts">
+		${notiConts}
+		</span>
+	</div>
+	<!-- 글내용 끝 -->
+
+	<div class="attachbox">
+		<span class="tit" style="vertical-align:top;">첨부파일</span>
+		<span class="ico_fileAttch2">
+			<dl id="notiFileDl">
+<!-- 				<dt><span class="fname"> document.hwp</span></dt> -->
+			</dl>
+		</span>
+	</div>
+
+
+
+
+<!--댓글-->
+	<div class="replybox fl" id="opnPrmsDiv">
+		<div id="replyUl" style="display:none;">
+		</div>
+		<div class="reply_post"  style="display:none;">
+			<textarea class="textbox" cols="5" rows="3" id="noti_reply" style="width:620px;"></textarea>
+			<a href="javascript:fnInsertBbsNotiOpnForView()" title="의견등록" class="btn_set bt_style1"><span>의견등록</span></a>
+		</div>
+	</div>
+	
+	
+
+
+	<!-- 게시판이전글다음글 -->
+	<div id="boardPage">
+	</div>	
+
+
+	<div class="replybox fl">
+
+
+		<div> <!-- 리플 하나의 컨테이너 -->
+			<div> <!-- 리플 상단 -->
+				<div class="innerbox tit">작성자</div>
+				<div class="innerbox">2014-06-01 17:33</div>
+				<div class="innerbox link">의견</div>
+				<div class="innerbox link">삭제</div>
+			</div><!-- 리플 상단 끝-->
+			<div> <!-- 리플 하단  -->
+				<div class="answer fl" > <!-- 리플내용 -->
+					<p>
+					
+					인생에는 두가지 고통이 있다. 하나는 훈련의 고통이고, 또 하나는 후회의 고통이다.
+					훈련의 고통은 가볍지만 후회의 고통은 무겁다. 기적은 훈련이 만든다. 
+					냉무1
+					</p>
+				</div> <!--리플내용 끝 -->
+			</div><!-- 리플 하단 끝-->
+		</div> <!-- 리플 하나 컨테이너 끝 -->
+
+					
+			<div class="rereply"> <!-- 리리플 하나의 컨테이너 -->
+			<div > <!-- 리리플 상단 -->
+				<div class="innerbox tit">이선미</div>
+				<div class="innerbox">2014-06-01 17:33</div>
+				<div class="innerbox link">의견</div>
+				<div class="innerbox link">삭제</div>
+			</div><!-- 리리플 상단 끝-->
+			<div> <!-- 리리플 하단  -->
+				<div class="answer fl" > <!-- 리리플내용 -->
+					<p>
+						좋은 의견입니다. 많은 분들이 봐주셨으면 좋겠습니다. ~
+					</p>
+				</div> <!--리리플내용 끝 -->
+			</div><!-- 리리플 하단 끝-->
+		</div> <!-- 리리플 하나 컨테이너 끝 -->
+	
+			<div class="rereply"> <!-- 리리플 하나의 컨테이너 -->
+			<div > <!-- 리리플 상단 -->
+				<div class="innerbox tit">은하림</div>
+				<div class="innerbox">2014-06-01 17:33</div>
+				<div class="innerbox link">의견</div>
+				<div class="innerbox link">삭제</div>
+			</div><!-- 리리플 상단 끝-->
+			<div> <!-- 리리플 하단  -->
+				<div class="answer fl" > <!-- 리리플내용 -->
+					<p>
+					열심히 노력하셨던 결실을 이루는 날이 어서 왔으면 좋겠습니다.
+					</p>
+				</div> <!--리리플내용 끝 -->
+			</div><!-- 리리플 하단 끝-->
+		</div> <!-- 리리플 하나 컨테이너 끝 -->
+	
+
+
+			<div class="rereply"> <!-- 리리플 하나의 컨테이너 -->
+			<div > <!-- 리리플 상단 -->
+				<div class="innerbox tit">이선미</div>
+				<div class="innerbox">2014-06-01 17:33</div>
+				<div class="innerbox link">의견</div>
+				<div class="innerbox link">삭제</div>
+			</div><!-- 리리플 상단 끝-->
+			<div> <!-- 리리플 하단  -->
+				<div class="answer fl" > <!-- 리리플내용 -->
+					<p>
+						감사합니다.
+					</p>
+				</div> <!--리리플내용 끝 -->
+			</div><!-- 리리플 하단 끝-->
+		</div> <!-- 리리플 하나 컨테이너 끝 -->
+
+
+		<div class="rereply fl answer" style="margin:15px;padding:0px;vertical-align:center;">
+			<div class="fl" >
+				<input type="text" size="100" name="replWriting" value="냉무" />
+			</div>
+			<div class="fr">
+				<a href="#" class="btn_set bt_style1"><span>등록</span></a>
+				<a href="#" class="btn_set bt_style1"><span>취소</span></a>
+			</div>
+		</div>
+	
+		<div> <!-- 리플 하나의 컨테이너 -->
+			<div> <!-- 리플 상단 -->
+				<div class="innerbox tit">작성자</div>
+				<div class="innerbox">2014-06-01 17:33</div>
+				<div class="innerbox link">의견</div>
+				<div class="innerbox link">삭제</div>
+			</div><!-- 리플 상단 끝-->
+			<div> <!-- 리플 하단  -->
+				<div class="answer fl" > <!-- 리플내용 -->
+					<p>
+					
+					인생에는 두가지 고통이 있다. 하나는 훈련의 고통이고, 또 하나는 후회의 고통이다.
+					훈련의 고통은 가볍지만 후회의 고통은 무겁다. 기적은 훈련이 만든다. 
+					</p>
+				</div> <!--리플내용 끝 -->
+			</div><!-- 리플 하단 끝-->
+		</div> <!-- 리플 하나 컨테이너 끝 -->
+		<div class="fl answer" style="margin:15px;padding:0px;vertical-align:center;">
+			<div class="fl" >
+				<input type="text" size="100" name="replWriting" value="냉무" />
+			</div>
+			<div class="fr">
+				<a href="#" class="btn_set bt_style1"><span>등록</span></a>
+				<a href="#" class="btn_set bt_style1"><span>취소</span></a>
+			</div>
+		</div>
+
+	</div> <!--  replybox  end -->
+
+
+
+<table width="100%" class="tbl_form" summary="이전 다음글 2개만.">
+<colgroup>
+	<col width="15%" />
+	<col width="85%" />
+</colgroup>
+<tbody>
+<tr>
+	<th scope="row">이전 글</th>
+	<td>
+		 이전 글 제목입니다.
+	</td>
+</tr>
+<tr>
+	<th scope="row">다음 글</th>
+	<td>
+		다음 글 제목입니다.
+	</td>
+</tr>
+</tbody>
+</table>
+<!-- //입력테이블2 -->
+<!-- 버튼영역 -->
+<div style="padding:10px 0px 0px 0px" >
+	<div class="fl">
+		<c:if test="${btnViewYn == 'Y'}">
+		<a href="#" class="btn_write"><span>글쓰기</span></a> 
+		<c:if test="${boardForm != '030'}">
+			<a href="#" class="btn_set bt_style5 btn_reply" style="display:none;"><span>답글쓰기</span></a>
+		</c:if>
+		<a href="#" class="btn_set bt_style2 btn_modify"><span>수정</span></a>
+		<a href="#" class="btn_set bt_style2 btn_delete"><span>삭제</span></a>
+		</c:if>
+		<a href="#" class="btn_set bt_style2 btn_print"><span>출력</span></a>
+		<a href="#" class="btn_set bt_style2 btn_boardMove"><span>게시물 이동</span></a>
+	</div>
+	<div class="fr">
+
+		<a href="#" class="btn_set bt_style7 btn_list"><span>목록</span></a>
+	</div>
+</div>
+<!-- //버튼영역 -->
+
+
+
+
+
+</div><!-- end of container -->
+
+	
+</body>
+</html>	
+
+
+<%--
+
+<body>
+
 	<div>${boardName}</div>
 	<div>
 		<input type="button" value="목록"  class="btn_list">
@@ -146,4 +430,5 @@ if('${btnViewYn}' == "X"){
 
 	
 </body>
-</html>			 
+
+ --%>		 
