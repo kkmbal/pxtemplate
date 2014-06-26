@@ -267,6 +267,7 @@ margin-left:3px;
 margin-right:3px;
 }
 
+.tit a {text-decoration:none;}
 /* -------------- 글상세보기 ------------------------------------------ */
 .yellowbox	{	width:180px;font-weight:bold;color:white;font-size:15px;
 				background-color:#ffaf15;padding:15px;text-align:center;
@@ -291,7 +292,7 @@ margin-right:3px;
 			border-bottom:1px solid gray;padding:15px 0px 0px 0px;vertical-align:middle;height:30px;} 
 .toptable .tit	{color:black;font-weight:bold}
 
-.titlebox {background-color:#edf4f7;padding-left:10px;}
+.titlebox {background-color:#edf4f7;padding-left:10px;padding-right:10px;}
 .titlebox h1{color:black;font-weight:bold;font-size:25px;padding:20px 10px 20px 10px;}
 .titlebox .tit	{font-weight:bold}
 
@@ -304,8 +305,8 @@ margin-right:3px;
 .attachbox	.tit	{font-weight:bold;color:c3c3c3;padding:0px 30px 0px 0px;}
 .attachbox	.fname	{color:#0000c3;padding: 3px 20px 20px 20px;background: url(../images/ico_fileAttch.png) no-repeat 0 0;}
 
-.replybox	{border-top:2px solid gray;border-bottom:2px solid gray;width:100%;}
-.replybox	.answer		{padding:5px 15px 5px 5px;border-bottom:1px solid #c3c3c3;width:97%;}
+.replybox	{border-top:2px solid gray;border-bottom:2px solid gray;width:100%;margin-bottom:15px;}
+.replybox	.answer		{padding:5px 15px 5px 5px;border-bottom:1px solid #c3c3c3;width:97%;margin-bottom:10px;}
 .replybox	.innerbox	{padding:5px 15px 5px 5px;}
 .replybox	.link		{color:#ffba02;}
 .replybox	.tit	{font-weight:bold;color:black;}
@@ -319,7 +320,182 @@ min-height: 100px;
 }
 
 .ico_fileAttch2{display:inline-block;}
+
+.reply_post {
+padding: 10px 0 0 0;
+position: relative;
+outline: 0px solid red;
+}
+
+.view_post .sns_imgs {padding-top:10px; text-align:center;}
+.view_post .sns_imgs li {width:123px !important; height:123px !important; display:inline-block; *display:inline; *zoom:1; overflow:hidden; border:1px solid #d2d2d2; margin:5px; position:relative;}
+.view_post .sns_imgs li a {width:100%; height:100%;  display:inline-block; }
+.view_post .sns_imgs li img {position:absolute; top:50%; left:50%; border:0 none;}
+.view_post .sns_imgs .one {width:438px !important; height:308px !important; margin:5px !important;}
+.view_post .sns_imgs .two {width:218px !important; height:218px !important; margin:5px !important;}
+.view_post .sns_imgs .three {width:123px !important; height:123px !important; margin:5px !important;}
+
+/*이미지 원본보기*/
+/*회색배경*/
+.ui-widget-overlay.ui-front {background-color:#000; opacity:0.5; filter:alpha(opacity=50); position:fixed; height:100%; width:100%; top:0; left:0;}
+/*원본팝업*/
+.ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable {position:absolute; z-index:100; border:2px solid black; background-color:black; background-image:none;}
+	/*헤더*/
+.ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix {height:15px; padding:10px; cursor:move; position:relative; color:#eee; background-image:none;  background-color:black; border:0 none;}
+	/*파일명*/
+.ui-dialog .ui-dialog-title {width:90%; cursor:move; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; float:left; margin:-2px 0 0 0 !important; font-size:12px;}
+	/*닫기버튼*/
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only.ui-dialog-titlebar-close { width:16px; height:16px; position:absolute; top:50%; right:5px; margin-top:-8px; background:url(../images/img/ico.png) no-repeat -21px -132px; border:0 none; cursor:pointer; }
+.ui-button-icon-primary.ui-icon.ui-icon-closethick {background-image:none;}
+.ui-button-text {display:none; margin:0;}
+	/*컨텐츠*/
+.ui-dialog-content.ui-widget-content {position:relative; border:0; padding:20px; overflow:auto; text-align:center;
+scrollbar-highlight-color:#000;
+scrollbar-3dlight-color:#424242;
+scrollbar-face-color:#000;
+scrollbar-shadow-color:#424242;
+scrollbar-darkshadow-color:#000;
+scrollbar-track-color:#000;
+scrollbar-arrow-color:#424242;}
+.ui-resizable-handle {position:absolute; font-size:0; display:block;}
+.ui-resizable-n {cursor:n-resize; width:100%; height:7px; top:-5px; left:0;}
+.ui-resizable-e {cursor:e-resize; width:7px; height:100%; top:0; right:-5px;}
+.ui-resizable-s {cursor:s-resize; width:100%; height:7px; bottom:-5px; left:0;}
+.ui-resizable-w {cursor:w-resize; width:7px; height:100%; top:0; left:-5px;}
+.ui-dialog .ui-resizable-se {cursor:se-resize; width:12px; height:12px; right:-5px; bottom:-5px;} 
+.ui-dialog .ui-resizable-sw {cursor:sw-resize; width:9px; height:9px; left:-5px; bottom:-5px;} 
+.ui-dialog .ui-resizable-ne {cursor:ne-resize; width:9px; height:9px; right:-5px; top:-5px;} 
+.ui-dialog .ui-resizable-nw {cursor:nw-resize; width:9px; height:9px; left:-5px; top:-5px;} 
+
+
+
+textarea {resize:none;}
 /* -------------- 글상세보기 ------------------------------------------ */
+
+/* -------------- 이미지동영상 이전다음 ------------------------------------------ */
+.page_vod {
+position: relative;
+height: 215px;
+margin: 0 auto;
+padding-top: 15px !important;
+border-top: 2px solid #bfbfbf !important;
+border-bottom: 1px solid #d9d9d9 !important;
+}
+
+.page_vod .btn_prev {
+width: 16px;
+height: 36px;
+position: absolute;
+top: 60px;
+left: 10px;
+background: url(../images/img/ico.png) no-repeat 0 -315px;
+}
+
+.page_vod .btn_next {
+width: 16px;
+height: 36px;
+position: absolute;
+top: 60px;
+right: 10px;
+background: url(../images/img/ico.png) no-repeat -25px -315px;
+}
+
+.page_vod .page_list {
+text-align: center;
+}
+
+page_vod .page_list li {
+display: inline-block;
+width: 30%;
+}
+
+.page_list li {
+list-style-type: none;
+}
+.ver_top {
+vertical-align: top !important;
+}
+
+.box_vod {
+width: 185px;
+margin: 0 auto !important;
+color: #666;
+}
+
+.te_center {
+text-align: center !important;
+}
+
+.box_vod .pho_tit {
+width: 180px;
+font-size: 12px;
+font-weight: bold;
+margin-top: 10px;
+padding-left: 4px;
+line-height: 16px;
+}
+
+.box_vod .pho_tit span {
+text-align:left;
+vertical-align:middle;
+}
+
+
+.bl_pho {
+display: inline-block;
+background: url(../images/img/bl_title.png) no-repeat 0 -350px;
+}
+
+.bl_pho, .bl_vod {
+width: 13px;
+height: 12px;
+}
+
+.te_dot {
+width: auto;
+max-width: 80%;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+display: inline-block;
+padding-right: 2px;
+padding-left: 2px;
+}
+
+.fo_replyn {
+color: #4375bf !important;
+font-size: 11px;
+margin-left: 5px;
+}
+
+.box_vod .name {
+margin: 6px 0 3px 4px;
+font-size: 12px;
+}
+
+.box_vod .fo_byte {
+line-height: 12px;
+margin-left: 4px;
+font-size: 11px;
+color: #999 !important;
+}
+
+.page_vod .page_list li {
+display: inline-block;
+width: 30%;
+}
+
+.box_vod img:hover, .box_vod img.on {
+border: 1px solid #4375bf;
+}
+
+.box_vod img {
+width: 185px;
+height: 104px;
+border: 3px solid #fff;
+}
+
+/* -------------- 이미지동영상 이전다음 ------------------------------------------ */
 
 /* ------------------- popup -------------------- */
 

@@ -110,7 +110,7 @@
 					<![CDATA[
 					CASE 
 		               WHEN UP_NOTI_ID = '*' THEN NOTI_TITLE
-		               ELSE LPAD('@!', 2 * (LEVEL - 1), '@!') || '<img src="../portalxpert/images/img/replyarrow.gif"/>&nbsp;' || NOTI_TITLE
+		               ELSE LPAD('@!', 2 * (LEVEL - 1), '@!') || '<span class="ico_reply"><span class="hidden">답글</span></span>' || NOTI_TITLE
 		             END AS NOTI_TITLE,
 		             ]]>
 		             ROWNUM PNUM,
@@ -1095,7 +1095,7 @@
 		WHERE NOTI_ID = #{notiId} 
 		AND DEL_YN='N'
 		AND UP_OPN_SEQ IS NULL
-		ORDER BY REG_DTTM DESC
+		ORDER BY REG_DTTM DESC, NOTI_OPN_SEQ DESC
 	</select>
 	
 	<!-- BBS 게시물 의견의 의견 정보 -->
@@ -1123,6 +1123,7 @@
 		WHERE NOTI_ID = #{notiId} 
 		AND UP_OPN_SEQ IS NOT NULL
 		AND DEL_YN='N'		
+		ORDER BY REG_DTTM DESC, UP_OPN_SEQ DESC
 	</select>
 	
 	<select id="getBbsBoardInfoListForView" parameterType="portalxpert.board.board100.vo.BbsBoardInfoVO"

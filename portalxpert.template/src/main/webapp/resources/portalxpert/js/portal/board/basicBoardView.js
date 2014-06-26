@@ -240,10 +240,9 @@
 	};
 	
 	var fnSetFrameHeight = function(addHeight){
-		
 		parent.document.getElementById("bbsFrame").height = "700px";
-		//parent.document.getElementById("bbsFrame").height = Number($(document).height()+ addHeight )+"px";
-		parent.document.getElementById("bbsFrame").height = (document.body.scrollHeight+ addHeight)+"px";
+		parent.document.getElementById("bbsFrame").height = Number($(document).height()+ addHeight )+"px";
+		//parent.document.getElementById("bbsFrame").height = (document.body.scrollHeight+ addHeight)+"px";
 		
 	};
 	
@@ -278,35 +277,36 @@
 	//일반 게시글 이전글 다음글 
 	var fnGetPrevNextNotiInfo = function(notiJson){
 		
-		$("#boardPage").append('<ul class="post_slt" id="post_sltUl"></ul>');	
-		$("#post_sltUl li").remove();
+		$("#boardPage > table").append('<tbody id="post_sltUl"></tbody>');	
+		$("#post_sltUl tr").remove();
 		if(notiJson !=null){
 			
 			if(notiJson.prevNotiId != null){
 				if(notiJson.prevNotiKind =='060'){
-					$("#post_sltUl").append('<li><a href="javascript:fnOpenLinkUrl(\''+notiJson.prevLinkUrl+'\' , \''+notiJson.prevNotiId+'\')" id="prevNotiId"><span class="bl_prev">이전글</span><span id="prevNotiTitle">'+notiJson.prevNotiTitle+'</span></a></li>');					
+					$("#post_sltUl").append('<tr><th scope="row">이전글</th><td id="prevNotiTitle"><a href="javascript:fnOpenLinkUrl(\''+notiJson.prevLinkUrl+'\' , \''+notiJson.prevNotiId+'\')" id="prevNotiId">'+notiJson.prevNotiTitle+'</a></td></tr>');					
 				}else{
-					$("#post_sltUl").append('<li><a href="javascript:fnGetBoardView(\''+notiJson.prevNotiId+'\' , \''+prev_pnum+'\')" id="prevNotiId"><span class="bl_prev">이전글</span><span id="prevNotiTitle">'+notiJson.prevNotiTitle+'</span></a></li>');	
+					$("#post_sltUl").append('<tr><th scope="row">이전글</th><td id="prevNotiTitle"><a href="javascript:fnGetBoardView(\''+notiJson.prevNotiId+'\' , \''+prev_pnum+'\')" id="prevNotiId">'+notiJson.prevNotiTitle+'</a></td></tr>');	
 				}
 				
 			}else{
-				$("#post_sltUl").append('<li><span class="bl_prev">이전글</span><span id="prevNotiTitle">처음 게시물 입니다.</span></li>');
+				$("#post_sltUl").append('<tr><th scope="row">이전글</th><td id="prevNotiTitle">처음 게시물 입니다.</td></tr>');
 			}
 			if(notiJson.nextNotiId != null){
 				
 				if(notiJson.nextNotiKind == '060'){
-					$("#post_sltUl").append('<li><a href="javascript:fnOpenLinkUrl(\''+notiJson.nextLinkUrl+'\' , \''+notiJson.nextNotiId+'\')" id="nextNotiId"><span class="bl_next">다음글</span><span id="nextNotiTitle">'+notiJson.nextNotiTitle+'</span></a></li>');											
+					$("#post_sltUl").append('<tr><th scope="row">다음글</th><td id="nextNotiTitle"><a href="javascript:fnOpenLinkUrl(\''+notiJson.nextLinkUrl+'\' , \''+notiJson.nextNotiId+'\')" id="nextNotiId">'+notiJson.nextNotiTitle+'</a></td></tr>');											
 				}else{
-					$("#post_sltUl").append('<li><a href="javascript:fnGetBoardView(\''+notiJson.nextNotiId+'\' , \''+next_pnum+'\')" id="nextNotiId"><span class="bl_next">다음글</span><span id="nextNotiTitle">'+notiJson.nextNotiTitle+'</span></a></li>');
+					$("#post_sltUl").append('<tr><th scope="row">다음글</td><td id="nextNotiTitle"><a href="javascript:fnGetBoardView(\''+notiJson.nextNotiId+'\' , \''+next_pnum+'\')" id="nextNotiId"><span class="bl_next">'+notiJson.nextNotiTitle+'</a></td></tr>');
 				}
 				
 			}else{
-				$("#post_sltUl").append('<li><span class="bl_next">다음글</span><span id="nextNotiTitle">마지막 게시물 입니다.</span></li>');
+				$("#post_sltUl").append('<tr><th scope="row">다음글</th><td id="nextNotiTitle">마지막 게시물 입니다.</td></tr>');
 			}
 		}
 		
 		fnSetFrameHeight(230);
 	};
+	
 	
 	//이미지형 게시글 이전글 다음글 
 	var fnGetImgNotiPrevNextInfo = function(param){
@@ -486,6 +486,7 @@
 			$("#agrmOppTd").show();
 		}
 		if(opnPrmsYn == 'Y'){
+			$("#opnPrmsDiv").show();
 			$("#replyUl").show();
 			$(".reply_post").show();
 		}
@@ -530,6 +531,11 @@
 			if(notiJson.replyPrmsYn == 'Y'){
 				$(".btn_reply").show();	
 			}
+		}
+		
+		//공지
+		if(notiJson.anmtYn == "Y"){
+			$("#anmtDiv").show();
 		}
 		
 		fnSetDataNotiFileInfo(notiFile);
@@ -643,7 +649,7 @@
  				fnGetImgNotiPrevNextInfo();
  			}
 		}
-		//fnSetFrameHeight(0);
+		fnSetFrameHeight(250);
 		
 	};
 	
@@ -690,7 +696,7 @@
 		$("#movNotiConts").css('display','block');
 
 		//var thumbnailImg = movDir+'/'+json.apndFilePath+'/'+json.apndFileName;
-		var thumbnailImg = movDir+"/movie_process.jpg";
+		var thumbnailImg = movDir+"/"+thumbnailFile;
 		$("#movNotiConts").append('<a href="javascript:fnPlayMov();" id="mvp_'+json.mvpKey+'"><img src="'+thumbnailImg+'" alt="비디오파일" ></a>');
 	};
 	
@@ -699,7 +705,7 @@
 		if(notiMov.length > 0 && notiMov[0].mvpKey){
 			$("#movNotiConts > #mvp_"+notiMov[0].mvpKey).remove();
 		
-			var thisMvpKey = WEB_HOME+"/common/player/Player.swf?key="+notiMov[0].mvpKey;
+			var thisMvpKey = RES_HOME+"/common/player/Player.swf?key="+notiMov[0].mvpKey;
 			movPlayerObj = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,115,0" width="406" height="358" id="main" align="middle"> '
 						+ '	<param name="allowScriptAccess" value="always" />                                                                                                                                                            '
 						+ '	<param name="allowFullScreen" value="true" />                                                                                                                                                                '
@@ -890,76 +896,12 @@
 	 	});
 	};
 	
-	//의견1 조회 (본문의 의견) - template
-	var fnSetDataNotiOpn1_template = function(notiOpn1){
-		var pName = '', ip = '',appendBtn='';
-		$("#replyUl li").remove();
-		for (var i=0; i < notiOpn1.length ; i++){
-
-			if(opnMakrRealnameYn == 'Y'){//실명공개 
-				ip = '';
-				pName = '<a href="javascript:doLikeUserInfoPop(\''+notiOpn1[i].userId+'\')">'+notiOpn1[i].userName+'</a>';
-			}else{//비실명 
-				ip = fnGetIpUtil(notiOpn1[i].makeIp);
-				pName = '의견'+Number(notiOpn1.length - i);
-			}
-			if(userId == notiOpn1[i].userId){//권한이 있는 사용자 혹은 작성자 
-				appendBtn = '<a id="btnModify_'+notiOpn1[i].notiOpnSeq+'" modiMode="N" class="fo_green" href="#" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">수정</a>'
-						   +'<a id="btnDel_'+notiOpn1[i].notiOpnSeq+'"    class="fo_green" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">삭제</a>';
-			}else{
-				appendBtn = '';
-			}
-			$("#replyUl").append(
-					'<li>'
-					+'<div class="clearfix" id="noti_opn_'+notiOpn1[i].notiOpnSeq+'">'	
-					+'	<dl>'
-					+'		<dt><span class="fo_bold fo_12px" notiOpnSeq = '+notiOpn1[i].notiOpnSeq+' chNotiOpnCnt ='+notiOpn1[i].chNotiOpnCnt+' id="noti_opn_name_'+notiOpn1[i].notiOpnSeq+'">'+pName+'</span><span class="fo_byte">'+ip+'</span><span>'+notiOpn1[i].regDttm+'</span>'
-					+'			<a class="fo_green" href="#" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'" id="btnOpn_'+notiOpn1[i].notiOpnSeq+'">의견</a>'+appendBtn+'</dt>'
-					+'		<dd id="opnDd_'+notiOpn1[i].notiOpnSeq+'">'+notiOpn1[i].opnConts+'</dd>'
-					+'	</dl>'
-				 	+'	<div id="opnTxtSapn_'+notiOpn1[i].notiOpnSeq+'" style="display:none;" class="clearfix reply_post2 reply_mod">'
-				 	+'  	<textarea id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" cols="5" rows="3">'+notiOpn1[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
-				 	+'		<a class="btn_reup" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" title="의견등록">의견등록</a>'
-				 	+'	</div>'
-					+'</div>'
-					+'</li>');
-			
-			$("#btnOpn_"+notiOpn1[i].notiOpnSeq).click(function(){//의견
-				
-				$(".reply_post2").remove();
-				$("#noti_opn_"+$(this).attr("notiOpnSeq")).parent("li").children(":last").after(
-					'<div class="clearfix reply_post2">'
-					+'	<span class="bl_reply" title="답글"><!--답글--></span>'
-					+'	<textarea cols="5" rows="3" id="re_reply_'+$(this).attr("notiOpnSeq")+'"></textarea>'
-					+'  <a class="btn_reup" href="javascript:fnInsertBbsNotiOpnForView('+$(this).attr("notiOpnSeq")+')" title="의견등록">의견등록</a>'
-					+'</div>');
-			});
-			
-			$("#btnModify_"+notiOpn1[i].notiOpnSeq).click(function(){//수정
-				
-				if($(this).attr("modiMode") == "N"){
-					$(this).html("수정취소");
-					$("#btnOpn_"+$(this).attr("notiOpnSeq")).html("");
-					$("#opnTxtSapn_"+$(this).attr("notiOpnSeq")).show();
-					$("#opnDd_"+$(this).attr("notiOpnSeq")).hide();
-					$(this).attr("modiMode","Y");
-				}else{
-					$(this).html("수정");
-					$("#btnOpn_"+$(this).attr("notiOpnSeq")).html("의견");
-					$("#opnTxtSapn_"+$(this).attr("notiOpnSeq")).hide();
-					$("#opnDd_"+$(this).attr("notiOpnSeq")).show();
-					$(this).attr("modiMode","N");
-				}
-			});
-		}
-		
-		fnSetDataNotiOpn2(notiOpn2);
-	};
+	
 	
 	//의견1 조회 (본문의 의견)
 	var fnSetDataNotiOpn1 = function(notiOpn1){
 		var pName = '', ip = '',appendBtn='';
-		$("#replyUl li").remove();
+		$("#replyUl div").remove();
 		for (var i=0; i < notiOpn1.length ; i++){
 			
 			if(opnMakrRealnameYn == 'Y'){//실명공개 
@@ -970,7 +912,7 @@
 				pName = '의견'+Number(notiOpn1.length - i);
 			}
 			if(userId == notiOpn1[i].userId){//권한이 있는 사용자 혹은 작성자 
-				appendBtn = '<div class="innerbox link"><a id="btnModify_'+notiOpn1[i].notiOpnSeq+'" modiMode="N" class="link" href="#" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">수정</a></div>'
+				appendBtn = '<div class="innerbox link"><a id="btnModify_'+notiOpn1[i].notiOpnSeq+'" modiMode="N" class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">수정</a></div>'
 				+'<div class="innerbox link"><a id="btnDel_'+notiOpn1[i].notiOpnSeq+'"    class="link" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">삭제</a></div>';
 			}else{
 				appendBtn = '';
@@ -997,14 +939,14 @@
 			+'<div>' 
 			+'	<div class="innerbox tit"  notiOpnSeq = '+notiOpn1[i].notiOpnSeq+' chNotiOpnCnt ='+notiOpn1[i].chNotiOpnCnt+' id="noti_opn_name_'+notiOpn1[i].notiOpnSeq+'">'+pName+'</div>'
 			+'	<div class="innerbox">'+notiOpn1[i].regDttm+'</div>'
-			+'	<div class="innerbox link"><a class="link" href="#" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'" id="btnOpn_'+notiOpn1[i].notiOpnSeq+'">의견</a></div>'
+			+'	<div class="innerbox link"><a class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'" id="btnOpn_'+notiOpn1[i].notiOpnSeq+'">의견</a></div>'
 			+   appendBtn
 			+'</div>' 
 			+'<div>' 
 			+'	<div class="answer fl" id="opnDd_'+notiOpn1[i].notiOpnSeq+'">'+notiOpn1[i].opnConts+'</div>' 
 			+'</div>' 	
 			+'	<div id="opnTxtSapn_'+notiOpn1[i].notiOpnSeq+'" style="display:none;" class="reply_post2 reply_mod">'
-			+'  	<textarea class="textbox" id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" cols="5" rows="5" style="width:620px;">'+notiOpn1[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
+			+'  	<textarea class="textbox" id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" cols="5" rows="5" style="width:620px;margin-bottom:10px;">'+notiOpn1[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
 			+'		<a class="btn_set bt_style1" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" title="의견등록"><span>의견등록</span></a>'
 			+'	</div>'			
 			+'</div>' );			
@@ -1019,7 +961,7 @@
 				$("#noti_opn_"+$(this).attr("notiOpnSeq")).append(
 						'<div class="clearfix reply_post2">'
 						+'	<span class="bl_reply" title="답글"><!--답글--></span>'
-						+'	<textarea class="textbox" cols="5" rows="3" id="re_reply_'+$(this).attr("notiOpnSeq")+'" style="width:520px;margin-left:100px;"></textarea>'
+						+'	<textarea class="textbox" cols="5" rows="3" id="re_reply_'+$(this).attr("notiOpnSeq")+'" style="width:570px;margin-left:50px;margin-bottom:10px;"></textarea>'
 						+'  <a class="btn_set bt_style1" href="javascript:fnInsertBbsNotiOpnForView('+$(this).attr("notiOpnSeq")+')" title="의견등록"><span>의견등록</span></a>'
 						+'</div>');
 			});
@@ -1059,7 +1001,7 @@
 			}
 			
 			if(userId == notiOpn2[i].userId){
-				appendBtn = '<div class="innerbox link"><a id="btnModify_'+notiOpn2[i].notiOpnSeq+'" modiMode="N" class="link" href="#" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">수정</a></div>'
+				appendBtn = '<div class="innerbox link"><a id="btnModify_'+notiOpn2[i].notiOpnSeq+'" modiMode="N" class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">수정</a></div>'
 						   +'<div class="innerbox link"><a id="btnDel_'+notiOpn2[i].notiOpnSeq+'"    class="link" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">삭제</a></div>';
 			}else{
 				appendBtn = '';
@@ -1092,7 +1034,7 @@
 					+'	<div class="answer fl" id="opnDd_'+notiOpn2[i].notiOpnSeq+'">'+notiOpn2[i].opnConts+'</div>' 
 					+'</div>' 	
 					+'	<div id="opnTxtSapn_'+notiOpn2[i].notiOpnSeq+'" style="display:none;" class="reply_post2 reply_mod">'
-					+'  	<textarea class="textbox" id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" cols="5" rows="5" style="width:520px;">'+notiOpn2[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
+					+'  	<textarea class="textbox" id="opnTxt_'+notiOpn2[i].notiOpnSeq+'" cols="5" rows="5" style="width:520px;margin-bottom:10px;">'+notiOpn2[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
 					+'		<a class="btn_set bt_style1" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" title="의견등록"><span>의견등록</span></a>'
 					+'	</div>'			
 					+'</div>' );			
@@ -1166,6 +1108,7 @@
 				}
 			}
 	 	});
+		
 	}; 
 	
 	//의견수정
@@ -1193,6 +1136,7 @@
 				}
 			}
 	 	});
+		
 	}; 
 	
 	//의견삭제
@@ -1215,6 +1159,7 @@
 				}
 			}
 	 	});
+		
 	}; 
 	
 	//게시글 평가 등록

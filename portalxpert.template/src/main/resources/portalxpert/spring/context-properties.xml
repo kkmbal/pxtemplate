@@ -76,7 +76,7 @@ jsp
 	        	<!-- 동영상 썸네일 웹경로 -->
 	        	<entry key="upload.thumbnail.web" value="${upload.thumbnail.web:/upload/movie}"/>
 	        	<!-- 동영상 썸네일기본 이미지 -->
-	        	<entry key="upload.thumbnail.file" value="${upload.thumbnail.file:movie_process.jpg}"/>
+	        	<entry key="upload.thumbnail.file" value="${upload.thumbnail.file:movie_process.png}"/>
 	        	<!-- 개인 개시물당 첨부용량 제한  (디폴트 1GB) -->
 	        	<entry key="pbs.upload.file.size" value="${pbs.upload.file.size:1000}"/>
 	        	<!-- 기본 개인 이미지 -->

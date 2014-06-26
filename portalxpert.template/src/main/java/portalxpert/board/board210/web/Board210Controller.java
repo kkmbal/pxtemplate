@@ -814,6 +814,7 @@ public class Board210Controller {
     	modelMap.put("admYn", bbsInfo.getAdmYn());//게시판 관리자 여부
     	modelMap.put("eamAdminYn", getEamAdmBoardAdmYNForList(session, bbsInfo));
     	modelMap.put("movDir", CONTEXT_PATH + PortalxpertConfigUtils.getString("upload.thumbnail.web"));
+    	modelMap.put("thumbnailFile", PortalxpertConfigUtils.getString("upload.thumbnail.file"));
     	modelMap.put("boardExplUseYn", bbsInfo.getBoardExplUseYn());
 		modelMap.put("boardExpl", bbsInfo.getBoardExpl());
 		modelMap.put("notiEmailSendYn", bbsInfo.getNotiEmailSendYn());
