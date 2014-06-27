@@ -1259,9 +1259,9 @@
 			},
 			success : function(data) {
 				if (data.jsonResult.success === true) {
-					if (!confirm('이동하시겠습니까?')) {
-						return;
-					}
+					//if (!confirm('이동하시겠습니까?')) {
+					//	return;
+					//}
 					PortalCommon.popupWindowCenter(
 							WEB_HOME+'/organization/categoryChartPop.do?mode=cm_move&kind=2&type=1&admin=1&notiId='
 									+ JSON.stringify(notiId), 'myBoardPop',

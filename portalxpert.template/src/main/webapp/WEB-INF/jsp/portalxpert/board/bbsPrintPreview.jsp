@@ -30,6 +30,80 @@
 
 <body>
 
+<div class="container">
+
+	<div>
+		<div class="toptable" >
+			<div class="fl">
+				<div class="innerbox tit">번호</div>
+				<div class="innerbox" id="notiNum">345,789</div>
+				<div class="innerbox"> &nbsp;</div>
+				<div class="innerbox tit">조회수</div>
+				<div class="innerbox" id="notiReadCnt">346,000</div>
+				<div class="innerbox"> &nbsp;</div>
+				<div class="innerbox tit">의견</div>
+				<div class="innerbox" id="opnCnt">35</div>		
+			</div>
+			<div class="fr">
+			</div>	
+		</div>
+	</div>
+
+	
+
+	<div class="titlebox fl">
+		<div class="fl">
+			<h1 id="notiTitle" style="width:660px;"> </h1>
+			<div class="innerbox tit">작성자</div>
+			<div class="innerbox" id="userName"></div>
+			<div class="innerbox" id="deptName"></div>
+			<div class="innerbox" id="mailTo"></div>
+		</div>
+		<div class="fl">
+			<div class="innerbox tit">등록일</div>
+			<div class="innerbox" id="regDttm"></div>
+		</div>
+		<div class="fr" id="anmtDiv" style="display:none;">
+			<strong>공지</strong>
+		</div>
+	</div>
+
+
+	<!--  글내용 -->
+	<div class="view_post">
+		<ul id="imgNotiConts" class="sns_imgs" style="display:none"></ul><!-- 이미지형 게시판 -->		
+		<p class="te_center" id="movNotiConts" style="display:none"></p><!-- 동영상 게시판 -->
+		<span id="notiConts">
+		${notiConts}
+		</span>
+	</div>
+	<!-- 글내용 끝 -->
+
+	<div class="attachbox">
+		<span class="tit" style="vertical-align:top;">첨부파일</span>
+		<span class="ico_fileAttch2">
+			<dl id="notiFileDl">
+			</dl>
+		</span>
+	</div>
+
+
+
+
+<!--댓글-->
+	<div class="replybox fl" id="opnPrmsDiv" style="display:none;">
+		<div id="replyUl" class="clearfix" style="display:none;">
+		</div>
+	</div>
+	
+	
+</div><!-- end of container -->
+	
+</body>
+</html>	
+
+<%--
+
 	<div>${boardName}</div>
 
 	작성자:<div id="userName"></div>
@@ -60,6 +134,4 @@
 	
 <iframe name="dummy" width=0 height=0 border=0 style="visibility:hidden"></iframe>
 
-	
-</body>
-</html>			 
+ --%>		 

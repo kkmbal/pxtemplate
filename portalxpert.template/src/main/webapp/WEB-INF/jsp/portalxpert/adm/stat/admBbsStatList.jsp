@@ -124,7 +124,7 @@
 <caption></caption>
 <colgroup>
 <col style="width:7%" />
-<col style="width:7%" />
+<col style="width:10%" />
 <col style="width:*" />
 <col style="width:8%" />
 <col style="width:8%" />
@@ -153,7 +153,7 @@
 			<tr>
 				<td>${result.seq}</td>
 				<td>${result.boardId}</td>
-				<td class="tit"><a href="javascript:fnGetBoardView('${result.boardId}');">${result.boardName}</a> 
+				<td class="tit" title="${result.boardName}"><a href="javascript:fnGetBoardView('${result.boardId}');" class="text_dot">${result.boardName}</a> 
 				</td>
 				<td>${result.boardKind}</td>
 				<td>${result.regrName}</td>
