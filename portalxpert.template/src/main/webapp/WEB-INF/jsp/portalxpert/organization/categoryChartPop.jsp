@@ -23,7 +23,7 @@
 	var jsonMyBoardList = ${myBoardList};
 		
 </script>
-<script type="text/javascript" src="${RES_HOME}/js/portal/organization/organizationChartPop2.js"></script>
+<script type="text/javascript" src="${RES_HOME}/js/portal/organization/categoryChartPop.js"></script>
 
  <style type="text/css">
 	div#rMenu {position:absolute; visibility:hidden; top:0; background-color:#fff; text-align: left;color:#666; border:1px solid #7a7a7a; min-width:100px;height:auto;z-index:1000}
@@ -33,7 +33,7 @@
 </style>
 </head>
  
-<body>
+<body style="overflow:hidden;">
 <form name="cateForm" method="post">
 
 </form>	
@@ -63,18 +63,16 @@
 	</div>
 	<!-- popup 본문 -->
 	<div class="pop_footer">
-		<!--btn_area-->         
-	    <div class="btn_area">
-	        <div class="fl_cen">
-	            <a id="btnOK" class="btn_basic2 bw70">
-				    <span class="fo_bold btn_text">확인</span>
-				</a>
-				<a id="btnClose" class="btn_basic2 bw70" style="cursor: pointer;">
-				    <span class="fo_bold btn_text" style="cursor: pointer;">닫기</span>
-				</a>
-	        </div>
-	     </div>
-	     <!--//btn_area-->  
+		<!-- 버튼영역 -->
+		<div style="text-align:center;">
+			<div class="rbox_btns">
+				<a href="#" class="btn_set bt_style2" id="btnOK" ><span>확인</span></a>
+				<a href="#" class="btn_set bt_style2" id = "btnClose"><span>닫기</span></a>
+			</div>
+		</div>
+		<!-- //버튼영역 -->	 	     
+	     
+	      
 	 </div>  
 </div>	
 <div id ="div_text">

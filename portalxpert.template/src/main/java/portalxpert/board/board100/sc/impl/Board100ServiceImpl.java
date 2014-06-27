@@ -352,7 +352,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 				
 				if(categoryCnt == 0){
 	
-					conts = "[{\"id\":999,\"pId\":0,\"name\":\"미지정\",\"boardId\":\"\",\"icon\":\"../resources/images/img/img_category.gif\",\"iconOpen\":\"../resources/images/img/img_category_on.gif\", \"iconClose\":\"../resources/images/img/img_category_off.gif\"}]";
+					conts = "[{\"id\":999,\"pId\":0,\"name\":\"게시판\",\"boardId\":\"\",\"icon\":\"../resources/portalxpert/images/img/img_category.gif\",\"iconOpen\":\"../resources/portalxpert/images/img/img_category_on.gif\", \"iconClose\":\"../resources/portalxpert/images/img/img_category_off.gif\"}]";
 					
 			    	JSONArray jsonConts = (JSONArray)JSONSerializer.toJSON( conts );
 	
@@ -366,7 +366,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 			    	newCont.put("boardKind", bbsBoardInfo.getBoardKind());
 			    	newCont.put("boardForm", bbsBoardInfo.getBoardForm());
 			    	newCont.put("boardFormSpec", bbsBoardInfo.getBoardFormSpec());
-			    	newCont.put("icon", "../resources/images/img/img_board.gif");
+			    	newCont.put("icon", "../resources/portalxpert/images/img/img_board.gif");
 			    	
 			    	jsonConts.add(newCont);
 			    	
@@ -404,7 +404,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 			    	newCont.put("boardKind", bbsBoardInfo.getBoardKind());
 			    	newCont.put("boardForm", bbsBoardInfo.getBoardForm());
 			    	newCont.put("boardFormSpec", bbsBoardInfo.getBoardFormSpec());
-			    	newCont.put("icon", "../resources/images/img/img_board.gif");
+			    	newCont.put("icon", "../resources/portalxpert/images/img/img_board.gif");
 			    	
 			    	jsonConts.add(newCont);
 			    	

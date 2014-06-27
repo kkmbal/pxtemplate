@@ -209,7 +209,7 @@ public class OrganizationController {
 		String conts = "", userId ="";
 		if(list.size() == 0){
 			
-			conts = "[{\"id\":1,\"pId\":0,\"boardId\":\"root\",\"name\":\"미지정\",\"icon\":\"../resources/images/img/img_category.png\"}]";
+			conts = "[{\"id\":1,\"pId\":0,\"boardId\":\"root\",\"name\":\"게시판\",\"icon\":\"../resources/images/img/img_category.png\"}]";
 			
 		}else{
 			

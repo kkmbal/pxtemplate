@@ -343,7 +343,7 @@
 					 pId : nodes[0].id,
 					 name : "카테고리"+(addCount++),
 					 boardId:"",
-					 icon : "../resources/images/img/img_category.png"
+					 icon : "../portalxpert/resources/images/img/img_category.png"
 			 };			
 			zNodes.push(jsonObject);
 			treeReload();

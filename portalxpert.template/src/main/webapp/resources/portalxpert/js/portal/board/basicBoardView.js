@@ -463,6 +463,7 @@
 		$("#notiLikeCnt").html(notiJson.evalLikeCnt);//좋아요
 		$("#notiTitle").html(notiJson.notiTitle);
 		$("#notiBgnDttm").html(notiJson.notiBgnDttm);
+		$("#regDttm").html(notiJson.regDttm);
 		if(notiJson.notiEndDttm == '9999-12-31'){
 			$("#notiEndDttm").html('영구');
 		}else{

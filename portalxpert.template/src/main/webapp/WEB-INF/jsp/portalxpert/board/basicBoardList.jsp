@@ -124,7 +124,7 @@
 <table summary="" class="tbl_list">
 <caption></caption>
 <colgroup>
-<col style="width:7%" />
+<col style="width:10%" />
 <col style="width:*" />
 <col style="width:8%" />
 <col style="width:11%" />
@@ -152,7 +152,7 @@
 				<c:if test="${result.anmtYn != 'Y'}">
 				<td>${result.sortSeq}</td>
 				</c:if>
-				<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');">${fn:replace(result.notiTitle,'@!', '&nbsp;&nbsp;')}</a> 
+				<td class="tit" title="${result.notiTitleOrgn}"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" class="text_dot">${fn:replace(result.notiTitle,'@!', '&nbsp;&nbsp;')}</a> 
 					<c:if test="${result.opnPrmsYn == 'Y' && result.opnCnt > 0}">
 					<em>[의견${result.opnCnt}]</em>
 					</c:if>
