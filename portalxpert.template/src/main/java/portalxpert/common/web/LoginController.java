@@ -31,26 +31,28 @@ public class LoginController {
 
 		JSONResult jsonResult = new JSONResult();
 
-		String sid = request.getParameter("userId");
+		String userId = request.getParameter("userId");
+		String passwd = (String) request.getParameter("passwd");
 		String ssnId = (String) request.getParameter("ssnId");
 		
 		try{
 			UserInfoVO vo = null;
 			if(ssnId == null || "".equals(ssnId)) {
-				vo = userLoginService.getLoginInfo(sid);
+				vo = userLoginService.getLoginInfo(userId);
 			}else {
 				vo = userLoginService.getLoginInfoBySsnId(ssnId);
 			}
 			
-			if(null == vo || StringUtils.isEmpty(vo.getSid())){
-				logger.debug(">>>>>>>>>>login fail:"+sid);
+			if(null == vo || StringUtils.isEmpty(vo.getSid()) || StringUtils.isEmpty(vo.getPasswd()) || !vo.getPasswd().equals(passwd)){
+				logger.debug(">>>>>>>>>>login fail:"+userId);
 				jsonResult.setSuccess(false);
 			}else{
-				logger.debug(">>>>>>>>>>login success:"+sid);
+				logger.debug(">>>>>>>>>>login success:"+userId);
 				request.getSession().setAttribute("pxLoginInfo", vo);
 				request.getSession().setAttribute("userId", vo.getSid() );
 			}
 		}catch(Exception e){
+			logger.error(e.toString(), e);
 			jsonResult.setSuccess(false);
 			jsonResult.setMessage(messageSource.getMessage("common.error"));
 		}

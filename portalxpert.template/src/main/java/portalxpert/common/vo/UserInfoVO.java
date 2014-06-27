@@ -36,9 +36,16 @@ public class UserInfoVO implements Serializable{
 	private String userRepImg;
 	private String tmlnreaddttm; 
 	private String msgYN;
+	private String passwd;
 	
 	
 	
+	public String getPasswd() {
+		return passwd;
+	}
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
 	public String getUserRepImg() {
 		return userRepImg;
 	}

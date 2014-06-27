@@ -11,6 +11,7 @@
 		      ,DEPT_FNAME ORGFULLNAME
 		      ,MAIL
 		      ,USER_ID SID
+		      ,USER_PASSWORD PASSWD
 		      ,(SELECT U.FILE_PATH ||'/'|| U.FILE_NAME  
                 FROM PSN_USER_POTO_INFO U
                 WHERE A.USER_ID = U.USER_ID
@@ -30,6 +31,7 @@
 		      ,DEPT_FNAME ORGFULLNAME
 		      ,MAIL
 		      ,USER_ID SID
+		      ,USER_PASSWORD PASSWD
 		      ,(SELECT U.FILE_PATH ||'/'|| U.FILE_NAME  
                 FROM PSN_USER_POTO_INFO U
                 WHERE A.USER_ID = U.USER_ID

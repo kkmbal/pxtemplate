@@ -33,19 +33,23 @@
     
     <!-- ############################## Main ############################## -->
     <!-- main -->    
-    <definition name=".main/*" extends=".defaultLayout">        
+    <definition name=".main/*" extends=".defaultLayout">
+    	<put-attribute name="left" value="" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
     </definition>         
     
     <definition name=".main/*/*" extends=".defaultLayout">        
+    	<put-attribute name="left" value="" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
     </definition>         
     
     <definition name=".main/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="left" value="" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
     </definition>
     
     <definition name=".main/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="left" value="" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
     </definition>
     
@@ -103,19 +107,23 @@
     <!-- ############################## Admin ############################## -->
 	<!-- admin layout" -->    
     <!-- ### admin ### -->    
-    <definition name=".adm/*" extends=".defaultLayout">        
+    <definition name=".adm/*" extends=".defaultLayout">  
+    	<put-attribute name="left" value="/WEB-INF/jsp/portalxpert/adm/left.jsp" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
     </definition>         
     
     <definition name=".adm/*/*" extends=".defaultLayout">        
+    	<put-attribute name="left" value="/WEB-INF/jsp/portalxpert/adm/left.jsp" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
     </definition>         
     
     <definition name=".adm/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="left" value="/WEB-INF/jsp/portalxpert/adm/left.jsp" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
     </definition>
     
     <definition name=".adm/*/*/*/*" extends=".defaultLayout">        
+    	<put-attribute name="left" value="/WEB-INF/jsp/portalxpert/adm/left.jsp" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
     </definition>
     
