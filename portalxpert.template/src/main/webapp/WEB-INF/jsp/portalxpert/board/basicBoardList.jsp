@@ -150,7 +150,7 @@
 				<td><span class="btn_set ico_notice"><span>공지</span></span></td>
 				</c:if>
 				<c:if test="${result.anmtYn != 'Y'}">
-				<td>${result.sortSeq}</td>
+				<td>${result.oldNoticeSeq}</td>
 				</c:if>
 				<td class="tit" title="${result.notiTitleOrgn}"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" class="text_dot">${fn:replace(result.notiTitle,'@!', '&nbsp;&nbsp;')}</a> 
 					<c:if test="${result.opnPrmsYn == 'Y' && result.opnCnt > 0}">
