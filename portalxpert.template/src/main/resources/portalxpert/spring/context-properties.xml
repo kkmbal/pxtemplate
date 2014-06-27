@@ -21,32 +21,6 @@
 
 	<util:properties id="default" location="classpath:/portalxpert/config/portalxpert.properties" />
 	
-
-<!-- 	<util:properties id="prop" location="/WEB-INF/config/portalxpert.properties" /> -->
-<!-- 	<util:properties id="prop" location="classpath:config/properties/sample.properties"/> -->
-
-<!-- 
-xml
-<property id="id" value="#{config['id']}"/>
-
-java
-@Value("#{config['id']}") String id;
-
-jsp
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<spring:eval expression="@config['id']"/>
-
-
-<util:properties id="contextProperties" location="classpath:context.properties"/>
-<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-    <property name="driverClassName" value="#{contextProperties.driver}"/>
-    <property name="url" value="#{contextProperties.url}"/>
-    <property name="username" value="#{contextProperties.username}"/>
-    <property name="password" value="#{contextProperties.password}"/>
-</bean>
-
-@Value("#{contextProperties['pageSize'] ?: 10}")
- -->
 	
 	<!-- 어플리케이션에서 유일한 키값으로 키/값쌍을 가지고 오는 서비스 -->
 	<bean name="propertiesService" class="egovframework.rte.fdl.property.impl.EgovPropertyServiceImpl" destroy-method="destroy">
@@ -54,47 +28,47 @@ jsp
 		<property name="properties">
 	        <map>
 	        	<!-- paging 관련 -->
-	        	<entry key="pageUnit" value="${pageUnit:10}"/>
-	        	<entry key="pageSize" value="${pageSize:10}"/>
+	        	<entry key="pageUnit" value="${portalxpert.pageUnit:10}"/>
+	        	<entry key="pageSize" value="${portalxpert.pageSize:10}"/>
 	        	
-	        	<entry key="image.web.contextpath" value="${image.web.contextpath:/portalxpert.template}"/>
+	        	<entry key="image.web.contextpath" value="${portalxpert.image.web.contextpath:/portalxpert.template}"/>
 	        	
 	        	<!-- 조직트리 쿼리 최상단 조직코드 -->
-	        	<entry key="START_DEPT_CODE" value="${start_dept_code:0}"/>
+	        	<entry key="START_DEPT_CODE" value="${portalxpert.startDeptCode:0}"/>
 	        	<!-- 업로드 첨부용량 제한 -->
-	        	<entry key="upload.file.size" value="${upload.file.size:1000}"/>
+	        	<entry key="upload.file.size" value="${portalxpert.upload.file.size:1000}"/>
 	        	<!-- 미리보기 실경로 -->
-	        	<entry key="upload.temp.dir" value="${upload.temp.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/temp/}"/>
+	        	<entry key="upload.temp.dir" value="${portalxpert.upload.temp.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/temp/}"/>
 	        	<!-- 미리보기 웹경로 -->
-	        	<entry key="upload.temp.web" value="${upload.temp.web:/upload/temp/}"/>
+	        	<entry key="upload.temp.web" value="${portalxpert.upload.temp.web:/upload/temp/}"/>
 	        	<!-- 업로드 실경로 -->
-	        	<entry key="upload.real.dir" value="${upload.real.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/}"/>
+	        	<entry key="upload.real.dir" value="${portalxpert.upload.real.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/}"/>
 	        	<!-- 업로드 웹경로 -->
-	        	<entry key="upload.real.web" value="${upload.real.web:/upload/}"/>
+	        	<entry key="upload.real.web" value="${portalxpert.upload.real.web:/upload/}"/>
 	        	<!-- 동영상 썸네일 실경로 -->
-	        	<entry key="upload.thumbnail.dir" value="${upload.thumbnail.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/movie/}"/>
+	        	<entry key="upload.thumbnail.dir" value="${portalxpert.upload.thumbnail.dir:/home/was/tomcat-portal/webapps/portalxpert/upload/movie/}"/>
 	        	<!-- 동영상 썸네일 웹경로 -->
-	        	<entry key="upload.thumbnail.web" value="${upload.thumbnail.web:/upload/movie}"/>
+	        	<entry key="upload.thumbnail.web" value="${portalxpert.upload.thumbnail.web:/upload/movie}"/>
 	        	<!-- 동영상 썸네일기본 이미지 -->
-	        	<entry key="upload.thumbnail.file" value="${upload.thumbnail.file:movie_process.png}"/>
+	        	<entry key="upload.thumbnail.file" value="${portalxpert.upload.thumbnail.file:movie_process.png}"/>
 	        	<!-- 개인 개시물당 첨부용량 제한  (디폴트 1GB) -->
-	        	<entry key="pbs.upload.file.size" value="${pbs.upload.file.size:1000}"/>
+	        	<entry key="pbs.upload.file.size" value="${portalxpert.pbs.upload.file.size:1000}"/>
 	        	<!-- 기본 개인 이미지 -->
-	        	<entry key="person.image.default" value="${person.image.default:/upload/photo/picture_img.gif}"/>
+	        	<entry key="person.image.default" value="${portalxpert.person.image.default:/upload/photo/picture_img.gif}"/>
 	        	<!-- 소통글 이미지 갯수 MAX -->
-	        	<entry key="person.tmln.img.max" value="${person.tmln.img.max:10}"/>
+	        	<entry key="person.tmln.img.max" value="${portalxpert.person.tmln.img.max:10}"/>
 	        	<!-- 소통글 이미지  MAX SIZE -->
-	        	<entry key="person.tmln.img.size" value="${person.tmln.img.size:3}"/>
+	        	<entry key="person.tmln.img.size" value="${portalxpert.person.tmln.img.size:3}"/>
 	        	<!-- 소통글 설문 질문 갯수 MAX -->
-	        	<entry key="person.tmln.survey.max" value="${person.tmln.survey.max:20}"/>
+	        	<entry key="person.tmln.survey.max" value="${portalxpert.person.tmln.survey.max:20}"/>
 	        	<!-- 소통글 설문 보기 갯수 MAX -->
-	        	<entry key="person.tmln.survey.view" value="${person.tmln.survey.view:10}"/>
+	        	<entry key="person.tmln.survey.view" value="${portalxpert.person.tmln.survey.view:10}"/>
 	        	<!-- 소통글 첨부 갯수 MAX -->
-	        	<entry key="person.tmln.apnd.max" value="${person.tmln.apnd.max:10}"/>
+	        	<entry key="person.tmln.apnd.max" value="${portalxpert.person.tmln.apnd.max:10}"/>
 	        	<!-- 소통글 첨부  MAX SIZE -->
-	        	<entry key="person.tmln.apnd.size" value="${person.tmln.apnd.size:3}"/>
+	        	<entry key="person.tmln.apnd.size" value="${portalxpert.person.tmln.apnd.size:3}"/>
 
-	        	<entry key="session.id" value="${session.id:pxLoginInfo}"/>
+	        	<entry key="session.id" value="${portalxpert.session.id:pxLoginInfo}"/>
 	        	
 				<!-- theme -->	        	
 	        </map>
