@@ -273,7 +273,7 @@ text-decoration : none;
 overflow: hidden;
 white-space: nowrap;
 display: inline-block;
-max-width:90%;
+max-width:85%;
 }
 
 .tbl_list td.tit a {
