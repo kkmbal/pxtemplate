@@ -149,6 +149,17 @@
 	</td>
 </tr>
 <tr>
+	<th scope="row"><label for="input01">게시기간</label></th>
+	<td colspan="3">
+		<div class="sec_calender">
+			<input type="text" class="text" id="openReserveDate" name="openReserveDate" title="시작날짜를 입력합니다. 예)YYYY.MM.DD">
+		</div> ~ 
+		<div class="sec_calender">
+			<input type="text" class="text" id="openCloseDate" name="openCloseDate" title="종료날짜를 입력합니다. 예)YYYY.MM.DD">
+		</div>
+	</td>
+</tr>
+<tr>
 	<th scope="row"><label for="input04">공개 대상</label></th>
 	<td colspan="3">
 		<select name="notiOpenDiv" id="notiOpenDiv">
@@ -279,6 +290,7 @@
 		<div>의견 허용</div>
 		<div><input type="checkbox" id="opnPrmsYN" name="opnPrmsYN" class="ma_none" title="허용" checked><label for="opnPrmsYN">허용</label><input type="radio" id="opnMarkRealNameYN_Y" name="opnMarkRealNameYN" value="Y" checked ></div>
 	</div>
+	<input type="checkbox"  id="chkReserveDate" title="예약게시사용" checked>
 </div>
 
 </body>

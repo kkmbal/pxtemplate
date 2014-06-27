@@ -9,6 +9,13 @@ $(function() {
 	$("#btnAdmin").click(function() {
 		$(this).attr("href", "${WEB_HOME}/adm/sys/admFrame.do?url=adm/stat/getAdmBbsStatList.do");
 	});	
+	
+	$("#main").click(function() {
+		$(this).attr("href", "${WEB_HOME}/main/mainFrame.do");		
+	});	
+	$("#board").click(function() {
+		$(this).attr("href", "${WEB_HOME}/board100/boardFrame.do?boardId=BBS000002");		
+	});	
 });
 </script>
 
@@ -26,12 +33,12 @@ $(function() {
 		</div>
 		<div class="gnb_area">
 			<ul class="clearfix">
-        		<li><a>복지포인트관리</a></li>
+        		<li><a id="main">HOME</a></li>
         		<li><a>보험관리</a></li>
         		<li><a>복지제도안내</a></li>
         		<li><a>제휴복지서비스</a></li>
-        		<li><a>커뮤니티</a></li>
         		<li><a>생활정보</a></li>
+        		<li><a id="board">게시판</a></li>
             </ul>
 		</div>
     </div>

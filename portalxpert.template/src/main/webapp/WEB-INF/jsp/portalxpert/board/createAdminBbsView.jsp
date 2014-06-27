@@ -55,27 +55,37 @@
 	<th scope="row"><label for="input01">게시판 종류</label></th>
 	<td colspan="3">
 		<div class="radiogroup">
-			<input type="radio" id="boardForm_010" value="010" name="boardForm" checked title="라디오1을 선택합니다." />
+			<input type="radio" id="boardKind_010" value="010" name="boardKind" checked title="라디오1을 선택합니다." />
 			<label for="radio01">일반</label>
-			<input type="radio" id="boardForm_030" value="030" name="boardForm" title="라디오2을 선택합니다." />
-			<label for="radio02" class="mgrn">이미지/동영상	
+			<input type="radio" id="boardForm_030_010" value="030_010" name="boardKind" title="라디오2을 선택합니다." />
+			<label for="radio02">이미지</label>
+			<input type="radio" id="boardForm_030_020" value="030_020" name="boardKind" title="라디오2을 선택합니다." />
+			<label for="radio02">동영상</label>
+			<input type="radio" id="boardKind_110" value="110" name="boardKind" title="라디오1을 선택합니다." />
+			<label for="radio01">설문조사</label>			
+			<input type="radio" id="boardKind_120" value="120" name="boardKind" title="라디오1을 선택합니다." />
+			<label for="radio01">CMS</label>			
+		</div>
+	</td>
+</tr>
+<tr>
+	<th scope="row"><label for="input01">게시판 형태</label></th>
+	<td colspan="3">
+		<div class="radiogroup">
+			<input type="radio" id="boardForm_010" value="010" name="boardForm" checked title="라디오1을 선택합니다." />
+			<label for="radio01">리스트형</label>
+			<input type="radio" id="boardForm_020" value="020" name="boardForm" title="라디오1을 선택합니다." />
+			<label for="radio01">SNS형</label>
+			<input type="radio" id="boardForm_030" value="030" name="boardForm" title="라디오2을 선택합니다." style="display:none;"/>
+			<label for="radio02" class="mgrn"  style="display:none;">콘텐츠형
 		    <select id="boardFormSub" title="컨텐츠형 종류선택">
 		    	<option value="010">이미지형</option>
 				<option value="020">동영상형</option>
 		    </select>			
-		    </label>
-		</div>
-
-		<div class="radiogroup">
-			<input type="radio" id="boardKind_110" value="110" name="boardForm" title="라디오2을 선택합니다." />
-			<label for="radio02">설문조사</label>	
-			<input type="radio" id="boardKind_120" value="120" name="boardForm" title="라디오2을 선택합니다." />
-			<label for="radio02">제도안내</label>	
-			<input type="radio" id="boardKind_130" value="130" name="boardForm" title="라디오2을 선택합니다." />
-			<label for="radio02">QnA</label>	
+			</label>	
 			<input type="radio" id="boardForm_040" value="040" name="boardForm" title="라디오2을 선택합니다." />
-			<label for="radio02" class="mgrn">교육안내</label>	
-		</div>	
+			<label for="radio02" class="mgrn">달력형</label>	
+		</div>
 	</td>
 </tr>
 <tr>
@@ -152,7 +162,6 @@
 
 <%-- default config --%>	
 <div style="display:none;">
-<input type="radio" value="010" name="boardKind" checked> <%-- 게시판종류 --%>
 <input type="radio" id="moblLinkYn_N" name="moblLinkYn" value="N" checked> <%-- 모바일연동 --%>
 <%-- 관리자 --%>
 <ul id="managerCategories">

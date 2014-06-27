@@ -701,8 +701,8 @@
   		
   		//console.log("BbsOupOpenUseType : "+BbsOupOpenUseType);
 		
-		BbsKind = fnCustomBbsKind(BbsKind);
-		BbsType = fnCustomBbsType(BbsType);
+		//BbsKind = fnCustomBbsKind(BbsKind);
+		//BbsType = fnCustomBbsType(BbsType);
   		
 		JsonBbsBoardInfoObj.boardId= boardId ;  //게시판_아이디
 		JsonBbsBoardInfoObj.boardTp = BbsTp ;  //게시판_유형
@@ -764,7 +764,7 @@
     	fnCreateBbs(JSON.stringify(JsonBbsBoardInfoObj));
     	
    };
-   
+   /*
    var fnCustomBbsKind = function(BbsKind){
 		if ($("#boardKind_110").is(":checked")){
 			BbsKind = '110';
@@ -788,7 +788,7 @@
 		}
 	   return BbsType;
    };
-   
+   */
    //조회값 설정
    var fnSetMenuCompo = function(){
 	   
@@ -804,10 +804,30 @@
 		$("#id_boardName").val(bbsList[0].boardName);  //게시판 명
 		$('input:radio[name=boardKind]:input[value='+bbsList[0].boardKind+']').attr("checked", "true"); //게시판 종류
 		$('input:radio[name=boardForm]:input[value='+bbsList[0].boardForm+']').attr("checked", "true"); //게시판 형태
+		if(bbsList[0].boardKind != '010' || bbsList[0].boardForm == '030'){
+			$('input:radio[name=boardForm]').attr("disabled", "true");
+		}
 		if (bbsList[0].boardForm == '030'){
 			$("#boardFormSub").val(bbsList[0].boardFormSpec);
 			$('#boardFormSub').removeAttr('disabled');
-		}	   
+			
+			if(bbsList[0].boardFormSpec == '010'){
+				//$('#boardForm_030_010').trigger("click");
+				$('#boardForm_030_010').attr("checked", "true");
+				$('input:radio[name=boardKind]:input[value!=030_010]').attr("disabled", "true");
+			}else if(bbsList[0].boardFormSpec == '020'){
+				//$('#boardForm_030_020').trigger("click");
+				$('#boardForm_030_020').attr("checked", "true");
+				$('input:radio[name=boardKind]:input[value!=030_020]').attr("disabled", "true");
+				
+			}
+		}	
+		
+		if(bbsList[0].boardKind != '010'){
+			$('input:radio[name=boardKind]:input[value!='+bbsList[0].boardKind+']').attr("disabled", "true");
+		}
+		
+
 		$('input:radio[name=moblLinkYn]:input[value='+bbsList[0].moblLinkYn+']').attr("checked", "true"); //모바일 연동	   
 		$('input:radio[name=boardOperYn]:input[value='+bbsList[0].boardOperYn+']').attr("checked", "true"); //상태
 		for (var i=0; i < userList.length; i++){  
@@ -923,14 +943,13 @@
 	   
 	   //추가
 	   $("#id_boardName").attr("disabled", true);
-	   $('input:radio[name=boardForm]').attr("disabled", "true");
-	   $("#boardFormSub").attr("disabled", true);
+	   //$("#boardFormSub").attr("disabled", true);
 	   $('input:radio[name=opnWrteDiv]').attr("disabled", "true");
 	   $('input:radio[name=replyWrteDiv]').attr("disabled", "true");
 	   
-	   fnCustomSet(bbsList[0]);
+	   //fnCustomSet(bbsList[0]);
    };
-   
+   /*
    var fnCustomSet = function(bbsList){
 	   if(bbsList.boardKind == '110' || bbsList.boardKind == '120' || bbsList.boardKind == '130'){
 		   $('input:radio[name=boardForm]:input[value='+bbsList.boardKind+']').attr("checked", "true"); //게시판 종류
@@ -939,7 +958,7 @@
 		   $('input:radio[name=boardForm]:input[value='+bbsList.boardKind+']').attr("checked", "true"); //게시판 형태
 	   }
    }
-	
+	*/
    var boardKindByView = function(kind){
 	   if(kind == '020'){//페쇄일경우
 		   $("#etcSetup").hide();
@@ -972,26 +991,52 @@ $(document).ready(function () {
 	}
 	
 	//게시판 종류 설정
-	$("#boardKind_010, #boardKind_020, #boardKind_030, #boardKind_110, #boardKind_120, #boardKind_130").click(function(eventObject) {
+	$("#boardKind_010, #boardKind_020, #boardKind_030, #boardKind_110, #boardKind_120, #boardForm_030_010, #boardForm_030_020").click(function(eventObject) {
 		boardKindByView($(this).val());
 	});
 	
 	//게시판 형태 설정
-	$("#boardForm_010").click(function(eventObject) {
+	$("#boardKind_010, #boardKind_110, #boardKind_120").click(function(eventObject) {
 		$('#boardFormSub').attr('disabled', 'true');
+		$('#boardForm_030').attr('disabled', 'true');
+		$('#boardForm_010').removeAttr('disabled');
+		$('#boardForm_020').removeAttr('disabled');
+		$('#boardForm_040').removeAttr('disabled');
+		$("#boardForm_010").trigger("click");
+		$("#boardForm_010").attr("checked", "true");
+		var id = $(this).attr("id");
+		if(id == 'boardKind_110'){
+			$("#boardForm_010").trigger("click");
+			$("#boardForm_010").attr("checked", "true");
+			$('#boardForm_020').attr('disabled', 'true');
+			$('#boardForm_040').attr('disabled', 'true');
+		}else if(id == 'boardKind_120'){
+			$("#boardForm_010").trigger("click");
+			$("#boardForm_010").attr("checked", "true");
+			$('#boardForm_020').attr('disabled', 'true');
+			$('#boardForm_040').attr('disabled', 'true');
+		}
 	});
 	
-	$("#boardForm_020").click(function(eventObject) {
-		$('#boardFormSub').attr('disabled', 'true');
-	});
 	
-	$("#boardForm_030").click(function(eventObject) {			
+	//이미지,동영상
+	$("#boardForm_030_010, #boardForm_030_020").click(function(eventObject) {			
 		$('#boardFormSub').removeAttr('disabled');
-	});		
-	
-	$("#boardKind_110, #boardKind_120, #boardKind_130, #boardForm_040").click(function(eventObject) { 
-		$('#boardFormSub').attr('disabled', 'true');
+		$('#boardForm_030').removeAttr('disabled');
+		$('#boardForm_010').attr('disabled', 'true');
+		$('#boardForm_020').attr('disabled', 'true');
+		$('#boardForm_040').attr('disabled', 'true');
+		$("#boardForm_030").trigger("click");
+		$("#boardForm_030").attr("checked", "true");
+		var id = $(this).attr("id");
+		if(id == 'boardForm_030_010'){
+			$('#boardFormSub').val('010');
+		}else if(id == 'boardForm_030_020'){
+			$('#boardFormSub').val('020');
+		}
 	});	
+	
+	
 	
 	$("#id_boardName").keyup(function(e) {
 		fnBbsSearchName($("#id_boardName").val());

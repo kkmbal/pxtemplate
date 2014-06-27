@@ -37,7 +37,7 @@
 <a href="${pageContext.request.contextPath}/board100/boardFrame.do?boardId=BBS999999" target="_blank">31. 임시저장목록</a>		(O)<br>
 ----------<a href="${pageContext.request.contextPath}/">32. 쪽지목록</a>			(-)<br>
 ----------<a href="${pageContext.request.contextPath}/">33. 쪽지보기</a>			(-)<br>
-<a href="${pageContext.request.contextPath}/board100/boardFrame.do?boardId=BBS000007" target="_blank"">34. SNS게시판목록</a>	(O)<br>
+<a href="${pageContext.request.contextPath}/board100/boardFrame.do?boardId=BBS000008" target="_blank"">34. SNS게시판목록</a>	(O)<br>
 </body>
 </html>
 <%

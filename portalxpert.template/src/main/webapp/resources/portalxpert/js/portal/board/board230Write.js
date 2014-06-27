@@ -92,7 +92,7 @@ var fnSetCalendar = function()
 	$('#openCloseDate').datepicker(
 	{
 			showOn: "button",     
-			buttonImage: RES_HOME+'/images/img/btn_cal2.png',      
+			buttonImage: RES_HOME+'/images/ico_calendar_off.png',      
 			buttonImageOnly: true,
 			buttonText: "게시종료일자",
 			showButtonPanel: true,
@@ -108,19 +108,20 @@ var fnSetCalendar = function()
 	});		
 	$( "#openCloseDate" ).datepicker( "setDate", basicCloseDttm );
 	
+	/*
 	$('img.ui-datepicker-trigger').attr('style','margin-left:-7px; vertical-align:middle; cursor:pointer;');
 	
 	 $('img.ui-datepicker-trigger').click(function(){
 		$('.ui-datepicker').css('left', $(this).position().left+150);
 	}); 
-		
+	*/	
 	 
 	 $('#openReserveDate').datepicker(
 				{
 					showOn: "button",     
-					buttonImage: RES_HOME+'/images/img/btn_cal2.png',      
+					buttonImage: RES_HOME+'/images/ico_calendar_off.png',      
 					buttonImageOnly: true,
-					buttonText: "예약게시일자",
+					buttonText: "게시시작일자",
 					showButtonPanel: true,
 					onSelect:function (dateText, inst){
 						var nowdate = new Date();						 
@@ -134,12 +135,14 @@ var fnSetCalendar = function()
 				}
 	);
 	$( "#openReserveDate" ).datepicker( "setDate", new Date() );
-		
+	
+	/*
 	$('img.ui-datepicker-trigger').attr('style','margin-left:-7px; vertical-align:middle; cursor:pointer;');
 		
 	 $('img.ui-datepicker-trigger').click(function(){
 			$('.ui-datepicker').css('margin-left', $(this).position().left-400+"px");
 	});
+	*/
 	 
 	 
 	 $('#close_date').datepicker(
@@ -170,7 +173,8 @@ var fnSetCalendar = function()
 	 
 	 $( "#close_date" ).datepicker( "setDate", new Date() );
 		
-	$('img.ui-datepicker-trigger').attr('style','margin-left:-7px; vertical-align:middle; cursor:pointer;');
+	/*
+	 $('img.ui-datepicker-trigger').attr('style','margin-left:-7px; vertical-align:middle; cursor:pointer;');
 	
 	 $('img.ui-datepicker-trigger').click(function(){
 			
@@ -201,7 +205,7 @@ var fnSetCalendar = function()
 			var ifm_h = $('.ui-datepicker').height()+2;
 			var ifm_w = $('.ui-datepicker').width();
 			$('.ui-datepicker iframe').remove();
-			$('.ui-datepicker').append('<iframe  frameborder="1" ></iframe>');
+			$('.ui-datepicker').append('<iframe  frameborder="0" ></iframe>');
 			$('.ui-datepicker iframe').css({
 				'height':ifm_h,
 				'width':'200px',
@@ -211,7 +215,8 @@ var fnSetCalendar = function()
 				'z-index':'-1'
 			});
 	});
-	
+	*/
+	 $('img.ui-datepicker-trigger').attr('style','margin-left:-7px; vertical-align:middle; cursor:pointer;');
 };
 
 //공개여부 부서지정 삭제
@@ -328,8 +333,12 @@ var fnBoardNotiCreate = function()
 	
 	if ($("#chkReserveDate").is(":checked")){
 		rsrvYN = 'Y';
-		openReserveHour = $('#openReserveHour option:selected').val();
-		openReserveMin = $('#openReserveMin option:selected').val()+':00';
+		if($('#openReserveHour').length > 0){
+			openReserveHour = $('#openReserveHour option:selected').val();
+		}
+		if($('#openReserveMin').length > 0){
+			openReserveMin = $('#openReserveMin option:selected').val()+':00';
+		}
 	}
 	
 	var openReserveDate = $('#openReserveDate').val();
