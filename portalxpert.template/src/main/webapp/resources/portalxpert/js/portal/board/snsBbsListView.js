@@ -81,6 +81,7 @@
 		if ($("#replay_post-"+id).val().trim() == '')
 		{
 			$("#replay_post-"+id).val('');
+			alert('의견을 입력하세요.');
 			return;
 		}
 		
@@ -156,9 +157,9 @@
 					+'			<a href="#" class="fo_bold fo_12px">'+json.regrName+'</a><span>'+json.regDttm+'</span>'
 					+'		</dt>'
 					+'		<dd>'
-					+'			<span class="img_me">'
-					+'				<img width="48" height="48" src="'+faceImg+'" alt="닉네임" onerror="javascript:this.src=\''+defaultImg+'\'">'
-					+'			</span>'
+					//+'			<span class="img_me">'
+					//+'				<img width="48" height="48" src="'+faceImg+'" alt="닉네임" onerror="javascript:this.src=\''+defaultImg+'\'">'
+					//+'			</span>'
 					+'       <div id="sns_tmln_conts-'+json.notiId+'" >'+json.notiConts+'</div>'
 					+'		</dd>'
 					+'	</dl>'
@@ -172,8 +173,8 @@
 					+'<div id="replay-'+json.notiId+'"></div>'				
 					+'	<div class="reply_post">'
 					+'		<textarea cols="5" rows="3" id="replay_post-'+json.notiId+'" style="ime-mode:active"></textarea>'
-					+'     <a class="btn_reup" title="의견등록" onclick="javascript:fnReplyWrite(\''+json.notiId+'\')">의견등록</a> '
-					+'		<span class="img_me"><img width="48" height="48" src="'+myImg+'" alt="닉네임" onerror="javascript:this.src=\''+defaultImg+'\'"></span>'
+					+'     <a class="btn_reup" title="의견등록" onclick="javascript:fnReplyWrite(\''+json.notiId+'\')"></a> '
+					//+'		<span class="img_me"><img width="48" height="48" src="'+myImg+'" alt="닉네임" onerror="javascript:this.src=\''+defaultImg+'\'"></span>'
 					+'	</div>'
 					+'</div>'
 					+'</div>'					
@@ -186,8 +187,8 @@
 		if (userId == json.userId || isAdmin == 'Y')
 		{
 			$("#sns_readp-"+json.notiId).append(
-				'<a class="ico_sdel" style="cursor:pointer;" id="sdel-'+json.notiId+'" onclick="javascript:fnDelTmln(\''+json.notiId+'\')" >삭제</a>'
-				+'<a class="ico_smod" style="cursor:pointer;" id="smod-'+json.notiId+'" onclick="javascript:fnModTmln(\''+json.notiId+'\')" >수정</a>'	
+				'<a class="ico_sdel" title="삭제" style="cursor:pointer;" id="sdel-'+json.notiId+'" onclick="javascript:fnDelTmln(\''+json.notiId+'\')" ></a>'
+				+'<a class="ico_smod" title="수정" style="cursor:pointer;" id="smod-'+json.notiId+'" onclick="javascript:fnModTmln(\''+json.notiId+'\')" ></a>'	
 			);
 		}
 				
@@ -236,7 +237,8 @@
 					+'	<li id="replay_li-'+json.notiOpnSeq+'" class="clearfix">'
 					+'		<dl>'
 					+'			<dt><a href="#" class="fo_bold fo_12px">'+json.userName+'</a><span>'+json.updDttm+'</span></dt>'
-					+'			<dd><span class="img_me"><img src="'+faceImg+'" width="48" height="48" alt="닉네임" onerror="javascript:this.src=\''+defaultImg+'\'"></span><div id="replay_conts-'+json.notiOpnSeq+'" >'+json.opnConts+'</div></dd>'
+					//+'			<dd><span class="img_me"><img src="'+faceImg+'" width="48" height="48" alt="닉네임" onerror="javascript:this.src=\''+defaultImg+'\'"></span><div id="replay_conts-'+json.notiOpnSeq+'" >'+json.opnConts+'</div></dd>'
+					+'			<dd><div id="replay_conts-'+json.notiOpnSeq+'" >'+json.opnConts+'</div></dd>'
 					+'		</dl>'
 					//+'		<a style="cursor:pointer;" onclick="javascript:fnDelOpn(\''+json.notiOpnSeq+'\')" class="ico_sredel" title="댓글삭제"></a>'
 					//+'		<a style="cursor:pointer;" onclick="javascript:fnOpnUpdate(\''+json.notiOpnSeq+'\')" class="ico_sremod" title="댓글수정"></a>'
@@ -248,8 +250,8 @@
 		if (userId == json.userId || isAdmin == 'Y')
 		{
 			$("#replay_li-"+json.notiOpnSeq).append(
-			 	'<a style="cursor:pointer;" onclick="javascript:fnDelOpn(\''+json.notiOpnSeq+'\')" class="ico_sredel" title="의견삭제">의견삭제</a>'
-			 	+'<a style="cursor:pointer;" onclick="javascript:fnOpnUpdate(\''+json.notiOpnSeq+'\')" class="ico_sremod" title="의견수정">의견수정</a>'
+			 	'<a style="cursor:pointer;" onclick="javascript:fnDelOpn(\''+json.notiOpnSeq+'\')" class="ico_sredel" title="의견삭제"></a>'
+			 	+'<a style="cursor:pointer;" onclick="javascript:fnOpnUpdate(\''+json.notiOpnSeq+'\')" class="ico_sremod" title="의견수정"></a>'
 			 );
 		}
 	};
@@ -329,9 +331,9 @@
 					+'<div style="display:none;" align="center" id="dialog-'+json.fileSeq+'" title="'+json.apndFileOrgn+'"><img src="'+apndFile+'"></div>'
 			);
 			
-			$("#sns_imgs-"+json.notiId).find('img').load(function(){
-				fnImgEffect2(json.notiId);
-			});
+			//$("#sns_imgs-"+json.notiId).find('img').load(function(){
+			//	fnImgEffect2(json.notiId);
+			//});
 			
 		}
 		else if (json.apndFileTp == '050')  //첨부파일
@@ -403,6 +405,7 @@
 			return;
 		}
 		var conts = $("#replay_conts-"+id).html();
+		
 		if (conts.indexOf("<br>") > 0)
 		{
 			conts = replaceAll($("#replay_conts-"+id).html(),"<br>","\n");
@@ -412,9 +415,9 @@
 		
 		//if ($("#replay_conts-"+id+" text").length > 0 ) return;
 		$("#replay_conts-"+id).empty();
-		$("#replay_conts-"+id).append('<textarea id="replay_textarea-'+id+'" cols="5" rows="3"></textarea><a style="cursor:pointer;" onclick="javascript:fnOpnUpdateCancel(\''+id+'\',\''+conts2+'\')" class="mccl">수정취소</a><a class="btn_reup" title="의견등록" onclick="javascript:fnOpnBtnClick(\''+id+'\')"></a>');
+		$("#replay_conts-"+id).append('<textarea id="replay_textarea-'+id+'" cols="5" rows="3">'+conts+'</textarea><a style="cursor:pointer;" onclick="javascript:fnOpnUpdateCancel(\''+id+'\',\''+conts2+'\')" class="mccl">수정취소</a><a class="btn_reup" title="의견등록" onclick="javascript:fnOpnBtnClick(\''+id+'\')"></a>');
 		$("#replay_conts-"+id).addClass('te_right text_mody');
-		$("#replay_textarea-"+id).val(conts);
+		//$("#replay_textarea-"+id).val(conts);
 		
 	};
 	
@@ -445,9 +448,9 @@
 	//의견 수정 결과 
 	var fnTlmnOpnUpdateView = function(data)
 	{
-		$("#replay_conts-"+data.tmlnOpnSeq).removeClass('te_right');
-		$("#replay_conts-"+data.tmlnOpnSeq).empty();
-		$("#replay_conts-"+data.tmlnOpnSeq).append(data.opnConts);
+		$("#replay_conts-"+data.notiOpnSeq).removeClass('te_right');
+		$("#replay_conts-"+data.notiOpnSeq).empty();
+		$("#replay_conts-"+data.notiOpnSeq).append(data.opnConts);
 	}
 	
 	//의견수정 취소
@@ -805,21 +808,32 @@
 		}
 		
 		var id = Math.floor(Math.random() * (9999998))+2;
-		$("#apndFileform").append(
-				'<li id="apnd-'+id+'" class="ma_bot5">' 
-				+'<span class="inp_file2" >'  
-				+'<input type="text" title="파일을 넣으세요" style="height:17px;">'
-				+'<a href="#" class="btn_file">'
-				+'<input type="file" class="file2" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'">'								                            	
-				+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_grid2"><span class="btn_text">삭제</span></a>'
-				+'</a>'
-				+'</span>'
-				+'</li>'
-		);
+//		$("#apndFileform").append(
+//				'<li id="apnd-'+id+'" class="ma_bot5">' 
+//				+'<span class="inp_file2" >'  
+//				+'<input type="text" title="파일을 넣으세요" style="height:17px;">'
+//				+'<a href="#" class="btn_file">'
+//				+'<input type="file" class="file2" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'">'								                            	
+//				+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_grid2"><span class="btn_text">삭제</span></a>'
+//				+'</a>'
+//				+'</span>'
+//				+'</li>'
+//		);
+		$("#apndFileform ul").append(
+						'<li id="apnd-'+id+'" class="ma_bot5"> '
+						+'<input type="text" class="text" style="width:476px" title="파일을 넣으세요" readonly> ' 
+						+'<a href="#" class="btn_set bt_style1 mv_file_a"><input type="file" class="mv_file" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"> '
+						+'<span>파일</span></a> '
+						+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_set bt_style1"><span>삭제</span></a> '
+						+'</li>'
+				);		
+		
 		
 		$("#file-"+id).bind("change",function(e) {
 			$(this).parent().prev().val($(this).val());
 		});
+		
+		parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
 		
 	}
 	
@@ -1253,7 +1267,7 @@
 			return;
 		}
 		
-		$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'" width="100" height="100" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($('.sns_imgadd'));
+		$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'" width="124" height="124" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($('.sns_imgadd'));
 		var jsonObject = {
 				  'notiId' : ''
 				, 'apndFileSeq' : '1'
@@ -1283,9 +1297,9 @@
 		
 		jsonAppendImgList.push(jsonObject);
 		
-		$("#img-"+json.saveFileId).load(function(){
-			fnImgEffect(json.saveFileId);
-		});
+		//$("#img-"+json.saveFileId).load(function(){
+		//	fnImgEffect(json.saveFileId);
+		//});
 		
 	};	
 	
@@ -1456,7 +1470,9 @@
 			}
 		});
 		
-
+		$("input[name^=upFile]").change(function(e) {
+			$(this).parent().prev().val($(this).val());
+		});
 		
 		
 		$(document).resize(function(){

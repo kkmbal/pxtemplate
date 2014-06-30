@@ -44,8 +44,17 @@ public class AdmBoardNotiDelInfoVO extends SearchConditionVO {
 	
 	private String delRegDttm;
 	private String apndFileCnt;
+	private String seq;
 	
 	
+	
+	
+	public String getSeq() {
+		return seq;
+	}
+	public void setSeq(String seq) {
+		this.seq = seq;
+	}
 	public String getApndFileCnt() {
 		return apndFileCnt;
 	}

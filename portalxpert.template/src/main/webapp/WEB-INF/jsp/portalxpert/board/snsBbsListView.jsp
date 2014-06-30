@@ -48,12 +48,7 @@ var jsonAppendImgList = [];  //이미지 리스트
 var jsonAppendFileList = [];  //첨부 리스트
 //var jsonAppendFileList = [];//설문 보기 리스트
 
-/*
-var imgUploadMax = ${imgUploadMax};
-var imgUploadSize = ${imgUploadSize};
-var apndUploadMax = ${apndUploadMax};
-var apndUploadSize = ${apndUploadSize};
-*/
+
 
 var lastSortSeq = "${lastSortSeq}";		
 var userId = "${userId}";
@@ -113,6 +108,127 @@ var boardExpl = '${boardExpl}';
 </head>
 
 <body>
+
+	<div id="my_list" class="sns_list">
+					<div class="tab_7">
+						 
+						<div class="tab_post">
+						 
+							 <div class="mysns_btn">
+								
+								<a id="pageRefresh" class="ico_ref" title="새로고침">새로고침</a>
+							</div>
+
+								<!--sns_area-->
+								<div class="sns_area">
+									<textarea id="id_sns_write" class="sns_write" style="width:97%; ime-mode:active;" cols="3" rows="5">글을 작성해주세요</textarea>
+									<div id="div_img_view" style="display:none">
+										<form id="fileform" name="fileform" enctype="multipart/form-data" method="post">
+										<div class="sns_form">
+											<div class="sns_tbl_form clearfix">
+												<ul id="id_add_image">
+													<li class="sns_imgadd">
+														<a href="#" class="fo_byte">이미지추가
+															<input type="file" class="file2" size="1" title="이미지추가" id="apndFile" name="upFile">
+														</a>
+													</li>						
+												</ul>					
+											</div>
+											<a class="ico_sredel" style="cursor:pointer;" onclick="javascript:fnAppendMenuRemove();" title="첨부없이 일반쓰기로 돌아갑니다."></a>
+										</div>
+										</form>
+									</div>
+									<div id="div_file_view"  style="display:none">
+										<div class="sns_form">
+											<span class="fileadd">파일 첨부</span>
+											<div class="sns_fileadd">									
+									    <form id="apndFileform" name="apndFileform" enctype="multipart/form-data" method="post">
+										<ul>
+										    <li class="ma_bot5">
+										    <input type="text" class="text" style="width:476px" readonly>
+										    <a href="#" class="btn_set bt_style1 mv_file_a">
+										    <input type="file" size="1" id="apndFileAddw" name="upFile" class="mv_file"><span>파일</span></a>
+										    <a style="cursor:pointer;" class="btn_set bt_style1" onclick="fnAddFileList();"><span>추가</span></a>
+										    </li>	
+										</ul>
+										</form>
+											</div>
+											<a class="ico_sredel" style="cursor:pointer;" onclick="javascript:fnAppendMenuRemove();" title="첨부없이 일반쓰기로 돌아갑니다."><!--삭제--></a>
+										</div>										
+									</div>									
+									
+									
+									<%--
+									<div id="div_file_view" style="display:none">										
+										<div class="sns_form">
+											<span class="fileadd">파일 첨부</span>
+											<div class="sns_fileadd"> 
+												<ul>
+													<form id="apndFileform" name="apndFileform" enctype="multipart/form-data" method="post">													
+														<li class="ma_bot5">
+															<span class="inp_file2" >  
+								                            <input type="text" title="파일을 넣으세요" style="height:17px;">
+								                            <a href="#" class="btn_file">								                            	
+								                            	<input type="file" class="file2" size="1" title="찾기" id="apndFileAddw" name="upFile">								                            	
+								                                <a style="cursor:pointer;" onclick="javascript:fnAddFileList()" class="btn_grid2"><span class="btn_text">추가</span></a>
+								                            </a>
+								                        	</span>
+								                        	
+								                    	</li>
+          							                </form>								                    
+												</ul>
+											</div>
+											<a class="ico_sredel" style="cursor:pointer;" onclick="javascript:fnAppendMenuRemove();" title="첨부없이 일반쓰기로 돌아갑니다."><!--삭제--></a>
+										</div>
+										 										 
+									</div>
+									 --%>
+									
+									<!--btn_area-->
+									<div class="btn_area">
+										<div class="fl_left ma_lef5">
+											<!-- <span class="nick">닉네임</span> -->
+											<a id="btn_img" href="#" class="btn_img" title="이미지"></a>
+											<a id="btn_file" href="#" class="btn_file3" title="파일"></a>
+										</div>
+										<div class="fl_right">
+												<span class="fl_left" style="vertical-align: middle;margin-top: 5px;margin-right: 5px;">공개설정</span>
+												<select name="notiOpenDiv" id="notiOpenDiv" class="fl_left">
+													<option value="010" selected>전체공개
+													<option value="020">운영자만공개
+													<option value="030">부서지정
+												</select>
+											<a href="#" class="btn_reg" id="btn_context_write"></a>
+										</div>
+									</div>    
+									<!--//btn_area-->
+									<span class="sch_tl"><!--top,left--></span>
+									<span class="sch_tr"><!--top,right--></span>
+									<span class="sch_br"><!--bottom,right--></span>
+									<span class="sch_bl"><!--bottom,left--></span>
+								</div>
+								
+								<div id="div_sns_read">
+								</div>
+																		
+									
+			 
+					</div>
+					</div>
+					<div class="title_add"  id="ajax_indicator" style="display:none;" >
+						<span><img src="${RES_HOME}/images/img/loadinfo.gif"/>로딩중입니다. 잠시만 기다려주세요...</span>
+					</div>
+				</div>	
+				
+				<div id="show_dialog"></div>
+				
+				<iframe id="dummy" name="dummy" width=0 height=0></iframe>
+
+</body>
+</html>				
+			 
+			 
+<%--
 
 	<div id="my_list" class="my_list">
 					<div class="tab_7">
@@ -206,6 +322,5 @@ var boardExpl = '${boardExpl}';
 				<div id="show_dialog"></div>
 				
 				<iframe id="dummy" name="dummy" width=0 height=0></iframe>
-</body>
-</html>				
-			 
+
+ --%>			 

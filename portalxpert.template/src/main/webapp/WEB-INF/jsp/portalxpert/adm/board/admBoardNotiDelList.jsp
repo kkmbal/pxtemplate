@@ -98,7 +98,7 @@
 	<c:when test="${paginationInfo.totalRecordCount > 0}">
 		<c:forEach var="result" items="${notiDelList}" varStatus="status">	
 			<tr>
-				<td>${paginationInfo.totalRecordCount - status.count}</td>
+				<td>${result.seq}</td>
 				<td class="tit">${result.boardName}</td>
 				<td class="tit"><a href="javascript:fnGetBoardView('${result.boardId}','${result.notiId}');" class="text_dot">${result.notiTitle}</a></td>
 				<td>${result.apndFileCnt}</td>

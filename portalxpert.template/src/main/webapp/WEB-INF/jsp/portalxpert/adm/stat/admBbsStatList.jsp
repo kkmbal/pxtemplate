@@ -155,7 +155,7 @@
 				<td>${result.boardId}</td>
 				<td class="tit" title="${result.boardName}"><a href="javascript:fnGetBoardView('${result.boardId}');" class="text_dot">${result.boardName}</a> 
 				</td>
-				<td>${result.boardKind}</td>
+				<td>${result.boardKind}(${result.boardForm})</td>
 				<td>${result.regrName}</td>
 				<td>${result.totCnt}</td>
 				<td>${result.readCnt}</td>

@@ -55,17 +55,17 @@
 	        	<entry key="pbs.upload.file.size" value="${portalxpert.pbs.upload.file.size:1000}"/>
 	        	<!-- 기본 개인 이미지 -->
 	        	<entry key="person.image.default" value="${portalxpert.person.image.default:/upload/photo/picture_img.gif}"/>
-	        	<!-- 소통글 이미지 갯수 MAX -->
-	        	<entry key="person.tmln.img.max" value="${portalxpert.person.tmln.img.max:10}"/>
-	        	<!-- 소통글 이미지  MAX SIZE -->
+	        	<!-- SNS 이미지 갯수 MAX -->
+	        	<entry key="person.tmln.img.max" value="${portalxpert.person.tmln.img.max:4}"/>
+	        	<!-- SNS 이미지  MAX SIZE -->
 	        	<entry key="person.tmln.img.size" value="${portalxpert.person.tmln.img.size:3}"/>
-	        	<!-- 소통글 설문 질문 갯수 MAX -->
+	        	<!-- SNS 설문 질문 갯수 MAX -->
 	        	<entry key="person.tmln.survey.max" value="${portalxpert.person.tmln.survey.max:20}"/>
-	        	<!-- 소통글 설문 보기 갯수 MAX -->
+	        	<!-- SNS 설문 보기 갯수 MAX -->
 	        	<entry key="person.tmln.survey.view" value="${portalxpert.person.tmln.survey.view:10}"/>
-	        	<!-- 소통글 첨부 갯수 MAX -->
+	        	<!-- SNS 첨부 갯수 MAX -->
 	        	<entry key="person.tmln.apnd.max" value="${portalxpert.person.tmln.apnd.max:10}"/>
-	        	<!-- 소통글 첨부  MAX SIZE -->
+	        	<!-- SNS 첨부  MAX SIZE -->
 	        	<entry key="person.tmln.apnd.size" value="${portalxpert.person.tmln.apnd.size:3}"/>
 
 	        	<entry key="session.id" value="${portalxpert.session.id:pxLoginInfo}"/>
