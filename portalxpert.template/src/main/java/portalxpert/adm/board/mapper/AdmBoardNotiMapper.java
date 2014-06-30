@@ -1,11 +1,14 @@
 package portalxpert.adm.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO;
 import portalxpert.adm.board.vo.AdmBoardNotiInfoVO;
 import portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO;
 import portalxpert.adm.board.vo.AdmBoardPbsNotiInfoVO;
+import portalxpert.board.board100.vo.BbsNotiApndFileVO;
+import portalxpert.board.board100.vo.BbsNotiOpnVO;
 import portalxpert.board.board100.vo.PbsUserBoardInfoVO;
 import portalxpert.board.board100.vo.PbsUserBoardPartInfoVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
@@ -220,5 +223,50 @@ public interface AdmBoardNotiMapper  {
 	 * @exception Exception
 	 */
 	public AdmBoardNotiInfoVO getAdminBbsBoardInfo(AdmBoardNotiInfoVO admBoardNotiDelInfoVO);
+	
+    /**
+	 * BBS_게시물_첨부_파일
+	 * @param BbsNotiApndFileVO - 조회할 정보가 담긴 VO
+	 * @return BBS_게시물_첨부_파일 정보 
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiApndFileVO> getBbsNotiApndFileListForView(BbsNotiApndFileVO vo)throws Exception ;
+    
+    /**
+	 * BBS 게시물 의견
+	 * @param BbsNotiOpnVO - 조회할 정보가 담긴 VO
+	 * @return BBS 게시물 의견
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiOpnVO> getBbsNotiOpnList1ForView(BbsNotiOpnVO vo)throws Exception ;
+    
+    /**
+	 * BBS 게시물 의견의 의견
+	 * @param BbsNotiOpnVO - 조회할 정보가 담긴 VO
+	 * @return BBS 게시물 의견
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiOpnVO> getBbsNotiOpnList2ForView(BbsNotiOpnVO vo)throws Exception ;   
+    
+    /**
+     * BBS_게시물_첨부_파일
+     * @param BbsNotiApndFileVO - 조회할 정보가 담긴 VO
+     * @return BBS_게시물_첨부_파일 정보 
+     * @exception Exception
+     * @auther crossent 
+     */
+    public BbsNotiApndFileVO getBbsNotiApndFile(BbsNotiApndFileVO vo)throws Exception ;    
+    
+    public int deleteBbsNotiAddItemForBoard (Map<String, Object> map) throws Exception ;
+    public int deleteBbsNotiApndFileForBoard (Map<String, Object> map) throws Exception ;
+    public int deleteBbsNotiEvalInfoForBoard (Map<String, Object> map) throws Exception ;
+    public int deleteBbsNotiOpnForBoard (Map<String, Object> map) throws Exception ;
+    public int deleteBbsNotiSurveyForBoard (Map<String, Object> map) throws Exception ;
+    public int deleteBbsNotiSurveyAnswForBoard (Map<String, Object> map) throws Exception ;
+    public int deleteBbsNotiSurveyExmplForBoard (Map<String, Object> map) throws Exception ;
+    public int deleteBbsNotiUserMapForBoard (Map<String, Object> map) throws Exception ;
     
 }

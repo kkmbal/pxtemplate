@@ -604,7 +604,7 @@
 		var apFileCnt = 0;
 		for (var i=0; i < notiFileJson.length ; i++){
 			if(notiFileJson[i].apndFileTp == '050'){
-				$('#notiFileDl:last').append('<dd><span class="fname"><a class="bl_file2 fo_blue" href="javascript:fnDoFileDown(\''+ notiFileJson[i].apndFileSeq +'\',\''+ notiFileJson[i].apndFileName +'\',\''+ notiFileJson[i].apndFileOrgn +'\')">'+notiFileJson[i].apndFileOrgn+'</a></span>'
+				$('#notiFileDl:last').append('<dd><a class="bl_file2 fo_blue" href="javascript:fnDoFileDown(\''+ notiFileJson[i].apndFileSeq +'\',\''+ notiFileJson[i].apndFileName +'\',\''+ notiFileJson[i].apndFileOrgn +'\')">'+notiFileJson[i].apndFileOrgn+'</a>'
 						+'<span class="fo_gray">('+getFileSzForKb(notiFileJson[i].apndFileSz)+"kb"+')</span></dd>');	
 				
 				apFileCnt++;	
@@ -1319,7 +1319,9 @@
 	
 	//공용 게시글 삭제 이력
 	var fnInsertBbsNotiDelInfo = function(notiId){
-		
+		if (!confirm('삭제하시겠습니까?')) {
+			return;
+		}		
 		var jsonNotiDelObject = {
 				'notiId' : '',
 				'boardId' : '',

@@ -81,7 +81,6 @@
 <col style="width:8%" />
 <col style="width:11%" />
 <col style="width:11%" />
-<col style="width:11%" />
 </colgroup>
 <thead>
 <tr>
@@ -91,8 +90,7 @@
 	<th scope="col"><span>파일</span></th>
 	<th scope="col"><span>작성자</span></th>
 	<th scope="col"><span>등록일</span></th>
-	<th scope="col"><span>삭제일</span></th>
-	<th scope="col" class="e"><span>복원일</span></th>
+	<th scope="col" class="e"><span>삭제일</span></th>
 </tr>
 </thead>
 <tbody>
@@ -101,13 +99,12 @@
 		<c:forEach var="result" items="${notiDelList}" varStatus="status">	
 			<tr>
 				<td>${paginationInfo.totalRecordCount - status.count}</td>
-				<td class="tit"><a href="javascript:fnGetBoardView('${result.boardId}','${result.notiId}');">${result.boardName}</a></td>
-				<td class="tit">${result.notiTitle}</td>
+				<td class="tit">${result.boardName}</td>
+				<td class="tit"><a href="javascript:fnGetBoardView('${result.boardId}','${result.notiId}');" class="text_dot">${result.notiTitle}</a></td>
 				<td>${result.apndFileCnt}</td>
 				<td>${result.notiRegrName}</td>
 				<td>${result.regDttm}</td>
 				<td>${result.delRegDttm}</td>
-				<td></td>
 			</tr>
 		</c:forEach>
 	</c:when>

@@ -708,7 +708,7 @@
 			    ,P.REG_DTTM
 			    ,P.DEL_REG_DTTM
 			    ,P.DEL_RSN
-			    ,(SELECT COUNT(NOTI_ID) FROM BBS_NOTI_APND_FILE WHERE DEL_YN = 'N' AND NOTI_ID = P.NOTI_ID AND APND_FILE_TP = '050') APND_FILE_CNT
+			    ,(SELECT COUNT(NOTI_ID) FROM BBS_NOTI_APND_FILE WHERE DEL_YN = 'Y' AND NOTI_ID = P.NOTI_ID AND APND_FILE_TP = '050') APND_FILE_CNT
 			FROM (
 			     SELECT  ROWNUM RNUM, S.*
 				   FROM (
@@ -824,7 +824,126 @@
 			, UPD_DTTM = SYSDATE
 		WHERE NOTI_ID = #{notiId}
 	</update>
-		
+
+	<!-- BBS_게시물_추가_항목 게시글 삭제  복원 -->
+	<update id="deleteBbsNotiAddItemForBoard" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_ADD_ITEM   
+		SET UPDR_ID = #{updrId}
+		, UPD_DTTM = SYSDATE
+		, UPDR_NAME = #{updrName}
+		, DEL_YN='N' 
+		WHERE DEL_YN='Y'	
+		AND NOTI_ID IN
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+           #{item}
+       	</foreach>
+	</update>
+	
+	<!-- BBS_게시물_첨부_파일 게시글 삭제 복원  -->
+	<update id="deleteBbsNotiApndFileForBoard" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_APND_FILE 
+		SET UPDR_ID = #{updrId}
+		, UPD_DTTM = SYSDATE
+		, UPDR_NAME = #{updrName}
+		, DEL_YN='N' 
+		WHERE DEL_YN='Y'	
+		AND NOTI_ID IN
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+           #{item}
+       	</foreach>	
+	</update>
+
+	<!-- BBS_게시물_평가_정보 게시글 삭제 복원  -->
+	<update id="deleteBbsNotiEvalInfoForBoard" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_EVAL_INFO 
+		SET UPDR_ID = #{updrId}
+		, UPD_DTTM = SYSDATE
+		, UPDR_NAME = #{updrName}
+		, DEL_YN='N' 
+		WHERE DEL_YN='Y'	
+		AND NOTI_ID IN
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+           #{item}
+       	</foreach>	
+	</update>
+	
+	<!-- BBS_게시물_의견 게시글 삭제 복원  -->
+	<update id="deleteBbsNotiOpnForBoard" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_OPN 
+		SET UPDR_ID = #{updrId}
+		, UPD_DTTM = SYSDATE
+		, UPDR_NAME = #{updrName}
+		, DEL_YN='N' 
+		WHERE DEL_YN='Y'	
+		AND NOTI_ID IN
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+           #{item}
+       	</foreach>	
+	</update>		
+	
+	<!-- BBS_게시물_설문 게시글 삭제 복원  -->
+	<update id="deleteBbsNotiSurveyForBoard" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_SURVEY 
+		SET UPDR_ID = #{updrId}
+		, UPD_DTTM = SYSDATE
+		, UPDR_NAME = #{updrName}
+		, DEL_YN='N' 
+		WHERE DEL_YN='Y'	
+		AND NOTI_ID IN
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+           #{item}
+       	</foreach>	
+	</update>
+
+	<!-- BBS_게시물_설문_답변 게시글 삭제 복원  -->
+	<update id="deleteBbsNotiSurveyAnswForBoard" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_SURVEY_ANSW 
+		SET UPDR_ID = #{updrId}
+		, UPD_DTTM = SYSDATE
+		, UPDR_NAME = #{updrName}
+		, DEL_YN='N' 
+		WHERE DEL_YN='Y'	
+		AND SURVEY_NO IN  (
+        	SELECT SURVEY_NO
+        	FROM BBS_NOTI_SURVEY
+			WHERE NOTI_ID IN
+			<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+           		#{item}
+       		</foreach>	
+       		)
+	</update>
+	
+	<!-- BBS_게시물_설문_예문 게시글 삭제 복원  -->
+	<update id="deleteBbsNotiSurveyExmplForBoard" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_SURVEY_EXMPL 
+		SET UPDR_ID = #{updrId}
+		, UPD_DTTM = SYSDATE
+		, UPDR_NAME = #{updrName}
+		, DEL_YN='N' 
+		WHERE DEL_YN='Y'	
+		AND SURVEY_NO IN  (
+        	SELECT SURVEY_NO
+        	FROM BBS_NOTI_SURVEY
+			WHERE NOTI_ID IN
+			<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+           		#{item}
+       		</foreach>	
+       		)
+	</update>
+	
+	<!-- BBS_게시물_사용자_매핑 게시글 삭제 복원  -->
+	<update id="deleteBbsNotiUserMapForBoard" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		UPDATE BBS_NOTI_USER_MAP 
+		SET UPDR_ID = #{updrId}
+		, UPD_DTTM = SYSDATE
+		, UPDR_NAME = #{updrName}
+		, DEL_YN='N' 
+		WHERE DEL_YN='Y'	
+		AND NOTI_ID IN
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+           #{item}
+       	</foreach>			
+	</update>		
 		
 	<!-- BBS_게시판_정보 조회 -->
 	<select id="getAdminBbsBoardInfo" resultType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO" parameterType="portalxpert.adm.board.vo.AdmBoardNotiInfoVO">
@@ -1001,4 +1120,122 @@
 		   AND X.BOARD_ID = Z.BOARD_ID
         
 	</select>		
+	
+	<!-- BBS_게시물_첨부_파일 -->
+	<select id="getBbsNotiApndFileListForView" parameterType="portalxpert.board.board100.vo.BbsNotiApndFileVO"
+						resultType="portalxpert.board.board100.vo.BbsNotiApndFileVO">
+		SELECT NOTI_ID
+		, APND_FILE_SEQ
+		, APND_FILE_TP
+		, APND_FILE_SZ
+		, APND_FILE_ORGN
+		, APND_FILE_NAME
+		, APND_FILE_PATH
+		, APND_FILE_PRVW_PATH
+		, APND_FILE_PRVW_NAME
+		, SOURCE_CODE_INPUT
+		, ADMIN_RCMD_YN
+		, ADMIN_RCMD_DTTM
+		, READ_CNT
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, MVP_KEY
+		FROM BBS_NOTI_APND_FILE
+		WHERE NOTI_ID = #{notiId}
+		AND DEL_YN='Y' 
+		
+	</select>
+
+	<!-- BBS 게시물 의견 정보 -->
+	<select id="getBbsNotiOpnList1ForView" parameterType="portalxpert.board.board100.vo.BbsNotiOpnVO"
+										resultType="portalxpert.board.board100.vo.BbsNotiOpnVO">
+		SELECT NOTI_ID
+		, NOTI_OPN_SEQ
+		, UP_OPN_SEQ
+		, OPN_CONTS
+		, USER_ID
+		, USER_NAME
+		, USER_NICK
+		, DEPT_CODE
+		, DEPT_NAME
+		, MAKE_IP
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, TO_CHAR( REG_DTTM,'yyyy-mm-dd hh24:mi') REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, (SELECT COUNT(1) FROM BBS_NOTI_OPN WHERE UP_OPN_SEQ IS NOT NULL AND DEL_YN='N' AND NOTI_ID = O.NOTI_ID AND  UP_OPN_SEQ= O.NOTI_OPN_SEQ ) CH_NOTI_OPN_CNT
+		FROM BBS_NOTI_OPN O
+		WHERE NOTI_ID = #{notiId} 
+		AND DEL_YN='Y'
+		AND UP_OPN_SEQ IS NULL
+		ORDER BY REG_DTTM DESC, NOTI_OPN_SEQ DESC
+	</select>
+	
+	<!-- BBS 게시물 의견의 의견 정보 -->
+	<select id="getBbsNotiOpnList2ForView" parameterType="portalxpert.board.board100.vo.BbsNotiOpnVO"
+										resultType="portalxpert.board.board100.vo.BbsNotiOpnVO">
+		SELECT NOTI_ID
+		,(ROW_NUMBER() OVER(PARTITION BY UP_OPN_SEQ  ORDER BY REG_DTTM DESC )) RANK
+		, NOTI_OPN_SEQ
+		, UP_OPN_SEQ
+		, OPN_CONTS
+		, USER_ID
+		, USER_NAME
+		, USER_NICK
+		, DEPT_CODE
+		, DEPT_NAME
+		, MAKE_IP
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, TO_CHAR( REG_DTTM,'yyyy-mm-dd hh24:mi') REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		FROM BBS_NOTI_OPN O
+		WHERE NOTI_ID = #{notiId} 
+		AND UP_OPN_SEQ IS NOT NULL
+		AND DEL_YN='Y'		
+		ORDER BY REG_DTTM DESC, UP_OPN_SEQ DESC
+	</select>
+
+	<!-- BBS_게시물_첨부_파일 -->
+	<select id="getBbsNotiApndFile" parameterType="portalxpert.board.board100.vo.BbsNotiApndFileVO"
+						resultType="portalxpert.board.board100.vo.BbsNotiApndFileVO">
+		SELECT NOTI_ID
+		, APND_FILE_SEQ
+		, APND_FILE_TP
+		, APND_FILE_SZ
+		, APND_FILE_ORGN
+		, APND_FILE_NAME
+		, APND_FILE_PATH
+		, APND_FILE_PRVW_PATH
+		, APND_FILE_PRVW_NAME
+		, SOURCE_CODE_INPUT
+		, ADMIN_RCMD_YN
+		, ADMIN_RCMD_DTTM
+		, READ_CNT
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, MVP_KEY
+		FROM BBS_NOTI_APND_FILE
+		WHERE NOTI_ID = #{notiId}
+		AND DEL_YN=#{delYn} 
+		AND APND_FILE_SEQ = #{apndFileSeq}
+		
+	</select>
+		
 </mapper>

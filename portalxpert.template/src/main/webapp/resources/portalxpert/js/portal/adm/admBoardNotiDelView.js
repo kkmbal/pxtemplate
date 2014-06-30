@@ -241,7 +241,8 @@
 	};
 	
 	var fnSetFrameHeight = function(addHeight){
-		
+		parent.document.getElementById("admFrame").height = "700px";
+		parent.document.getElementById("admFrame").height = Number($(document).height()+ addHeight )+"px";
 		//parent.document.getElementById("bbsFrame").height = "700px";
 		//parent.document.getElementById("bbsFrame").height = (document.body.scrollHeight+ addHeight)+"px";
 		
@@ -597,7 +598,7 @@
 		var apFileCnt = 0;
 		for (var i=0; i < notiFileJson.length ; i++){
 			if(notiFileJson[i].apndFileTp == '050'){
-				$('#notiFileDl:last').append('<dd><a class="bl_file2 fo_blue" href="javascript:fnDoFileDown(\''+ notiFileJson[i].apndFilePath +'\',\''+ notiFileJson[i].apndFileName +'\',\''+ notiFileJson[i].apndFileOrgn +'\')">'+notiFileJson[i].apndFileOrgn+'</a>'
+				$('#notiFileDl:last').append('<dd><a class="bl_file2 fo_blue" href="javascript:fnDoFileDown(\''+ notiFileJson[i].apndFileSeq +'\',\''+ notiFileJson[i].apndFileName +'\',\''+ notiFileJson[i].apndFileOrgn +'\')">'+notiFileJson[i].apndFileOrgn+'</a>'
 						+'<span class="fo_gray">('+getFileSzForKb(notiFileJson[i].apndFileSz)+"kb"+')</span></dd>');	
 				
 				apFileCnt++;	
@@ -643,7 +644,7 @@
  				fnGetImgNotiPrevNextInfo();
  			}
 		}
-		//fnSetFrameHeight(0);
+		fnSetFrameHeight(250);
 		
 	};
 	
@@ -893,22 +894,26 @@
 	//의견1 조회 (본문의 의견)
 	var fnSetDataNotiOpn1 = function(notiOpn1){
 		var pName = '', ip = '',appendBtn='';
-		$("#replyUl li").remove();
+		$("#replyUl div").remove();
 		for (var i=0; i < notiOpn1.length ; i++){
-
+			
 			if(opnMakrRealnameYn == 'Y'){//실명공개 
 				ip = '';
-				pName = '<a href="javascript:doLikeUserInfoPop(\''+notiOpn1[i].userId+'\')">'+notiOpn1[i].userName+'</a>';
+				pName = '<a href="javascript:doLikeUserInfoPop(\''+notiOpn1[i].userId+'\')" class="tit">'+notiOpn1[i].userName+'</a>';
 			}else{//비실명 
 				ip = fnGetIpUtil(notiOpn1[i].makeIp);
 				pName = '의견'+Number(notiOpn1.length - i);
 			}
 			if(userId == notiOpn1[i].userId){//권한이 있는 사용자 혹은 작성자 
-				appendBtn = '<a id="btnModify_'+notiOpn1[i].notiOpnSeq+'" modiMode="N" class="fo_green" href="#" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">수정</a>'
-						   +'<a id="btnDel_'+notiOpn1[i].notiOpnSeq+'"    class="fo_green" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">삭제</a>';
+				appendBtn = '<div class="innerbox link"><a id="btnModify_'+notiOpn1[i].notiOpnSeq+'" modiMode="N" class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">수정</a></div>'
+				+'<div class="innerbox link"><a id="btnDel_'+notiOpn1[i].notiOpnSeq+'"    class="link" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">삭제</a></div>';
 			}else{
 				appendBtn = '';
 			}
+			
+			appendBtn = '';
+			
+			/*
 			$("#replyUl").append(
 					'<li>'
 					+'<div class="clearfix" id="noti_opn_'+notiOpn1[i].notiOpnSeq+'">'	
@@ -917,22 +922,44 @@
 					+'			<a class="fo_green" href="#" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'" id="btnOpn_'+notiOpn1[i].notiOpnSeq+'">의견</a>'+appendBtn+'</dt>'
 					+'		<dd id="opnDd_'+notiOpn1[i].notiOpnSeq+'">'+notiOpn1[i].opnConts+'</dd>'
 					+'	</dl>'
-				 	+'	<div id="opnTxtSapn_'+notiOpn1[i].notiOpnSeq+'" style="display:none;" class="clearfix reply_post2 reply_mod">'
-				 	+'  	<textarea id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" cols="5" rows="3">'+notiOpn1[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
-				 	+'		<a class="btn_reup" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" title="의견등록">의견등록</a>'
-				 	+'	</div>'
+					+'	<div id="opnTxtSapn_'+notiOpn1[i].notiOpnSeq+'" style="display:none;" class="clearfix reply_post2 reply_mod">'
+					+'  	<textarea id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" cols="5" rows="3">'+notiOpn1[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
+					+'		<a class="btn_reup" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" title="의견등록">의견등록</a>'
+					+'	</div>'
 					+'</div>'
 					+'</li>');
+					*/
+			
+			$("#replyUl").append(
+			'<div id="noti_opn_'+notiOpn1[i].notiOpnSeq+'">' 
+			+'<div>' 
+			+'	<div class="innerbox tit"  notiOpnSeq = '+notiOpn1[i].notiOpnSeq+' chNotiOpnCnt ='+notiOpn1[i].chNotiOpnCnt+' id="noti_opn_name_'+notiOpn1[i].notiOpnSeq+'">'+pName+'</div>'
+			+'	<div class="innerbox">'+notiOpn1[i].regDttm+'</div>'
+			+'	<div class="innerbox link"><a class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'" id="btnOpn_'+notiOpn1[i].notiOpnSeq+'"></a></div>'
+			+   appendBtn
+			+'</div>' 
+			+'<div>' 
+			+'	<div class="answer fl" id="opnDd_'+notiOpn1[i].notiOpnSeq+'">'+notiOpn1[i].opnConts+'</div>' 
+			+'</div>' 	
+			+'	<div id="opnTxtSapn_'+notiOpn1[i].notiOpnSeq+'" style="display:none;" class="reply_post2 reply_mod">'
+			+'  	<textarea class="textbox" id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" cols="5" rows="5" style="width:620px;margin-bottom:10px;">'+notiOpn1[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
+			+'		<a class="btn_set bt_style1" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" title="의견등록"><span>의견등록</span></a>'
+			+'	</div>'			
+			+'</div>' );			
+			
+			
+			
 			
 			$("#btnOpn_"+notiOpn1[i].notiOpnSeq).click(function(){//의견
 				
 				$(".reply_post2").remove();
-				$("#noti_opn_"+$(this).attr("notiOpnSeq")).parent("li").children(":last").after(
-					'<div class="clearfix reply_post2">'
-					+'	<span class="bl_reply" title="답글"><!--답글--></span>'
-					+'	<textarea cols="5" rows="3" id="re_reply_'+$(this).attr("notiOpnSeq")+'"></textarea>'
-					+'  <a class="btn_reup" href="javascript:fnInsertBbsNotiOpnForView('+$(this).attr("notiOpnSeq")+')" title="의견등록">의견등록</a>'
-					+'</div>');
+				//$("#noti_opn_"+$(this).attr("notiOpnSeq")).parent("li").children(":last").after(
+				$("#noti_opn_"+$(this).attr("notiOpnSeq")).append(
+						'<div class="clearfix reply_post2">'
+						+'	<span class="bl_reply" title="답글"><!--답글--></span>'
+						+'	<textarea class="textbox" cols="5" rows="3" id="re_reply_'+$(this).attr("notiOpnSeq")+'" style="width:570px;margin-left:50px;margin-bottom:10px;"></textarea>'
+						+'  <a class="btn_set bt_style1" href="javascript:fnInsertBbsNotiOpnForView('+$(this).attr("notiOpnSeq")+')" title="의견등록"><span>의견등록</span></a>'
+						+'</div>');
 			});
 			
 			$("#btnModify_"+notiOpn1[i].notiOpnSeq).click(function(){//수정
@@ -963,19 +990,22 @@
 			
 			if(opnMakrRealnameYn == 'Y'){//실명공개 
 				ip = '';
-				pName = '<a href="javascript:doLikeUserInfoPop(\''+notiOpn2[i].userId+'\')">'+notiOpn2[i].userName+'</a>';
+				pName = '<a href="javascript:doLikeUserInfoPop(\''+notiOpn2[i].userId+'\')" class="tit">'+notiOpn2[i].userName+'</a>';
 			}else{//비실명 
 				ip = fnGetIpUtil(notiOpn2[i].makeIp);
 				pName = $("#noti_opn_name_"+notiOpn2[i].upOpnSeq).html()+"-"+ notiOpn2[i].rank;
 			}
 			
 			if(userId == notiOpn2[i].userId){
-				appendBtn = '<a id="btnModify_'+notiOpn2[i].notiOpnSeq+'" modiMode="N" class="fo_green" href="#" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">수정</a>'
-						   +'<a id="btnDel_'+notiOpn2[i].notiOpnSeq+'"    class="fo_green" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">삭제</a>';
+				appendBtn = '<div class="innerbox link"><a id="btnModify_'+notiOpn2[i].notiOpnSeq+'" modiMode="N" class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">수정</a></div>'
+						   +'<div class="innerbox link"><a id="btnDel_'+notiOpn2[i].notiOpnSeq+'"    class="link" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">삭제</a></div>';
 			}else{
 				appendBtn = '';
 			}
 			
+			appendBtn = '';
+			
+			/*
 			$("#noti_opn_"+notiOpn2[i].upOpnSeq).parent("li").children(":first").after(
 			'<div class="clearfix" id="noti_opn_'+notiOpn2[i].notiOpnSeq+'">'	
 			+'	<span class="bl_reply" title="답글"><!--답글--></span>'
@@ -984,10 +1014,27 @@
 			+'		<dd id="opnDd_'+notiOpn2[i].notiOpnSeq+'">'+notiOpn2[i].opnConts+'</dd>'
 			+'	</dl>'
 			+'	<div id="opnTxtSapn_'+notiOpn2[i].notiOpnSeq+'" style="display:none;" class="clearfix reply_post2 reply_mod">'
-		 	+'  	<textarea id="opnTxt_'+notiOpn2[i].notiOpnSeq+'" cols="5" rows="3">'+notiOpn2[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
+		 	+'  	<textarea class="textbox" id="opnTxt_'+notiOpn2[i].notiOpnSeq+'" cols="5" rows="3">'+notiOpn2[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
 		 	+'		<a class="btn_reup" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" title="의견등록">의견등록</a>'
 		 	+'	</div>'
 			+'</div>');
+			*/
+			
+			$("#noti_opn_"+notiOpn2[i].upOpnSeq).children(":last").after(
+					'<div class="rereply" id="noti_opn_'+notiOpn2[i].notiOpnSeq+'">' 
+					+'<div>' 
+					+'	<div class="innerbox tit">'+pName+'</div>'
+					+'	<div class="innerbox">'+notiOpn2[i].regDttm+'</div>'
+					+   appendBtn
+					+'</div>' 
+					+'<div>' 
+					+'	<div class="answer fl" id="opnDd_'+notiOpn2[i].notiOpnSeq+'">'+notiOpn2[i].opnConts+'</div>' 
+					+'</div>' 	
+					+'	<div id="opnTxtSapn_'+notiOpn2[i].notiOpnSeq+'" style="display:none;" class="reply_post2 reply_mod">'
+					+'  	<textarea class="textbox" id="opnTxt_'+notiOpn2[i].notiOpnSeq+'" cols="5" rows="5" style="width:520px;margin-bottom:10px;">'+notiOpn2[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
+					+'		<a class="btn_set bt_style1" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" title="의견등록"><span>의견등록</span></a>'
+					+'	</div>'			
+					+'</div>' );			
 			
 			$("#btnModify_"+notiOpn2[i].notiOpnSeq).click(function(){//수정
 				
@@ -1132,21 +1179,22 @@
 	};
 	
 	//파일다운로드
-	var fnDoFileDown = function(filepath, filename, fileorg)
+	var fnDoFileDown = function(fileseq, filename, fileorg)
 	{	
 		
 		 var jsonObject = {
-			'apndFileOrgn' : fileorg,
-			'apndFileName' : filename,
-			'apndFilePath' : '${imgRealDir}/'+filepath
+					'apndFileOrgn' : fileorg,
+					'apndFileName' : filename,
+					'apndFileSeq' :  fileseq,
+					'notiId' : notiId
 		 };
 		 
-		 var url =WEB_HOME+"/board100/bbsFileDownload.do?data="+encodeURI(JSON.stringify(jsonObject),"UTF-8");
+		 var url =WEB_HOME+"/adm/board/bbsFileDownload.do?data="+encodeURI(JSON.stringify(jsonObject),"UTF-8");
 		 document.dummy.location.href = url;
 	};
 	
 	var fnGetBoardView = function(id, temp){
-		parent.document.getElementById("bbsFrame").height = "700px";
+		parent.document.getElementById("admFrame").height = "700px";
 		location.href = WEB_HOME+"/board210/getBasicBoardView.do?notiId="+id+"&boardId="+boardId+"&pageIndex="+pageIndex+"&pageUnit=10&pnum="+temp;
 	};
 	
@@ -1567,6 +1615,9 @@
 		});
 		
 		$(".btn_back").click(function(){
+			if (!confirm('복원하시겠습니까?')) {
+				return;
+			}			
 			PortalCommon.getJson({
 				url: WEB_HOME+"/adm/board/updateAdmBoardNotiDelRollBack.do?format=json",
 			    data: $("form[name=frmMain]").serialize(),

@@ -122,13 +122,13 @@ if('${btnViewYn}' == "X"){
 		<div class="toptable" >
 			<div class="fl">
 				<div class="innerbox tit">번호</div>
-				<div class="innerbox" id="notiNum">345,789</div>
+				<div class="innerbox" id="notiNum"></div>
 				<div class="innerbox"> &nbsp;</div>
 				<div class="innerbox tit">조회수</div>
-				<div class="innerbox" id="notiReadCnt">346,000</div>
+				<div class="innerbox" id="notiReadCnt"></div>
 				<div class="innerbox"> &nbsp;</div>
 				<div class="innerbox tit">의견</div>
-				<div class="innerbox" id="opnCnt">35</div>		
+				<div class="innerbox" id="opnCnt"></div>		
 			</div>
 			<div class="fr">
 <!-- 				<div class="innerbox">전체공개</div> -->

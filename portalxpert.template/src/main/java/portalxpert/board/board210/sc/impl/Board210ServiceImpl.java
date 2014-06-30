@@ -596,7 +596,7 @@ public class Board210ServiceImpl extends AbstractServiceImpl implements  Board21
 				BbsNotiInfoVO bbsNotiVO = new BbsNotiInfoVO();
 				bbsNotiVO.setNotiId(vo.getNotiId());
 				List<BbsNotiInfoVO> bbsBasicNotiInfoList = board210Mapper.getBbsNotiInfoView(bbsNotiVO);
-				if(bbsBasicNotiInfoList != null){
+				if(bbsBasicNotiInfoList != null && bbsBasicNotiInfoList.size() > 0){
 					bbsNotiVO = bbsBasicNotiInfoList.get(0);
 					
 					if(!info.getId().equals(bbsNotiVO.getUserId())){

@@ -10,6 +10,8 @@ import portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO;
 import portalxpert.adm.board.vo.AdmBoardNotiInfoVO;
 import portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO;
 import portalxpert.adm.board.vo.AdmBoardPbsNotiInfoVO;
+import portalxpert.board.board100.vo.BbsNotiApndFileVO;
+import portalxpert.board.board100.vo.BbsNotiOpnVO;
 import portalxpert.board.board100.vo.PbsUserBoardInfoVO;
 import portalxpert.board.board100.vo.PbsUserBoardPartInfoVO;
 
@@ -192,5 +194,41 @@ public interface AdmBoardNotiService {
 	 * @exception Exception
 	 */
 	public AdmBoardNotiInfoVO getAdminBbsBoardInfo(AdmBoardNotiInfoVO admBoardNotiDelInfoVO) throws Exception;
+	
+    /**
+	 * BBS_게시물_첨부_파일
+	 * @param BbsNotiApndFileVO - 조회할 정보가 담긴 VO
+	 * @return BBS_게시물_첨부_파일 정보 
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiApndFileVO> getBbsNotiApndFileListForView(String data)throws Exception ;
+    
+    /**
+	 * BBS 게시물 의견
+	 * @param BbsNotiOpnVO - 조회할 정보가 담긴 VO
+	 * @return BBS 게시물 의견
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiOpnVO> getBbsNotiOpnList1ForView(String data)throws Exception ;
+    
+    /**
+	 * BBS 게시물 의견
+	 * @param BbsNotiOpnVO - 조회할 정보가 담긴 VO
+	 * @return BBS 게시물 의견
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiOpnVO> getBbsNotiOpnList2ForView(String data)throws Exception ;    
+    
+    /**
+     * BBS_게시물_첨부_파일
+     * @param 조회할 정보가 담긴 String
+     * @return BBS_게시물_첨부_파일 정보 
+     * @exception Exception
+     * @auther crossent 
+     */
+    public BbsNotiApndFileVO getBbsNotiApndFile(BbsNotiApndFileVO vo)throws Exception;    
 }
  

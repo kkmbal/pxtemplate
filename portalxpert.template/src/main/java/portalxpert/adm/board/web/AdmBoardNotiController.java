@@ -1,10 +1,13 @@
 package portalxpert.adm.board.web;
 
+import java.io.File;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
@@ -24,6 +27,7 @@ import portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO;
 import portalxpert.adm.board.vo.AdmBoardNotiInfoVO;
 import portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO;
 import portalxpert.adm.board.vo.AdmBoardPbsNotiInfoVO;
+import portalxpert.board.board100.vo.BbsNotiApndFileVO;
 import portalxpert.board.board100.vo.BbsNotiInfoVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyExmplVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyVO;
@@ -34,6 +38,7 @@ import portalxpert.board.board230.sc.Board230Service;
 import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
 import portalxpert.common.utils.CommUtil;
+import portalxpert.common.utils.FileDownloadUtil;
 import portalxpert.common.utils.JSONUtils;
 import portalxpert.common.vo.JSONResult;
 import portalxpert.common.vo.UserInfoVO;
@@ -606,14 +611,14 @@ public class AdmBoardNotiController {
 				notiInfo.add(new AdmBoardNotiInfoVO());
 			}
 					
-			List notiFile = board210Service.getBbsNotiApndFileListForView(data);
+			List notiFile = admBoardNotiService.getBbsNotiApndFileListForView(data);
 			
 			String boardId = (String)bbsObject.get("boardId");
 			
 			//List<BbsNotiInfoVO> notiPrevNextInfo = board210Service.getBbsPrevNextNotiInfoForView(data, auth,prev_pnum,next_pnum,notiReadmanAsgnYn, info.getId() );
 
-			List notiOpn1 = board210Service.getBbsNotiOpnList1ForView(data);
-			List notiOpn2 = board210Service.getBbsNotiOpnList2ForView(data);
+			List notiOpn1 = admBoardNotiService.getBbsNotiOpnList1ForView(data);
+			List notiOpn2 = admBoardNotiService.getBbsNotiOpnList2ForView(data);
 			
 			
 			AdmBoardNotiInfoVO vo = (AdmBoardNotiInfoVO) notiInfo.get(0);
@@ -661,4 +666,56 @@ public class AdmBoardNotiController {
         return modelMap;
     }    
     
+    
+    /**
+     * 첨부파일 다운로드
+     * @param data, modelMap, request, response, session
+     * @return void
+     * @exception Exception
+     * @auther crossent 
+     */
+    @RequestMapping(value = "/bbsFileDownload", method = RequestMethod.GET)
+    public void bbsFileDownload(
+    		@RequestParam(value="data" ,required = true) String data,
+ 			ModelMap 		modelMap,
+ 			HttpServletRequest request, 
+ 			HttpServletResponse response,
+ 			HttpSession session
+ 			
+    ) throws Exception {
+
+   	 	//data = URLDecoder.decode(new String(data.getBytes("ISO-8859-1")), "UTF-8");
+    	data = URLDecoder.decode(data, "UTF-8");
+
+   	 	JSONObject jsonObject = JSONObject.fromObject(data);
+   	 	String notiId = (String)jsonObject.get("notiId");
+		String apndFileOrgn = (String)jsonObject.get("apndFileOrgn");
+		String apndFileName = (String)jsonObject.get("apndFileName");
+		int apndFileSeq =  jsonObject.getInt("apndFileSeq");
+		//String apndFilePath = (String)jsonObject.get("apndFilePath");
+		logger.debug("apndFileOrgn : "+apndFileOrgn);
+		logger.debug("apndFileName : "+apndFileName);
+		logger.debug("apndFilePath : "+apndFileSeq);
+    		
+ 		try{	
+ 			BbsNotiApndFileVO vo = new BbsNotiApndFileVO();
+ 			vo.setNotiId(notiId);
+ 			vo.setApndFileSeq(apndFileSeq);
+ 			vo.setDelYn("Y");
+ 			BbsNotiApndFileVO bbsNotiApndFile = admBoardNotiService.getBbsNotiApndFile(vo);
+ 			String apndFilePath = PortalxpertConfigUtils.getString("upload.real.dir") + bbsNotiApndFile.getApndFilePath();
+ 			
+ 			File file = new File(apndFilePath+'/'+apndFileName.replace("..\\","").replace("../",""));
+ 			
+	        if(!CommUtil.uploadExtensionsCheck(file.getName(), null)){
+	        	throw new Exception("Invalid upload file");
+	        }
+ 			
+			FileDownloadUtil.download(request, response, file, apndFileOrgn);
+			
+ 		}catch(Exception e){
+ 			logger.error(e.toString(), e);
+ 		}
+
+ 	}
 }

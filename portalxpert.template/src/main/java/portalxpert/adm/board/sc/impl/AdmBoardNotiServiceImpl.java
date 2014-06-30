@@ -1,9 +1,14 @@
 package portalxpert.adm.board.sc.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +23,8 @@ import portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO;
 import portalxpert.adm.board.vo.AdmBoardNotiInfoVO;
 import portalxpert.adm.board.vo.AdmBoardNotiPopInfoVO;
 import portalxpert.adm.board.vo.AdmBoardPbsNotiInfoVO;
+import portalxpert.board.board100.vo.BbsNotiApndFileVO;
+import portalxpert.board.board100.vo.BbsNotiOpnVO;
 import portalxpert.board.board100.vo.PbsUserBoardInfoVO;
 import portalxpert.board.board100.vo.PbsUserBoardPartInfoVO;
 import portalxpert.common.config.Constant;
@@ -343,8 +350,24 @@ public class AdmBoardNotiServiceImpl extends AbstractServiceImpl implements AdmB
 	    	admBoardNotiDelInfoVO.setUpdrId((String)usrInfo.getId());
 	    	admBoardNotiDelInfoVO.setUpdrName((String)usrInfo.getName());
 	    	
+			List list = new ArrayList();
+			Map<String, Object> map = new HashMap<String, Object>();
+			list.add(admBoardNotiDelInfoVO.getNotiId());//notiId
+			
+			map.put("list", list);
+			map.put("updrId", usrInfo.getId());
+			map.put("updrName", usrInfo.getName());
+	    	
 	    	admBoardNotiMapper.deleteAdmBoardNotiDelRollBack1(admBoardNotiDelInfoVO);
 	    	admBoardNotiMapper.updateAdmBoardNotiDelRollBack2(admBoardNotiDelInfoVO);
+	    	admBoardNotiMapper.deleteBbsNotiAddItemForBoard(map);
+	    	admBoardNotiMapper.deleteBbsNotiApndFileForBoard(map);
+	    	admBoardNotiMapper.deleteBbsNotiEvalInfoForBoard(map);
+	    	admBoardNotiMapper.deleteBbsNotiOpnForBoard(map);
+			admBoardNotiMapper.deleteBbsNotiUserMapForBoard(map);
+			admBoardNotiMapper.deleteBbsNotiSurveyForBoard(map);
+			admBoardNotiMapper.deleteBbsNotiSurveyAnswForBoard(map);
+			admBoardNotiMapper.deleteBbsNotiSurveyExmplForBoard(map);	
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
@@ -377,4 +400,79 @@ public class AdmBoardNotiServiceImpl extends AbstractServiceImpl implements AdmB
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
 	}
+	
+    /**
+	 * BBS_게시물_첨부_파일
+	 * @param 조회할 정보가 담긴 String
+	 * @return BBS_게시물_첨부_파일 정보 
+	 * @exception Exception
+	 * @auther crossent 
+	 */	
+    public List<BbsNotiApndFileVO> getBbsNotiApndFileListForView(String json)throws Exception{
+    	try{
+	    	JSONObject bbsObject = JSONObject.fromObject(json);
+	    	BbsNotiApndFileVO vo = new BbsNotiApndFileVO();
+			String notiId = (String)bbsObject.get("notiId");		
+			vo.setNotiId(notiId);
+			
+	    	return admBoardNotiMapper.getBbsNotiApndFileListForView(vo);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+    }
+    
+    /**
+	 * BBS 게시물 의견
+	 * @param 조회할 정보가 담긴 String
+	 * @return BBS 게시물 의견
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiOpnVO> getBbsNotiOpnList1ForView(String json)throws Exception {
+    	try{
+	    	JSONObject bbsObject = JSONObject.fromObject(json);
+	    	BbsNotiOpnVO vo = new BbsNotiOpnVO();
+			String notiId = (String)bbsObject.get("notiId");		
+			vo.setNotiId(notiId);
+	    	
+	    	return admBoardNotiMapper.getBbsNotiOpnList1ForView(vo);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+    }
+    
+    /**
+	 * BBS 게시물 의견
+	 * @param 조회할 정보가 담긴 String
+	 * @return BBS 게시물 의견
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiOpnVO> getBbsNotiOpnList2ForView(String json)throws Exception {
+    	try{
+	    	JSONObject bbsObject = JSONObject.fromObject(json);
+	    	BbsNotiOpnVO vo = new BbsNotiOpnVO();
+			String notiId = (String)bbsObject.get("notiId");		
+			vo.setNotiId(notiId);
+	    	
+	    	return admBoardNotiMapper.getBbsNotiOpnList2ForView(vo);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+    }    
+    
+    /**
+     * BBS_게시물_첨부_파일
+     * @param 조회할 정보가 담긴 String
+     * @return BBS_게시물_첨부_파일 정보 
+     * @exception Exception
+     * @auther crossent 
+     */
+    public BbsNotiApndFileVO getBbsNotiApndFile(BbsNotiApndFileVO vo)throws Exception{
+    	try{
+    		return admBoardNotiMapper.getBbsNotiApndFile(vo);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+    }
 }

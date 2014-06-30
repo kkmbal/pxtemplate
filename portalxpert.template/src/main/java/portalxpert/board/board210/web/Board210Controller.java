@@ -844,7 +844,7 @@ public class Board210Controller {
     @RequestMapping(value="/getNotiDetailInfoView")
     public ModelMap getNotiDetailInfoView(
  			@RequestParam(value="data" ,required = true) String data,
- 			@RequestParam(value="pnum" ,required = false) int pnum,
+ 			@RequestParam(value="pnum" ,required = false) String pnum,
 			ModelMap 		modelMap,
 			HttpSession session) throws Exception {  
                 	
@@ -852,10 +852,11 @@ public class Board210Controller {
 //    	EAMCrypt ec = new EAMCrypt();
 		try{	
 			int prev_pnum = 0, next_pnum = 0;
-	    	if(pnum > 0){
-	    		prev_pnum = pnum -1;
-	    		next_pnum = pnum +1;
-	    	}
+			if(!CommUtil.isEmpty(pnum)){
+	    	//if(pnum > 0){
+	    		prev_pnum = Integer.parseInt(pnum) -1;
+	    		next_pnum = Integer.parseInt(pnum) +1;
+			}
 			
 			JSONObject bbsObject = JSONObject.fromObject(data);
 			logger.debug("boardId : "+(String)bbsObject.get("boardId"));
