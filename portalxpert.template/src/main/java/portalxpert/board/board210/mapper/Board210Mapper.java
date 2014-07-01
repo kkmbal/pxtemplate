@@ -40,6 +40,15 @@ public interface Board210Mapper  {
 	 */
     public int getBbsNotiInfoListTotCnt(BoardSearchVO vo)throws Exception;
     
+	/**
+	 * 게시물 목록 조회
+	 * @param BoardSearchVO - 조회할 정보가 담긴 Map
+	 * @return 게시물 정보 
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiInfoVO> getBbsNotiInfoList(BoardSearchVO vo)throws Exception ;
+    
     /**
      * 나의 작성글 여부 확인 
      * @param Map<String, Object> map

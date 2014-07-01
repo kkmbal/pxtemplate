@@ -175,7 +175,7 @@
 </select>
 <%-- 게시판기간 --%>
 <select id="notiTermDivSelect">
-	<option value="12">1년</option>
+	<option value="0">영구</option>
 </select>
 <%-- 게시자지정 --%>
 <input name="publDiv" value="010" id ="publDiv_ALL" type="radio"checked>

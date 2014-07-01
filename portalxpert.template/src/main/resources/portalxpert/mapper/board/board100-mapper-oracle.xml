@@ -637,6 +637,7 @@
 		WHERE 1=1
 		AND ROWNUM = 1
 		<if test="boardId != null and boardId != ''"> AND BOARD_ID = #{boardId} </if>
+		<if test="boardKind != null and boardKind != ''"> AND BOARD_KIND = #{boardKind} </if>
 	</select>
 
 	<!-- BBS_게시판_사용자_매핑 조회 -->

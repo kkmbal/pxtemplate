@@ -82,6 +82,20 @@ public class Board210ServiceImpl extends AbstractServiceImpl implements  Board21
 		}
     }
     
+	/**
+	 * 게시물 목록 조회 
+	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO
+	 * @return 게시물 정보 
+	 * @exception Exception
+	 */    
+    public List<BbsNotiInfoVO> getBbsNotiInfoList(BoardSearchVO vo) throws Exception {
+    	try{
+    		return board210Mapper.getBbsNotiInfoList(vo);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+    }    
+    
     /**
      * 공용 게시판 게시글 삭제
      * @param json

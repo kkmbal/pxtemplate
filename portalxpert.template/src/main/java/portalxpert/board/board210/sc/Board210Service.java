@@ -34,6 +34,14 @@ public interface Board210Service {
     int getBbsNotiInfoListTotCnt(BoardSearchVO vo) throws Exception;
     
 	/**
+	 * 게시물 목록 조회
+	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO
+	 * @return 게시물 정보
+	 * @exception Exception
+	 */
+    List<BbsNotiInfoVO> getBbsNotiInfoList(BoardSearchVO vo) throws Exception;
+    
+	/**
 	 * 공용 게시판 게시글 삭제
 	 * @param searchVO - 조회할 정보가 담긴 VO
 	 * @return 성공

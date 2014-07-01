@@ -17,7 +17,7 @@
 	var fnDrawScrollBar = function(){
 			
 			$("#commonBoardListDiv").css({
-				'height' : '310'
+				'height' : '100%'
 				, 'visibility' : 'true'
 				, 'overflow-x': 'auto'
 				, 'overflow-y': 'auto'
@@ -59,12 +59,12 @@
 		
 		 if(treeId == 'commonBoardtreeObj'){
 			   if(treeNode.boardId != ""){				   
-				   doBoardList(treeId, treeNode.boardId, treeNode.boardKind, treeNode.boardForm, treeNode.boardFormSpec);
+				   doBoardList(treeId, treeNode.boardId, treeNode.boardKind, treeNode.boardForm, treeNode.boardFormSpec, treeNode.id);
 			   }
 		    }
 	};
 	
-	var doBoardList = function(treeId, bid, boardKind, boardForm, boardFormSpec){
+	var doBoardList = function(treeId, bid, boardKind, boardForm, boardFormSpec, nid){
 
 		if(treeId == 'commonBoardtreeObj'){   //공용  
 			if (bid == 'BBS999999'){  //임시게시판이면
@@ -76,6 +76,8 @@
 					parent.document.getElementById("bbsFrame").src='${WEB_HOME}/board212/getBbsVideoBoardNotiList.do?boardId='+bid;
 				}else if (boardForm == '020'){  //SNS형 게시판
 					parent.document.getElementById("bbsFrame").src='${WEB_HOME}/board220/getBbsSnsBoardList.do?boardId='+bid;
+				}else if (boardKind == '120' && nid.toString().indexOf('S') == 0){  //CMS형 게시판 게시물 링크
+					parent.document.getElementById("bbsFrame").src='${WEB_HOME}/board210/getBasicKindBoardView.do?notiId='+nid+'&boardId='+bid+'&boardKind=120';
 				}else{
 					parent.document.getElementById("bbsFrame").src='${WEB_HOME}/board210/getBoardInfoList.do?boardId='+bid;
 				}
@@ -96,16 +98,8 @@
 	//tree 
 	var treeReload = function(){
 		//공통게시판
-			boardType = "common";
 			var isMatch = false;
 			commonBoardtreeObj = $.fn.zTree.getZTreeObj("commonBoardtreeObj");
-				/*
-			    var renameNode = commonBoardtreeObj.getNodeByParam("name","미지정",null);
-			    if(renameNode){
-			    	renameNode.name = "게시판";
-			    	commonBoardtreeObj.editName(renameNode);
-			    }
-			    */
 
  				for(var i =0 ; i < commonZNodes.length ;i++){
 					if(commonZNodes[i].boardId == boardId){
@@ -121,7 +115,35 @@
 					expandNodes(commonBoardtreeObj.getNodes());
 				}
 				
+				//CMS 게시물 메뉴로 반영.
+				fnSetCmsBoard();			
 			
+	};
+	
+	var fnSetCmsBoard = function(){
+		var nodes = commonBoardtreeObj.getNodesByParam("boardKind","120",null); //CMS
+		for(var j=0;j<nodes.length;j++){
+			PortalCommon.getJson({
+				url: "${WEB_HOME}/board210/getBoardNotiList.do?format=json&boardId="+nodes[j].boardId,
+				success :function(data){
+					if(data.jsonResult.success ===true){
+
+						var json = $.parseJSON(data.notiList);
+						var newNodes = [];
+						for(var k = 0;k<json.length;k++){
+							newNodes.push( {id:json[k].notiId, name:json[k].notiTitle, boardId:json[k].boardId, boardKind:"120", notiId:json[k].notiId, icon:"${RES_HOME}/images/img/img_board.gif"} );
+						}
+				
+						for(var m=0;m<nodes.length;m++){
+							if(nodes[m].boardId == newNodes[0].boardId){
+								commonBoardtreeObj.addNodes(nodes[m], newNodes);
+								break;
+							}
+						}
+					}
+				}
+		 	});
+		}			
 	};
 	
 	var readNodes=[];
@@ -220,12 +242,6 @@
 		});
 	};
 	
-	var fnDoAllOpen = function(gubun){
-		if(gubun == 'cm'){
-			
-			fnGetCommonBoardInfoListForZTree();
-		}
-	};
 	
 	
 	
@@ -256,9 +272,8 @@
 		}
 	}
 	
-	var fnGetZtreeHeight = function(mode, boardType){
+	var fnGetZtreeHeight = function(mode){
 		var rtnCnt = 1, height = 0;
-		if(boardType == "common"){
 			
 			if(mode =="open"){
 				height = cmObjHeight;
@@ -273,7 +288,6 @@
 			}
 			
 			
-		}
 		return height;
 	};
 	
@@ -444,7 +458,6 @@
 	
 	
 	
-	var boardType = "common";
 	$(document).ready(function(){
 		fnGetCommonBoardInfoListForZTree();
 		
