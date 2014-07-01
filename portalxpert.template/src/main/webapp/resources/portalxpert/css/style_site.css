@@ -655,6 +655,7 @@ vertical-align: middle;
 position: relative;
 clear: both;
 margin-bottom: 0;
+margin-left:10px;
 }
 
 .tab_7 {
@@ -1113,5 +1114,44 @@ margin-top: 1px;
 cursor:pointer;
 }
 /* ------------------- sns board -------------------- */
+
+/* ------------------- left board -------------------- */
+.lnb_bor {
+width: 175px;
+z-index: 8;
+left: 0px;
+min-height: 100%;
+top: 0;
+position: absolute;
+background-color: #ffffff;
+border: 1px solid #dbdbdb;
+}
+
+.lnb_clop {
+height: 15px;
+padding: 8px 0 5px 0;
+margin: 3px 3px 3px 3px;
+text-align: center;
+}
+
+.ico_allcl {
+width: 13px;
+height: 13px; 
+background: url(../images/img/ico.png) no-repeat -55px -160px;
+margin-top: -2px;
+display:inline-block;
+vertical-align:middle;
+}
+
+.ico_allop {
+width: 13px;
+height: 13px;
+background: url(../images/img/ico.png) no-repeat -55px -180px;
+margin-top: -2px;
+display:inline-block;
+vertical-align:middle;
+}
+
+/* ------------------- left board -------------------- */
 
 

@@ -735,9 +735,11 @@ public class Board100Controller {
 		
 		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);
 		BbsBoardInfoVO bbsInfo = null;
+		String boardForm = null;
 		if (list.size() > 0)
 		{
 			bbsInfo = list.get(0);
+			boardForm = bbsInfo.getBoardForm();
 		}
 		
 		/*logger.debug("bbsInfo : "+bbsInfo);
@@ -785,6 +787,7 @@ public class Board100Controller {
 		logger.debug("page : "+".board/" + rtnPage);
 		
     	modelMap.put("boardId", boardId);
+    	modelMap.put("boardForm", boardForm);
     	modelMap.put("pageIndex", pageIndex);
     	 
         return ".board/" + rtnPage;     

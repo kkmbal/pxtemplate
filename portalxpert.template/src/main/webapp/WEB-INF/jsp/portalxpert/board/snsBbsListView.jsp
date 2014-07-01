@@ -109,7 +109,16 @@ var boardExpl = '${boardExpl}';
 
 <body>
 
+
 	<div id="my_list" class="sns_list">
+		<div class="header">
+			<h1>${boardName}</h1>
+			<div class="loc">
+				<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
+				<span><a href="#">커뮤니티</a></span>
+				<span><strong>${boardName}</strong></span>
+			</div>
+		</div>
 					<div class="tab_7">
 						 
 						<div class="tab_post">

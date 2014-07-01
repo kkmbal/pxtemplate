@@ -1,7 +1,7 @@
 
 	var fnAutoSetHeight = function()
 	{
-		parent.document.getElementById("bbsFrame").height = ($("#my_list").height() )+"px";
+		parent.document.getElementById("bbsFrame").height = ($("#my_list").height() + 45 )+"px";
 	};
 	
 	
@@ -49,13 +49,15 @@
 					if (notiList.length == 0)
 					{
 						moreData = 'N';
-						return;
-					}					
+						//return;
+					}else{					
 					
-					for (var i=0; i < notiList.length; i++)
-					{
-						fnNotiList(notiList[i]);
-					}						
+						for (var i=0; i < notiList.length; i++)
+						{
+							fnNotiList(notiList[i]);
+						}	
+					}
+					
 					var opnList = $.parseJSON(data.opnList);						
 					for (var i=0; i < opnList.length; i++)
 					{
@@ -254,6 +256,8 @@
 			 	+'<a style="cursor:pointer;" onclick="javascript:fnOpnUpdate(\''+json.notiOpnSeq+'\')" class="ico_sremod" title="의견수정"></a>'
 			 );
 		}
+		
+		fnAutoSetHeight();
 	};
 	
 	/*sns 등록된 이미지  - sns 가로,세로 가로정렬*/

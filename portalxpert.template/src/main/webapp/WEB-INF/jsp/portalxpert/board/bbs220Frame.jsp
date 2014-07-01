@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>  
 <script type="text/javascript">
 	$(window).scroll(function(){
-		if  ($(window).scrollTop() == $(document).height() - $(window).height()){
-			var url = $("#bbsFrame").attr("src");
-			if (url.indexOf("getBbsSnsBoardList") > 0) {
+		var url = $("#bbsFrame").attr("src");
+		if (url.indexOf("getBbsSnsBoardList") > 0) {
+			if  ($(window).scrollTop() == $(document).height() - $(window).height()){
 				bbsFrame.fnResizeWindow();
 			}
 		}
