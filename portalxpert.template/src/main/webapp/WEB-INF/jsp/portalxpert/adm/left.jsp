@@ -8,6 +8,7 @@
             </ul>
 		</div>
  		<!--//left-->
+ 		
 <script type="text/javascript">
 $(function(){
 	$("#a").click(function(){
@@ -16,6 +17,8 @@ $(function(){
 	$("#b").click(function(){
 		document.getElementById("admFrame").src = "${pageContext.request.contextPath}/adm/board/getAdmBoardNotiDelList.do";
 	});
+	
+	
 });
 </script>           
 	           

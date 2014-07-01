@@ -90,7 +90,7 @@
 	top: 0;
 	left: 0;
 	z-index: 8;
-	font-weight: bold;
+/* 	font-weight: bold; */
 	font-size: 14px;
 	color: #505050;
 	text-align: center;
@@ -297,7 +297,7 @@ text-decoration:none;
 .lnb_area a:hover {
 	text-decoration: none;
 	font-size: 14px;
-	font-weight: bold;
+/* 	font-weight: bold; */
 	cursor: pointer;
 	text-decoration:underline;
 }
