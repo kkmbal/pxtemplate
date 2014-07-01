@@ -947,6 +947,9 @@
 	   $('input:radio[name=opnWrteDiv]').attr("disabled", "true");
 	   $('input:radio[name=replyWrteDiv]').attr("disabled", "true");
 	   
+	   $("#boardUrlDiv").show();
+	   $("#boardUrl").val(WEB_HOME+"/board100/boardFrame.do?boardId="+boardId);
+	   
 	   //fnCustomSet(bbsList[0]);
    };
    /*

@@ -144,6 +144,12 @@
 		<textarea name="boardExpl"  id="boardExpl" cols="100" rows="5" maxlength="300" class="textbox" title="설명을 300자 이하로 작성하세요"></textarea>
 	</td>
 </tr>
+<tr id="boardUrlDiv" style="display:none;">
+	<th scope="row"><label for="textbox01">제공 URL</label></th>
+	<td colspan="3">
+		<input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL">
+	</td>
+</tr>
 </tbody>
 </table>
 
