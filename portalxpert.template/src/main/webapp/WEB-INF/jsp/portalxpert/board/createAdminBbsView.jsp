@@ -147,7 +147,7 @@
 <tr id="boardUrlDiv" style="display:none;">
 	<th scope="row"><label for="textbox01">제공 URL</label></th>
 	<td colspan="3">
-		<input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL">
+		<input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:568px">
 	</td>
 </tr>
 </tbody>
