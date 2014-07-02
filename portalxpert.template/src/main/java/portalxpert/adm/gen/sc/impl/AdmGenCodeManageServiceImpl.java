@@ -162,6 +162,20 @@ public class AdmGenCodeManageServiceImpl extends AbstractServiceImpl implements 
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
 	}
+	
+	/**
+	 * 공통코드-상세코드 목록 화면 조회한다.
+	 * @param admGenAdmGenCodeManageVO - 조회할 정보가 담긴 VO
+	 * @return 글 목록
+	 * @exception Exception
+	 */
+	public List<AdmGenCodeManageVO> getAdmGenCommonCodeSpecList(AdmGenCodeManageVO admGenCodeManageVO) throws Exception {
+		try{
+			return admGenManageMapper.getAdmGenCommonCodeSpecList(admGenCodeManageVO);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+	}
 
 	/**
 	 * 공통코드-상위코드 목록 조회한다.

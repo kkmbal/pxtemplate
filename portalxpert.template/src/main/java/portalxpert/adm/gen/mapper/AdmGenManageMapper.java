@@ -81,6 +81,15 @@ public interface AdmGenManageMapper {
 	 * @exception Exception
 	 */
 	List<AdmGenCodeManageVO> getAdmGenCommonSCodeList(AdmGenCodeManageVO admGenCodeManageVO);
+	
+	
+	/**
+	 * 세부코드 목록조회
+	 * @param admGenCodeManageVO - 조회할 정보가 담긴 VO
+	 * @return 글 목록
+	 * @exception Exception
+	 */
+	List<AdmGenCodeManageVO> getAdmGenCommonCodeSpecList(AdmGenCodeManageVO admGenCodeManageVO);
 
 	/**
 	 * 세부코드 조회를 위한 상위코드 목록조회

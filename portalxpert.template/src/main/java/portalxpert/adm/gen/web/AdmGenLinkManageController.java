@@ -71,7 +71,7 @@ public class AdmGenLinkManageController {
     	List<AdmGenLinkVO> sysLinkCtlgList = admGenLinkManageService.getAdmGenSysLinkCtlgList(admGenLinkVO);
     	modelMap.put("sysLinkCtlgList", sysLinkCtlgList);
     	
-   		return ".adm/adm/gen/admGenSysLinkCtlgList";
+   		return ".self/adm/gen/admGenSysLinkCtlgList";
 	}
     
     /**
@@ -225,7 +225,7 @@ public class AdmGenLinkManageController {
     		modelMap.put("pLINK_CAT_ID", admGenLinkVO.getLinkCatId());
     	}
     	
-   		return ".adm/adm/gen/admGenSysLinkList";
+   		return ".self/adm/gen/admGenSysLinkList";
 	}
     
     /**
@@ -359,7 +359,7 @@ public class AdmGenLinkManageController {
     	List<AdmGenLinkVO> mainLinkList = admGenLinkManageService.getAdmGenMainLinkList(admGenLinkVO);
     	modelMap.put("mainLinkList", mainLinkList);
     	
-   		return ".adm/adm/gen/admGenMainLinkList";
+   		return ".self/adm/gen/admGenMainLinkList";
 	}
     
     /**

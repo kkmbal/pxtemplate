@@ -70,7 +70,7 @@ public class AdmGenContentManageController {
     	List<AdmGenContentManageVO> genContentList = admGenContentManageService.getAdmGenContentManageList(admGenContentManageVO);
     	modelMap.put("genContentList", genContentList);
     	
-   		return ".adm/adm/gen/admGenContentManageList";
+   		return ".self/adm/gen/admGenContentManageList";
 	}
     
     /**

@@ -77,7 +77,7 @@ public class AdmGenCodeManageController {
 		pSearchVO.setCurrentRecordCount(admGenCodeList.size());
 		model.put("pSearch", pSearchVO);
 
-		return ".adm/adm/gen/admGenCommLCdList";
+		return ".self/adm/gen/admGenCommLCdList";
 	}
 	
     /**
@@ -277,7 +277,7 @@ public class AdmGenCodeManageController {
 		model.put("pSearch", pSearchVO);
 		
 		
-		return ".adm/adm/gen/admGenCommSCdList";
+		return ".self/adm/gen/admGenCommSCdList";
 	}
 	
     /**

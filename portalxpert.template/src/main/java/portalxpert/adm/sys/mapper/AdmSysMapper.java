@@ -4,8 +4,10 @@ import java.util.List;
 
 import portalxpert.adm.gen.vo.AdmGenLinkVO;
 import portalxpert.adm.sys.vo.AdmSysBbsNotiApndFileVO;
+import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO;
 import portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO;
+import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 
@@ -146,5 +148,122 @@ public interface AdmSysMapper {
 	 * @return
 	 * @exception Exception
 	 */
-    public void deleteAdmSysTagCloud(AdmSysTagCloudInfoVO admSysTagCloudInfoVO) throws Exception;    
+    public void deleteAdmSysTagCloud(AdmSysTagCloudInfoVO admSysTagCloudInfoVO) throws Exception;
+    
+    
+    
+    //********************************************** 신규추가 ****************************************
+    
+    /**
+     * 사용자목록
+     * @param AdmSysPsnUserInfoVO
+     * @return AdmSysPsnUserInfoVO
+     * @exception Exception
+     */
+    public List<AdmSysPsnUserInfoVO> getAdmSysUserInfoList(AdmSysPsnUserInfoVO admSysPsnUserInfoVO) throws Exception;    
+    
+    /**
+     * 사용자목록 총수
+     * @param AdmSysPsnUserInfoVO
+     * @return int
+     * @exception Exception
+     */
+    public int getAdmSysUserInfoListCnt(AdmSysPsnUserInfoVO admSysPsnUserInfoVO) throws Exception;    
+    
+    /**
+     * 사용자정보
+     * @param AdmSysPsnUserInfoVO
+     * @return AdmSysPsnUserInfoVO
+     * @exception Exception
+     */
+    public AdmSysPsnUserInfoVO getAdmSysUserInfo(AdmSysPsnUserInfoVO admSysPsnUserInfoVO) throws Exception;    
+    
+    /**
+     * 사용자등록
+     * @param AdmSysPsnUserInfoVO
+     * @return void
+     * @exception Exception
+     */
+    public void insertPsnUserInfo(AdmSysPsnUserInfoVO admSysPsnUserInfoVO) throws Exception;    
+    
+    /**
+     * 사용자수정
+     * @param AdmSysPsnUserInfoVO
+     * @return void
+     * @exception Exception
+     */
+    public void updatePsnUserInfo(AdmSysPsnUserInfoVO admSysPsnUserInfoVO) throws Exception;  
+    
+    /**
+     * 사용자 권한목록
+     * @param AdmSysUserAuthVO
+     * @return AdmSysPsnUserInfoVO
+     * @exception Exception
+     */
+    public List<AdmSysUserAuthVO> getAdmSysUserAuthList(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    
+    /**
+     * 사용자 권한목록 총수
+     * @param AdmSysUserAuthVO
+     * @return int
+     * @exception Exception
+     */
+    public int getAdmSysUserAuthListCnt(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    
+    /**
+     * 사용자 권한정보
+     * @param AdmSysUserAuthVO
+     * @return AdmSysPsnUserInfoVO
+     * @exception Exception
+     */
+    public AdmSysUserAuthVO getAdmSysUserAuthInfo(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    
+    /**
+     * 사용자 권한등록
+     * @param AdmSysUserAuthVO
+     * @return void
+     * @exception Exception
+     */
+    public void insertUserAuth(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    
+    /**
+     * 사용자 권한수정
+     * @param AdmSysUserAuthVO
+     * @return void
+     * @exception Exception
+     */
+    public void updateUserAuth(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    
+    /**
+     * 메뉴 권한정보
+     * @param AdmSysMenuAuthVO
+     * @return AdmSysMenuAuthVO
+     * @exception Exception
+     */
+    public AdmSysMenuAuthVO getAdmSysMenuAuthInfo(AdmSysMenuAuthVO admSysMenuAuthVO) throws Exception;    
+    
+    /**
+     * 메뉴 권한등록
+     * @param AdmSysMenuAuthVO
+     * @return void
+     * @exception Exception
+     */
+    public void insertMenuAuth(AdmSysMenuAuthVO admSysMenuAuthVO) throws Exception;    
+    
+    /**
+     * 메뉴 권한수정
+     * @param AdmSysMenuAuthVO
+     * @return void
+     * @exception Exception
+     */
+    public void updateMenuAuth(AdmSysMenuAuthVO admSysMenuAuthVO) throws Exception;        
+    
+    /**
+     * 부서목록
+     * @param AdmSysPsnUserInfoVO
+     * @return AdmSysPsnUserInfoVO
+     * @exception Exception
+     */
+    public List<AdmSysPsnUserInfoVO> getUserDeptInfoList(AdmSysPsnUserInfoVO admSysPsnUserInfoVO) throws Exception;    
+    
 }

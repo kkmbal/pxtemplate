@@ -484,5 +484,377 @@
 		    AND REG_DIV = #{regDiv}
 		    AND TAG_SEQ = #{tagSeq}
 	</update>
+	
+	
+	
+	
+	
+	<!-- ************************** 신규 추가 **************************************** -->
+	
+	
+	
+	
+	<!-- 사용자 목록 -->
+	<select id="getAdmSysUserInfoList" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO"
+	resultType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		<![CDATA[
+			SELECT    P.USER_ID
+	                , P.USER_NAME
+	                , P.USER_NICK 
+	                , P.USER_INTRO
+	                , P.SLCT_POTO_SEQ
+	                , P.USER_JOB
+	                , P.USER_BIRTH
+	                , P.DEPT_CODE 
+	                , P.SMS_BAL_CNT
+	                , P.SMS_ALL_CNT
+	                , P.DEPT_FNAME
+	                , P.TITLENAME
+	                , P.TELEPHONENUMBER
+	                , P.MOBILE
+	                , P.MAIL
+	                , P.INTERMAIL
+	                , P.USER_PASSWORD
+	                , P.DEL_YN
+	                , (SELECT AUTH_CD FROM ADM_USER_AUTH WHERE USER_ID = P.USER_ID) AUTH_CD
+	                , RNUM SEQ		
+			FROM
+			(
+				SELECT	ROWNUM RNUM ,B.*
+				FROM (
+					SELECT A.* FROM
+					(		
+						SELECT    PU.USER_ID
+				                , PU.USER_NAME
+				                , USER_NICK 
+				                , USER_INTRO
+				                , SLCT_POTO_SEQ
+				                , USER_JOB /*업무분장*/
+				                , USER_BIRTH /*생년월일*/
+				                , LD.DEPT_CODE 
+				                , PU.SMS_BAL_CNT
+				                , PU.SMS_ALL_CNT
+				                , PU.DEPT_FNAME
+				                , PU.TITLENAME
+				                , PU.TELEPHONENUMBER
+				                , PU.MOBILE
+				                , PU.MAIL
+				                , PU.INTERMAIL
+				                , PU.USER_PASSWORD
+				                , PU.DEL_YN
+				        FROM      PSN_USER_INFO PU
+				                , PSN_DEPT_INFO LD
+				        WHERE PU.DEPT_CODE = LD.DEPT_CODE(+)
+				        AND   PU.DEL_YN = 'N'
+						]]>
+						<if test="searchCondition !=null and searchCondition !=''">
+							<if test="searchCondition == 'USER_NAME'">
+							AND PU.USER_NAME LIKE '%'||#{searchKeyword}||'%'
+							</if>
+							<if test="searchCondition == 'REGR_NAME'">
+							AND PU.REGR_NAME LIKE '%'||#{searchKeyword}||'%'
+							</if>
+						</if>	
+					) A
+					ORDER BY A.USER_NAME
+				) B	
+			) P
+			<![CDATA[
+			WHERE RNUM <= #{recordCountPerPage}  and RNUM >= #{firstIndex}
+			]]>			
+	</select>
+	
+	<select id="getAdmSysUserInfoListCnt" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO"
+	resultType="int">
+		<![CDATA[
+				SELECT    COUNT(PU.USER_ID) CNT
+		        FROM      PSN_USER_INFO PU
+		                , PSN_DEPT_INFO LD
+		        WHERE PU.DEPT_CODE = LD.DEPT_CODE(+)
+		        AND   PU.DEL_YN = 'N'
+				]]>
+				<if test="searchCondition !=null and searchCondition !=''">
+					<if test="searchCondition == 'USER_NAME'">
+					AND PU.USER_NAME LIKE '%'||#{searchKeyword}||'%'
+					</if>
+					<if test="searchCondition == 'REGR_NAME'">
+					AND PU.REGR_NAME LIKE '%'||#{searchKeyword}||'%'
+					</if>
+				</if>	
+	</select>
+	
+	
+	<!-- 사용자 정보 -->
+	<select id="getAdmSysUserInfo" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO"
+	resultType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		<![CDATA[
+		SELECT    PU.USER_ID
+                , PU.USER_NAME
+                , USER_NICK 
+                , USER_INTRO
+                , SLCT_POTO_SEQ
+                , REST_ID
+                , USER_JOB /*업무분장*/
+                , USER_BIRTH /*생년월일*/
+                , LD.DEPT_CODE 
+                , PU.SMS_BAL_CNT
+                , PU.SMS_ALL_CNT
+                , PU.DEPT_FNAME
+                , PU.TITLENAME
+                , PU.TELEPHONENUMBER
+                , PU.MOBILE
+                , PU.MAIL
+                , PU.INTERMAIL
+                , PU.USER_PASSWORD
+                , C.AUTH_CD
+                , (SELECT CD_NM FROM COM_CODE_SPEC WHERE CD='AUTH' AND CD_SPEC=C.AUTH_CD) AUTH_NM
+                , PU.DEL_YN
+        FROM      PSN_USER_INFO PU
+                , PSN_DEPT_INFO LD
+                , ADM_USER_AUTH C
+        WHERE PU.DEPT_CODE = LD.DEPT_CODE(+)
+        AND   PU.USER_ID = C.USER_ID(+)
+        AND   PU.USER_ID = #{userId}    
+        AND   PU.DEL_YN = 'N'
+		]]>
+	</select>
+	
+	<insert id="insertPsnUserInfo" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		<![CDATA[
+		INSERT INTO PSN_USER_INFO(
+		 USER_ID
+		, USER_NAME
+		, USER_PASSWORD
+		, USER_NICK
+		, USER_JOB
+		, SLCT_POTO_SEQ
+		, USER_BIRTH
+		, MAIL
+		, MOBILE
+		, TELEPHONENUMBER
+		, DEPT_CODE
+		, DEPT_NAME
+		, DEPT_FNAME
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		) VALUES (
+		 #{userId}
+		, #{userName}
+		, #{userPassword}
+		, #{userNick}
+		, #{userJob}
+		, #{slctPotoSeq}
+		, #{userBirth}
+		, #{mail}
+		, #{mobile}
+		, #{telephonenumber}
+		, #{deptCode}
+		, (SELECT DEPT_NAME FROM PSN_DEPT_INFO WHERE DEPT_CODE = #{deptCode})
+		, (SELECT DEPT_FNAME FROM PSN_DEPT_INFO WHERE DEPT_CODE = #{deptCode})
+		, #{delYn}
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		)
+		]]>
+	</insert>	
+
+	<update id="updatePsnUserInfo" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		<![CDATA[
+			UPDATE PSN_USER_INFO SET UPDR_ID = #{updrId}, UPD_DTTM = sysdate
+		]]>
+		<if test="userName != null and userName != ''"> , USER_NAME = #{userName} </if>		
+		<if test="userPassword != null and userPassword != ''"> , USER_PASSWORD = #{userPassword} </if>
+		<if test="userJob != null and userJob != ''"> , USER_JOB = #{userJob} </if>
+		<if test="userBirth != null and userBirth != ''"> , USER_BIRTH = #{userBirth} </if>
+		<if test="mail != null and mail != ''"> , MAIL = #{mail} </if>
+		<if test="mobile != null and mobile != ''"> , MOBILE = #{mobile} </if>
+		<if test="telephonenumber != null and telephonenumber != ''"> , TELEPHONENUMBER = #{telephonenumber} </if>
+		<if test="deptCode != null and deptCode != ''"> 
+			, DEPT_CODE = #{deptCode}
+			, DEPT_NAME =  (SELECT DEPT_NAME FROM PSN_DEPT_INFO WHERE DEPT_CODE = #{deptCode})
+			, DEPT_FNAME =  (SELECT DEPT_FNAME FROM PSN_DEPT_INFO WHERE DEPT_CODE = #{deptCode})
+		</if>
+		<if test="delYn != null and delYn != ''"> , DEL_YN = #{delYn} </if>
+		WHERE USER_ID = #{userId}
+	</update>
+	
+	<select id="getAdmSysUserAuthList" parameterType="portalxpert.adm.sys.vo.AdmSysUserAuthVO"
+	resultType="portalxpert.adm.sys.vo.AdmSysUserAuthVO">
+		<![CDATA[
+			SELECT    P.USER_ID
+	                , P.USER_NAME
+	                , P.AUTH_CD
+	                , P.AUTH_NM
+	                , P.DEL_YN
+	                , RNUM SEQ		
+			FROM
+			(
+				SELECT	ROWNUM RNUM ,B.*
+				FROM (
+					SELECT A.* FROM
+					(			
+						SELECT    A.USER_ID
+				                , A.USER_NAME
+				                , B.AUTH_CD
+				                , C.CD_NM  AUTH_NM
+				                , B.DEL_YN
+				        FROM      PSN_USER_INFO A
+				                , ADM_USER_AUTH B
+				                , COM_CODE_SPEC C
+				        WHERE A.USER_ID = B.USER_ID
+				        AND   C.CD = 'AUTH'
+				        AND   C.CD_SPEC = B.AUTH_CD
+				        AND   B.DEL_YN = 'N'
+						]]>
+						<if test="searchCondition !=null and searchCondition !=''">
+							<if test="searchCondition == 'USER_NAME'">
+							AND A.USER_NAME LIKE '%'||#{searchKeyword}||'%'
+							</if>
+							<if test="searchCondition == 'AUTH_CD'">
+							AND B.AUTH_CD LIKE '%'||#{searchKeyword}||'%'
+							</if>
+						</if>	
+					) A
+					ORDER BY A.USER_NAME
+				) B	
+			) P
+			<![CDATA[
+			WHERE RNUM <= #{recordCountPerPage}  and RNUM >= #{firstIndex}
+			]]>			
+	</select>	
+	
+	<select id="getAdmSysUserAuthListCnt" parameterType="portalxpert.adm.sys.vo.AdmSysUserAuthVO"
+	resultType="int">
+		<![CDATA[
+		SELECT    COUNT(A.USER_ID) CNT
+        FROM      PSN_USER_INFO A
+                , ADM_USER_AUTH B
+                , COM_CODE_SPEC C
+        WHERE A.USER_ID = B.USER_ID
+        AND   C.CD = 'AUTH'
+        AND   C.CD_SPEC = B.AUTH_CD
+        AND   B.DEL_YN = 'N'
+		]]>
+	</select>	
+	
+	<select id="getAdmSysUserAuthInfo" parameterType="portalxpert.adm.sys.vo.AdmSysUserAuthVO"
+	resultType="portalxpert.adm.sys.vo.AdmSysUserAuthVO">
+		<![CDATA[
+		SELECT    A.USER_ID
+                , A.USER_NAME
+                , B.AUTH_CD
+                , C.CD_NM  AUTH_NM
+                , B.DEL_YN
+        FROM      PSN_USER_INFO A
+                , ADM_USER_AUTH B
+                , COM_CODE_SPEC C
+        WHERE A.USER_ID = B.USER_ID
+        AND   C.CD = 'AUTH'
+        AND   C.CD_SPEC = B.AUTH_CD
+        AND   A.USER_ID = #{userId}
+        AND   B.DEL_YN = 'N'
+		]]>
+	</select>
+	
+	<insert id="insertUserAuth" parameterType="portalxpert.adm.sys.vo.AdmSysUserAuthVO">
+		<![CDATA[
+		INSERT INTO ADM_USER_AUTH(
+		 USER_ID
+		, AUTH_CD
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		) VALUES (
+		 #{userId}
+		, #{authCd}
+		, #{delYn}
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		)
+		]]>
+	</insert>		
+
+	<update id="updateUserAuth" parameterType="portalxpert.adm.sys.vo.AdmSysUserAuthVO">
+		<![CDATA[
+			UPDATE ADM_USER_AUTH SET UPDR_ID = #{updrId}, UPD_DTTM = sysdate
+									, AUTH_CD = #{authCd}
+		]]>
+		<if test="delYn != null and delYn != ''"> , DEL_YN = #{delYn} </if>
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<select id="getAdmSysMenuAuthInfo" parameterType="portalxpert.adm.sys.vo.AdmSysMenuAuthVO"
+	resultType="portalxpert.adm.sys.vo.AdmSysMenuAuthVO">
+		<![CDATA[
+		SELECT    A.AUTH_CD
+                , A.MENU_CONTS
+                , A.DEL_YN
+        FROM      ADM_MENU_AUTH A
+        WHERE A.AUTH_CD = #{authCd}
+        AND   A.DEL_YN = 'N'
+		]]>
+	</select>
+			
+	<insert id="insertMenuAuth" parameterType="portalxpert.adm.sys.vo.AdmSysMenuAuthVO">
+		<![CDATA[
+		INSERT INTO ADM_MENU_AUTH(
+		 AUTH_CD
+		, MENU_CONTS
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		) VALUES (
+		 #{authCd}
+		 #{menuConts}
+		, #{delYn}
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		)
+		]]>
+	</insert>	
+	
+	<update id="updateMenuAuth" parameterType="portalxpert.adm.sys.vo.AdmSysMenuAuthVO">
+		<![CDATA[
+			UPDATE ADM_MENU_AUTH SET UPDR_ID = #{updrId}, UPD_DTTM = sysdate
+									, MENU_CONTS = #{menuConts}
+		]]>
+		<if test="delYn != null and delYn != ''"> , DEL_YN = #{delYn} </if>
+		WHERE AUTH_CD = #{authCd}
+	</update>	
+	
+	<select id="getUserDeptInfoList" resultType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO" parameterType="portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO">
+		<![CDATA[
+        SELECT
+            A.DEPT_CODE
+            ,A.DEPT_NAME
+            ,A.DEPT_FNAME
+        FROM PSN_DEPT_INFO A
+		]]>
+	</select>					
 			
 </mapper>

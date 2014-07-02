@@ -202,6 +202,15 @@
 		FROM COM_CODE_SPEC                  
 		WHERE CD = #{cd} AND CD_SPEC = #{cdSpec}
 	</select>
+
+	<!-- 세부코드 상세조회 -->
+	<select id="getAdmGenCommonCodeSpecList" 
+			parameterType="portalxpert.adm.gen.vo.AdmGenCodeManageVO" 
+			resultMap="admGenCodeManage">
+		SELECT CD, CD_NM, CD_SPEC, REMARK                    
+		FROM COM_CODE_SPEC                  
+		WHERE CD = #{cd}
+	</select>
 	
 	<!-- 세부코드 등록 -->
 	<insert id="insertAdmGenCommonSCode">

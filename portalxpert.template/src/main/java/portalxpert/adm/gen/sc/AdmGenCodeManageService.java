@@ -87,6 +87,14 @@ public interface AdmGenCodeManageService {
 	 * @exception Exception
 	 */
 	List<AdmGenCodeManageVO> getAdmGenCommonLCodeType() throws Exception;
+	
+	/**
+	 * 세부코드 목록조회
+	 * @param admGenCodeManageVO - 조회할 정보가 담긴 VO
+	 * @return 글 목록
+	 * @exception Exception
+	 */
+	List<AdmGenCodeManageVO> getAdmGenCommonCodeSpecList(AdmGenCodeManageVO admGenCodeManageVO) throws Exception;
     
 	/**
 	 * 세부코드 목록 총건수조회

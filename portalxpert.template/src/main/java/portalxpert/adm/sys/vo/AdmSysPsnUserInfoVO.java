@@ -39,6 +39,78 @@ public class AdmSysPsnUserInfoVO extends SearchConditionVO
 	private String updrName; /*수정자_명*/
 	private String updDttm; /*수정_일시*/
 	
+	private String  authCd;
+	private String  authNm;
+	private String titleName;
+	private String telephonenumber;
+	private String mobile;
+	private String mail;
+	private String interMail;
+	private String userPassword;
+	private String deptFname;
+	private String seq;
+	
+	
+	public String getAuthNm() {
+		return authNm;
+	}
+	public void setAuthNm(String authNm) {
+		this.authNm = authNm;
+	}
+	public String getAuthCd() {
+		return authCd;
+	}
+	public void setAuthCd(String authCd) {
+		this.authCd = authCd;
+	}
+	public String getSeq() {
+		return seq;
+	}
+	public void setSeq(String seq) {
+		this.seq = seq;
+	}
+	public String getTitleName() {
+		return titleName;
+	}
+	public void setTitleName(String titleName) {
+		this.titleName = titleName;
+	}
+	public String getTelephonenumber() {
+		return telephonenumber;
+	}
+	public void setTelephonenumber(String telephonenumber) {
+		this.telephonenumber = telephonenumber;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getMail() {
+		return mail;
+	}
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+	public String getInterMail() {
+		return interMail;
+	}
+	public void setInterMail(String interMail) {
+		this.interMail = interMail;
+	}
+	public String getUserPassword() {
+		return userPassword;
+	}
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+	public String getDeptFname() {
+		return deptFname;
+	}
+	public void setDeptFname(String deptFname) {
+		this.deptFname = deptFname;
+	}
 	public String getDeptName() {
 		return deptName;
 	}
