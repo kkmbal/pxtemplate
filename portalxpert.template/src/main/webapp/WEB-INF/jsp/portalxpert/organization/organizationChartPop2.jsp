@@ -126,8 +126,5 @@
 <!--//pop_wrap-->
 
 
-<script type="text/javascript">
-
-</script>
 </body>
 </html>
