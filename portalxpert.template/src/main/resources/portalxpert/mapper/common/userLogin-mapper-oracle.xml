@@ -17,7 +17,7 @@
                 WHERE A.USER_ID = U.USER_ID
                 AND A.SLCT_POTO_SEQ = U.POTO_SEQ ) USER_REP_IMG
               ,USER_NICK NICKNAME
-              ,NVL(TMLN_READ_DTTM, SYSDATE) TMLN_READ_DTTM
+              ,(SELECT AUTH_CD FROM ADM_USER_AUTH WHERE USER_ID = A.USER_ID AND ROWNUM = 1) AUTH_CD 
 		FROM PSN_USER_INFO A
 		WHERE USER_ID = #{userId}
 	</select>				

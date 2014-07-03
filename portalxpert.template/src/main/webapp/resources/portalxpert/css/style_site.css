@@ -84,7 +84,7 @@
 }
 
 #left {
-	width: 165px;
+	width: 190px;
 	min-height: 100%;
 	position: absolute;
 	top: 0;
@@ -1168,6 +1168,8 @@ left: 0;
 
 .tree_list .p_right {
 float:right;
+width:380px;
+margin-top:65px;
 }
 
 .tree_list .p_right .tbl_list{

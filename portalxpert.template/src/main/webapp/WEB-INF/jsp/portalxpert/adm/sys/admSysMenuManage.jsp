@@ -14,6 +14,7 @@
 <script type="text/javascript" >
 
 var authCodeList = ${authCodeList};
+var authCd = '${authCd}';
 
 var nodeCount = 0;
 
@@ -32,7 +33,8 @@ var setting2 = {
 			}
 		},
 		check: {
-			enable: true
+			enable: true,
+			chkboxType : {"Y":"p", "N":"s"}
 		},
 		onCheck: zTreeOnCheck,
 		callback: {
@@ -58,10 +60,13 @@ function zTreeOnCheck(event, treeId, treeNode) {
 };
 
 function zTreeOnClick(event, treeId, treeNode) {
-	
+	console.log(treeNode)
+	$("#menuId").val(treeNode.id);
+	$("#menuNm").val(treeNode.name);
+	$("#menuUrl").val(treeNode.page);
 	//alert(JSON.stringify(treeNode));
 	//selectNodeId = treeNode.boardId;
-	
+	/*
 	 PortalCommon.getJson({
 		url: "${WEB_HOME}/board100/getCategoryBoardList.do?format=json&boardKind=BBS",
 		data: {'data' : JSON.stringify(treeNode)},
@@ -111,6 +116,7 @@ function zTreeOnClick(event, treeId, treeNode) {
 			}				
 		}
 	});
+	*/
 };
 
 //이름변경
@@ -285,10 +291,7 @@ function addTreeNode() {
 		id : nodeCount++,
 		pId : 0,
 		name : "메뉴" + (addCount++),
-		boardId : "",
-		boardKind : "",
-		boardForm : "",
-		boardFormSpec : "",
+		page : "",
 		icon : "${RES_HOME}/images/img/img_category.gif"
 	};
 	var idx = 0;
@@ -300,13 +303,17 @@ function addTreeNode() {
 		}
 	}
 
+	/*
 	if (zNodes.length > 0) {
 		zNodes.splice(idx, 0, jsonObject);
 	} else {
 		zNodes.push(jsonObject);
 	}
+	*/
+	zNodes.push(jsonObject);
 
-	$.fn.zTree.init($("#categoryTreeObj"), setting2, zNodes);
+	var treeObj = $.fn.zTree.init($("#categoryTreeObj"), setting2, zNodes);
+	checkState(treeObj);
 
 };
 
@@ -434,17 +441,26 @@ function expandNodes2(nodes) {
 	}
 };
 
+function checkState(treeObj){
+	if(authCd == 'SYSTEM'){
+		treeObj.checkAllNodes(true);
+	}	
+}
+
 $(document).ready(function() {
 	var data = ${menuList};
 	zNodes = $.parseJSON(data);
 	$.fn.zTree.init($("#categoryTreeObj"), setting2, zNodes);
 	zTree = $.fn.zTree.getZTreeObj("categoryTreeObj");
 	zTree.expandAll(true);
+	checkState(zTree);
 	fnCategoryDrawScrollBar();
+	
 	
 	//권한코드
 	for(var i=0;i<authCodeList.length;i++){
 		$("#authCd").append("<option value='"+authCodeList[i].cdSpec+"'>"+authCodeList[i].cdNm+"</option>");
+		$("#authCd2").append("<option value='"+authCodeList[i].cdSpec+"'>"+authCodeList[i].cdNm+"</option>");
 	}
 
 	for ( var i = 0; i < zNodes.length; i++) {
@@ -459,11 +475,13 @@ $(document).ready(function() {
 	$("#btn_all_open_ca").click(function() {//공통게시판 모두열림
 		var treeObj = $.fn.zTree.init($("#categoryTreeObj"), setting2,zNodes);
 		treeObj.expandAll(true);
+		checkState(treeObj);
 	});
 
 	$("#btn_all_close_ca").click(function() {//공통게시판 모두닫힘
 		var treeObj = $.fn.zTree.init($("#categoryTreeObj"), setting2,zNodes);
 		expandNodes2(treeObj.getNodes());
+		checkState(treeObj);
 	});
 
 	//게시판 생성
@@ -473,7 +491,34 @@ $(document).ready(function() {
 
 	//게시판 수정
 	$("#btn_board_update").click(function() {
+		if ($("#menuId").val() == "") return;
+		
+		var treeObj = $.fn.zTree.getZTreeObj("categoryTreeObj");
+		var nodes = treeObj.getSelectedNodes();
+		//zTree.editName(nodes[0]);
 
+		for (var i=0; i < zNodes.length; i++)
+		{
+			var json = zNodes[i];
+			if ($("#menuId").val() == json.id)
+			{
+				json.name = $("#menuNm").val();
+				json.page = $("#menuUrl").val();
+			}
+		}
+		
+		nodes[0].name = $("#menuNm").val();
+		treeObj.updateNode(nodes[0]);
+		
+		//zTree.updateNode(nodes[0]);
+		//$.fn.zTree.init($("#categoryTreeObj"), setting2, zNodes);
+		
+		$("#menuId").val("");
+		$("#menuNm").val("");
+		$("#menuUrl").val("");
+		
+		//zTree.expandAll(true);
+		/*
 		var boardId = $(
 				':radio[name="radio"]:checked')
 				.val();
@@ -482,7 +527,7 @@ $(document).ready(function() {
 			return;
 		}
 		location.href = "${WEB_HOME}/board100/createAdminBbsView.do?boardId="+boardId;
-
+		*/
 	});
 
 	//게시판 삭제
@@ -569,18 +614,30 @@ $(document).ready(function() {
 	});
 
 	//저장
-	$("#saveCategoryMenu").click(	function() {
+	$("#saveMenu").click(	function() {
 
-		//alert(JSON.stringify(zNodes));
 		if (!confirm('저장 하시겠습니까?')) {
 			return;
 		}
 
-// 		alert(JSON.stringify(zNodes));
+		var treeObj = $.fn.zTree.getZTreeObj("categoryTreeObj");
+		var saveNodes = [];
+		for (var i=0; i < zNodes.length; i++){
+			var json = zNodes[i];
+			var node = treeObj.getNodeByParam("id", json.id, null);
+
+			if ( node.id == json.id && node.checked){
+				saveNodes.push(json);
+			}
+		}
+
+		console.log(JSON.stringify(saveNodes));
+			
 		PortalCommon.getJson({
-			url : "${WEB_HOME}/board100/updatePbsUserCategoryInfo.do?admin=1&format=json",
+			url : "${WEB_HOME}/adm/sys/updateMenuAuth.do?format=json",
 			data : {
-				'data' : unescape(JSON.stringify(zNodes))
+				'data' : unescape(JSON.stringify(saveNodes)),
+				'authCd' : $("#authCd").val()
 			},
 			success : function(data) {
 				if (data.jsonResult.success === true) {
@@ -590,12 +647,56 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$("#search").click(function(){ //조회
+		PortalCommon.getJson({
+			url : "${WEB_HOME}/adm/sys/getAuthMenu.do?format=json",
+			data : 'authCd='+$("#authCd").val(),
+			success : function(data) {
+				if (data.jsonResult.success === true) {
+
+					var zNewNodes = $.parseJSON(data.menuList);
+					var treeObj = $.fn.zTree.getZTreeObj("categoryTreeObj");
+					
+					if(data.authCd == 'SYSTEM'){
+						$(".fl_left").show();
+						$("#btn_board_update").show();
+					}else{
+						$(".fl_left").hide();
+						$("#btn_board_update").hide();
+					}
+					treeObj.checkAllNodes(false);
+					
+					for (var i=0; i < zNewNodes.length; i++)
+					{
+						var json = zNewNodes[i];
+						var node = treeObj.getNodeByParam("id", json.id, null);
+
+						if ( node.id == json.id){
+							node.checked = true;
+						}else{
+							node.checked = false;
+						}
+						treeObj.updateNode(node, true);
+					}					
+					
+				};
+			}
+		});		
+	});
+	
+	parent.document.getElementById("admFrame").height = "700px";
+	parent.document.getElementById("admFrame").height = $(document).height()+"px";
+		
+	console.log(JSON.stringify(PortalCommon.getMenu($.parseJSON(data), "id", "5")));
+	
 
 });
 </script>
 </head>
 
 <body>
+<div id="ttree"></div>
 <div class="container">	
 	<div class="header">
 		<h1>메뉴관리</h1>
@@ -615,11 +716,11 @@ $(document).ready(function() {
 				<span class="selectN" style="width:100px">
 					<span>
 						<select title="" id="authCd">
-							<option value="">선택</option>
+							<option value="SYSTEM">[ 메뉴관리 ]</option>
 						</select>
 					</span>
 				</span>
-				<a href="#" class="btn_set bt_style1"><span id="search">조회</span></a>
+				<a href="#" class="btn_set bt_style7"><span id="search">조회</span></a>
 			</li>
 		</ul>
 	</div>
@@ -630,19 +731,16 @@ $(document).ready(function() {
     	<div class="p_left">
 		    <div class="btn_area">
 				<div class="fl_left">
-					<a href="#" class="btn_all">
-						<span class="btn_text" id="btn_catageory_create">생성</span>
+					<a href="#" class="btn_set bt_style2">
+						<span id="btn_catageory_create">생성</span>
 					</a>
-					<a href="#" class="btn_all">
-						<span class="btn_text" id="btn_catageory_rename">이름변경</span>
-					</a>
-					<a href="#" class="btn_all">
-						<span class="btn_text" id="btn_catageory_delete">삭제</span>
+					<a href="#" class="btn_set bt_style2">
+						<span id="btn_catageory_delete">삭제</span>
 					</a>
 				</div>
 				<div class="fl_right">
-					<a href="#" class="btn_all">
-						<span class="btn_text" id="saveCategoryMenu">저장</span>
+					<a href="#" class="btn_set bt_style3">
+						<span id="saveMenu">저장</span>
 					</a>
 				</div>
 			</div>	
@@ -656,80 +754,40 @@ $(document).ready(function() {
 			</div>
 	    </div>
 	    <div class="p_right">
-	    	<div class="btn_area">
-	    		<div class="fl_left">
-	    			<a id="btn_board_create" class="btn_all">
-	    				<span class="btn_text">게시판생성</span>
-	    			</a>
-	    		</div>
-	    		<div class="fl_right">
-	    			<a id="btn_board_update" class="btn_all">
-	    				<span class="btn_text">수정</span>
-	    			</a>
-	    			<a id="btn_board_delete" class="btn_all">
-	    				<span class="btn_text">삭제</span>
-	    			</a>
-	    		</div>
-	    	</div>
-    	
 
-	    	 <!--tbl_list-->   
-			 <div class="tbl_list te_center te90">
-		        <table summary="게시판리스트입니다." class="tbl_fixed">
-		            <caption>게시판리스트입니다.</caption>
-		            <colgroup>
-		                <col width="45" style="*width:25px">
-		                <col width="100" style="*width:80px">
-		                <col width="65" style="*width:45px">
-		                <col width="80" style="*width:60px">
-		                <col width="60" style="*width:40px">
-		                <col>
-		            </colgroup>
-		            <thead>
-		                <tr>
-		                    <th scope="col">선택</th>
-		                    <th scope="col">게시판명</th>
-		                    <th scope="col">신청자</th>
-		                    <th scope="col">생성일</th>
-		                    <th scope="col">모바일</th>
-		                    <th scope="col" class="last">상태</th>
-		                </tr>
-		            </thead>
-		       </table>
-		      <div class="tbl_scroll h430" >
-		        <table summary="게시판리스트입니다." class="tbl_fixed">
-		            <caption>게시판리스트입니다.</caption>
-		            <colgroup>
-		                <col width="45" style="*width:25px">
-		                <col width="100" style="*width:80px">
-		                <col width="65" style="*width:45px">
-		                <col width="80" style="*width:60px">
-		                <col width="60" style="*width:40px">
-		                <col>
-		            </colgroup>      
-			            <tbody id="bodyBoardList">
-			                <!-- <tr>
-			                    <td><input type="radio" title="선택"></td>
-			                    <td class="te_left"><a href="#" class="te_dot">게시판명게시판명게시판명게시판명게시판명</a></td>
-			                    <td>게시자</td>
-			                    <td>2012.02.12</td>
-			                    <td>연동</td>
-			                    <td>운영중</td>
-			                </tr>
-			            
-			                <tr>
-			                    <td><input type="radio" title="선택"></td>
-			                    <td class="te_left"><a href="#" class="te_dot">게시판명게시판명게시판명게시판명게시판명</a></td>
-			                    <td>게시자</td>
-			                    <td>2012.02.12</td>
-			                    <td>연동</td>
-			                    <td>운영중</td>
-			                </tr> -->
-						</tbody>			                
-			        </table>
-			    </div>
-		<!--//tbl_list-->
-	    </div>
+			 <div class="te_center te90">
+		      
+					<table class="tbl_form" summary="제목에 대한 입력테이블입니다.">
+					<caption>제목</caption>
+					<colgroup>
+						<col style="width:30%" />
+						<col style="*" />
+					</colgroup>
+					<tbody>
+					<tr>
+						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">ID</label></th>
+						<td><input type="text" class="text" style="width:200px" title="아이디" id="menuId" name="menuId" disabled="disabled" /></td>
+					</tr>
+					<tr>
+						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">메뉴명</label></th>
+						<td><input type="text" class="text" style="width:200px" title="아이디" id="menuNm" name="menuNm" value="" /></td>
+					</tr>
+					<tr>
+						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">URL</label></th>
+						<td><textarea id="menuUrl" name="menuUrl" cols="32" rows="5" maxlength="100"  title="URL"></textarea></td>
+					</tr>
+					</tbody>
+					</table>		      
+		      
+	    	</div>
+	    	<br>
+	    	<div class="btn_area">
+	    		<div class="fl_right">
+	    			<a id="btn_board_update" class="btn_set bt_style2">
+	    				<span>수정</span>
+	    			</a>
+	    		</div>
+	    	</div>	    	
 	</div>
 </div>
 </div>

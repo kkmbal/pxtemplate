@@ -37,9 +37,16 @@ public class UserInfoVO implements Serializable{
 	private String tmlnreaddttm; 
 	private String msgYN;
 	private String passwd;
+	private String authCd;
 	
 	
 	
+	public String getAuthCd() {
+		return authCd;
+	}
+	public void setAuthCd(String authCd) {
+		this.authCd = authCd;
+	}
 	public String getPasswd() {
 		return passwd;
 	}

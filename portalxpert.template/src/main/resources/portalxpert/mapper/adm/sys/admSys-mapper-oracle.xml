@@ -826,7 +826,7 @@
 		, UPD_DTTM
 		) VALUES (
 		 #{authCd}
-		 #{menuConts}
+		, #{menuConts}
 		, #{delYn}
 		, #{updrId}
 		, #{updrName}

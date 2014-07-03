@@ -5,11 +5,19 @@ import portalxpert.common.vo.SearchConditionVO;
 public class AdmSysMenuAuthVO  extends SearchConditionVO {
 	private String authCd;
 	private String menuConts;
+	private String delYn;
 	private String regrId;
 	private String regrName;
 	private String updrId;
 	private String updrName;
 	
+	
+	public String getDelYn() {
+		return delYn;
+	}
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
+	}
 	public String getRegrId() {
 		return regrId;
 	}

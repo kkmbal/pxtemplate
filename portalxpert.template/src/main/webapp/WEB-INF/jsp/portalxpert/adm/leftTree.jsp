@@ -22,7 +22,7 @@
  		<!--//left-->
  		
 <script type="text/javascript">
-var setting = {
+var left_menu_setting = {
 		edit: {
 				enable: false,
 				showRemoveBtn: false,
@@ -74,24 +74,24 @@ var setting = {
 	}	
 	
 $(function(){
-	var zNodes = [];
-	zNodes.push({id:1, pId:999, name:"시스템관리", page:""});
-	zNodes.push({id:2, pId:999, name:"포털관리", page:""});
-	zNodes.push({id:3, pId:2, name:"메인관리", page:""});
-	zNodes.push({id:4, pId:2, name:"게시판관리", page:""});
-	zNodes.push({id:5, pId:2, name:"연계관리", page:""});
-	zNodes.push({id:6, pId:1, name:"사용자관리", page:"/adm/sys/getAdmSysUserList.do"});
-	zNodes.push({id:8, pId:1, name:"메뉴관리", page:"/adm/sys/getAdmSysMenuManage.do"});
-	zNodes.push({id:10, pId:1, name:"공통코드관리", page:"/adm/gen/getAdmGenCommonLCodeList.do"});
-	zNodes.push({id:11, pId:3, name:"레이아웃관리", page:""});
-	zNodes.push({id:12, pId:3, name:"팝업관리", page:""});
-	zNodes.push({id:13, pId:3, name:"배너관리", page:""});
-	zNodes.push({id:14, pId:4, name:"게시판현황", page:"/adm/stat/getAdmBbsStatList.do"});
-	zNodes.push({id:15, pId:4, name:"삭제게시물", page:"/adm/board/getAdmBoardNotiDelList.do"});
-	zNodes.push({id:16, pId:5, name:"링크관리", page:"/adm/gen/getAdmGenSysLinkList.do"});
 	
-	var treeObj = $.fn.zTree.init($("#menuTreeObj"), setting, zNodes);
-	treeObj.expandAll(true);
+	PortalCommon.getJson({
+		url : "${pageContext.request.contextPath}/adm/sys/getAuthMenu.do?format=json",
+		data : 'authCd=${sessionScope.pxLoginInfo.authCd}',
+		success : function(data) {
+			if (data.jsonResult.success === true) {
+
+				var zNodes = $.parseJSON(data.menuList);
+				var treeObj = $.fn.zTree.init($("#menuTreeObj"), left_menu_setting, zNodes);
+				treeObj.expandAll(true);					
+				
+			};
+		}
+	});		
+	
+	
+	
+	
 	
 	$("#btn_all_open_cm").click(function() {//모두열림
 		//location.reload();

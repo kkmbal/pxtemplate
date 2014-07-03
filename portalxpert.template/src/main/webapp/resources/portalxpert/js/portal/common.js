@@ -486,7 +486,80 @@ this.PortalCommon = {};
 		return s;
 	};
 	
+	// simple data json --> ztree json
+	var transformTozTreeFormat = function(sNodes) {
+		var i,l,
+		 key = 'id',
+		 parentKey = 'pId',
+		 childKey = 'children';
+		if (!key || key=="" || !sNodes) return [];
 
+		if ($.isArray(sNodes)) {
+			var r = [];
+			var tmpMap = [];
+			for (i=0, l=sNodes.length; i<l; i++) {
+				tmpMap[sNodes[i][key]] = sNodes[i];
+			}
+			for (i=0, l=sNodes.length; i<l; i++) {
+				if (tmpMap[sNodes[i][parentKey]] && sNodes[i][key] != sNodes[i][parentKey]) {
+					if (!tmpMap[sNodes[i][parentKey]][childKey])
+						tmpMap[sNodes[i][parentKey]][childKey] = [];
+					tmpMap[sNodes[i][parentKey]][childKey].push(sNodes[i]);
+				} else {
+					r.push(sNodes[i]);
+				}
+			}
+			return r;
+		}else {
+			return [sNodes];
+		}		
+	};
+
+	// id children json
+	var getNodeByParam = function(nodes, key, value) {
+		if (!nodes || !key) return [];
+		var childKey = 'children',
+		result = [];
+		for (var i = 0, l = nodes.length; i < l; i++) {
+			if (nodes[i][key] == value) {
+				result.push(nodes[i]);
+				break;
+			}
+			if (nodes[i][childKey]){
+				var r = (getNodeByParam(nodes[i][childKey], key, value));
+				if(r.length > 0) return r;
+			}
+		}
+		return result;
+	};	
+	
+	var transformToArray = (function () {
+		var arr = [];
+		return function transformToArrayFormat(nodes){
+			if (!nodes) return;
+			var childKey = 'children';
+			if ($.isArray(nodes)) {
+				for (var i=0, l=nodes.length; i<l; i++) {
+					var obj = {};
+					obj['id'] = nodes[i]['id'];
+					obj['pId'] = nodes[i]['pId'];
+					obj['name'] = nodes[i]['name'];
+					obj['page'] = nodes[i]['page'];
+					arr.push(obj);
+					if (nodes[i][childKey]){
+						(transformToArrayFormat(nodes[i][childKey]));
+					}
+				}
+			}
+			return arr;
+		};
+	})();	
+	
+	// simple json data 에서 특정  id 하위 메뉴의  simple data menu 구함.
+	PortalCommon.getMenu = function(nodes, key, value){
+		return transformToArray(getNodeByParam(transformTozTreeFormat(nodes), key, value));
+	};
+	
 	function leadingZeros(n, digits) {
 		var zero = '';
 		n = n.toString();
@@ -496,7 +569,7 @@ this.PortalCommon = {};
 				zero += '0';
 		}
 		return zero + n;
-	}
+	};
 	
 })(this.PortalCommon);
 
@@ -650,3 +723,5 @@ function getDateWeek(date){
 
 	return week[dateObj.getDay()];
 }
+
+var console = window.console||{log:function(){}};
