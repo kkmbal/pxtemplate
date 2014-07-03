@@ -1154,4 +1154,25 @@ vertical-align:middle;
 
 /* ------------------- left board -------------------- */
 
+/* ------------------- admin menu -------------------- */
+.tree_list {
+position: relative;
+}
+
+.tree_list .p_left {
+width: 300px !important;
+position: absolute;
+top: 0;
+left: 0;
+}
+
+.tree_list .p_right {
+float:right;
+}
+
+.tree_list .p_right .tbl_list{
+margin-top:40px;
+}
+/* ------------------- admin menu -------------------- */
+
 

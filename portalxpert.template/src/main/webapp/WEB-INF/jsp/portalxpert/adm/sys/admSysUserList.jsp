@@ -80,7 +80,7 @@
 <col style="width:*" />
 <col style="width:11%" />
 <col style="width:11%" />
-<col style="width:11%" />
+<col style="width:15%" />
 </colgroup>
 <thead>
 <tr>

@@ -3,6 +3,9 @@
 <html lang="ko">
 <head>
 <title></title>
+<%
+	request.setAttribute("tree", "tree");
+%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/taglibs.jsp"%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/jsLibs.jsp"%>
 

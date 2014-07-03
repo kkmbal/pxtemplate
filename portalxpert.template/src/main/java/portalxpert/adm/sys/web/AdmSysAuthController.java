@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import portalxpert.adm.gen.sc.AdmGenCodeManageService;
 import portalxpert.adm.gen.vo.AdmGenCodeManageVO;
 import portalxpert.adm.sys.sc.AdmSysAuthService;
 import portalxpert.adm.sys.vo.AdmSysDeptInfo;
@@ -39,6 +40,9 @@ public class AdmSysAuthController {
 	
 	@Resource(name = "admSysAuthService")
 	private AdmSysAuthService admSysAuthService;
+	
+	@Resource(name = "admGenCodeManageService")
+	private AdmGenCodeManageService admGenCodeManageService;
 	
     /** EgovPropertyService */
     @Resource(name = "propertiesService")
@@ -67,11 +71,17 @@ public class AdmSysAuthController {
 		}
 		AdmSysMenuAuthVO admSysMenuAuthInfo = admSysAuthService.getAdmSysMenuAuthInfo(admSysMenuAuthVO);
 		
-		String conts = "";
+		String conts = "[]";
 		if(admSysMenuAuthInfo != null){
 			conts = admSysMenuAuthInfo.getMenuConts();
 		}
 		
+		//권한코드
+		AdmGenCodeManageVO admGenCodeManageVO = new AdmGenCodeManageVO();
+		admGenCodeManageVO.setCd("AUTH");
+		List<AdmGenCodeManageVO> admGenCommonCodeSpecList = admGenCodeManageService.getAdmGenCommonCodeSpecList(admGenCodeManageVO);
+		
+		modelMap.put("authCodeList", JSONUtils.objectToJSON(admGenCommonCodeSpecList));
 		modelMap.put("menuList", JSONUtils.objectToJSON(conts));
 		
 		

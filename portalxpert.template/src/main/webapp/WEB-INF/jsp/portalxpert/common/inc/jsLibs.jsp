@@ -8,8 +8,10 @@
 <!-- JavaScript -->
 <script type="text/javascript" src="${RES_HOME}/js/portal/common.js"></script>
 <script type="text/javascript" src="${RES_HOME}/js/lib/jquery/jquery-1.9.1.min.js"></script>
+<% if(!"tree".equals(request.getAttribute("tree"))){ %>
 <script type="text/javascript" src="${RES_HOME}/js/lib/jquery/jquery_ui.js"></script>
 <script type="text/javascript" src="${RES_HOME}/js/lib/jquery/jquery.ui.datepicker-ko.js"></script>
+<% } %>
 <script type="text/javascript" src="${RES_HOME}/js/lib/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="${RES_HOME}/js/lib/jquery/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${RES_HOME}/js/lib/jquery/jquery.validate.util.js"></script>

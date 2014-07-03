@@ -3,12 +3,17 @@
 <html lang="ko">
 <head>
 <title></title>
+<%
+	request.setAttribute("tree", "tree");
+%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/taglibs.jsp"%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/jsLibs.jsp"%>
 
 
 
 <script type="text/javascript" >
+
+var authCodeList = ${authCodeList};
 
 var nodeCount = 0;
 
@@ -27,8 +32,9 @@ var setting2 = {
 			}
 		},
 		check: {
-			enable: false
+			enable: true
 		},
+		onCheck: zTreeOnCheck,
 		callback: {
 			onClick: zTreeOnClick,
  			beforeDrop: zTreeBeforeDrop,
@@ -40,7 +46,7 @@ var setting2 = {
 var fnCategoryDrawScrollBar = function(){
 	
 	$("#boardCategoryListDiv").css({
-		'height' : '419px'
+		'height' : '550px'
 		, 'visibility' : 'true'
 		, 'overflow-x': 'auto'
 		, 'overflow-y': 'auto'
@@ -48,6 +54,8 @@ var fnCategoryDrawScrollBar = function(){
 	});
 };
 
+function zTreeOnCheck(event, treeId, treeNode) {
+};
 
 function zTreeOnClick(event, treeId, treeNode) {
 	
@@ -276,7 +284,7 @@ function addTreeNode() {
 	var jsonObject = {
 		id : nodeCount++,
 		pId : 0,
-		name : "카테고리" + (addCount++),
+		name : "메뉴" + (addCount++),
 		boardId : "",
 		boardKind : "",
 		boardForm : "",
@@ -427,12 +435,17 @@ function expandNodes2(nodes) {
 };
 
 $(document).ready(function() {
-	var data = ${categoryList};
+	var data = ${menuList};
 	zNodes = $.parseJSON(data);
 	$.fn.zTree.init($("#categoryTreeObj"), setting2, zNodes);
 	zTree = $.fn.zTree.getZTreeObj("categoryTreeObj");
-
+	zTree.expandAll(true);
 	fnCategoryDrawScrollBar();
+	
+	//권한코드
+	for(var i=0;i<authCodeList.length;i++){
+		$("#authCd").append("<option value='"+authCodeList[i].cdSpec+"'>"+authCodeList[i].cdNm+"</option>");
+	}
 
 	for ( var i = 0; i < zNodes.length; i++) {
 		var json = zNodes[i];
@@ -585,13 +598,33 @@ $(document).ready(function() {
 <body>
 <div class="container">	
 	<div class="header">
-		<h1>사용자관리</h1>
+		<h1>메뉴관리</h1>
 		<div class="loc">
 			<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
 			<span><a href="#">관리자</a></span>
-			<span><strong>사용자관리</strong></span>
+			<span><strong>메뉴관리</strong></span>
 		</div>
 	</div>
+
+<div class="rbox">
+	<span class="rbox_top"></span>
+	<div class="rboxInner">
+		<ul>
+			<li>
+				<label for="pname">권한</label> 
+				<span class="selectN" style="width:100px">
+					<span>
+						<select title="" id="authCd">
+							<option value="">선택</option>
+						</select>
+					</span>
+				</span>
+				<a href="#" class="btn_set bt_style1"><span id="search">조회</span></a>
+			</li>
+		</ul>
+	</div>
+</div>
+<br/>
 
     <div class="tree_list">
     	<div class="p_left">
@@ -618,7 +651,7 @@ $(document).ready(function() {
 					<div class="lnb_clop"><a href="#" id="btn_all_close_ca"><span class="ico_allcl" ></span>모두닫음</a> | <a href="#" id="btn_all_open_ca"><span class="ico_allop"></span>모두펼침</a></div>
 				</div>
 			</div>	
-			<div class="tree" id="boardCategoryListDiv" style="height:419px !important ; border:1px solid #ddd">
+			<div class="tree" id="boardCategoryListDiv" style="height:550px !important ; border:1px solid #ddd">
 				<ul id="categoryTreeObj" class="ztree"></ul>
 			</div>
 	    </div>
@@ -638,8 +671,66 @@ $(document).ready(function() {
 	    			</a>
 	    		</div>
 	    	</div>
-    </div>
+    	
 
+	    	 <!--tbl_list-->   
+			 <div class="tbl_list te_center te90">
+		        <table summary="게시판리스트입니다." class="tbl_fixed">
+		            <caption>게시판리스트입니다.</caption>
+		            <colgroup>
+		                <col width="45" style="*width:25px">
+		                <col width="100" style="*width:80px">
+		                <col width="65" style="*width:45px">
+		                <col width="80" style="*width:60px">
+		                <col width="60" style="*width:40px">
+		                <col>
+		            </colgroup>
+		            <thead>
+		                <tr>
+		                    <th scope="col">선택</th>
+		                    <th scope="col">게시판명</th>
+		                    <th scope="col">신청자</th>
+		                    <th scope="col">생성일</th>
+		                    <th scope="col">모바일</th>
+		                    <th scope="col" class="last">상태</th>
+		                </tr>
+		            </thead>
+		       </table>
+		      <div class="tbl_scroll h430" >
+		        <table summary="게시판리스트입니다." class="tbl_fixed">
+		            <caption>게시판리스트입니다.</caption>
+		            <colgroup>
+		                <col width="45" style="*width:25px">
+		                <col width="100" style="*width:80px">
+		                <col width="65" style="*width:45px">
+		                <col width="80" style="*width:60px">
+		                <col width="60" style="*width:40px">
+		                <col>
+		            </colgroup>      
+			            <tbody id="bodyBoardList">
+			                <!-- <tr>
+			                    <td><input type="radio" title="선택"></td>
+			                    <td class="te_left"><a href="#" class="te_dot">게시판명게시판명게시판명게시판명게시판명</a></td>
+			                    <td>게시자</td>
+			                    <td>2012.02.12</td>
+			                    <td>연동</td>
+			                    <td>운영중</td>
+			                </tr>
+			            
+			                <tr>
+			                    <td><input type="radio" title="선택"></td>
+			                    <td class="te_left"><a href="#" class="te_dot">게시판명게시판명게시판명게시판명게시판명</a></td>
+			                    <td>게시자</td>
+			                    <td>2012.02.12</td>
+			                    <td>연동</td>
+			                    <td>운영중</td>
+			                </tr> -->
+						</tbody>			                
+			        </table>
+			    </div>
+		<!--//tbl_list-->
+	    </div>
+	</div>
 </div>
 </div>
 </body>

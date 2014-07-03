@@ -27,7 +27,7 @@
 $(document).ready(function () {
 	
 	for(var i=0;i<authCodeList.length;i++){
-		$("#authCd").append("<option value='"+authCodeList[i].cd+"'>"+authCodeList[i].cdNm+"</option>");
+		$("#authCd").append("<option value='"+authCodeList[i].cdSpec+"'>"+authCodeList[i].cdNm+"</option>");
 	}
 
 	for(var i=0;i<deptList.length;i++){

@@ -12,7 +12,7 @@
 
 var userId = '${admSysPsnUserInfoVO.userId}';
 var deptList = ${deptList};
-var authCodeList = ${admGenCommonCodeSpecList};
+var authCodeList = ${authCodeList};
 var deptCd = '${admSysPsnUserInfoVO.deptCode}';
 var authCd = '${admSysPsnUserInfoVO.authCd}';
 

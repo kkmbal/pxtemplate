@@ -11,7 +11,7 @@
 			}
 		},
 		check: {
-			enable: type == 1 ? true : false
+			enable: type == 1 ? true : false 
 		},
 		callback: {
 			onClick: zTreeOnClick,

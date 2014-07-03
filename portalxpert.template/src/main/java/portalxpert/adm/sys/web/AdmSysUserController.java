@@ -125,7 +125,7 @@ public class AdmSysUserController {
 		
 		
 		modelMap.put("admSysPsnUserInfoVO", admSysPsnUserInfoVO);
-		modelMap.put("admGenCommonCodeSpecList", JSONUtils.objectToJSON(admGenCommonCodeSpecList));
+		modelMap.put("authCodeList", JSONUtils.objectToJSON(admGenCommonCodeSpecList));
 		modelMap.put("deptList", JSONUtils.objectToJSON(deptList));
 		
 		
