@@ -555,9 +555,38 @@ this.PortalCommon = {};
 		};
 	})();	
 	
+	var transformToArraySibling = (function () {
+		var arr = [];
+		return function transformToArrayFormat(nodes, key, value){
+			if (!nodes) return;
+			var childKey = 'children';
+			if ($.isArray(nodes)) {
+				for (var i=0, l=nodes.length; i<l; i++) {
+					if (nodes[i][key] == value) {
+					var obj = {};
+						obj['id'] = nodes[i]['id'];
+						obj['pId'] = nodes[i]['pId'];
+						obj['name'] = nodes[i]['name'];
+						obj['page'] = nodes[i]['page'];
+						arr.push(obj);
+					}
+					if (nodes[i][childKey]){
+						(transformToArrayFormat(nodes[i][childKey], key, value));
+					}
+				}
+			}
+			return arr;
+		};
+	})();		
+	
 	// simple json data 에서 특정  id 하위 메뉴의  simple data menu 구함.
-	PortalCommon.getMenu = function(nodes, key, value){
-		return transformToArray(getNodeByParam(transformTozTreeFormat(nodes), key, value));
+	PortalCommon.getChildZMenuById = function(nodes, idValue){
+		return transformToArray(getNodeByParam(transformTozTreeFormat(nodes), "id", idValue));
+	};
+	
+	// simple json data 에서 특정  pId 동일 레벨 메뉴의  simple data menu 구함.
+	PortalCommon.getSiblingZMenuByPid = function(nodes, pIdValue){
+		return transformToArraySibling(transformTozTreeFormat(nodes), "pId", pIdValue);
 	};
 	
 	function leadingZeros(n, digits) {

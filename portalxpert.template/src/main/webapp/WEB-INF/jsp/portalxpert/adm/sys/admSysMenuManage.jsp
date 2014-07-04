@@ -685,10 +685,8 @@ $(document).ready(function() {
 		});		
 	});
 	
-	parent.document.getElementById("admFrame").height = "700px";
-	parent.document.getElementById("admFrame").height = $(document).height()+"px";
-		
-	console.log(JSON.stringify(PortalCommon.getMenu($.parseJSON(data), "id", "5")));
+	//console.log('PortalCommon.getSiblingZMenu',JSON.stringify(PortalCommon.getSiblingZMenuByPid($.parseJSON(data), "3")));
+	//console.log('PortalCommon.getChildZMenu',JSON.stringify(PortalCommon.getChildZMenuById($.parseJSON(data), "3")));
 	
 
 });
