@@ -584,7 +584,7 @@ this.PortalCommon = {};
 		return transformToArray(getNodeByParam(transformTozTreeFormat(nodes), "id", idValue));
 	};
 	
-	// simple json data 에서 특정  pId 동일 레벨 메뉴의  simple data menu 구함.
+	// simple json data 에서 특정  pId 하위 1 레벨 메뉴의  simple data menu 구함.
 	PortalCommon.getSiblingZMenuByPid = function(nodes, pIdValue){
 		return transformToArraySibling(transformTozTreeFormat(nodes), "pId", pIdValue);
 	};
