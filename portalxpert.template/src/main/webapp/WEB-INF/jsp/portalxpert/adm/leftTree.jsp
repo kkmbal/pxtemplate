@@ -82,7 +82,7 @@ $(function(){
 			if (data.jsonResult.success === true) {
 
 				var zNodes = $.parseJSON(data.menuList);
-				var treeObj = $.fn.zTree.init($("#menuTreeObj"), left_menu_setting, zNodes);
+				var treeObj = $.fn.zTree.init($("#menuTreeObj"), left_menu_setting, PortalCommon.getChildZMenuById(zNodes, "1")); //관리자메뉴
 				treeObj.expandAll(true);					
 				
 			};

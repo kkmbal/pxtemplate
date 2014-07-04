@@ -215,8 +215,8 @@ function addTreeNode() {
 		id : nodeCount++,
 		pId : 0,
 		name : "메뉴" + (addCount++),
-		page : "",
-		icon : RES_HOME+"/images/img/img_category.gif"
+		page : ""
+		//icon : RES_HOME+"/images/img/img_category.gif"
 	};
 	var idx = 0;
 	for ( var i = 0; i < zNodes.length; i++) {
@@ -591,13 +591,15 @@ $(document).ready(function() {
 						treeObj.updateNode(node, true);
 					}					
 					
+					$("#menuId").val("");
+					$("#menuNm").val("");
+					$("#menuUrl").val("");
 				};
 			}
 		});		
 	});
 	
-	//console.log('PortalCommon.getSiblingZMenu',JSON.stringify(PortalCommon.getSiblingZMenuByPid($.parseJSON(data), "3")));
-	//console.log('PortalCommon.getChildZMenu',JSON.stringify(PortalCommon.getChildZMenuById($.parseJSON(data), "3")));
-	
+	parent.document.getElementById("admFrame").height = "700px";
+	parent.document.getElementById("admFrame").height = $(document).height()+"px";
 
 });

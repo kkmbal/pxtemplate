@@ -8,7 +8,7 @@
 	<definition name=".defaultLayout" template="/WEB-INF/jsp/portalxpert/common/layout/defaultLayout.jsp">     
 	  	<put-attribute name="title" value="포털"/>   
 		<put-attribute name="header" value="/WEB-INF/jsp/portalxpert/common/layout/header.jsp" />                      	
-		<put-attribute name="left" value="/WEB-INF/jsp/portalxpert/common/layout/left.jsp" />                      	
+		<put-attribute name="left" value="/WEB-INF/jsp/portalxpert/common/layout/leftTree.jsp" />                      	
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/jsp/portalxpert/common/layout/footer.jsp" />                      	
 	</definition>
@@ -74,39 +74,6 @@
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
     </definition>
     
-    <!-- ############################## person ############################## -->
-    <definition name=".person/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
-    </definition>         
-    
-    <definition name=".person/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
-    </definition>         
-    
-    <definition name=".person/*/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
-    </definition>
-    
-    <definition name=".person/*/*/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
-    </definition>
-    
-    <!-- ############################## adw ############################## -->
-    <definition name=".adw/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
-    </definition>         
-    
-    <definition name=".adw/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
-    </definition>         
-    
-    <definition name=".adw/*/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
-    </definition>
-    
-    <definition name=".adw/*/*/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
-    </definition>	
     
     <!-- ############################## Admin ############################## -->
 	<!-- admin layout" -->    
@@ -154,22 +121,6 @@
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
     </definition>
     
-    <!-- ############################## setup ############################## -->
-    <definition name=".setup/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
-    </definition>         
-    
-    <definition name=".setup/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
-    </definition>         
-    
-    <definition name=".setup/*/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
-    </definition>
-    
-    <definition name=".setup/*/*/*/*" extends=".defaultLayout">        
-    	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
-    </definition>
     
     <!-- ############################## Self ############################## -->
     <!-- ###  body self ### -->
