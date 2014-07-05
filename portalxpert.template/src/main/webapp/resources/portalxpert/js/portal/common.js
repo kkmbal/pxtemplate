@@ -555,6 +555,29 @@ this.PortalCommon = {};
 		};
 	})();	
 	
+	PortalCommon.transformToArray2 = (function () {
+		var arr = [];
+		return function transformToArrayFormat(nodes){
+			if (!nodes) return;
+			var childKey = 'children';
+			if ($.isArray(nodes)) {
+				for (var i=0, l=nodes.length; i<l; i++) {
+					var obj = {};
+					obj['id'] = nodes[i]['id'];
+					obj['pId'] = nodes[i]['pId'];
+					obj['name'] = nodes[i]['name'];
+					obj['page'] = nodes[i]['page'];
+					obj['menuId'] = nodes[i]['menuId'];
+					arr.push(obj);
+					if (nodes[i][childKey]){
+						(transformToArrayFormat(nodes[i][childKey]));
+					}
+				}
+			}
+			return arr;
+		};
+	})();	
+	
 	var transformToArraySibling = (function () {
 		var arr = [];
 		return function transformToArrayFormat(nodes, key, value){
@@ -568,6 +591,7 @@ this.PortalCommon = {};
 						obj['pId'] = nodes[i]['pId'];
 						obj['name'] = nodes[i]['name'];
 						obj['page'] = nodes[i]['page'];
+						obj['menuId'] = nodes[i]['menuId'];
 						arr.push(obj);
 					}
 					if (nodes[i][childKey]){
@@ -581,7 +605,7 @@ this.PortalCommon = {};
 	
 	// simple json data 에서 특정  id 하위 메뉴의  simple data menu 구함.
 	PortalCommon.getChildZMenuById = function(nodes, idValue){
-		return transformToArray(getNodeByParam(transformTozTreeFormat(nodes), "id", idValue));
+		return transformToArray(getNodeByParam(transformTozTreeFormat(nodes), "menuId", idValue));
 	};
 	
 	// simple json data 에서 특정  pId 하위 1 레벨 메뉴의  simple data menu 구함.

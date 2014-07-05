@@ -93,8 +93,12 @@ var nodeCount = 0;
 					</colgroup>
 					<tbody>
 					<tr>
-						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">ID</label></th>
+						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">메뉴ID</label></th>
 						<td><input type="text" class="text" style="width:200px" title="아이디" id="menuId" name="menuId" disabled="disabled" /></td>
+					</tr>
+					<tr>
+						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">상위메뉴ID</label></th>
+						<td><input type="text" class="text" style="width:200px" title="아이디" id="menuPId" name="menuPId" disabled="disabled" /></td>
 					</tr>
 					<tr>
 						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">메뉴명</label></th>

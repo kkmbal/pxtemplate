@@ -23,12 +23,13 @@ $(function() {
 		success : function(data) {
 			if (data.jsonResult.success === true) {
 				var zNodes = $.parseJSON(data.menuList);
-				var topMenus = PortalCommon.getSiblingZMenuByPid(zNodes, "0");
+				var topMenus = PortalCommon.getSiblingZMenuByPid(zNodes, "0"); //최상단 메뉴
 				for(var i=0;i<topMenus.length;i++){
+					if(i == 6) return; // 상단 메뉴최대 갯수
 					if(topMenus[i].name != '관리자'){
 						var page = topMenus[i].page;
 						if(page.match(/^\//g)) page = page.substring(1);
-						$("#topMenu").append('<li><a href="${WEB_HOME}/'+page+'">'+topMenus[i].name+'</a></li>');
+						$("#topMenu").append('<li><a href="${WEB_HOME}/'+page+'?menuId='+topMenus[i].menuId+'">'+topMenus[i].name+'</a></li>');
 					}
 				}
 				

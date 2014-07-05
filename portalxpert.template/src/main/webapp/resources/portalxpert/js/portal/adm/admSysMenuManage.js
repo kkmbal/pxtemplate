@@ -17,8 +17,9 @@ var settingMenu = {
 			enable: true,
 			chkboxType : {"Y":"p", "N":"s"}
 		},
-		onCheck: zTreeOnCheck,
+		//onCheck: zTreeOnCheck,
 		callback: {
+			beforeCheck : zTreeBeforeCheck,
 			onClick: zTreeOnClick,
  			beforeDrop: zTreeBeforeDrop,
  			onDrop: zTreeOnDrop,
@@ -40,9 +41,16 @@ var fnCategoryDrawScrollBar = function(){
 function zTreeOnCheck(event, treeId, treeNode) {
 };
 
+function zTreeBeforeCheck(treeId, treeNode) {
+	if(authCd == 'SYSTEM'){
+		return false;
+	}	
+};
+
 function zTreeOnClick(event, treeId, treeNode) {
 	console.log(treeNode)
-	$("#menuId").val(treeNode.id);
+	$("#menuId").val(treeNode.menuId);
+	$("#menuPId").val(treeNode.pId);
 	$("#menuNm").val(treeNode.name);
 	$("#menuUrl").val(treeNode.page);
 	
@@ -92,16 +100,18 @@ function zTreeOnDrop(event, treeId, treeNodes, targetNode, moveType) {
 				}
 			}
 		}
-	}else{
+	}
+	/*
+	else{
+	   //정렬위해 id 변경 로직.
 		var moveNodeIdx = 0;
 		for ( var i = 0; i < zNodes.length; i++) {
 			var json = zNodes[i];
-			if (treeNodes[0].id == json.id) {
+			if (treeNodes[0].id == json.id && treeNodes[0].pId == json.pId) {
 				moveNodeIdx = i;
 				break;
 			}
 		}
-		
 		var moveNode = zNodes[moveNodeIdx];
 		var zTreeNodes = zTree.getNodesByParam("pId" ,moveNode.pId ,zTree.getNodeByParam("id" ,moveNode.pId ,""));
 
@@ -117,13 +127,15 @@ function zTreeOnDrop(event, treeId, treeNodes, targetNode, moveType) {
 					idMax = tree.id;
 				}
 			}			
-			
+
 			for(var i=idMin;i<=idMax;i++){
-				//zNodes[i-1].id = i;
 				zNodes[i].id = i;
 			}
 		}
-	}    
+	}
+	 */
+
+	console.log('after===>',JSON.stringify(zNodes))	
 };
 
 //드래그
@@ -144,66 +156,30 @@ function zTreeBeforeDrop(treeId, treeNodes, targetNode, moveType) {
 		var moveNodeIdx = 0;
 		for ( var i = 0; i < zNodes.length; i++) {
 			var json = zNodes[i];
-			if (treeNodes[0].id == json.id) {
+			if (treeNodes[0].id == json.id && treeNodes[0].pId == json.pId) {
 				moveNodeIdx = i;
 				break;
 			}
 		}
-			
+		
+		
 		var moveNode = zNodes[moveNodeIdx];
 		if(moveNode.pId != targetNode.pId){
-			alert('정렬 이동은 카테고리 밖으로 이동할 수 없습니다. ');
-	 		return false;
+			//alert('정렬 이동은 카테고리 밖으로 이동할 수 없습니다. ');
+	 		//return false;
+			zNodes[moveNodeIdx].pId = targetNode.pId;
+			var moveNodeObj = zNodes.splice(moveNodeIdx ,1);
+			zNodes.splice(pos_idx ,0 ,moveNodeObj[0]); //cut&&paste
 		}else{
 			var moveNodeObj = zNodes.splice(moveNodeIdx ,1);
 			zNodes.splice(pos_idx ,0 ,moveNodeObj[0]); //cut&&paste
 		}
+		
+		
+		
 	}
 
-	if (treeNodes[0].name == '미지정') {
-		alert('[미지정] 카테고리는 이동 할 수 없습니다.');
-		return false;
-	}
-
-	/* if (moveType != 'inner')
-	{
-		if (targetNode.pId == null)
-		{
-			if (treeNodes[0].boardId != '')
-			{
-				alert('게시판은 카테고리 안으로만 이동이 가능 합니다.');
-				return false;
-			}
-		}
-	} */
-
-	//	alert('게시판은 카테고리안으로만 이동이 가능합니다.');
-	//	zTree.cancelSelectedNode();
-
-	/* for (var i=0; i < zNodes.length; i++)
-	{
-		var json = zNodes[i];
-		if (treeNodes[0].id == json.id)
-		{
-			json.pId = targetNode.id;
-			break;
-		}
-	} */
-
-	/* if (treeNodes[0].pId == null)
-	{
-		for (var i=0; i < zNodes.length; i++)
-		{
-			var json = zNodes[i];
-			if (treeNodes[0].id == json.id)
-			{
-				json.pId = 0;
-				break;
-			}
-		}
-	} */
-
-	//treeReload(); 
+	
 	return true;
 
 };
@@ -215,7 +191,8 @@ function addTreeNode() {
 		id : nodeCount++,
 		pId : 0,
 		name : "메뉴" + (addCount++),
-		page : ""
+		page : "",
+		menuId : (nodeCount-1)
 		//icon : RES_HOME+"/images/img/img_category.gif"
 	};
 	var idx = 0;
@@ -245,10 +222,12 @@ function addTreeNode() {
 var renameTreeNode = function() {
 	var nodes = zTree.getSelectedNodes();
 
+	/*
 	if (nodes[0].name == '미지정') {
 		alert('미지정 카테고리는 수정할 수 없습니다.');
 		return;
 	}
+	*/
 
 	zTree.editName(nodes[0]);
 
@@ -277,7 +256,8 @@ function removeTreeNode() {
 	}
 
 	removeId(nodes[0].id);
-	$.fn.zTree.init($("#categoryTreeObj"), settingMenu, zNodes);
+	var treeObj = $.fn.zTree.init($("#categoryTreeObj"), settingMenu, zNodes);
+	checkState(treeObj);
 
 };
 
@@ -422,7 +402,7 @@ $(document).ready(function() {
 		for (var i=0; i < zNodes.length; i++)
 		{
 			var json = zNodes[i];
-			if ($("#menuId").val() == json.id)
+			if ($("#menuId").val() == json.menuId)
 			{
 				json.name = $("#menuNm").val();
 				json.page = $("#menuUrl").val();
@@ -434,6 +414,7 @@ $(document).ready(function() {
 		
 		
 		$("#menuId").val("");
+		$("#menuPId").val("");
 		$("#menuNm").val("");
 		$("#menuUrl").val("");
 		
@@ -458,7 +439,6 @@ $(document).ready(function() {
 	});
 
 	$("#btn_catageory_create").click(function() {//카테고리 생성
-		//
 		addTreeNode();
 	});
 
@@ -536,13 +516,24 @@ $(document).ready(function() {
 		for (var i=0; i < zNodes.length; i++){
 			var json = zNodes[i];
 			var node = treeObj.getNodeByParam("id", json.id, null);
-
-			if ( node.id == json.id && node.checked){
+			
+			if(authCd == 'SYSTEM'){
 				saveNodes.push(json);
+			}else{
+				if(node){
+					if ( node.id == json.id && node.checked){
+						saveNodes.push(json);
+					}
+				}
 			}
 		}
 
-		console.log(JSON.stringify(saveNodes));
+		console.log('saveNodes',JSON.stringify(saveNodes));
+		
+		if(saveNodes.length == 0) {
+			alert('메뉴지정 오류[다시 조회하세요].');
+			return;
+		}
 			
 		PortalCommon.getJson({
 			url : WEB_HOME+"/adm/sys/updateMenuAuth.do?format=json",
@@ -576,6 +567,7 @@ $(document).ready(function() {
 						$(".fl_left").hide();
 						$("#btn_board_update").hide();
 					}
+					authCd = data.authCd;
 					treeObj.checkAllNodes(false);
 					
 					for (var i=0; i < zNewNodes.length; i++)
@@ -583,15 +575,18 @@ $(document).ready(function() {
 						var json = zNewNodes[i];
 						var node = treeObj.getNodeByParam("id", json.id, null);
 
-						if ( node.id == json.id){
-							node.checked = true;
-						}else{
-							node.checked = false;
+						if(node){
+							if ( node.id == json.id){
+								node.checked = true;
+							}else{
+								node.checked = false;
+							}
+							treeObj.updateNode(node, true);
 						}
-						treeObj.updateNode(node, true);
 					}					
 					
 					$("#menuId").val("");
+					$("#menuPId").val("");
 					$("#menuNm").val("");
 					$("#menuUrl").val("");
 				};
@@ -601,5 +596,8 @@ $(document).ready(function() {
 	
 	parent.document.getElementById("admFrame").height = "700px";
 	parent.document.getElementById("admFrame").height = $(document).height()+"px";
+	
+	
+	
 
 });
