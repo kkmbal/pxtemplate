@@ -15,6 +15,7 @@ import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO;
 import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import portalxpert.common.config.Constant;
+import portalxpert.common.utils.CommUtil;
 import portalxpert.common.vo.UserInfoVO;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 
@@ -81,10 +82,36 @@ public class AdmSysUserServiceImpl extends AbstractServiceImpl implements AdmSys
     	try{
 	    	//로그인된 User 정보 세팅
 	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admSysPsnUserInfoVO.setRegrId((String)usrInfo.getId());
-	    	admSysPsnUserInfoVO.setRegrName((String)usrInfo.getName());
+	    	admSysPsnUserInfoVO.setRegrId(usrInfo.getId());
+	    	admSysPsnUserInfoVO.setRegrName(usrInfo.getName());
+	    	admSysPsnUserInfoVO.setUpdrId(usrInfo.getId());
+	    	admSysPsnUserInfoVO.setUpdrName(usrInfo.getName());
+	    	admSysPsnUserInfoVO.setDelYn("N");
 	    	
-	    	admSysMapper.insertPsnUserInfo(admSysPsnUserInfoVO);
+			AdmSysPsnUserInfoVO admSysUserInfo = admSysMapper.getAdmSysUserInfo(admSysPsnUserInfoVO);
+	    	
+	    	if(admSysUserInfo == null){
+	    		admSysMapper.insertPsnUserInfo(admSysPsnUserInfoVO);
+	    	}else{
+	    		admSysMapper.updatePsnUserInfo(admSysPsnUserInfoVO);
+	    	}
+	    	
+	    	//권한
+	    	AdmSysUserAuthVO admSysUserAuthVO = new AdmSysUserAuthVO();
+	    	admSysUserAuthVO.setUserId(admSysPsnUserInfoVO.getUserId());
+	    	admSysUserAuthVO.setRegrId(usrInfo.getId());
+	    	admSysUserAuthVO.setRegrName(usrInfo.getName());
+	    	admSysUserAuthVO.setUpdrId(usrInfo.getId());
+	    	admSysUserAuthVO.setUpdrName(usrInfo.getName());
+	    	admSysUserAuthVO.setAuthCd(admSysPsnUserInfoVO.getAuthCd());
+	    	
+	    	AdmSysUserAuthVO admSysUserAuthInfo = admSysMapper.getAdmSysUserAuthInfo(admSysUserAuthVO);
+	    	if(admSysUserAuthInfo == null){
+	    		admSysUserAuthVO.setDelYn("N");
+	    		admSysMapper.insertUserAuth(admSysUserAuthVO);
+	    	}else{
+	    		admSysMapper.updateUserAuth(admSysUserAuthVO);
+	    	}
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
@@ -104,6 +131,23 @@ public class AdmSysUserServiceImpl extends AbstractServiceImpl implements AdmSys
 	    	admSysPsnUserInfoVO.setUpdrName((String)usrInfo.getName());
 	    	
 	    	admSysMapper.updatePsnUserInfo(admSysPsnUserInfoVO);
+	    	
+	    	//권한
+	    	AdmSysUserAuthVO admSysUserAuthVO = new AdmSysUserAuthVO();
+	    	admSysUserAuthVO.setUserId(admSysPsnUserInfoVO.getUserId());
+	    	admSysUserAuthVO.setRegrId(usrInfo.getId());
+	    	admSysUserAuthVO.setRegrName(usrInfo.getName());
+	    	admSysUserAuthVO.setUpdrId(usrInfo.getId());
+	    	admSysUserAuthVO.setUpdrName(usrInfo.getName());
+	    	admSysUserAuthVO.setAuthCd(admSysPsnUserInfoVO.getAuthCd());
+	    	
+	    	AdmSysUserAuthVO admSysUserAuthInfo = admSysMapper.getAdmSysUserAuthInfo(admSysUserAuthVO);
+	    	if(admSysUserAuthInfo == null){
+	    		admSysUserAuthVO.setDelYn("N");
+	    		admSysMapper.insertUserAuth(admSysUserAuthVO);
+	    	}else{
+	    		admSysMapper.updateUserAuth(admSysUserAuthVO);
+	    	}
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}

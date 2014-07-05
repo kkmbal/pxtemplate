@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import portalxpert.adm.gen.sc.AdmGenCodeManageService;
 import portalxpert.adm.gen.vo.AdmGenCodeManageVO;
+import portalxpert.adm.sys.sc.AdmSysAuthService;
 import portalxpert.adm.sys.sc.AdmSysUserService;
+import portalxpert.adm.sys.vo.AdmSysAuthVO;
 import portalxpert.adm.sys.vo.AdmSysDeptInfo;
+import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO;
 import portalxpert.common.utils.CommUtil;
 import portalxpert.common.utils.JSONUtils;
+import portalxpert.common.vo.JSONResult;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -39,9 +44,10 @@ public class AdmSysUserController {
 	@Resource(name = "admSysUserService")
 	private AdmSysUserService admSysUserService;
 	
-	/** AdmStatService */
-	@Resource(name = "admGenCodeManageService")
-	private AdmGenCodeManageService admGenCodeManageService;
+	
+	
+	@Resource(name = "admSysAuthService")
+	private AdmSysAuthService admSysAuthService;
 	
     /** EgovPropertyService */
     @Resource(name = "propertiesService")
@@ -61,7 +67,7 @@ public class AdmSysUserController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/getAdmSysUserList")
-	public String getAdmBbsStatList(@ModelAttribute("admSysPsnUserInfoVO") AdmSysPsnUserInfoVO admSysPsnUserInfoVO ,ModelMap modelMap) throws Exception{
+	public String getAdmSysUserList(@ModelAttribute("admSysPsnUserInfoVO") AdmSysPsnUserInfoVO admSysPsnUserInfoVO ,ModelMap modelMap) throws Exception{
 		
 		/** PropertyService.sample */
 		admSysPsnUserInfoVO.setPageUnit(admSysPsnUserInfoVO.getPageUnit());
@@ -83,8 +89,13 @@ public class AdmSysUserController {
 		
 		paginationInfo.setTotalRecordCount(totCnt);
 		
+		//권한코드
+		AdmSysAuthVO admSysAuthVO = new AdmSysAuthVO();
+		List<AdmSysAuthVO> listAdmSysAuthVO = admSysAuthService.getAuchCodeList(admSysAuthVO);
+		
 		modelMap.put("paginationInfo", paginationInfo);
 		modelMap.put("admSysPsnUserInfoVO", admSysPsnUserInfoVO);
+		modelMap.put("authCodeList", listAdmSysAuthVO);
 		modelMap.put("notiList", notiList);
 		
 		
@@ -99,7 +110,7 @@ public class AdmSysUserController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/getAdmSysUserManage")
-	public String getAdmBbsStatList(@RequestParam(value="userId",required = true) String userId ,ModelMap modelMap) throws Exception{
+	public String getAdmSysUserManage(@RequestParam(value="userId",required = true) String userId ,ModelMap modelMap) throws Exception{
 		
 		AdmSysPsnUserInfoVO admSysPsnUserInfoVO = new AdmSysPsnUserInfoVO();
 		if(!CommUtil.isEmpty(userId)){
@@ -108,9 +119,9 @@ public class AdmSysUserController {
 		}
 		
 		//권한코드
-		AdmGenCodeManageVO admGenCodeManageVO = new AdmGenCodeManageVO();
-		admGenCodeManageVO.setCd("AUTH");
-		List<AdmGenCodeManageVO> admGenCommonCodeSpecList = admGenCodeManageService.getAdmGenCommonCodeSpecList(admGenCodeManageVO);
+		AdmSysAuthVO admSysAuthVO = new AdmSysAuthVO();
+		List<AdmSysAuthVO> listAdmSysAuthVO = admSysAuthService.getAuchCodeList(admSysAuthVO);
+		
 		
 		//부서코드
 		List<AdmSysPsnUserInfoVO> userDeptInfoList = admSysUserService.getUserDeptInfoList(new AdmSysPsnUserInfoVO());
@@ -125,12 +136,34 @@ public class AdmSysUserController {
 		
 		
 		modelMap.put("admSysPsnUserInfoVO", admSysPsnUserInfoVO);
-		modelMap.put("authCodeList", JSONUtils.objectToJSON(admGenCommonCodeSpecList));
+		modelMap.put("authCodeList", JSONUtils.objectToJSON(listAdmSysAuthVO));
 		modelMap.put("deptList", JSONUtils.objectToJSON(deptList));
 		
 		
 		return ".self/adm/sys/admSysUserManage";
 	}	
 
+	   /**
+	    * 사용자등록
+		* @param modelMap
+		* @return
+		* @throws Exception
+		*/
+	@RequestMapping(value = "/insertAdmUser")
+	public ModelMap insertAdmUser(@ModelAttribute("admSysPsnUserInfoVO") AdmSysPsnUserInfoVO admSysPsnUserInfoVO ,ModelMap modelMap, HttpSession session) throws Exception{
 	
+			JSONResult jsonResult = new JSONResult();
+				
+			try{
+				admSysUserService.insertPsnUserInfo(admSysPsnUserInfoVO, session);
+				
+		   	}catch (Exception e) {
+		   		jsonResult.setSuccess(false);
+		   		jsonResult.setMessage(messageSource.getMessage("common.error"));
+		   		jsonResult.setErrMessage(e.getMessage());
+			}
+			
+			modelMap.put("jsonResult", jsonResult);
+			return modelMap;
+	}
 }

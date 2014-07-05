@@ -8,19 +8,19 @@
 
 <script type="text/javascript">
 	
-	var pageIndex = '${admSysPsnUserInfoVO.pageIndex}';
-	var pageUnit = '${admSysPsnUserInfoVO.pageUnit}';
-	var searchKeyword = decodeURIComponent("${fn:replace(admSysPsnUserInfoVO.searchKeyword,'"', '&quot;')}");
-	var searchCondition = '${admSysPsnUserInfoVO.searchCondition}';	
+	var pageIndex = '${admSysAuthVO.pageIndex}';
+	var pageUnit = '${admSysAuthVO.pageUnit}';
+	var searchKeyword = decodeURIComponent("${fn:replace(admSysAuthVO.searchKeyword,'"', '&quot;')}");
+	var searchCondition = '${admSysAuthVO.searchCondition}';	
 	
 </script>
-<script type="text/javascript" src="${RES_HOME}/js/portal/adm/admSysUserList.js"></script>
+<script type="text/javascript" src="${RES_HOME}/js/portal/adm/admSysAuthList.js"></script>
 </head>
 
 <body>
 
-<form:form commandName="admSysPsnUserInfoVO" action="${WEB_HOME}/adm/sys/getAdmSysUserList.do" name="listForm" method="post">
-	<c:if test="${not empty admSysPsnUserInfoVO }">
+<form:form commandName="admSysAuthVO" action="${WEB_HOME}/adm/sys/getAdmSysAuthList.do" name="listForm" method="post">
+	<c:if test="${not empty admSysAuthVO }">
 	<form:hidden path="pageUnit" value="${pageUnit}"/>
 	<form:hidden path="pageIndex" />
 	<form:hidden path="searchCondition" />
@@ -29,11 +29,11 @@
 	
 <div class="container">	
 <div class="header">
-	<h1>사용자관리</h1>
+	<h1>권한관리</h1>
 	<div class="loc">
 		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
 		<span><a href="#">관리자</a></span>
-		<span><strong>사용자관리</strong></span>
+		<span><strong>권한관리</strong></span>
 	</div>
 </div>
  
@@ -45,19 +45,19 @@
 			<span>
 				<select title="" id="search_gubun">
 					<option value="">선택</option>
-					<option value="USER_NAME" ${admSysPsnUserInfoVO.searchCondition == 'USER_NAME' ? 'selected' : ''}>이름</option>
+					<option value="AUTH_NM" ${admSysAuthVO.searchCondition == 'AUTH_NM' ? 'selected' : ''}>이름</option>
 				</select>
 			</span>
 		</span>
 		<!-- //셀렉트박스 -->
-		<input type="text" value="${fn:replace(admSysPsnUserInfoVO.searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:450px" /> 
+		<input type="text" value="${fn:replace(admSysAuthVO.searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:450px" /> 
 		<a href="#" class="btn_set bt_style7" id="search"><span>검색</span></a>
 	</div>
 </div>
 <br/>
 <div class="btn_board_top">
 	<div class="fl">
-		<a href="#" id="createUser" class="btn_write"><span>등록</span></a> 
+		<a href="#" id="createAuth" class="btn_write"><span>등록</span></a> 
 	</div>
 	<div class="fr">
 		<span class="selectN" style="width:80px">
@@ -76,7 +76,7 @@
 <caption></caption>
 <colgroup>
 <col style="width:7%" />
-<col style="width:10%" />
+<col style="width:15%" />
 <col style="width:*" />
 <col style="width:11%" />
 <col style="width:11%" />
@@ -85,11 +85,11 @@
 <thead>
 <tr>
 	<th scope="col" class="f"><span>번호</span></th>
-	<th scope="col"><span>사용자ID</span></th>
-	<th scope="col"><span>사용자명</span></th>
-	<th scope="col"><span>부서</span></th>
-	<th scope="col"><span>담당업무</span></th>
-	<th scope="col" class="e"><span>권한</span></th>
+	<th scope="col"><span>권한코드</span></th>
+	<th scope="col"><span>권한명</span></th>
+	<th scope="col"><span>설명</span></th>
+	<th scope="col"><span>등록일자</span></th>
+	<th scope="col" class="e"><span>URL패턴</span></th>
 </tr>
 </thead>
 <tbody>
@@ -98,18 +98,12 @@
 		<c:forEach var="result" items="${notiList}" varStatus="status">	
 			<tr>
 				<td>${result.seq}</td>
-				<td>${result.userId}</td>
-				<td class="tit" title="${result.userName}"><a href="javascript:fnGetRegView('${result.userId}');" class="text_dot">${result.userName}</a> 
+				<td>${result.authCd}</td>
+				<td class="tit" title="${result.authNm}"><a href="javascript:fnGetRegView('${result.authCd}');" class="text_dot">${result.authNm}</a> 
 				</td>
-				<td>${result.deptFname}</td>
-				<td>${result.userJob}</td>
-				<td>
-					<select name="authCd${status.count}">
-					<c:forEach var="auth" items="${authCodeList}">
-						<option value="${auth.authCd}" ${result.authCd == auth.authCd ? 'selected' : ''}>${auth.authNm}</option>
-					</c:forEach>
-					</select>
-				</td>
+				<td>${result.authDesc}</td>
+				<td>${result.regDttm}</td>
+				<td>${result.urlPtn}</td>
 			</tr>
 		</c:forEach>
 	</c:when>

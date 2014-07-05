@@ -94,10 +94,11 @@ $(function(){
 	
 	
 	$("#btn_all_open_cm").click(function() {//모두열림
-		//location.reload();
+		var treeObj = $.fn.zTree.getZTreeObj("menuTreeObj");
 		treeObj.expandAll(true);
 	});
 	$("#btn_all_close_cm").click(function() {//모두닫힘
+		var treeObj = $.fn.zTree.getZTreeObj("menuTreeObj");
 		expandNodes(treeObj.getNodes());
 	});
 	

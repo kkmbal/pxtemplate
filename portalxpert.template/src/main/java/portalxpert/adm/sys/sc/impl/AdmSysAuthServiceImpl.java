@@ -5,15 +5,19 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import portalxpert.adm.sys.mapper.AdmSysMapper;
 import portalxpert.adm.sys.sc.AdmSysAuthService;
+import portalxpert.adm.sys.vo.AdmSysAuthVO;
 import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import portalxpert.common.config.Constant;
+import portalxpert.common.utils.CommUtil;
 import portalxpert.common.vo.UserInfoVO;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 
@@ -27,48 +31,75 @@ public class AdmSysAuthServiceImpl extends AbstractServiceImpl implements AdmSys
 	private final static Logger logger = LoggerFactory.getLogger(AdmSysAuthServiceImpl.class);
 	 
     /**
-     * 사용자 권한목록
-     * @param AdmSysUserAuthVO
-     * @return AdmSysPsnUserInfoVO
+     * 권한목록
+     * @param AdmSysAuthVO
+     * @return AdmSysAuthVO
      * @exception Exception
      */
-    public List<AdmSysUserAuthVO> getAdmSysUserAuthList(AdmSysUserAuthVO admSysUserAuthVO) throws Exception {
+    public List<AdmSysAuthVO> getAdmSysAuthList(AdmSysAuthVO admSysAuthVO) throws Exception {
     	try{
-    		return admSysMapper.getAdmSysUserAuthList(admSysUserAuthVO);
+    		return admSysMapper.getAdmSysAuthList(admSysAuthVO);
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
     }
     
     /**
-     * 사용자 권한목록 총수
+     * 권한목록 총수
      * @param AdmSysUserAuthVO
      * @return int
      * @exception Exception
      */
-    public int getAdmSysUserAuthListCnt(AdmSysUserAuthVO admSysUserAuthVO) throws Exception {
+    public int getAdmSysAuthListCnt(AdmSysAuthVO AdmSysAuthVO) throws Exception {
     	try{
-    		return admSysMapper.getAdmSysUserAuthListCnt(admSysUserAuthVO);
+    		return admSysMapper.getAdmSysAuthListCnt(AdmSysAuthVO);
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
     }
     
     /**
-     * 사용자 권한정보
+     *  권한정보
      * @param AdmSysUserAuthVO
      * @return AdmSysPsnUserInfoVO
      * @exception Exception
      */
-    public AdmSysUserAuthVO getAdmSysUserAuthInfo(AdmSysUserAuthVO admSysUserAuthVO)  throws Exception {
+    public AdmSysAuthVO getAdmSysAuthInfo(AdmSysAuthVO admSysAuthVO)  throws Exception {
     	try{
-    		return admSysMapper.getAdmSysUserAuthInfo(admSysUserAuthVO);
+    		return admSysMapper.getAdmSysAuthInfo(admSysAuthVO);
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
     }
     
-
+    /**
+     * 권한등록
+     * @param AdmSysUserAuthVO
+     * @return void
+     * @exception Exception
+     */
+    public void insertAuth(AdmSysAuthVO admSysAuthVO, HttpSession session) throws Exception{
+    	try{
+    		//로그인된 User 정보 세팅
+	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
+	    	admSysAuthVO.setRegrId((String)usrInfo.getId());
+	    	admSysAuthVO.setRegrName((String)usrInfo.getName());
+	    	admSysAuthVO.setUpdrId((String)usrInfo.getId());
+	    	admSysAuthVO.setUpdrName((String)usrInfo.getName());
+	    	admSysAuthVO.setDelYn("N");
+	    	
+	    	AdmSysAuthVO admSysAuthInfo = admSysMapper.getAdmSysAuthInfo(admSysAuthVO);
+	    	if(admSysAuthInfo == null){
+	    		admSysMapper.insertAuth(admSysAuthVO);
+	    	}else{
+	    		admSysMapper.updateAuth(admSysAuthVO);
+	    	}
+	    	
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}   
+    }        
+              
     
     /**
      * 사용자 권한등록
@@ -155,11 +186,51 @@ public class AdmSysAuthServiceImpl extends AbstractServiceImpl implements AdmSys
 	    	admSysMenuAuthVO.setUpdrName((String)usrInfo.getName());
 	    	
 	    	admSysMapper.updateMenuAuth(admSysMenuAuthVO);
+
+	    	//SYSTEM 외 권한 메뉴정보 Update
+	    	if("SYSTEM".equals(admSysMenuAuthVO.getAuthCd())){
+		    	
+				JSONArray jsonArr = JSONArray.fromObject(admSysMenuAuthVO.getMenuConts());
+				
+				admSysMenuAuthVO.setAuthCd("SYSTEM");
+				List<AdmSysMenuAuthVO> listAdmSysMenuAuthInfo = admSysMapper.getAdmSysNoSystemMenuAuthInfo(admSysMenuAuthVO);
+				
+	    		for(AdmSysMenuAuthVO vo : listAdmSysMenuAuthInfo){
+	    			JSONArray updateJsonArr = new JSONArray();
+	    			if(!CommUtil.isEmpty(vo.getMenuConts())){
+		    			JSONArray jsonArrSub = JSONArray.fromObject(vo.getMenuConts());
+						for (int i=0; i < jsonArr.size(); i++){
+							for (int j=0; j < jsonArrSub.size(); j++){
+
+								if(jsonArr.getJSONObject(i).getInt("menuId") == jsonArrSub.getJSONObject(j).getInt("menuId")){
+									updateJsonArr.add(jsonArr.getJSONObject(i));
+								}
+							}
+						}
+						admSysMenuAuthVO.setAuthCd(vo.getAuthCd());
+						admSysMenuAuthVO.setMenuConts(updateJsonArr.toString());
+						admSysMapper.updateMenuAuth(admSysMenuAuthVO);
+		    		}
+	    		}
+	    	}
+
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}   
     } 
     
  	
-
+    /**
+     * 권한코드 전체 목록
+     * @param AdmSysAuthVO
+     * @return void
+     * @exception Exception
+     */
+	public List<AdmSysAuthVO> getAuchCodeList(AdmSysAuthVO admSysAuthVO) throws Exception{
+    	try{
+    		return admSysMapper.getAuchCodeList(admSysAuthVO);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+	}
 }

@@ -116,7 +116,7 @@
         <property name="defaultErrorView" value="portalxpert/common/bizError"/>
         <property name="exceptionMappings">
             <props>
-                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">portalxpert/common/bizError</prop>
+                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">common/bizError</prop>
             </props>
         </property>
         <property name="order" value="0" />

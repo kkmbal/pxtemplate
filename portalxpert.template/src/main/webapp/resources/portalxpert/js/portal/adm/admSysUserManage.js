@@ -1,25 +1,5 @@
 
-	function fn_link_page(pageNo) {
-		$("#pageUnit").val(pageUnit);
-		$("#pageIndex").val(pageNo);
-		$('#listForm').submit();
-	}	
-
-	var fnSearchList = function(orderType) {
-		pageUnit = $('#list_cnt').val();
-		document.listForm.pageIndex.value = '1';
-		document.listForm.searchCondition.value = $("#search_gubun").val();
-		document.listForm.searchKeyword.value = $("#keyword").val().replace(/&quot;/g,"\"");
-
-		document.listForm.pageUnit.value = pageUnit;
-		document.listForm.submit();
-
-	};	
 	
-	function fnGetRegView(userId){
-		//PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysUserManage.do?userId='+userId, '사용자',400,460);
-		PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart2.do?type=2&callback=callbackOpenPerson', '개인선택',900,520);
-	}
 	
 	
 ////////////////////////////////onload/////////////////////////////////////////////////////////////////////
@@ -27,30 +7,64 @@
 $(document).ready(function () {
 	
 	for(var i=0;i<authCodeList.length;i++){
-		$("#authCd").append("<option value='"+authCodeList[i].cdSpec+"'>"+authCodeList[i].cdNm+"</option>");
+		$("#authCd").append("<option value='"+authCodeList[i].authCd+"'>"+authCodeList[i].authNm+"</option>");
 	}
 
 	for(var i=0;i<deptList.length;i++){
-		$("#deptCd").append("<option value='"+deptList[i].deptCode+"'>"+deptList[i].deptName+"</option>");
+		$("#deptCode").append("<option value='"+deptList[i].deptCode+"'>"+deptList[i].deptName+"</option>");
 	}
 	
-	$("#deptCd").val(deptCd);
+	$("#deptCode").val(deptCode);
 	$("#authCd").val(authCd);
 	if(userId != ''){
-		$('#userId').attr('disabled', 'true');
+		$('#userId_v').attr('disabled', 'true');
 	}
 	
-	$('#search').click(function() {//검색
-		fnSearchList('');
-	});
-	$('#keyword').keypress(function(event) {
-		if ( event.which == 13 ) {     
-			fnSearchList('');   
-		}
-	});
 	
 	$('#btnSave').click(function() {//등록
-		location.href = WEB_HOME+"/board100/createAdminBbsView.do";
+		if($("#userId_v").val() == ""){
+			alert("아이디를 입력하세요.");
+			return;
+		}
+		if($("#userId_v").val() != ""){
+			$("#userId").val($("#userId_v").val());
+		}
+		if($("#userName").val() == ""){
+			alert("이름을 입력하세요.");
+			return;
+		}
+		if($("#userPassword").val() == ""){
+			alert("비밀번호를 입력하세요.");
+			return;
+		}
+		if($("#userPassword").val() != $("#userPassword2").val()){
+			alert("비밀번호를 다시 입력하세요.");
+			$("#userPassword2").focus();
+			return;
+		}
+		if($("#deptCode").val() == ""){
+			alert("부서를 선택하세요.");
+			return;
+		}
+		if($("#authCd").val() == ""){
+			alert("권한을 선택하세요.");
+			return;
+		}
+		
+		if (!confirm('등록 하시겠습니까?')) {
+			return;
+		}
+		
+		PortalCommon.getJson({
+			url : WEB_HOME+"/adm/sys/insertAdmUser.do?format=json",
+			data: $("form[name=listForm]").serialize(),
+			success : function(data) {
+				if (data.jsonResult.success === true) {
+					opener.location.reload();
+					self.close(); 
+				}
+			}
+		});
 	});	
 	
 	$("#btnClose").click(function(){

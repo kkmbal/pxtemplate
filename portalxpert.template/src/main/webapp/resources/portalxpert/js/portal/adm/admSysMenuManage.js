@@ -531,7 +531,7 @@ $(document).ready(function() {
 		console.log('saveNodes',JSON.stringify(saveNodes));
 		
 		if(saveNodes.length == 0) {
-			alert('메뉴지정 오류[다시 조회하세요].');
+			alert('메뉴를 한건이상 체크하세요.');
 			return;
 		}
 			

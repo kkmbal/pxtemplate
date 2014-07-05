@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import portalxpert.adm.sys.vo.AdmSysAuthVO;
 import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 
@@ -12,28 +13,37 @@ public interface AdmSysAuthService {
  
     
     /**
-     * 사용자 권한목록
+     *  권한목록
      * @param AdmSysUserAuthVO
      * @return AdmSysPsnUserInfoVO
      * @exception Exception
      */
-    public List<AdmSysUserAuthVO> getAdmSysUserAuthList(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    public List<AdmSysAuthVO> getAdmSysAuthList(AdmSysAuthVO admSysAuthVO) throws Exception;    
     
     /**
-     * 사용자 권한목록 총수
+     *  권한목록 총수
      * @param AdmSysUserAuthVO
      * @return int
      * @exception Exception
      */
-    public int getAdmSysUserAuthListCnt(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    public int getAdmSysAuthListCnt(AdmSysAuthVO admSysAuthVO) throws Exception;    
     
     /**
-     * 사용자 권한정보
+     *  권한정보
      * @param AdmSysUserAuthVO
      * @return AdmSysPsnUserInfoVO
      * @exception Exception
      */
-    public AdmSysUserAuthVO getAdmSysUserAuthInfo(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    public AdmSysAuthVO getAdmSysAuthInfo(AdmSysAuthVO admSysAuthVO) throws Exception;    
+    
+    /**
+     * 권한등록
+     * @param AdmSysUserAuthVO
+     * @return void
+     * @exception Exception
+     */
+    public void insertAuth(AdmSysAuthVO admSysAuthVO, HttpSession session) throws Exception;    
+       
     
     /**
      * 사용자 권한등록
@@ -73,7 +83,15 @@ public interface AdmSysAuthService {
      * @return void
      * @exception Exception
      */
-    public void updateMenuAuth(AdmSysMenuAuthVO admSysMenuAuthVO, HttpSession session) throws Exception; 
+    public void updateMenuAuth(AdmSysMenuAuthVO admSysMenuAuthVO, HttpSession session) throws Exception;
+
+    /**
+     * 권한코드 전체 목록
+     * @param AdmSysAuthVO
+     * @return void
+     * @exception Exception
+     */
+	public List<AdmSysAuthVO> getAuchCodeList(AdmSysAuthVO admSysAuthVO) throws Exception; 
     
  	
 

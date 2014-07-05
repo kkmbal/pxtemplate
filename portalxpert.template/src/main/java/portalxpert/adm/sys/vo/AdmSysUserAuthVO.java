@@ -6,7 +6,6 @@ public class AdmSysUserAuthVO  extends SearchConditionVO {
 	private String userId;
 	private String userNm;
 	private String authCd;
-	private String authNm;
 	private String delYn;
 	private String seq;
 	private String regrId;
@@ -62,12 +61,6 @@ public class AdmSysUserAuthVO  extends SearchConditionVO {
 	}
 	public void setAuthCd(String authCd) {
 		this.authCd = authCd;
-	}
-	public String getAuthNm() {
-		return authNm;
-	}
-	public void setAuthNm(String authNm) {
-		this.authNm = authNm;
 	}
 	public String getDelYn() {
 		return delYn;

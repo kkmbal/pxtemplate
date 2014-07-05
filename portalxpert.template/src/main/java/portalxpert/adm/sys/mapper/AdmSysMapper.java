@@ -3,6 +3,7 @@ package portalxpert.adm.sys.mapper;
 import java.util.List;
 
 import portalxpert.adm.gen.vo.AdmGenLinkVO;
+import portalxpert.adm.sys.vo.AdmSysAuthVO;
 import portalxpert.adm.sys.vo.AdmSysBbsNotiApndFileVO;
 import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO;
@@ -195,20 +196,44 @@ public interface AdmSysMapper {
     public void updatePsnUserInfo(AdmSysPsnUserInfoVO admSysPsnUserInfoVO) throws Exception;  
     
     /**
-     * 사용자 권한목록
+     *  권한목록
      * @param AdmSysUserAuthVO
      * @return AdmSysPsnUserInfoVO
      * @exception Exception
      */
-    public List<AdmSysUserAuthVO> getAdmSysUserAuthList(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    public List<AdmSysAuthVO> getAdmSysAuthList(AdmSysAuthVO admSysAuthVO) throws Exception;    
     
     /**
-     * 사용자 권한목록 총수
+     *  권한목록 총수
      * @param AdmSysUserAuthVO
      * @return int
      * @exception Exception
      */
-    public int getAdmSysUserAuthListCnt(AdmSysUserAuthVO admSysUserAuthVO) throws Exception;    
+    public int getAdmSysAuthListCnt(AdmSysAuthVO admSysAuthVO) throws Exception;    
+    
+    /**
+     *  권한정보
+     * @param AdmSysUserAuthVO
+     * @return AdmSysPsnUserInfoVO
+     * @exception Exception
+     */
+    public AdmSysAuthVO getAdmSysAuthInfo(AdmSysAuthVO admSysAuthVO) throws Exception;    
+    
+    /**
+     * 권한등록
+     * @param AdmSysUserAuthVO
+     * @return void
+     * @exception Exception
+     */
+    public void insertAuth(AdmSysAuthVO admSysAuthVO) throws Exception;    
+    
+    /**
+     * 권한수정
+     * @param AdmSysUserAuthVO
+     * @return void
+     * @exception Exception
+     */
+    public void updateAuth(AdmSysAuthVO admSysAuthVO) throws Exception;     
     
     /**
      * 사용자 권한정보
@@ -240,7 +265,15 @@ public interface AdmSysMapper {
      * @return AdmSysMenuAuthVO
      * @exception Exception
      */
-    public AdmSysMenuAuthVO getAdmSysMenuAuthInfo(AdmSysMenuAuthVO admSysMenuAuthVO) throws Exception;    
+    public AdmSysMenuAuthVO getAdmSysMenuAuthInfo(AdmSysMenuAuthVO admSysMenuAuthVO) throws Exception;
+    
+    /**
+     * 메뉴 권한정보
+     * @param AdmSysMenuAuthVO
+     * @return AdmSysMenuAuthVO
+     * @exception Exception
+     */
+    public List<AdmSysMenuAuthVO> getAdmSysNoSystemMenuAuthInfo(AdmSysMenuAuthVO admSysMenuAuthVO) throws Exception;    
     
     /**
      * 메뉴 권한등록
@@ -266,4 +299,11 @@ public interface AdmSysMapper {
      */
     public List<AdmSysPsnUserInfoVO> getUserDeptInfoList(AdmSysPsnUserInfoVO admSysPsnUserInfoVO) throws Exception;    
     
+    /**
+     * 권한코드 전체 목록
+     * @param AdmSysAuthVO
+     * @return void
+     * @exception Exception
+     */
+	public List<AdmSysAuthVO> getAuchCodeList(AdmSysAuthVO admSysAuthVO) throws Exception; 
 }
