@@ -361,8 +361,7 @@ $(document).ready(function() {
 	
 	//권한코드
 	for(var i=0;i<authCodeList.length;i++){
-		$("#authCd").append("<option value='"+authCodeList[i].cdSpec+"'>"+authCodeList[i].cdNm+"</option>");
-		$("#authCd2").append("<option value='"+authCodeList[i].cdSpec+"'>"+authCodeList[i].cdNm+"</option>");
+		$("#authCd").append("<option value='"+authCodeList[i].authCd+"'>"+authCodeList[i].authNm+"</option>");
 	}
 
 	for ( var i = 0; i < zNodes.length; i++) {
