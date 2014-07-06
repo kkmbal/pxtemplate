@@ -38,7 +38,7 @@ var fn_admGen_link_insert = function(){
 /* 링크분류 수정화면 */
 var fn_admGen_link_modify = function(linkCatId,linkCd){
 	PortalCommon.popupWindowCenter('${WEB_HOME}/adm/gen/getAdmGenSysLink.do?linkCatId='+ linkCatId +'&linkCd=' + linkCd
-			,'linkModify',500,310);
+			,'linkModify',500,330);
 };
 
 /* 링크분류 삭제 */
@@ -152,17 +152,16 @@ var fnAdwWin = function(url, popupYn) {
 
 </script>
 			
-	<!-- web_navi -->
-	<div class="web_navi"> 
-		<ul>
-			<li>Home</li>
-			<li>관리자</li>
-			<li>포털관리</li>
-			<li>연계관리</li>
-			<li>링크관리</li>
-		</ul>
+<body>
+<div class="container">	
+<div class="header">
+	<h1>링크관리</h1>
+	<div class="loc">
+		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
+		<span><a href="#">관리자</a></span>
+		<span><strong>링크관리</strong></span>
 	</div>
-	<!--//web_navi-->
+</div>
 	
 	<!--tab-->
 	<div class="tab_1">
@@ -183,91 +182,80 @@ var fnAdwWin = function(url, popupYn) {
 
 			<!--search-->
 			<!--title-->
-			<p class="title_sub">링크 등록</p>
+			<h2>링크 등록</h2>
 			<!--//title-->
 			<!--data-->
 			<div class="tbl_onedata">
-				<table summary="링크 등록">
-					<caption>링크 등록</caption>
-					<colgroup>
-						<col width="11%">
-						<col width="19%">
-						<col width="9%">
-						<col>
-						<col width="8%">
-						<col width="9%">
-						<col width="10%">
-						<col width="8%">
-					</colgroup>
-					<tbody>
-						<tr>
-							<th scope="row"><span class="bl_red"><!--필수--></span>링크분류</th>
-							<td>
-								<select id="linkCatId" name="linkCatId" title="링크분류">
-								<c:forEach var="result" items="${sysLinkCatList}" varStatus="i">
-									<option value="${result.linkCatId}" <c:if test="${result.linkCatId == pLINK_CAT_ID}">selected='selected'</c:if>>${result.linkCatNm}</option>
-								</c:forEach>
-							</select>
-							</td>
-							<th scope="row"><span class="bl_red"><!--필수--></span>링크명</th>
-							<td><input type="text" id="linkNm" name="linkNm" title="링크명" class="inp_all"></td>
-							<th scope="row">순서</th>
-							<td>
-								<select id="linkOrder" name="linkOrder" title="순서">
-								<c:forEach var="order" begin="1" end="${paginationInfo.totalRecordCount+1}" step="1">
-									<option value="${order}" <c:if test="${order == paginationInfo.totalRecordCount+1}">selected="selected"</c:if>>${order}</option>
-								</c:forEach>
-								</select>
-							</td>
-							<th scope="row">팝업사용</th>
-							<td><input type="checkbox" title="팝업사용" id="popupUseGb" name="popupUseGb" value="Y" <c:if test="${sysLink.popupUseGb eq 'Y'}">checked='checked'</c:if>></td>
-						</tr>
-						<tr>
-							<th scope="row"><span class="bl_red"><!--필수--></span>링크 주소</th>
-							<td colspan="7"><input type="text" id="linkAddress" name="linkAddress" title="링크주소" class="inp_all"></td>
-						</tr>
-						<tr>
-							<th scope="row">약어명</th>
-							<td colspan="7"><input type="text" id="linkSnm" name="linkSnm" title="약어명" ></td>
-						</tr>
-					</tbody>
-				</table>
+			
+			<table class="tbl_form" summary="링크 등록">
+			<caption>링크 등록</caption>
+			<colgroup>
+				<col style="width:15%" />
+				<col style="width:35%" />
+				<col style="width:15%" />
+				<col style="width:35%" />
+			</colgroup>
+			<tbody>
+			<tr>
+				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">링크분류</label></th>
+				<td>
+					<select id="linkCatId" name="linkCatId" title="링크분류">
+						<c:forEach var="result" items="${sysLinkCatList}" varStatus="i">
+							<option value="${result.linkCatId}" <c:if test="${result.linkCatId == pLINK_CAT_ID}">selected='selected'</c:if>>${result.linkCatNm}</option>
+						</c:forEach>
+					</select>
+				</td>
+				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input03">링크명</label></th>
+				<td><input type="text"  class="text" style="width:210px" title="링크명" id="linkNm" name="linkNm" ></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="input02">순서</label></th>
+				<td>
+					<select id="linkOrder" name="linkOrder" title="순서">
+					<c:forEach var="order" begin="1" end="${paginationInfo.totalRecordCount+1}" step="1">
+						<option value="${order}" <c:if test="${order == paginationInfo.totalRecordCount+1}">selected="selected"</c:if>>${order}</option>
+					</c:forEach>
+					</select>
+				</td>
+				<th scope="row"><label for="input03">팝업사용</label></th>
+				<td><input type="checkbox" title="팝업사용" id="popupUseGb" name="popupUseGb" value="Y" <c:if test="${sysLink.popupUseGb eq 'Y'}">checked='checked'</c:if>></td>
+			</tr>
+			<tr>
+				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">링크주소</label></th>
+				<td colspan="3"><input type="text"  class="text" style="width:560px" title="링크주소" id="linkAddress" name="linkAddress" ></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="input02">약어명</label></th>
+				<td colspan="3"><input type="text"  class="text" style="width:560px" title="약어명" id="linkSnm" name="linkSnm" ></td>
+			</tr>
+			</tbody>
+			</table>			
 			</div>
 			<!--data-->
+			<br>
 			<!--button-->
-			<div class="btn_area">
-				<div class="fl_right">
-					<a onclick="fn_admGen_link_insert();" class="btn_data">
-						<span class="btnin_icon"><!--버튼아이콘--></span>
-						<span class="btn_text">등록</span>
-					</a>
+			<div class="btn_board_top">
+				<div class="fr">
+					<a href="#" class="btn_set bt_style3" onclick="fn_admGen_link_insert();"><span>등록</span></a>
 				</div>
 			</div>
 			<!--//button-->
 			<!--title-->
-			<p class="title_sub">링크 목록</p>
+			<h2>링크 목록</h2>
 			<!--//title-->
 			<!--search-->
-			<div class="search_area">
-				<table summary="링크분류 검색">
-					<caption>링크분류 검색</caption>
-					<colgroup>
-						<col width="10%">
-						<col>
-					</colgroup>
-					<tbody>
-						<tr>
-							<th scope="row">링크 검색</th>
-							<td><input type="text" id="searchKeyword" name="searchKeyword" title="검색어 입력"></td>
-						</tr>
-					</tbody>
-				</table>
-				<a class="btn_search" onclick="fn_admGen_linkCtlg_search();" title="검색"><!--검색버튼--></a>
-				<span class="sch_tl"><!--top,left--></span>
-				<span class="sch_tr"><!--top,right--></span>
-				<span class="sch_br"><!--bottom,right--></span>
-				<span class="sch_bl"><!--bottom,left--></span>
-			</div>
+			<div class="rbox">
+				<span class="rbox_top"></span>
+				<div class="rboxInner">
+					<!-- 셀렉트박스 -->
+					<span style="font-weight:bold;width:100px">
+						링크검색
+					</span>
+					<!-- //셀렉트박스 -->
+					<input type="text" id="searchKeyword" name="searchKeyword" title="검색어 입력" class="text ml5mr10" style="width:450px" /> 
+					<a href="#" class="btn_set bt_style7" id="search" onclick="fn_admGen_linkCtlg_search();"><span>검색</span></a>
+				</div>
+			</div>			
 			<!--//search-->
 			
 			<!-- page unit -->
@@ -318,7 +306,7 @@ var fnAdwWin = function(url, popupYn) {
 			<!--//list-->
 			
 			<!--paginate-->
-			<div id="paging" class="paginate">
+			<div id="paging" class="paging">
 				<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_admGen_link_linkPage" />
 				<form:hidden path="pageIndex" />
 			</div>
@@ -344,3 +332,7 @@ var fnAdwWin = function(url, popupYn) {
 		
 	</div>
 	<!--//tab-->
+	
+	</div>
+	</body>
+</html>	

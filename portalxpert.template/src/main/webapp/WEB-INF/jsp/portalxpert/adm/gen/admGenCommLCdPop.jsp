@@ -6,7 +6,7 @@
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/taglibs.jsp"%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/jsLibs.jsp"%>
 
-<script type="text/javascript">s
+<script type="text/javascript">
 
 /* 상위코드 추가 및 수정된 내용 저장 */
 var fn_adm_code_save = function(){
@@ -45,7 +45,7 @@ $("document").ready(function(){
 		,rules : {
 			cd : {
 				required : true
-				,maxByte	: 3
+				,maxByte	: 10
 				,invalidKor	: true
 			}
 			,cdNm : {
@@ -76,53 +76,45 @@ $("document").ready(function(){
 	<!-- popup 본문 -->
 	<form:form commandName="admGenCodeManageVO" name="popForm" id="popForm" method="post">
 	 	<div class="pop_post clearfix">
-			<!--tbl_blue-->                                    
-			<div class="tbl_blue">
-			    <table summary="코드/등록 , 수정합니다.">
-			        <caption>코드,코드명,코드설명</caption>
-			        <colgroup>
-			            <col width="20%">
-			            <col>
-			         </colgroup> 
-			        <tbody>
-			            <tr>
-			                <th scope="row">코드</th>
-<!-- 			                <td><input type="text" title="코드를 입력하세요"></td> -->
-			                <td><input type="text" id="cd" name="cd" title="상위코드명" maxlength="3" size="3" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.cd} readonly="readonly"</c:if>></td>
-			            </tr>
-			            <tr>
-			                <th scope="row">코드명</th>
-<!-- 			                <td><input type="text" title="코드명를 입력하세요"></td> -->
-			                <td><input type="text" id="cdNm" name="cdNm" title="코드명" maxlength="50" size="30" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.cdNm} </c:if>></td>
-			            </tr>
-			            <tr>
-			                <th scope="row">코드설명</th>
-<!-- 			                <td><input type="text" title="코드설명를 적으세요"></td> -->
-			                <td><input type="text" id="remark" name="remark" title="코드설명" maxlength="2000" size="30" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.remark} </c:if>></td>
-			            </tr>
-			        </tbody>
-			    </table>
-			</div>
-			<!--//tbl_blue-->
-		<!--btn_area-->         
-		<div class="btn_area ma_top15">
-			<div class="fl_cen">
-				<a href="#" class="btn_basic2" onclick="fn_adm_code_save();">
-					<span class="fo_bold btn_text">등록</span>
-				</a>
-				<a href="#" class="btn_basic2" onclick="popForm.reset();">
-					<span class="fo_bold btn_text">초기화</span>
-				</a>
-				<a href="#" class="btn_basic2" onclick="self.close();">
-					<span class="fo_bold btn_text">닫기</span>
-				</a>
-			</div>
-		</div>
-		<!--//btn_area-->  
+			<table class="tbl_form" summary="제목에 대한 입력테이블입니다.">
+			<caption>제목</caption>
+			<colgroup>
+				<col style="width:20%" />
+				<col style="*" />
+			</colgroup>
+			<tbody>
+			<tr>
+				<th scope="row"><label for="input02">코드</label></th>
+				<td><input type="text"  class="text" style="width:340px" title="코드" maxlength="10" id="cd" name="cd" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.cd} readonly="readonly"</c:if> ></td>
+			</tr>			
+			<tr>
+				<th scope="row"><label for="input02">코드명</label></th>
+				<td><input type="text"  class="text" style="width:340px" title="코드명" maxlength="50" id="cdNm" name="cdNm" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.cdNm} </c:if> ></td>
+			</tr>			
+			<tr>
+				<th scope="row"><label for="input02">코드설명</label></th>
+				<td><input type="text"  class="text" style="width:340px" title="코드설명" maxlength="2000" id="remark" name="remark" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.remark} </c:if> ></td>
+			</tr>			
+			</tbody>
+			</table>	 	
 		</div>
 		<!-- popup 본문 -->
 	</form:form>
 	</div>
+	
+	<!-- popup 본문 -->
+	<div class="pop_footer">
+		<!-- 버튼영역 -->
+		<div style="text-align:center;">
+			<div class="rbox_btns">
+				<a href="#" class="btn_set bt_style3" id="btnOK" onclick="fn_adm_code_save();"><span>등록</span></a>
+				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="popForm.reset();"><span>초기화</span></a>
+				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="self.close();"><span>닫기</span></a>
+			</div>
+		</div>
+		<!-- //버튼영역 -->	     
+	 </div>  
+	 	
 </div>	
 <!--//pop_wrap-->
 </body>

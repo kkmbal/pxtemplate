@@ -130,17 +130,16 @@ $("document").ready(function(){
 
 </script>
 
-	<!-- web_navi -->
-	<div class="web_navi">
-		<ul>
-			<li>Home</li>
-			<li>관리자</li>
-			<li>포털관리</li>
-			<li>공통코드관리</li>
-			<li>세부코드</li>
-		</ul>
+<body>
+<div class="container">	
+<div class="header">
+	<h1>공통코드관리</h1>
+	<div class="loc">
+		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
+		<span><a href="#">관리자</a></span>
+		<span><strong>공통코드관리</strong></span>
 	</div>
-	<!--//web_navi-->
+</div>
 	
 	
 	<!--tab-->
@@ -154,59 +153,44 @@ $("document").ready(function(){
 		<!-- //제목부분 -->
 		<!-- 내용부분 -->
 			<div class="tab_post">
-			
-				<!--button-->
-				<div class="btn_area">
-					<div class="fl_left">
-						<a href="#" onclick="fn_adm_code_add();" class="btn_all">
-							<span class="btn_text">추가</span>
-						</a>
-						<a href="#" onclick="fn_adm_code_update();" class="btn_all">
-							<span class="btn_text">수정</span>
-						</a>
-						<a href="#" onclick="fn_adm_code_delete();" class="btn_all">
-							<span class="btn_text">삭제</span>
-						</a>
-					</div>
-				</div>
-				<!--//button-->
-				
 				<form:form commandName="admGenCodeManageVO" name="listForm" method="post">
 				<input type="hidden" name="cdSpec" id="cdSpec">
-				<!--search-->
-				<div class="search_area">
-					<table summary="코드 검색">
-						<caption>코드 검색</caption>
-						<colgroup>
-							<col width="14%">
-							<col>
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">상위코드 선택</th>
-								<td>
-									<select title="검색할 코드 선택" id="cd" name="cd">
-										<c:forEach var="result" items="${admGenCodeTypeList}" varStatus="status">
-											<option value="${result.cd}" <c:if test="${result.cd==pSearch.cd}"> selected="selected" </c:if> ><c:out value="${result.cd} - ${result.cdNm}"/></option>
-										</c:forEach>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">세부 코드명</th>
-								<td>
-									<input type="text" id="searchKeyword" name="searchKeyword" title="코드 검색 입력" value="${pSearch.searchKeyword}">
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<a class="btn_search" href="#" onclick="fn_adm_code_search();"><!--검색버튼--></a>
-					<span class="sch_tl"><!--top,left--></span>
-					<span class="sch_tr"><!--top,right--></span>
-					<span class="sch_br"><!--bottom,right--></span>
-					<span class="sch_bl"><!--bottom,left--></span>
+
+				<div class="rbox">
+					<span class="rbox_top"></span>
+					<div class="rboxInner">
+						<ul>
+							<li>
+								<label for="subtitle">상위코드</label>
+								<select title="검색할 코드 선택" id="cd" name="cd">
+									<c:forEach var="result" items="${admGenCodeTypeList}" varStatus="status">
+										<option value="${result.cd}" <c:if test="${result.cd==pSearch.cd}"> selected="selected" </c:if> ><c:out value="${result.cd} - ${result.cdNm}"/></option>
+									</c:forEach>
+								</select>
+							</li>				
+							<li>
+								<label for="subtitle">세부코드명</label>
+								<input type="text" id="searchKeyword" name="searchKeyword" title="코드 검색 입력" value="${fn:replace(pSearch.searchKeyword,'"', '&quot;')}" class="text" style="width:554px">
+							</li>				
+						</ul>
+						<div class="rbox_btns">
+							<a href="#" class="btn_set bt_style7" onclick="fn_adm_code_search();"><span>검색</span></a> 
+<!-- 							<a href="#" class="btn_set bt_style6"><span>초기화</span></a> -->
+						</div>		
+					</div>
+				</div>			
+				<br/>	
+			
+				<!--  버튼영역 -->
+				<div class="btn_board_top">
+					<div class="fl">
+						<a href="#" onclick="fn_adm_code_add();" class="btn_set bt_style2 btn_modify"><span>추가</span></a>
+						<a href="#" onclick="fn_adm_code_update();" class="btn_set bt_style2 btn_delete"><span>수정</span></a>
+						<a href="#" onclick="fn_adm_code_delete();" class="btn_set bt_style2 btn_print"><span>삭제</span></a>
+					</div>
 				</div>
-				<!--//search-->
+				<!-- // 버튼영역 -->
+							
 				<!-- page unit -->
 				<div class="select te_right" >
 					<c:out value="${pSearch.currentRecordCount}"/> 건
@@ -245,7 +229,7 @@ $("document").ready(function(){
 				
 				<!--//list-->
 				<!--paginate-->
-				<div id="paging" class="paginate">
+				<div id="paging" class="paging">
 					<ui:pagination paginationInfo = "${paginationInfo}"
 							   type="image"
 							   jsFunction="fn_adm_code_link_page"
@@ -254,22 +238,12 @@ $("document").ready(function(){
 				</div>
 				<!--//paginate-->
 				</form:form>
-				<!--button-->
-				<div class="btn_area">
-					<div class="fl_left">
-						<a href="#" onclick="fn_adm_code_add();" class="btn_all">
-							<span class="btn_text">추가</span>
-						</a>
-						<a href="#" onclick="fn_adm_code_update();" class="btn_all">
-							<span class="btn_text">수정</span>
-						</a>
-						<a href="#" onclick="fn_adm_code_delete();" class="btn_all">
-							<span class="btn_text">삭제</span>
-						</a>
-					</div>
-				</div>
-				<!--//button-->
+				
 			</div>
 			<!--tab02-->
 	</div>
 	<!--//tab-->
+	
+	</div>
+	</body>
+</html>	

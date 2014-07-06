@@ -81,53 +81,46 @@ var fn_admGen_linkCtlg_cloBTN_click = function(){
 		<input type="hidden" name="linkCatOrder" value="${sysLinkCtlg.linkCatOrder}">
 				
 	 	<div class="pop_post clearfix">
-			<!--tbl_blue-->                                    
-			<div class="tbl_blue">
-			    <table summary="링크를 분류 및 수정 합니다.">
-			        <caption>링크분류명,링크분류순서</caption>
-			        <colgroup>
-			            <col width="30%">
-			            <col>
-			         </colgroup> 
-			        <tbody>
-			            <tr>
-			                <th scope="row"><span class="bl_red"><!--필수--></span>링크분류명</th>
-			                <td><input type="text" id="linkCatNm" name="linkCatNm" value="${sysLinkCtlg.linkCatNm}" title="링크분류명" class="inp_all"></td>
-			            </tr>
-			            <tr>
-			                <th scope="row">링크 분류 순서</th>
-			                <td>
-			                	<select name="linkCatOrderNew" title="순서를 선택하세요">
-								<c:forEach var="order" begin="1" end="${sysLinkCtlg.linkCatCount}" step="1">
-									<option value="${order}" <c:if test="${order == sysLinkCtlg.linkCatOrder}">selected="selected"</c:if>>${order}</option>
-								</c:forEach>
-								</select>
-			                </td>
-			            </tr>
-			        </tbody>
-			    </table>
-			</div>
-			<!--//tbl_blue-->
-		<!--btn_area-->         
-		<div class="btn_area ma_top15">
-			<div class="fl_cen">
-				<a href="#" onclick="fn_admGen_linkCtlg_uptBTN_click();" class="btn_basic2">
-					<span class="fo_bold btn_text">수정</span>
-				</a>
-				<a href="#" onclick="fn_admGen_linkCtlg_iniBTN_click();" class="btn_basic2">
-					<span class="fo_bold btn_text">초기화</span>
-				</a>
-				<a href="#" onclick="fn_admGen_linkCtlg_cloBTN_click();" class="btn_basic2">
-					<span class="fo_bold btn_text">닫기</span>
-				</a>
-			</div>
-		</div>
-		<!--//btn_area-->  
+			<table class="tbl_form" summary="링크를 분류 및 수정 합니다.">
+			<caption>링크분류명,링크분류순서</caption>
+			<colgroup>
+				<col style="width:25%" />
+				<col style="*" />
+			</colgroup>
+			<tbody>
+			<tr>
+				<th scope="row"><label for="input02">링크분류명</label></th>
+				<td><input type="text"  class="text" style="width:320px" id="linkCatNm" name="linkCatNm" value="${sysLinkCtlg.linkCatNm}" title="링크분류명" ></td>
+			</tr>			
+			<tr>
+				<th scope="row"><label for="input02">링크 분류 순서</label></th>
+				<td>
+                	<select name="linkCatOrderNew" title="순서를 선택하세요">
+					<c:forEach var="order" begin="1" end="${sysLinkCtlg.linkCatCount}" step="1">
+						<option value="${order}" <c:if test="${order == sysLinkCtlg.linkCatOrder}">selected="selected"</c:if>>${order}</option>
+					</c:forEach>
+					</select>				
+				</td>
+			</tr>			
+			</tbody>
+			</table>	 	
 		</div>
 		
 		</form:form>
 		<!-- popup 본문 -->
 	</div>
+	
+	<div class="pop_footer">
+		<!-- 버튼영역 -->
+		<div style="text-align:center;">
+			<div class="rbox_btns">
+				<a href="#" class="btn_set bt_style3" id="btnOK" onclick="fn_admGen_linkCtlg_uptBTN_click();"><span>수정</span></a>
+				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="fn_admGen_linkCtlg_iniBTN_click();"><span>초기화</span></a>
+				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="fn_admGen_linkCtlg_cloBTN_click();"><span>닫기</span></a>
+			</div>
+		</div>
+		<!-- //버튼영역 -->	     
+	 </div> 	
 </div>	
 <!--//pop_wrap-->
 
