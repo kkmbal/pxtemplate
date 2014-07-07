@@ -73,6 +73,14 @@
 	margin-bottom: 10px;
 }
 
+#content_main {
+	width: 100%;
+	min-height: 800px;
+	padding-left: 0px;
+	position: relative;
+	margin-bottom: 10px;
+}
+
 #footer {
 	position: relative;
 	/* background: url(../images/img/bg_footer.png) repeat 0 0; */
@@ -235,6 +243,7 @@ ul,li,ol {
 	left: 0;
 	top: 0;
 	width: 38px;
+	height: 25px;
 	margin: 0;
 	opacity: 0;
 	filter: alpha(opacity :   0);
@@ -404,6 +413,9 @@ scrollbar-arrow-color:#424242;}
 
 
 textarea {resize:none;}
+input[type=radio], input[type=checkbox]{
+	border : 0;
+}
 /* -------------- 글상세보기 ------------------------------------------ */
 
 /* -------------- 이미지동영상 이전다음 ------------------------------------------ */

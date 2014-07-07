@@ -366,7 +366,7 @@ public class Board300Controller {
 		JSONArray jsonArr = FileUploadUtil.upload(request, SAVE_DIR, WEB_DIR, CONTEXT_PATH, maxFileSize);
 		
  		HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper(response);
- 		wrapper.setContentType("text/plain");
+ 		//wrapper.setContentType("text/plain");
  		response.getWriter().print(jsonArr.toString());
  		response.getWriter().flush();
  		response.getWriter().close();

@@ -524,7 +524,7 @@ public class Board230Controller {
 			jsonObject.put("nkey", selectMovieKey);
 		}
     	HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper(response);
-    	wrapper.setContentType("text/plain");
+    	//wrapper.setContentType("text/plain");
     	//wrapper.setHeader("Content-length", String.valueOf(jsonArr.toString().length()));
     	response.getWriter().print(jsonArr.toString());
     	response.getWriter().flush();
@@ -759,7 +759,7 @@ public class Board230Controller {
 		JSONArray jsonArr = FileUploadUtil.upload(request, SAVE_DIR, WEB_DIR, CONTEXT_PATH, maxFileSize);
 			
 		HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper(response);
-    	wrapper.setContentType("text/plain");
+    	//wrapper.setContentType("text/plain");
 		response.getWriter().print(jsonArr.toString());
 		response.getWriter().flush();
 		response.getWriter().close();

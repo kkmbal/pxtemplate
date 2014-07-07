@@ -96,7 +96,7 @@ function fnMakeWebEditor(res_home, id, param){
 //이미지 버튼 클릭시 팝업 실제 파일업로드를 구성.
 function cmdImgUploadPop(){
  var win = window.open(
-		 			WEB_HOME+"/portalxpert/board/imageUp.do",
+		 			WEB_HOME+"/board/imageUp.do",
 					"editor_win",
 					"toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=no,resizable=0,width=450,height=150,left=50,top=50");
 	win.focus();  

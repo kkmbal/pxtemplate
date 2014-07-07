@@ -15,7 +15,7 @@
 <body>
 <div id="mainBody">
 	<!-- 본문 -->
-	
+	<img src="${RES_HOME}/images/img/bg_intro_crossent.png" width="1000" height="768">
 	<!-- //본문 -->
 </div>	            
 </body>

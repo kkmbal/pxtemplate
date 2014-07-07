@@ -40,7 +40,7 @@
 <tbody>
 <tr>
 	<th scope="row"><label for="input01">기관/관리자</label></th>
-	<td colspan="3">기관 <input type="text" id="id_requDeptName" class="text" style="width:220px" disabled="disabled" title="제목을 입력합니다." value="${deptNm}" /> 관리자 <input type="text" id="id_requUserName" class="text" style="width:220px" disabled="disabled" title="제목을 입력합니다." value="${userNm}" /></td>
+	<td colspan="3">기관 <input type="text" id="id_requDeptName" class="text" style="width:160px" disabled="disabled" title="제목을 입력합니다." value="${deptNm}" /> 관리자 <input type="text" id="id_requUserName" class="text" style="width:160px" disabled="disabled" title="제목을 입력합니다." value="${userNm}" /></td>
 </tr>
 <tr>
 	<th scope="row"><label for="input14">게시판명</label></th>
@@ -141,7 +141,7 @@
 <tr>
 	<th scope="row"><label for="textbox01">게시판설명</label></th>
 	<td colspan="3">
-		<textarea name="boardExpl"  id="boardExpl" cols="100" rows="5" maxlength="300" class="textbox" title="설명을 300자 이하로 작성하세요"></textarea>
+		<textarea name="boardExpl"  id="boardExpl" cols="60" rows="5" maxlength="300" class="textbox" title="설명을 300자 이하로 작성하세요" style="width:420px"></textarea>
 	</td>
 </tr>
 <tr id="boardUrlDiv" style="display:none;">

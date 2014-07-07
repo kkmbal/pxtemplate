@@ -27,7 +27,7 @@
 	<div class="pop_content">
 	<!-- popup 본문 -->
 	 	<div class="">
-		    <form id="detailForm" name="detailForm" action="<%=request.getContextPath()%>/portalxpert/board/innoUpload.do" enctype="multipart/form-data" method="post">
+		    <form id="detailForm" name="detailForm" action="<%=request.getContextPath()%>/board/innoUpload.do" enctype="multipart/form-data" method="post">
 		    <input type="text" class="text" id="fileName" readonly style="width:300px">
 		    <a href="#" class="btn_set bt_style1 mv_file_a">   
 			<input type="file" size="1" name="file" class="mv_file" onchange="javascript: document.getElementById('fileName').value = this.value">
@@ -40,7 +40,7 @@
 		<!-- 버튼영역 -->
 		<div style="text-align:center;">
 			<div class="rbox_btns">
-				<a href="#" class="btn_set bt_style2" onclick="goAppend();" ><span>추가</span></a>
+				<a href="#" class="btn_set bt_style3" onclick="goAppend();" ><span>등록</span></a>
 				<a href="#" class="btn_set bt_style2" onclick="window.close();"><span>닫기</span></a>
 			</div>
 		</div>

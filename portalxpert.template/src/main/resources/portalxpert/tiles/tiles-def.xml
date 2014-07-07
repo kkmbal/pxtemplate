@@ -32,23 +32,29 @@
     </definition>
     
     <!-- ############################## Main ############################## -->
+	<definition name=".mainLayout" template="/WEB-INF/jsp/portalxpert/common/layout/mainLayout.jsp">     
+	  	<put-attribute name="title" value="포털"/>   
+		<put-attribute name="header" value="/WEB-INF/jsp/portalxpert/common/layout/header.jsp" />                      	
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/portalxpert/common/layout/footer.jsp" />                      	
+	</definition>    
     <!-- main -->    
-    <definition name=".main/*" extends=".defaultLayout">
+    <definition name=".main/*" extends=".mainLayout">
     	<put-attribute name="left" value="" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}.jsp" />    
     </definition>         
     
-    <definition name=".main/*/*" extends=".defaultLayout">        
+    <definition name=".main/*/*" extends=".mainLayout">        
     	<put-attribute name="left" value="" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}.jsp" />    
     </definition>         
     
-    <definition name=".main/*/*/*" extends=".defaultLayout">        
+    <definition name=".main/*/*/*" extends=".mainLayout">        
     	<put-attribute name="left" value="" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}.jsp" />    
     </definition>
     
-    <definition name=".main/*/*/*/*" extends=".defaultLayout">        
+    <definition name=".main/*/*/*/*" extends=".mainLayout">        
     	<put-attribute name="left" value="" />        
     	<put-attribute name="body" value="/WEB-INF/jsp/portalxpert/{1}/{2}/{3}/{4}.jsp" />    
     </definition>

@@ -896,8 +896,7 @@ public class Person300Controller {
 
 		HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper(response);
 		// wrapper.setContentType("text/plain");
-		// wrapper.setHeader("Content-length",
-		// String.valueOf(jsonArr.toString().length()));
+		// wrapper.setHeader("Content-length",  String.valueOf(jsonArr.toString().length()));
 		response.getWriter().print(jsonArr.toString());
 		response.getWriter().flush();
 		response.getWriter().close();
