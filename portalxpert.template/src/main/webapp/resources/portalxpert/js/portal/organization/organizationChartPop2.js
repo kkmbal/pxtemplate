@@ -99,8 +99,8 @@
 		
 		if (treeNode.id == '6110002' || treeNode.id == '6110003')
 		{
-			alert('하위 부서를 선택하세요');
-			return false;
+			//alert('하위 부서를 선택하세요');
+			//return false;
 		}
 		else
 		{
