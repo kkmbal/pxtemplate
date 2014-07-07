@@ -931,7 +931,7 @@ public class Board210ServiceImpl extends AbstractServiceImpl implements  Board21
 			notiVO.setNotiId(notiId);
 			
 			String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
-			if (superAdmin.equals("E"))
+			if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 			{
 				notiVO.setNotiReadmanAsgnYn("A");
 			}
@@ -947,7 +947,7 @@ public class Board210ServiceImpl extends AbstractServiceImpl implements  Board21
 				auth = board100Mapper.getUserBbsMapList(searchVO);
 	    	}
 	    	notiVO.setUserMap(auth);
-	    	if (superAdmin.equals("E"))
+	    	if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 			{
 				notiVO.setNotiReadmanAsgnYn("A");
 			}

@@ -30,9 +30,30 @@ public class BoardSearchVO extends SearchConditionVO{
 	private String deptCode;
 	private String regDttm;
 	private int rowNum;
+	private String boardForm;
+	private String calYmFrom;
+	private String calYmTo;
 	
 	
 	
+	public String getBoardForm() {
+		return boardForm;
+	}
+	public void setBoardForm(String boardForm) {
+		this.boardForm = boardForm;
+	}
+	public String getCalYmFrom() {
+		return calYmFrom;
+	}
+	public void setCalYmFrom(String calYmFrom) {
+		this.calYmFrom = calYmFrom;
+	}
+	public String getCalYmTo() {
+		return calYmTo;
+	}
+	public void setCalYmTo(String calYmTo) {
+		this.calYmTo = calYmTo;
+	}
 	public int getRowNum() {
 		return rowNum;
 	}

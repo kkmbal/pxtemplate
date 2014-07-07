@@ -243,6 +243,16 @@
 	                        	AND UPD_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
 	                        	]]>
 	                        </if>
+	                        <if test="calYmFrom != null and calYmFrom != '' ">/* 달력 */
+	                            <![CDATA[
+	                            AND NOTI_BGN_DTTM <= TO_DATE(#{calYmTo},'yyyy-mm-dd')
+	                            ]]>
+	                        </if>
+	                        <if test="calYmTo != null and calYmTo != '' ">/* 달력 */
+	                        	<![CDATA[	                        	
+	                        	AND NOTI_END_DTTM >= TO_DATE(#{calYmFrom} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+	                        	]]>
+	                        </if>
 	                        <if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('N') ">
 	                        AND EXISTS(SELECT 1
                                        FROM BBS_BOARD_USER_MAP B
@@ -332,7 +342,7 @@
 								</if>
 							</if>
 			      ) N
-			 WHERE PNUM BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+			 WHERE (PNUM BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}) or '040'=#{boardForm}
 			 ORDER BY PNUM
 	</select>
 	

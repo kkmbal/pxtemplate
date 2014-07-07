@@ -71,6 +71,7 @@
 		</br>
 	</c:if>
 
+<c:if test="${boardForm != '040'}">
 <div class="rbox">
 	<span class="rbox_top"></span>
 	<div class="rboxInner">
@@ -90,6 +91,8 @@
 	</div>
 </div>
 <br/>
+</c:if>
+
 <div class="btn_board_top">
 	<div class="fl">
 	<c:if test="${btnViewYn == 'Y'}">
@@ -178,7 +181,9 @@
 </table>
 
 <div class="paging">
+<c:if test="${boardForm != '040'}">
 <ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_link_page" />
+</c:if>
 </div>
 </div>	 
 	 

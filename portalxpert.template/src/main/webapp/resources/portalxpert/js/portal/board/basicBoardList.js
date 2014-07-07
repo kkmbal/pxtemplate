@@ -324,6 +324,35 @@
 		PortalCommon.windowPopup(WEB_HOME+'/board210/bbsDelInfoPop.do?notiId='+JSON.stringify(_notiId)+'&delDiv='+delDiv,'삭제정보','528','560');
 	};
 	
+    function convertDate(d){
+		var year = d.getFullYear().toString();
+		var tempDate = d.getDate();
+		var date = tempDate < 10 ? "0".concat(tempDate.toString()) : tempDate.toString();
+		var tempMonth = d.getMonth() + 1;
+		var month = tempMonth < 10 ? "0".concat(tempMonth.toString()) : tempMonth.toString();
+		return year.concat(month).concat(date);
+    }
+    
+    function setCalList(start, end, callback){
+    	alert(boardId)
+		var param = {};
+		param.calYmFrom= convertDate(start._d);
+		param.calYmTo = convertDate(end._d);
+		param.boardId = boardId;
+        $.ajax({
+            url: WEB_HOME+'/board210/getBoardInfoList.do?format=json',
+            type: "POST",
+    		dataType: "json",
+            data: JSON.stringify(param),
+            success: function(doc) {
+            	console.log(doc)
+                var events = [];
+                events = doc;
+                callback(events);
+            }
+        });    	
+    }
+	
 
 ////////////////////////////////onload/////////////////////////////////////////////////////////////////////	
 	
@@ -456,6 +485,7 @@
 		$('#list_cnt').val(pageUnit);
 		
 		if(boardForm == '040'){
+			
 			//달력세팅
 		    $('#calendar').fullCalendar({
 				header: {
@@ -465,54 +495,67 @@
 				},
 		    	editable: false,
 		    	height : 500,
-		    	events : calList,
-		    	/*
-		    	events : function(start, end, callback) {
+		    	//events : calList,
+		    	events : function(start, end, timezone, callback) {
 		    		var param = {};
-		    		param.tskStYmd = convertDate(start);
-		    		param.tskEdYmd = convertDate(end);
-
+		    		param.calYmFrom= convertDate(start._d);
+		    		param.calYmTo = convertDate(end._d);
+		    		param.boardId = boardId;
 		            $.ajax({
-		                url: WEB_HOME+'/board210/getCalBoardList.do?format=json',
+		                url: WEB_HOME+'/board210/getBoardInfoList.do?format=json',
 		                type: "POST",
 		        		dataType: "json",
-		                data: "boardId="+boardId,
+		                data: param,
 		                success: function(doc) {
+		                	//console.log(doc.calList)
 		                    var events = [];
-		                    events = doc;
+		                    events = $.parseJSON(doc.calList);
+		                    calList = events;
 		                    callback(events);
 		                }
 		            });
 		        },
-		    		 */
 		    	dayNamesShort : ['일', '월', '화', '수', '목', '금', '토'],
 		    	titleFormat : {month : 'YYYY.MM'},
 		    	//lang : 'ko',
 		    	loading: function(bool) {
-					if (bool) $('#loading').show();
-					else $('#loading').hide();
+					if (!bool){
+						$(".tbl_list tbody").empty();
+						for(var i=0;i<calList.length;i++){
+							var tr = "<tr>"
+								+ "<td>"+calList[i].oldNoticeSeq+"</td>"
+								+ "<td class='tit' title='"+calList[i].notiTitleOrgn+"'><a href=\"javascript:fnGetBoardView('"+calList[i].notiId+"','"+calList[i].pnum+"');\" class='text_dot'>"+calList[i].notiTitle+"</a></td>"
+								+ "<td>"+(calList[i].apndFileCnt > 0?'<a href="#"><span class="ico_fileAttch"><span class="hidden">파일첨부</span></span></a>':'')+"</td>"
+								+ "<td>"+calList[i].userName+"</td>"
+								+ "<td>"+calList[i].notiReadCnt+"</td>"
+								+ "<td>"+calList[i].regDttm+"</td>";
+							$(".tbl_list tbody").append(tr);
+						}
+						
+						if(calList.length == 0) $(".tbl_list tbody").append('<tr><td colspan="6">검색된 데이터가 없습니다.</td></tr>');
+						parent.document.getElementById("bbsFrame").height = "700px";
+						parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";
+					}
 				},
 				selectable: true,
 				select : function(start, end, allDay) {
 				},
 			    eventClick: function(calEvent, jsEvent, view) {
 			    	fnGetBoardView(calEvent.notiId, calEvent.pnum);
-			        //$(this).css('border-color', 'red');
+			        $(this).css('border-color', 'red');
 			        //var tskYmd = convertDate(calEvent.start);
-			        //fnDhxPopup('${pageContext.request.contextPath}/itpm2/hr/effortDayInfoPop?id='+calEvent.id+'&tskYmd='+tskYmd, "일일업무등록", 554, 340);
 			    },
 			    dayClick: function(date, allDay, jsEvent, view ) {
 			    	//var tskYmd = convertDate(date);
-			    	//fnDhxPopup('${pageContext.request.contextPath}/itpm2/hr/effortDayInfoPop?id=&tskYmd='+tskYmd, "일일업무등록", 554, 340);
 			    },
 			    viewRender : function(){
 			    	parent.document.getElementById("bbsFrame").height = "700px";
 					parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";
 			    },
 				eventColor: '#99ccff'
-		    });			
+		    });
+		    
 		}
-
 
 		
 	});

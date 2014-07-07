@@ -26,6 +26,7 @@ import portalxpert.board.board100.vo.BbsNotiInfoVO;
 import portalxpert.board.board100.vo.BbsNotiOpnVO;
 import portalxpert.board.board210.sc.Board210Service;
 import portalxpert.board.board220.sc.Board220Service;
+import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
 import portalxpert.common.utils.CommUtil;
 import portalxpert.common.utils.JSONUtils;
@@ -93,12 +94,6 @@ public class Board220Controller {
 		bbsVO.setUserId(info.getId());
 		bbsVO.setUserMap(auth);
 		
-		/*superAdmin = "E";
-		//관리자면 권한 체크 SKIP
-		if (superAdmin.equals("E"))
-		{
-			bbsVO.setUserMap("");
-		}*/
 		
 		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 		BbsBoardInfoVO bbsInfo = list.get(0);
@@ -125,7 +120,7 @@ public class Board220Controller {
 		boardSearchVO.setUserId(info.getId());
 		
 		//관리자면 권한 체크 SKIP
-		if (superAdmin.equals("E"))
+		if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 		{
 			bbsInfo.setNotiReadmanAsgnYn("A");
 		}
@@ -378,12 +373,12 @@ public class Board220Controller {
     	/**
     	 * portal 관리자, 게시판관리자, 게시판담당자, 쓰기권한이 있는 사용자(작성자포함) 여부 확인 
     	 */
-    	if( superAdmin.equals("E")
+    	if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y") 
     			|| bbsInfo.getWrtYn().equals("Y")){
     		yn = "Y";
     	}
-    	if( (!superAdmin.equals("E")) && bbsInfo.getAdmYn().equals("N") && bbsInfo.getWrtYn().equals("N") && bbsInfo.getRedYn().equals("N")){   		
+    	if( (!superAdmin.equals(Constant.ROLE_SUPER.getVal())) && bbsInfo.getAdmYn().equals("N") && bbsInfo.getWrtYn().equals("N") && bbsInfo.getRedYn().equals("N")){   		
     		yn = "X";
     	}
     	logger.debug("getBoardBtnViewYN : "+yn);
@@ -414,7 +409,7 @@ public class Board220Controller {
 		logger.debug("==getDisplayname : "+ info.getDisplayname());
 		logger.debug("==superAdmin : "+ superAdmin);
 		logger.debug("==getAdmYn : "+ bbsInfo.getAdmYn());
-		if( superAdmin.equals("E")
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y")){ 
     		yn = "Y";
     		

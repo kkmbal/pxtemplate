@@ -344,7 +344,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 			{
 				//my카테고리 업데이트
 				CategoryVO categoryVo = new CategoryVO();
-				categoryVo.setId("SYSTEM");
+				categoryVo.setId(Constant.ROLE_SUPER.getVal());
 				
 				int categoryCnt = board100Mapper.selectMyCategoryContCnt(categoryVo);
 				
@@ -373,7 +373,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 			    	conts = jsonConts.toString();
 			    	
 					categoryVo = new CategoryVO();
-					categoryVo.setId("SYSTEM");
+					categoryVo.setId(Constant.ROLE_SUPER.getVal());
 					categoryVo.setConts(conts);
 					categoryVo.setDelYn("N");
 					categoryVo.setRegrId(info.getId());
@@ -385,7 +385,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 				}else{
 					
 					categoryVo = new CategoryVO();
-					categoryVo.setId("SYSTEM");
+					categoryVo.setId(Constant.ROLE_SUPER.getVal());
 					
 					categoryVo = board100Mapper.selectMyCategoryCont(categoryVo);
 					
@@ -411,7 +411,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 					conts = jsonConts.toString();
 					
 					categoryVo = new CategoryVO();
-					categoryVo.setId("SYSTEM");
+					categoryVo.setId(Constant.ROLE_SUPER.getVal());
 					categoryVo.setConts(conts);
 					
 					board100Mapper.updatePbsUserCategoryInfo(categoryVo);
@@ -420,7 +420,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 			else
 			{
 				CategoryVO categoryVo = new CategoryVO();
-				categoryVo.setId("SYSTEM");
+				categoryVo.setId(Constant.ROLE_SUPER.getVal());
 				
 				categoryVo = board100Mapper.selectMyCategoryCont(categoryVo);
 				//conts = categoryVo.getConts();
@@ -440,7 +440,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 		    	}
 		    	
 		    	categoryVo = new CategoryVO();
-				categoryVo.setId("SYSTEM");
+				categoryVo.setId(Constant.ROLE_SUPER.getVal());
 				categoryVo.setConts(jsonArrCate.toString());
 				
 				board100Mapper.updatePbsUserCategoryInfo(categoryVo);
@@ -1609,7 +1609,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 	    	CategoryVO categoryVo = new CategoryVO();
 			if (admin.equals("1"))
 			{
-				categoryVo.setId("SYSTEM");
+				categoryVo.setId(Constant.ROLE_SUPER.getVal());
 			}
 			else
 			{
@@ -1648,7 +1648,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 			
 			//카테고리의 게시판 정보도 수정한다. 20130708
 			CategoryVO cate = new CategoryVO();
-	    	cate.setId("SYSTEM");
+	    	cate.setId(Constant.ROLE_SUPER.getVal());
 	    	cate = (CategoryVO)board100Mapper.selectMyCategoryCont(cate);
 	    	
 	    	JSONArray jsonArr =JSONArray.fromObject(cate.getConts());
@@ -1662,7 +1662,7 @@ public class Board100ServiceImpl extends AbstractServiceImpl implements  Board10
 	    			break;
 	    		}
 	    	}
-	    	cate.setId("SYSTEM");
+	    	cate.setId(Constant.ROLE_SUPER.getVal());
 			cate.setConts(jsonArr.toString());			
 			board100Mapper.updatePbsUserCategoryInfo(cate);
 			

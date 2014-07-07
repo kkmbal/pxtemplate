@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import portalxpert.common.config.Constant;
 import portalxpert.common.sc.UserLoginService;
 import portalxpert.common.vo.JSONResult;
 import portalxpert.common.vo.UserInfoVO;
@@ -50,6 +51,9 @@ public class LoginController {
 				logger.debug(">>>>>>>>>>login success:"+userId);
 				request.getSession().setAttribute("pxLoginInfo", vo);
 				request.getSession().setAttribute("userId", vo.getSid() );
+				if(Constant.ROLE_SUPER.getVal().equals(vo.getAuthCd())){
+					request.getSession().setAttribute("superAdmin", Constant.ROLE_SUPER.getVal());
+				}
 			}
 		}catch(Exception e){
 			logger.error(e.toString(), e);

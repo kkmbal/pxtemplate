@@ -612,7 +612,7 @@ public class Board230Controller {
     	String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
     	
     	
-    	if( superAdmin.equals("E"))
+    	if( superAdmin.equals(Constant.ROLE_SUPER.getVal()))
     	{
     		return "Y";
     	}
@@ -635,7 +635,7 @@ public class Board230Controller {
 		logger.debug("getAdmYn : "+bbsInfo.getAdmYn());
 		logger.debug("getWrtYn : "+bbsInfo.getWrtYn());
 		
-		if( superAdmin.equals("E")
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y")){ 
     			//|| bbsInfo.getWrtYn().equals("Y")){
 			isAdmin = "Y";
@@ -659,7 +659,7 @@ public class Board230Controller {
     	String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
     	
     	
-    	if( superAdmin.equals("E"))
+    	if( superAdmin.equals(Constant.ROLE_SUPER.getVal()))
     	{
     		return "Y";
     	}
@@ -682,7 +682,7 @@ public class Board230Controller {
 		logger.debug("getAdmYn : "+bbsInfo.getAdmYn());
 		logger.debug("getWrtYn : "+bbsInfo.getWrtYn());
 		
-		if( superAdmin.equals("E")
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y")
     			|| bbsInfo.getWrtYn().equals("Y")){
 			isWrite = "Y";
@@ -697,7 +697,7 @@ public class Board230Controller {
 				List<BbsNotiInfoVO> notiInfo = board210Service.getBbsNotiInfoView(data);
 				BbsNotiInfoVO notiVo = notiInfo.get(0);
 				
-				if( superAdmin.equals("E")
+				if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
 		    			|| bbsInfo.getAdmYn().equals("Y")
 		    			|| notiVo.getRegrId().equals(info.getId())){
 					isWrite = "Y";

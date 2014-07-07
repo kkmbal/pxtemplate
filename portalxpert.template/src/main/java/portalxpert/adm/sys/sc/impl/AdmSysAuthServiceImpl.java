@@ -188,11 +188,11 @@ public class AdmSysAuthServiceImpl extends AbstractServiceImpl implements AdmSys
 	    	admSysMapper.updateMenuAuth(admSysMenuAuthVO);
 
 	    	//SYSTEM 외 권한 메뉴정보 Update
-	    	if("SYSTEM".equals(admSysMenuAuthVO.getAuthCd())){
+	    	if(Constant.ROLE_SUPER.getVal().equals(admSysMenuAuthVO.getAuthCd())){
 		    	
 				JSONArray jsonArr = JSONArray.fromObject(admSysMenuAuthVO.getMenuConts());
 				
-				admSysMenuAuthVO.setAuthCd("SYSTEM");
+				admSysMenuAuthVO.setAuthCd(Constant.ROLE_SUPER.getVal());
 				List<AdmSysMenuAuthVO> listAdmSysMenuAuthInfo = admSysMapper.getAdmSysNoSystemMenuAuthInfo(admSysMenuAuthVO);
 				
 	    		for(AdmSysMenuAuthVO vo : listAdmSysMenuAuthInfo){

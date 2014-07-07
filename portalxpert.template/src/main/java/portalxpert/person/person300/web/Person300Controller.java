@@ -29,6 +29,7 @@ import portalxpert.board.board100.vo.BbsNotiOpnVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyAnswVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyExmplVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyVO;
+import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
 import portalxpert.common.exception.PortalxpertException;
 import portalxpert.common.utils.CommUtil;
@@ -162,7 +163,7 @@ public class Person300Controller {
 		
 		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
 		String isAdmin = "N";
-		if( superAdmin.equals("E")) isAdmin = "Y";		
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())) isAdmin = "Y";		
 		modelMap.put("isAdmin", isAdmin);
     	
 		return ".self/person/person300TotView";
@@ -307,7 +308,7 @@ public class Person300Controller {
 		
 		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
 		String isAdmin = "N";
-		if( superAdmin.equals("E")) isAdmin = "Y";		
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())) isAdmin = "Y";		
 		modelMap.put("isAdmin", isAdmin);
 		
 		return ".self/person/person300Write";
@@ -350,7 +351,7 @@ public class Person300Controller {
     	
 		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
 		String isAdmin = "N";
-		if( superAdmin.equals("E")) isAdmin = "Y";		
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())) isAdmin = "Y";		
 		modelMap.put("isAdmin", isAdmin);
 		
 		//return ".person/person/person300Alarm";
@@ -1253,7 +1254,7 @@ public class Person300Controller {
  		
  		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
 		String isAdmin = "N";
-		if( superAdmin.equals("E")) isAdmin = "Y";		
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())) isAdmin = "Y";		
 		modelMap.put("isAdmin", isAdmin);
      	
  		//return ".person/person/person300Noti";
@@ -1400,7 +1401,7 @@ public class Person300Controller {
      	
  		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
 		String isAdmin = "N";
-		if( superAdmin.equals("E")) isAdmin = "Y";		
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())) isAdmin = "Y";		
 		modelMap.put("isAdmin", isAdmin);
 		
  		//return ".person/person/person300Opinion";
@@ -1517,7 +1518,7 @@ public class Person300Controller {
 		String superAdmin = (String) session.getAttribute("superAdmin") == null ? ""
 				: (String) session.getAttribute("superAdmin");
 
-		if (superAdmin.equals("E")) {
+		if (superAdmin.equals(Constant.ROLE_SUPER.getVal())) {
 			return "Y";
 		}
 
@@ -1548,7 +1549,7 @@ public class Person300Controller {
     	 String superAdmin = (String) session.getAttribute("superAdmin") == null ? ""
     			 : (String) session.getAttribute("superAdmin");
     	 
-    	 if (superAdmin.equals("E")) {
+    	 if (superAdmin.equals(Constant.ROLE_SUPER.getVal())) {
     		 return "Y";
     	 }
     	 

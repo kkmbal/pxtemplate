@@ -1020,7 +1020,7 @@ public class Board100Controller {
     			modelMap.put("categoryList", JSONUtils.objectToJSON(conts));
     			
     			String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
-    			if( superAdmin.equals("E"))
+    			if( superAdmin.equals(Constant.ROLE_SUPER.getVal()))
     	    	{
     				modelMap.put("myBoardList", "[]");
     	    	}
@@ -1121,7 +1121,7 @@ public class Board100Controller {
 	    		List board_list = board100Service.getBbsBoardInfoCateList(bbsBoardVo);
 	    		
 	    		/*CategoryVO cate = new CategoryVO();
-		    	cate.setId("SYSTEM");
+		    	cate.setId(Constant.ROLE_SUPER.getVal());
 		    	cate = (CategoryVO)board100Service.selectMyCategoryCont(cate);	    	
 		    	String cateInfo = cate.getConts();	    	
 		    	
@@ -1278,7 +1278,7 @@ public class Board100Controller {
 		UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
 		if (admin.equals("1"))
 		{
-			categoryVO.setId("SYSTEM");
+			categoryVO.setId(Constant.ROLE_SUPER.getVal());
 		}
 		else
 		{

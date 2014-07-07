@@ -100,12 +100,12 @@ public class Board210Controller {
     	/**
     	 * portal 관리자, 게시판관리자, 게시판담당자, 쓰기권한이 있는 사용자(작성자포함) 여부 확인 
     	 */
-    	if( superAdmin.equals("E")
+    	if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y") 
     			|| bbsInfo.getWrtYn().equals("Y")){
     		yn = "Y";
     	}
-    	if( (!superAdmin.equals("E")) && bbsInfo.getAdmYn().equals("N") && bbsInfo.getWrtYn().equals("N") && bbsInfo.getRedYn().equals("N")){   		
+    	if( (!superAdmin.equals(Constant.ROLE_SUPER.getVal())) && bbsInfo.getAdmYn().equals("N") && bbsInfo.getWrtYn().equals("N") && bbsInfo.getRedYn().equals("N")){   		
     		yn = "X";
     	}
     	logger.debug("getBoardBtnViewYN : "+yn);
@@ -132,7 +132,7 @@ public class Board210Controller {
 		BbsBoardInfoVO bbsInfo = list.get(0);
 		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
 		
-		if( superAdmin.equals("E")
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y") 
     			|| bbsInfo.getWrtYn().equals("Y")){
     		yn = "Y";
@@ -170,7 +170,7 @@ public class Board210Controller {
 		//logger.debug("==getAdmYn : "+ bbsInfo.getAdmYn());
 		bbsInfo = null;
 		if(bbsInfo != null){
-			if( superAdmin.equals("E")
+			if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
 	    			|| bbsInfo.getAdmYn().equals("Y")){ 
 	    		yn = "Y";
 	    		
@@ -204,7 +204,7 @@ public class Board210Controller {
 		logger.debug("==getDisplayname : "+ info.getDisplayname());
 		logger.debug("==superAdmin : "+ superAdmin);
 		logger.debug("==getAdmYn : "+ bbsInfo.getAdmYn());
-		if( superAdmin.equals("E")
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y")){ 
     		yn = "Y";
     		
@@ -235,6 +235,8 @@ public class Board210Controller {
  			@RequestParam(value="orderType",required = false, defaultValue="default") String orderType,
  			@RequestParam(value="isDesc",required = false) boolean isDesc,
  			@RequestParam(value="listYn",required = false) String listYn,
+ 			@RequestParam(value="calYmFrom",required = false) String calYmFrom,
+ 			@RequestParam(value="calYmTo",required = false) String calYmTo,
  			HttpSession session,
  			HttpServletRequest request
  			)
@@ -252,12 +254,7 @@ public class Board210Controller {
 		bbsVO.setUserId(info.getId());
 		bbsVO.setUserMap(auth);
 		
-		/*superAdmin = "E";
-		//관리자면 권한 체크 SKIP
-		if (superAdmin.equals("E"))
-		{
-			bbsVO.setUserMap("");
-		}*/
+
 		
 		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 		BbsBoardInfoVO bbsInfo = list.get(0);
@@ -284,7 +281,7 @@ public class Board210Controller {
 		boardSearchVO.setUserId(info.getId());
 		
 		//관리자면 권한 체크 SKIP
-		if (superAdmin.equals("E"))
+		if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 		{
 			bbsInfo.setNotiReadmanAsgnYn("A");
 		}
@@ -300,6 +297,18 @@ public class Board210Controller {
 		boardSearchVO.setBoardKind(bbsInfo.getBoardKind());
 		boardSearchVO.setUserId(info.getId());
 		boardSearchVO.setEamAdminYn(getEamAdmBoardAdmYNForList(session, bbsInfo));
+		
+		//달력타입
+		if(Constant.BOARD_FORM_040.getVal().equals(bbsInfo.getBoardForm())){
+			if(CommUtil.isEmpty(calYmFrom)){
+				String ym = CommUtil.getDateString("yyyyMM");
+				calYmFrom = ym + "01";
+				calYmTo = CommUtil.getDayOfMonth(ym);
+			}
+			boardSearchVO.setBoardForm(Constant.BOARD_FORM_040.getVal());
+			boardSearchVO.setCalYmFrom(calYmFrom);
+			boardSearchVO.setCalYmTo(calYmTo);
+		}
 
 		searchKeyword = searchKeyword == null?"":searchKeyword;
 		searchKeyword = URLDecoder.decode(searchKeyword,"UTF-8");
@@ -314,14 +323,10 @@ public class Board210Controller {
 		List calList = new ArrayList();
 		if(Constant.BOARD_FORM_040.getVal().equals(bbsInfo.getBoardForm())){
 			for(BbsNotiInfoVO bvo : noti_list){
-				BbsNotiCalInfoVO cvo = new BbsNotiCalInfoVO();
-				cvo.setBoardId(bvo.getBoardId());
-				cvo.setNotiId(bvo.getNotiId());
-				cvo.setPnum(bvo.getPnum());
-				cvo.setTitle(bvo.getNotiTitle());
-				cvo.setStart(bvo.getNotiBgnDttm());
-				cvo.setEnd(bvo.getNotiEndDttm());
-				calList.add(cvo);
+				bvo.setTitle(bvo.getNotiTitle());
+				bvo.setStart(bvo.getNotiBgnDttm());
+				bvo.setEnd(bvo.getNotiEndDttm());
+				calList.add(bvo);
 			}
 		}
 		
@@ -396,12 +401,6 @@ public class Board210Controller {
 			bbsVO.setUserId(info.getId());
 			bbsVO.setUserMap(auth);
 			
-			/*superAdmin = "E";
-			//관리자면 권한 체크 SKIP
-			if (superAdmin.equals("E"))
-			{
-				bbsVO.setUserMap("");
-			}*/
 			
 			List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 			BbsBoardInfoVO bbsInfo = list.get(0);
@@ -412,7 +411,7 @@ public class Board210Controller {
 			boardSearchVO.setUserId(info.getId());
 			
 			//관리자면 권한 체크 SKIP
-			if (superAdmin.equals("E"))
+			if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 			{
 				bbsInfo.setNotiReadmanAsgnYn("A");
 			}
@@ -843,7 +842,7 @@ public class Board210Controller {
 		notiVo.setNotiKind(bbsInfo.getBoardForm());
 		notiVo.setNotiReadmanAsgnYn(bbsInfo.getNotiReadmanAsgnYn());
 		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
-		if (superAdmin.equals("E"))
+		if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 		{
 			notiVo.setNotiReadmanAsgnYn("A");
 		}
@@ -986,7 +985,7 @@ public class Board210Controller {
     	notiVo.setNotiKind(bbsInfo.getBoardForm());
     	notiVo.setNotiReadmanAsgnYn(bbsInfo.getNotiReadmanAsgnYn());
     	String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
-    	if (superAdmin.equals("E"))
+    	if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
     	{
     		notiVo.setNotiReadmanAsgnYn("A");
     	}
@@ -1097,7 +1096,7 @@ public class Board210Controller {
 			List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);
 			BbsBoardInfoVO bbsInfo = list.get(0);
 			String notiReadmanAsgnYn = bbsInfo.getNotiReadmanAsgnYn();
-			if (superAdmin.equals("E"))
+			if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 			{
 				notiReadmanAsgnYn = "A";
 			}

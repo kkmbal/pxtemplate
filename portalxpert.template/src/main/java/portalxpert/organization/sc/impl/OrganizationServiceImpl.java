@@ -152,11 +152,11 @@ public class OrganizationServiceImpl extends AbstractServiceImpl implements  Org
 		try{
 			List list = null;
 			if(vo.getAdmin().equals("1")){//공용게시판 리스트
-				vo.setId("SYSTEM");
+				vo.setId(Constant.ROLE_SUPER.getVal());
 				String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
-				if( superAdmin.equals("E"))
+				if( superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 		    	{ 
-					vo.setId("SYSTEM");
+					vo.setId(Constant.ROLE_SUPER.getVal());
 		    	}
 			}
 			

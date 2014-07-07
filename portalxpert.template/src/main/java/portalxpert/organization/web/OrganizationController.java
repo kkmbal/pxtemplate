@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import portalxpert.board.board210.sc.Board210Service;
+import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
 import portalxpert.common.sc.UserLoginService;
 import portalxpert.common.utils.JSONUtils;
@@ -323,13 +324,13 @@ public class OrganizationController {
     		UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
     		if (admin.equals("1"))
     		{
-    			categoryVO.setId("SYSTEM");
+    			categoryVO.setId(Constant.ROLE_SUPER.getVal());
     		}
     		else
     		{
     			categoryVO.setId(info.getId());
     		}
-    		//categoryVO.setId("SYSTEM");
+    		//categoryVO.setId(Constant.ROLE_SUPER.getVal());
     		categoryVO.setKind(kind);
     		categoryVO.setAdmin(admin);
     		
@@ -406,7 +407,7 @@ public class OrganizationController {
 
 		try{			
 			UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
-			categoryVO.setId("SYSTEM");
+			categoryVO.setId(Constant.ROLE_SUPER.getVal());
 			organizationService.insertCategory(categoryVO);
 			
 			jsonResult.setSuccess(true);

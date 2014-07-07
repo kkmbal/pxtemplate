@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -81,6 +82,18 @@ public class CommUtil {
 	public static String getDateString()	{
 		return getDateString("yyyy-MM-dd");
 	}
+	
+	/**
+	 * 그달의 마지막 일자 구하기
+	 * 
+	 */
+	public static String getDayOfMonth(String ym){
+		String year = ym.substring(0, 4);
+		String month = ym.substring(4);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1 , 1);
+		return year + month + cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+	}	
 	
 	/**
 	 *	문자열을 받아서 null이면 공백 문자열로 리턴

@@ -27,8 +27,9 @@ public enum Constant {
 	NOTI_KIND_050("050"), //첨부
 	NOTI_KIND_060("060"), //링크
 	
-	E000001("portalxpert.service.error")   //기본에러코드
+	E000001("portalxpert.service.error"),   //기본에러코드
 	
+	ROLE_SUPER("SYSTEM") //슈퍼유저권한
 	;
 
 	

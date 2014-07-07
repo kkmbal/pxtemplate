@@ -107,7 +107,6 @@ public class Person100ServiceImpl extends AbstractServiceImpl implements  Person
 			ComUserInfoVO comUserInfoVO = new ComUserInfoVO();
 			UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
 			
-//			EAMCrypt ec = new EAMCrypt();
 			
 			comUserInfoVO.setUserId(info.getId());
 			comUserInfoVO.setUpdrId(info.getId());

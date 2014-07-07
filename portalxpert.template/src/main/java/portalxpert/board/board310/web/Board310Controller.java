@@ -368,7 +368,6 @@ public class Board310Controller {
 			
 			List notiOpn1 = board310Service.getPbsUserNotiOpnList1(data);
 			List notiOpn2 = board310Service.getPbsUserNotiOpnList2(data);
-//			EAMCrypt ec = new EAMCrypt();
 			PbsUserNotiInfoVO vo = (PbsUserNotiInfoVO) notiInfo.get(0);
 
 			List survey_list = null;

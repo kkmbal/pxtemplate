@@ -25,6 +25,7 @@ import portalxpert.adm.sys.vo.AdmSysAuthVO;
 import portalxpert.adm.sys.vo.AdmSysDeptInfo;
 import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO;
+import portalxpert.common.config.Constant;
 import portalxpert.common.utils.CommUtil;
 import portalxpert.common.utils.JSONUtils;
 import portalxpert.common.vo.JSONResult;
@@ -147,7 +148,7 @@ public class AdmSysAuthController {
 		
 		AdmSysMenuAuthVO admSysMenuAuthVO = new AdmSysMenuAuthVO();
 		if(CommUtil.isEmpty(authCd)){
-			admSysMenuAuthVO.setAuthCd("SYSTEM");
+			admSysMenuAuthVO.setAuthCd(Constant.ROLE_SUPER.getVal());
 		}else{
 			admSysMenuAuthVO.setAuthCd(authCd);
 		}
@@ -165,6 +166,7 @@ public class AdmSysAuthController {
 		modelMap.put("authCodeList", JSONUtils.objectToJSON(listAdmSysAuthVO));
 		modelMap.put("menuList", JSONUtils.objectToJSON(conts));
 		modelMap.put("authCd", admSysMenuAuthVO.getAuthCd());
+		modelMap.put("ROLE_SUPER", Constant.ROLE_SUPER.getVal());
 		
 		
 		return ".self/adm/sys/admSysMenuManage";

@@ -44,7 +44,7 @@ var nodeCount = 0;
 				<span class="selectN" style="width:100px">
 					<span>
 						<select title="" id="authCd">
-							<option value="SYSTEM">[ 메뉴관리 ]</option>
+							<option value="${ROLE_SUPER}">[ 메뉴관리 ]</option>
 						</select>
 					</span>
 				</span>

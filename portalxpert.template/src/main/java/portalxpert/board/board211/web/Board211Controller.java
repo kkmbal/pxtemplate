@@ -24,6 +24,7 @@ import portalxpert.board.board100.vo.BbsNotiInfoVO;
 import portalxpert.board.board210.sc.Board210Service;
 import portalxpert.board.board211.sc.Board211Service;
 import portalxpert.board.board211.vo.BbsImgBoardNotiInfoVO;
+import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
 import portalxpert.common.utils.JSONUtils;
 import portalxpert.common.vo.BoardSearchVO;
@@ -141,7 +142,7 @@ public class Board211Controller {
 		
 		//관리자면 권한 체크 SKIP
 		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
-		if (superAdmin.equals("E"))
+		if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
 		{
 			boardSearchVO.setNotiReadmanAsgnYn("A");
 		}
@@ -298,7 +299,7 @@ public class Board211Controller {
     	/**
     	 * portal 관리자, 게시판관리자, 게시판담당자, 쓰기권한이 있는 사용자(작성자포함) 여부 확인 
     	 */
-    	if( superAdmin.equals("E")
+    	if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y") 
     			|| bbsInfo.getWrtYn().equals("Y")){
     		yn = "Y";
@@ -334,7 +335,7 @@ public class Board211Controller {
 		logger.debug("==getDisplayname : "+ info.getDisplayname());
 		logger.debug("==superAdmin : "+ superAdmin);
 		logger.debug("==getAdmYn : "+ bbsInfo.getAdmYn());
-		if( superAdmin.equals("E")
+		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
     			|| bbsInfo.getAdmYn().equals("Y")){ 
     		yn = "Y";
     		
