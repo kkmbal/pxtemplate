@@ -21,7 +21,7 @@
     
     <bean id="dataSource-oracle" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>
+        <property name="url" value="jdbc:oracle:thin:@192.168.139.227:1521:XE"/>
         <property name="username" value="PX_PORTAL"/>
         <property name="password" value="PX_PORTAL"/>
     </bean>

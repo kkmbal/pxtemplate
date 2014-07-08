@@ -11,7 +11,7 @@ $(function() {
 		$(this).attr("href", WEB_HOME+"/main/mainFrame.do");		
 	});	
 	$("#board").click(function() {
-		$(this).attr("href", WEB_HOME+"/board100/boardFrame.do?boardId=BBS000002");		
+		$(this).attr("href", WEB_HOME+"/board100/boardFrame.do?boardId=BBS000001");		
 	});	
 	
 	PortalCommon.getJson({

@@ -4,7 +4,7 @@
 <head>
 <title></title>
 <%
-	request.setAttribute("tree", "tree");
+	request.setAttribute("NO_JQUERY_UI", "Y");
 %>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/taglibs.jsp"%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/jsLibs.jsp"%>

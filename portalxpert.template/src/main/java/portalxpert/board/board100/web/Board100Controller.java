@@ -742,9 +742,6 @@ public class Board100Controller {
 			boardForm = bbsInfo.getBoardForm();
 		}
 		
-		/*logger.debug("bbsInfo : "+bbsInfo);
-		logger.debug("bbsInfo.getBoardForm() : "+bbsInfo.getBoardForm());
-		logger.debug("bbsInfo.getBoardFormSpec() : "+bbsInfo.getBoardFormSpec());*/
 		
 		if (boardId.equals("BBS999999"))  //임시게시판
 		{
