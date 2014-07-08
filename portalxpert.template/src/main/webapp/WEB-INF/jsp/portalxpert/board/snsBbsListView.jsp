@@ -167,31 +167,6 @@ var boardExpl = '${boardExpl}';
 									</div>									
 									
 									
-									<%--
-									<div id="div_file_view" style="display:none">										
-										<div class="sns_form">
-											<span class="fileadd">파일 첨부</span>
-											<div class="sns_fileadd"> 
-												<ul>
-													<form id="apndFileform" name="apndFileform" enctype="multipart/form-data" method="post">													
-														<li class="ma_bot5">
-															<span class="inp_file2" >  
-								                            <input type="text" title="파일을 넣으세요" style="height:17px;">
-								                            <a href="#" class="btn_file">								                            	
-								                            	<input type="file" class="file2" size="1" title="찾기" id="apndFileAddw" name="upFile">								                            	
-								                                <a style="cursor:pointer;" onclick="javascript:fnAddFileList()" class="btn_grid2"><span class="btn_text">추가</span></a>
-								                            </a>
-								                        	</span>
-								                        	
-								                    	</li>
-          							                </form>								                    
-												</ul>
-											</div>
-											<a class="ico_sredel" style="cursor:pointer;" onclick="javascript:fnAppendMenuRemove();" title="첨부없이 일반쓰기로 돌아갑니다."><!--삭제--></a>
-										</div>
-										 										 
-									</div>
-									 --%>
 									
 									<!--btn_area-->
 									<div class="btn_area">
@@ -201,11 +176,9 @@ var boardExpl = '${boardExpl}';
 											<a id="btn_file" href="#" class="btn_file3" title="파일"></a>
 										</div>
 										<div class="fl_right">
-												<span class="fl_left" style="vertical-align: middle;margin-top: 5px;margin-right: 5px;">공개설정</span>
-												<select name="notiOpenDiv" id="notiOpenDiv" class="fl_left">
+												<span class="fl_left" style="vertical-align: middle;margin-top: 5px;margin-right: 5px;display:none">공개설정</span>
+												<select name="notiOpenDiv" id="notiOpenDiv" class="fl_left"  style="display:none">
 													<option value="010" selected>전체공개
-													<option value="020">운영자만공개
-													<option value="030">부서지정
 												</select>
 											<a href="#" class="btn_reg" id="btn_context_write"></a>
 										</div>

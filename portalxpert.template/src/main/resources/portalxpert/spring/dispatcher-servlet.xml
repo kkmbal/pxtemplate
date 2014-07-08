@@ -38,6 +38,16 @@
 				</list>
 			</property>
 		</bean>
+		<bean class="portalxpert.common.web.AuthUrlPatternInterceptor">
+			<property name="exceptPattern">
+				<list>
+					<value>/getLogin.do</value>
+					<value>/login/login.do</value>
+					<value>/doLogin.do</value>
+					<value>/logout.do</value>
+				</list>
+			</property>
+		</bean>
 	</mvc:interceptors> 
       
 	<bean id="tilesconfigurer"	class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
@@ -113,7 +123,7 @@
 <!--     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
     <bean class="portalxpert.common.web.PortalExceptionResolver">
     	<property name="exceptionAttribute" value="exception"/>
-        <property name="defaultErrorView" value="portalxpert/common/bizError"/>
+        <property name="defaultErrorView" value="common/bizError"/>
         <property name="exceptionMappings">
             <props>
                 <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">common/bizError</prop>

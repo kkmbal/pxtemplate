@@ -78,8 +78,8 @@
 <col style="width:7%" />
 <col style="width:15%" />
 <col style="width:*" />
-<col style="width:11%" />
-<col style="width:11%" />
+<col style="width:15%" />
+<col style="width:15%" />
 <col style="width:15%" />
 </colgroup>
 <thead>
@@ -88,8 +88,8 @@
 	<th scope="col"><span>권한코드</span></th>
 	<th scope="col"><span>권한명</span></th>
 	<th scope="col"><span>설명</span></th>
-	<th scope="col"><span>등록일자</span></th>
-	<th scope="col" class="e"><span>URL패턴</span></th>
+	<th scope="col"><span>URL패턴</span></th>
+	<th scope="col" class="e"><span>등록일자</span></th>
 </tr>
 </thead>
 <tbody>
@@ -101,9 +101,9 @@
 				<td>${result.authCd}</td>
 				<td class="tit" title="${result.authNm}"><a href="javascript:fnGetRegView('${result.authCd}');" class="text_dot">${result.authNm}</a> 
 				</td>
-				<td>${result.authDesc}</td>
+				<td><p class="text_dot" title="${result.authDesc}">${result.authDesc}</p></td>
+				<td ><p class="text_dot" title="${result.urlPtn}">${result.urlPtn}</p></td>
 				<td>${result.regDttm}</td>
-				<td>${result.urlPtn}</td>
 			</tr>
 		</c:forEach>
 	</c:when>

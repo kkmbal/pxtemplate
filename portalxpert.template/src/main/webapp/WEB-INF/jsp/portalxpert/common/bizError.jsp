@@ -8,8 +8,10 @@
 <body>
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td>오류발생:</td>
+    <td></td>
     <td width="100%" height="100%" align="center" valign="middle" style="padding-top:150px;"><table border="0" cellspacing="0" cellpadding="0">
+      <tr>[오류발생]</tr>
+      <tr style="height:20px;"> </tr>
 	  <tr>
 		<td ><span style="font-family:Tahoma; font-weight:bold; color:#000000; line-height:150%; width:440px; height:70px;"><%=request.getAttribute("exception") %></span></td>
 	  </tr>
