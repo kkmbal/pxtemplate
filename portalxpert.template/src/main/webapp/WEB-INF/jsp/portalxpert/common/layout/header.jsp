@@ -1,45 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/taglibs.jsp"%>
-<script type="text/javascript">	
-$(function() {
-	$("#btnLogOut").click(function() {
-		parent.location.href = "${pageContext.request.contextPath}/logout.do";
-	});
-	
-	$("#btnAdmin").click(function() {
-		$(this).attr("href", "${WEB_HOME}/adm/sys/admFrame.do?url=adm/stat/getAdmBbsStatList.do");
-	});	
-	
-	$("#main").click(function() {
-		$(this).attr("href", "${WEB_HOME}/main/mainFrame.do");		
-	});	
-	$("#board").click(function() {
-		$(this).attr("href", "${WEB_HOME}/board100/boardFrame.do?boardId=BBS000002");		
-	});	
-	
-	PortalCommon.getJson({
-		url : "${pageContext.request.contextPath}/adm/sys/getAuthMenu.do?format=json",
-		data : 'authCd=${sessionScope.pxLoginInfo.authCd}',
-		success : function(data) {
-			if (data.jsonResult.success === true) {
-				var zNodes = $.parseJSON(data.menuList);
-				var topMenus = PortalCommon.getSiblingZMenuByPid(zNodes, "0"); //최상단 메뉴
-				for(var i=0;i<topMenus.length;i++){
-					if(i == 6) return; // 상단 메뉴최대 갯수
-					if(topMenus[i].name != '관리자'){
-						var page = topMenus[i].page;
-						if(page.match(/^\//g)) page = page.substring(1);
-						$("#topMenu").append('<li><a href="${WEB_HOME}/'+page+'?menuId='+topMenus[i].menuId+'">'+topMenus[i].name+'</a></li>');
-					}
-				}
-				
-			};
-		}
-	});
-	
-});
-</script>
-
 
 	<!--header-->
 	<div id="header">
@@ -60,4 +20,10 @@ $(function() {
 		</div>
     </div>
     <!--//header-->
+    
+<script type="text/javascript">
+var topMenuAuthCd = '${sessionScope.pxLoginInfo.authCd}';
+</script>           
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/portalxpert/js/portal/common/header.js"></script>
+ 	    
     

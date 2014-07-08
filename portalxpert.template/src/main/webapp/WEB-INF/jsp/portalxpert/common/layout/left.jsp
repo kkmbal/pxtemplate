@@ -1,23 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
  		<!--//left-->
- 		<div id="left">
-				<div id="a">게시판1</div>
-				<div id="b">게시판2</div>
-				<div id="c">게시판3</div>
+ 		<div id="left" class="lnb_area">
+            
+			<div class="bbs_board">
+				<div class="non_tree">
+					<div class="content_wrap">
+						<div id="menuListDiv">
+							<ul id="menuTreeObj" class="ztree"></ul>
+						</div>	
+					</div>
+				</div>
+			</div>            
+            
+            
 		</div>
  		<!--//left-->
+ 
 <script type="text/javascript">
-$(function(){
-	$("#a").click(function(){
-		document.getElementById("bbsFrame").src = "${pageContext.request.contextPath}/board210/getBoardInfoList.do?boardId=BBS000002";
-	});
-	$("#b").click(function(){
-		document.getElementById("bbsFrame").src = "${pageContext.request.contextPath}/board210/getBoardInfoList.do?boardId=BBS000003";
-	});
-	$("#c").click(function(){
-		document.getElementById("bbsFrame").src = "${pageContext.request.contextPath}/board210/getBoardInfoList.do?boardId=BBS000004";
-	});
-});
+var menuId = '${param.menuId}';
+var authCd = '${sessionScope.pxLoginInfo.authCd}';
 </script>           
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/portalxpert/js/portal/common/left.js"></script>
+ 		
+
 	           

@@ -1258,7 +1258,35 @@ height: 16px;
 cursor:pointer;
 }
 
-
 /* ------------------- admin tab -------------------- */
+
+/* ------------------- left non-tree -------------------- */
+.non_tree .ztree{
+/* padding-bottom: 2px; */
+/* border-bottom: 1px solid #c3c3c3; */
+}
+
+.non_tree .ztree * {font-size: 10pt;}
+.non_tree .ztree li ul{ margin:0; padding:0}
+.non_tree .ztree li {line-height:30px;}
+.non_tree .ztree li a {width:180px;height:30px;padding-top: 0px;}
+.non_tree .ztree li a:hover {text-decoration:none; background-color: #E7E7E7;}
+.non_tree .ztree li a span.button.switch {visibility:hidden}
+.non_tree .ztree.showIcon li a span.button.switch {visibility:visible}
+.non_tree .ztree li a.curSelectedNode {background-color:#D4D4D4;border:0;height:30px;}
+.non_tree .ztree li span {line-height:30px;}
+.non_tree .ztree li span.button {margin-top: -7px;}
+.non_tree .ztree li span.button.switch {width: 16px;height: 16px;}
+.non_tree 
+.non_tree .ztree li a.level0 span {font-size: 150%;font-weight: bold;}
+.non_tree .ztree li span.button {background-image:url("../images/zTree/left_menuForOutLook.png"); *background-image:url("../images/zTree/left_menuForOutLook.gif")}
+.non_tree .ztree li span.button.switch.level0 {width: 20px; height:20px}
+.non_tree .ztree li span.button.switch.level1 {width: 20px; height:20px}
+.non_tree .ztree li span.button.noline_open {background-position: 0 0;}
+.non_tree .ztree li span.button.noline_close {background-position: -18px 0;}
+.non_tree .ztree li span.button.noline_open.level0 {background-position: 0 -18px;}
+.non_tree .ztree li span.button.noline_close.level0 {background-position: -18px -18px;}
+
+/* ------------------- left non-tree -------------------- */
 
 
