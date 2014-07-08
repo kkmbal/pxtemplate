@@ -294,6 +294,10 @@ vertical-align: middle;
 table-layout: fixed;
 }
 
+.tbl_list2 .tbl_list {
+table-layout: auto;
+}
+
 .lnb_area  a {
 display: inline-block;
 color: #000;

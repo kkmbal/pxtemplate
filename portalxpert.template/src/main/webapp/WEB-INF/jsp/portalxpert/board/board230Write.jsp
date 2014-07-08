@@ -164,7 +164,7 @@
 	<td colspan="3">
 		<select name="notiOpenDiv" id="notiOpenDiv">
 			<option value="010" selected>전체공개
-			<option value="020">운영자만공개
+			<option value="020">사용자지정
 			<option value="030">부서지정
 		</select>
  

@@ -57,7 +57,7 @@
 			</div>
 			<div class="p_right" style="width:58%">
 				<!--search-->
-				<div class="attachbox" style="width:300px;margin-bottom:10px;">
+				<div class="attachbox" style="width:470px;margin-bottom:10px;">
 					<span class="rbox_top"></span>
 					<div class="rboxInner">
 						사용자명
