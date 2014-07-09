@@ -23,6 +23,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,7 @@ import portalxpert.board.board100.vo.PbsUserBoardPartInfoVO;
 import portalxpert.board.board210.sc.Board210Service;
 import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
+import portalxpert.common.exception.PortalxpertException;
 import portalxpert.common.utils.CommUtil;
 import portalxpert.common.utils.FileDownloadUtil;
 import portalxpert.common.utils.JSONUtils;
@@ -791,6 +793,85 @@ public class Board100Controller {
     }
     
     /**
+     * 유형별 게시판 프레임(대외공개)
+     * @param modelMap
+     * @return board/bbsFrame.jsp
+     * @throws Exception
+     */
+    @RequestMapping(value="/boardOpenFrame")
+    public String boardOpenFrame(
+    		ModelMap modelMap,
+    		@RequestParam(value="boardId",required = true) String boardId,
+    		@RequestParam(value="pageIndex",required = false) String pageIndex,
+    		HttpSession session
+    )
+    throws Exception {
+    	
+    	
+    	String rtnPage = "blank";
+    	BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+    	bbsVO.setBoardId(boardId);
+    	
+    	List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);
+    	BbsBoardInfoVO bbsInfo = null;
+    	String boardForm = null;
+    	if (list.size() > 0)
+    	{
+    		bbsInfo = list.get(0);
+    		boardForm = bbsInfo.getBoardForm();
+    	}
+    	
+    	
+    	if (boardId.equals("BBS999999"))  //임시게시판
+    	{
+    		rtnPage = "board/bbs240Frame";
+    	}
+    	else  //임시게시판이 아니면
+    	{
+    		if(bbsInfo !=null && "Y".equals(bbsInfo.getOutsideOpenDiv())){ //외부공개허용
+    			
+    			//UserInfoVO vo = (UserInfoVO)WebUtils.getOrCreateSessionAttribute(session, "pxLoginInfo", UserInfoVO.class);
+    			
+    			if( ! bbsInfo.getBoardKind().equals(Constant.BOARD_KIND_020.getVal())){//일반, 경조사 
+    				if( bbsInfo.getBoardForm() != null){
+    					if(bbsInfo.getBoardForm().equals(Constant.BOARD_FORM_010.getVal())){//일반형
+    						rtnPage = "board/open/bbs210Frame";
+    					}else if(bbsInfo.getBoardForm().equals(Constant.BOARD_FORM_020.getVal())){//SNS형
+    						rtnPage = "board/open/bbs220Frame";
+    					}else if(bbsInfo.getBoardForm().equals(Constant.BOARD_FORM_040.getVal())){//달력형
+    						rtnPage = "board/open/bbs210Frame";
+    					}else if(bbsInfo.getBoardForm().equals(Constant.BOARD_FORM_030.getVal()) && bbsInfo.getBoardFormSpec().equals(Constant.BOARD_FORM_SPEC_010.getVal())){//컨텐츠 이미지형
+    						rtnPage = "board/open/bbs211Frame";
+    					}else if(bbsInfo.getBoardForm().equals(Constant.BOARD_FORM_030.getVal()) && bbsInfo.getBoardFormSpec().equals(Constant.BOARD_FORM_SPEC_020.getVal())){//컨텐츠 동영상형
+    						rtnPage = "board/open/bbs212Frame";
+    					}else if(bbsInfo.getBoardForm().equals(Constant.BOARD_FORM_030.getVal()) && bbsInfo.getBoardFormSpec().equals(Constant.BOARD_FORM_SPEC_030.getVal())){//컨텐츠형 
+    						rtnPage = "board/open/bbs213Frame";
+    					}						
+    				}else{
+    					//logger.error("BoardForm 을 확인해주세요.");
+    					
+    					rtnPage = "board/open/bbs210Frame";
+    				}
+    			}else{//폐쇄게시판
+    				rtnPage = "board/open/bbs210Frame";
+    			}
+    			
+    		}else{
+    			logger.error("["+boardId+"]게시판이 존재하지 않습니다.");
+    		}
+    		
+    	}
+    	
+    	logger.debug("page : "+".board/" + rtnPage);
+    	
+    	modelMap.put("boardId", boardId);
+    	modelMap.put("boardForm", boardForm);
+    	modelMap.put("pageIndex", pageIndex);
+    	
+    	return ".board/" + rtnPage;     
+    }
+    
+    /**
      * 게시판 종합 검색 일반 검색 리스트
      * @param model
      * @return "/bbs/bbsTotalSearchList"
@@ -969,6 +1050,34 @@ public class Board100Controller {
  		}
 
  	}
+    
+    @RequestMapping(value = "/{open}/bbsFileDownload", method = RequestMethod.GET)
+    public void openBbsFileDownload(
+    		@RequestParam(value="data" ,required = true) String data,
+    		@PathVariable String open,
+ 			ModelMap 		modelMap,
+ 			HttpServletRequest request, 
+ 			HttpServletResponse response,
+ 			HttpSession session
+ 			
+    ) throws Exception {
+    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+    		JSONObject bbsObject = JSONObject.fromObject(data);
+    		String boardId = (String)bbsObject.get("boardId");
+    		
+			BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+			bbsVO.setBoardId(boardId);    	
+    		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);
+    		BbsBoardInfoVO bbsInfo = list.get(0);
+    		if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+    			if(!"Y".equals(bbsInfo.getOutsideOpenDiv())){
+    				throw new PortalxpertException(messageSource.getMessage("auth.error"));
+    			}
+    		}
+    	}
+    	
+    	bbsFileDownload(data, modelMap, request, response, session);
+    }
 
     /**
      * 개인 게시판 MY 카테고리 관리

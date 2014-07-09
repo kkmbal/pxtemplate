@@ -14,6 +14,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import portalxpert.board.board211.sc.Board211Service;
 import portalxpert.board.board211.vo.BbsImgBoardNotiInfoVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
+import portalxpert.common.exception.PortalxpertException;
 import portalxpert.common.utils.JSONUtils;
 import portalxpert.common.vo.BoardSearchVO;
 import portalxpert.common.vo.JSONResult;
@@ -82,6 +84,7 @@ public class Board211Controller {
 	 			@RequestParam(value="orderType",required = false, defaultValue="default") String orderType,
 	 			@RequestParam(value="isDesc",required = false) boolean isDesc,
 	 			@RequestParam(value="fh",required = false) String fh,
+	 			@RequestParam(value="open",required = false) String open,
 				HttpSession session,
 				HttpServletRequest request,
 				ModelMap modelMap)
@@ -94,7 +97,16 @@ public class Board211Controller {
 		if (!imgSvrUrl.endsWith("/")) imgSvrUrl = imgSvrUrl+"/";
 		
 		
-		UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+    	UserInfoVO info = null;
+    	String openPath = "";
+    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+    		info = new UserInfoVO();
+    		info.setId(Constant.BOARD_ROLE_USER.getVal());
+    		openPath = Constant.BOARD_OPEN_PATH.getVal() + "/"; // 공개게시판
+    	}else{
+    		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+    	}
+    	
 		String auth = board100Service.getUserBbsMapList(info.getId());
 		
 		BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
@@ -107,6 +119,10 @@ public class Board211Controller {
 		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 		BbsBoardInfoVO bbsInfo = list.get(0);
 		String boardBtnViewYn = getBoardBtnViewYN(session,bbsInfo );
+		
+		//공개게시판 체크
+		checkOpenBoard(open, bbsInfo);
+		
 		/** PropertyService.sample */
 		boardSearchVO.setPageUnit(Integer.parseInt(pageUnit));
 		boardSearchVO.setPageSize(propertiesService.getInt("pageSize"));
@@ -188,8 +204,30 @@ public class Board211Controller {
 		
 		modelMap.put("host", "http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort());
        
- 	   return ".self/board/board211Imagelist";
+ 	   return ".self/board/"+openPath+"board211Imagelist";
  	   		   
+	}
+	
+	@RequestMapping(value="/{open}/getBbsImgBoardNotiList")                            
+	 public String getOpenBbsImgBoardNotiList(
+			 @ModelAttribute("boardSearchVO") BoardSearchVO boardSearchVO,
+			    @RequestParam(value="boardId" ,required = false) String boardId,
+			    @RequestParam(value="pageIndex",required = false, defaultValue="1") String pageIndex,
+	 			@RequestParam(value="pageUnit",required = false, defaultValue="6") String pageUnit,
+				@RequestParam(value="searchCondition",required = false) String searchCondition,
+	 			@RequestParam(value="searchKeyword",required = false) String searchKeyword,
+	 			@RequestParam(value="regDttmFrom",required = false) String regDttmFrom,
+	 			@RequestParam(value="regDttmTo",required = false) String regDttmTo,
+	 			@RequestParam(value="orderType",required = false, defaultValue="default") String orderType,
+	 			@RequestParam(value="isDesc",required = false) boolean isDesc,
+	 			@RequestParam(value="fh",required = false) String fh,
+	 			@PathVariable String open,
+				HttpSession session,
+				HttpServletRequest request,
+				ModelMap modelMap)
+        throws Exception {
+		
+		return getBbsImgBoardNotiList(boardSearchVO, boardId, pageIndex, pageUnit, searchCondition, searchKeyword, regDttmFrom ,regDttmTo, orderType, isDesc, fh, open, session, request, modelMap);
 	}
 	
 	public int getMyBbsFavoriteYn(String userId, String boardId) throws Exception 
@@ -331,8 +369,6 @@ public class Board211Controller {
 		logger.debug("========================================");
 		logger.debug("==getBoardId : "+ bbsInfo.getBoardId());
 		logger.debug("==getBoardName : "+ bbsInfo.getBoardName());
-		logger.debug("==getId : "+ info.getId());
-		logger.debug("==getDisplayname : "+ info.getDisplayname());
 		logger.debug("==superAdmin : "+ superAdmin);
 		logger.debug("==getAdmYn : "+ bbsInfo.getAdmYn());
 		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
@@ -346,5 +382,12 @@ public class Board211Controller {
     	return yn;
     }
 	
-	
+    //공개게시판 여부 체크
+	private void checkOpenBoard(String open, BbsBoardInfoVO bbsInfo) {
+		if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+			if(!"Y".equals(bbsInfo.getOutsideOpenDiv())){
+				throw new PortalxpertException(messageSource.getMessage("auth.error"));
+			}
+		}
+	}
 }

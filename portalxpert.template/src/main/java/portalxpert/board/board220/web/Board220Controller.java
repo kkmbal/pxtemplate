@@ -15,6 +15,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,7 @@ import portalxpert.board.board210.sc.Board210Service;
 import portalxpert.board.board220.sc.Board220Service;
 import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
+import portalxpert.common.exception.PortalxpertException;
 import portalxpert.common.utils.CommUtil;
 import portalxpert.common.utils.JSONUtils;
 import portalxpert.common.vo.BoardSearchVO;
@@ -79,10 +81,20 @@ public class Board220Controller {
 	 			@RequestParam(value="pageUnit",required = false, defaultValue="10") String pageUnit,
 	 			@RequestParam(value="searchCondition",required = false) String searchCondition,
 	 			@RequestParam(value="searchKeyword",required = false) String searchKeyword,	 			
+	 			@RequestParam(value="open",required = false) String open,	 			
 				HttpSession session,
 				HttpServletRequest request)  throws Exception {
 
-   		UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+    	UserInfoVO info = null;
+    	String openPath = "";
+    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+    		info = new UserInfoVO();
+    		info.setId(Constant.BOARD_ROLE_USER.getVal());
+    		openPath = Constant.BOARD_OPEN_PATH.getVal() + "/"; // 공개게시판
+    	}else{
+    		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+    	}
+    	
 		String auth = board100Service.getUserBbsMapList(info.getId());
 		
 		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
@@ -98,6 +110,9 @@ public class Board220Controller {
 		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 		BbsBoardInfoVO bbsInfo = list.get(0);
 		String boardBtnViewYn = getBoardBtnViewYN(session,bbsInfo );
+		
+		//공개게시판 체크
+		checkOpenBoard(open, bbsInfo);
 		
 		/** PropertyService.sample */
 		boardSearchVO.setPageUnit(Integer.parseInt(pageUnit));
@@ -208,10 +223,28 @@ public class Board220Controller {
 		modelMap.put("WEB_DIR", CONTEXT_PATH + WEB_DIR);
 		
 		
- 	   return ".self/board/snsBbsListView";
+ 	   return ".self/board/"+openPath+"snsBbsListView";
  	   		   
 	}
    
+	
+	@RequestMapping(value="/{open}/getBbsSnsBoardList")                            
+	 public String getOpenBbsSnsBoardList(
+				ModelMap modelMap,
+	 			@ModelAttribute("boardSearchVO") BoardSearchVO boardSearchVO,
+	 			@RequestParam(value="boardId",required = true) String boardId,
+	 			@RequestParam(value="pageIndex",required = false, defaultValue="1") String pageIndex,
+	 			@RequestParam(value="pageUnit",required = false, defaultValue="10") String pageUnit,
+	 			@RequestParam(value="searchCondition",required = false) String searchCondition,
+	 			@RequestParam(value="searchKeyword",required = false) String searchKeyword,	 			
+	 			@PathVariable String open,	 			
+				HttpSession session,
+				HttpServletRequest request)  throws Exception {
+		
+		return getBbsSnsBoardList(modelMap, boardSearchVO, boardId, pageIndex, pageUnit, searchCondition, searchKeyword, open, session, request);
+	}
+	
+	
     /**
      * 글 조회
      * @param modelMap
@@ -220,6 +253,7 @@ public class Board220Controller {
     @RequestMapping("/getNotiTmlnInfo")
     public ModelMap getNotiTmlnInfo(
  		   @RequestParam(value="data" ,required = true) String data,
+ 		   @RequestParam(value="open",required = false)  String open,
             ModelMap model,
             HttpServletRequest request,
             HttpSession session
@@ -237,11 +271,26 @@ public class Board220Controller {
 	    	String searchKeyword = (String)jsonObject.get("searchKeyword");
 	    	int sortSeq = jsonObject.getInt("sortSeq");
 	    	
+	    	UserInfoVO info = null;
+	    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+	    		info = new UserInfoVO();
+	    		info.setId(Constant.BOARD_ROLE_USER.getVal());
+	    	}else{
+	    		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+	    	}
 	    	
-	   		UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
 			String auth = board100Service.getUserBbsMapList(info.getId());
 			
-	
+			BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+			bbsVO.setBoardId(boardId);
+			bbsVO.setUserId(info.getId());
+			bbsVO.setUserMap(auth);
+
+			List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
+			BbsBoardInfoVO bbsInfo = list.get(0);
+			
+			//공개게시판 체크
+			checkOpenBoard(open, bbsInfo);
 			
 			BoardSearchVO boardSearchVO = new BoardSearchVO();
 	
@@ -405,8 +454,6 @@ public class Board220Controller {
 		logger.debug("========================================");
 		logger.debug("==getBoardId : "+ bbsInfo.getBoardId());
 		logger.debug("==getBoardName : "+ bbsInfo.getBoardName());
-		logger.debug("==getId : "+ info.getId());
-		logger.debug("==getDisplayname : "+ info.getDisplayname());
 		logger.debug("==superAdmin : "+ superAdmin);
 		logger.debug("==getAdmYn : "+ bbsInfo.getAdmYn());
 		if( superAdmin.equals(Constant.ROLE_SUPER.getVal())
@@ -418,5 +465,14 @@ public class Board220Controller {
 		logger.debug("========================================");
     	return yn;
     }    
+    
+    //공개게시판 여부 체크
+	private void checkOpenBoard(String open, BbsBoardInfoVO bbsInfo) {
+		if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+			if(!"Y".equals(bbsInfo.getOutsideOpenDiv())){
+				throw new PortalxpertException(messageSource.getMessage("auth.error"));
+			}
+		}
+	}
 }
 

@@ -49,7 +49,7 @@
 
 <!--pop_wrap-->
 <div class="pop_wrap" style="width:400px;"><!-- 팝업사이즈 width:400px; height:500px; -->
-	<div class="pop_header">카테고리 관리</div>
+	<div class="pop_header">게시물 이동</div>
 	<div class="pop_content">
 	<!-- popup 본문 -->
 		<div class="tree" style="border:1px solid #eee;">

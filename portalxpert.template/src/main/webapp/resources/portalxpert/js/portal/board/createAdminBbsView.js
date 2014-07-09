@@ -949,6 +949,10 @@
 	   
 	   $("#boardUrlDiv").show();
 	   $("#boardUrl").val(WEB_HOME+"/board100/boardFrame.do?boardId="+boardId);
+	   if( $('#oupOpenUseTypeSelect option:selected').val() == "Y" ){
+		   $("#openBoardUrl").show();
+		   $("#openBoardUrl").val(WEB_HOME+"/board100/boardOpenFrame.do?boardId="+boardId);
+	   }
 	   
 	   //fnCustomSet(bbsList[0]);
    };

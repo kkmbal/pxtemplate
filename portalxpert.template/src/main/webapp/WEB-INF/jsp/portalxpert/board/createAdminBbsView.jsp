@@ -117,7 +117,7 @@
 	</td>
 </tr>
 <tr>
-	<th scope="row"><label for="input01">의견 허용</label></th>
+	<th scope="row"><label for="input01">의견허용</label></th>
 	<td colspan="3">
 		<div class="radiogroup">
 			<input type="radio" name="opnWrteDiv" id="opnWrteDiv_010" value="010" checked title="라디오1을 선택합니다." />
@@ -128,7 +128,7 @@
 	</td>
 </tr>
 <tr>
-	<th scope="row"><label for="input01">답글 허용</label></th>
+	<th scope="row"><label for="input01">답글허용</label></th>
 	<td colspan="3">
 		<div class="radiogroup">
 			<input type="radio" name="replyWrteDiv" id="replyWrteDiv_010" value="010" checked title="라디오1을 선택합니다." />
@@ -136,6 +136,15 @@
 			<input type="radio" name="replyWrteDiv" id="replyWrteDiv_020" value="020" title="라디오2을 선택합니다." />
 			<label for="radio02" class="mgrn">사용안함</label>	
 		</div>	
+	</td>
+</tr>
+<tr>
+	<th scope="row"><label for="input01">외부공개</label></th>
+	<td colspan="3">
+		    <select id="oupOpenUseTypeSelect" title="외부공개">
+		    	<option value="N" selected>비허용</option>
+				<option value="Y">허용</option>
+		    </select>
 	</td>
 </tr>
 <tr>
@@ -147,7 +156,9 @@
 <tr id="boardUrlDiv" style="display:none;">
 	<th scope="row"><label for="textbox01">제공 URL</label></th>
 	<td colspan="3">
-		<input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:568px">
+		로그인 <input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:468px"><br>
+		공개 <input type="text" class="text" id="openBoardUrl" name="openBoardUrl" title="제공  URL" readonly style="width:468px;magin-left:12px;margin-top:5px;display:none;">
+		
 	</td>
 </tr>
 </tbody>
@@ -207,9 +218,6 @@
 	<option value="10">10MB</option>
 </select>
 <input type="radio" id="NotiMailSend_N" value="N" name="NotiMailSend" checked> <%-- 게시물 메일발송 사용안함 --%>
-<select title="외부공개" id="oupOpenUseTypeSelect">
-	<option value="N" selected>비허용</option>
-</select>
 </div>	
 
 

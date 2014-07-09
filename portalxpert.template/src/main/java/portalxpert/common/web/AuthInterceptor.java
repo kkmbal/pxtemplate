@@ -11,6 +11,7 @@ import org.springframework.util.PathMatcher;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.WebUtils;
 
+import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
 
 @Component

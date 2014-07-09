@@ -941,6 +941,7 @@ public class Board210ServiceImpl extends AbstractServiceImpl implements  Board21
 	    	
 	    	BoardSearchVO searchVO = new BoardSearchVO();
 	    	UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+	    	if(info == null) info = new UserInfoVO();
 	    	if(auth == null){
 		    	searchVO.setUserId(info.getId());
 		    	searchVO.setDeptCode(propertiesService.getString("START_DEPT_CODE"));
