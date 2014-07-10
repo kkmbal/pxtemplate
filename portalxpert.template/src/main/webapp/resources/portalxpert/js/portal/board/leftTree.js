@@ -198,7 +198,7 @@
 					var list = JSON.stringify(data.categoryList);
 					var categoryList = $.parseJSON(list);
 					commonZNodes =  $.parseJSON(categoryList);
-					if (eamAdmnF != 'E')
+					if (eamAdmnF != 'SYSTEM')
 					{
 						myBoardList = data.myBoardList;
 						fnSetAuthList();

@@ -951,6 +951,7 @@
 	   $("#boardUrl").val(WEB_HOME+"/board100/boardFrame.do?boardId="+boardId);
 	   if( $('#oupOpenUseTypeSelect option:selected').val() == "Y" ){
 		   $("#openBoardUrl").show();
+		   $("#openBoardUrlTitle").show();
 		   $("#openBoardUrl").val(WEB_HOME+"/board100/boardOpenFrame.do?boardId="+boardId);
 	   }
 	   

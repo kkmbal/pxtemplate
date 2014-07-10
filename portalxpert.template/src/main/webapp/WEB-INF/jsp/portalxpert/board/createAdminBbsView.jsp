@@ -99,7 +99,7 @@
 		</div>	
 	</td>
 </tr>
-<tr>
+<tr style="display:none;">
 	<th scope="row"><label for="input01">운영기간</label></th>
 	<td colspan="3">
 		<div class="radiogroup">
@@ -157,7 +157,7 @@
 	<th scope="row"><label for="textbox01">제공 URL</label></th>
 	<td colspan="3">
 		로그인 <input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:468px"><br>
-		공개 <input type="text" class="text" id="openBoardUrl" name="openBoardUrl" title="제공  URL" readonly style="width:468px;magin-left:12px;margin-top:5px;display:none;">
+		<span id="openBoardUrlTitle" style="display:none;">공개</span> <input type="text" class="text" id="openBoardUrl" name="openBoardUrl" title="제공  URL" readonly style="width:468px;magin-left:12px;margin-top:5px;display:none;">
 		
 	</td>
 </tr>

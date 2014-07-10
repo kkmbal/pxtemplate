@@ -82,6 +82,13 @@ public interface OrganizationMapper  {
      * @return 게시판 리스트
      */
     List<CategoryVO> getBbsAuthList(BbsVO vo);
+    
+    /**
+     * 게시판 운영 정보 조회
+     * @param vo 사용자 아이디
+     * @return 게시판 리스트
+     */
+    List<BbsVO> getBbsOperInfo(BbsVO vo);
 
     /**
      * 사용자 직원 검색

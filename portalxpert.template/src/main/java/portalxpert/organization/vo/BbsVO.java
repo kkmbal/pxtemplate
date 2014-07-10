@@ -4,6 +4,15 @@ public class BbsVO {
 	private String userid;
 	private String boardid;
 	private String userMap;
+	private String boardOperYn;
+	
+	
+	public String getBoardOperYn() {
+		return boardOperYn;
+	}
+	public void setBoardOperYn(String boardOperYn) {
+		this.boardOperYn = boardOperYn;
+	}
 	public String getBoardid() {
 		return boardid;
 	}

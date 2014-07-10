@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -351,6 +353,31 @@ public class OrganizationController {
     			conts = vo.getConts();
     			
     		}
+    		
+    		//폐쇄된것 제외
+    		JSONArray updateJsonArr = new JSONArray();
+    		if(!"".equals(conts)){
+	    		JSONArray jsonArr = JSONArray.fromObject(conts);
+	    		
+	    		BbsVO bvo = new BbsVO();
+	    		bvo.setBoardOperYn("N");
+	    		List<BbsVO> bbsOperList = organizationService.getBbsOperInfo(bvo); //폐쇄된 게시판 리스트
+				
+	    		boolean isEqual = false;
+				for (int i=0; i < jsonArr.size(); i++){
+					for(BbsVO v : bbsOperList){
+						if(v.getBoardid().equals(jsonArr.getJSONObject(i).getString("boardId"))){
+							isEqual = true;
+							break;
+						}
+					}
+					if(!isEqual) updateJsonArr.add(jsonArr.getJSONObject(i));
+					isEqual = false;
+				}
+    		}
+    		
+    		
+    		
     		//logger.info("getCommonBoardListForZtree conts : "+conts);
     		
     		if (kind.equals("2")) //사용자용이면 나의 권한에 맞는 리스트를 생성한다. 
@@ -362,12 +389,14 @@ public class OrganizationController {
     			boardSearchVO.setUserId(info.getId());
     			board_list = organizationService.getUserBbsMapList(boardSearchVO);
 
-    			modelMap.put("categoryList", conts);    			
+    			//modelMap.put("categoryList", conts);    			
+    			modelMap.put("categoryList", updateJsonArr.toString());    			
     			modelMap.put("myBoardList", board_list);
     		}
     		else
     		{
-    			modelMap.put("categoryList", conts);
+    			//modelMap.put("categoryList", conts);
+    			modelMap.put("categoryList", updateJsonArr.toString());
     			modelMap.put("myBoardList", "[]"); 
     		}
     		

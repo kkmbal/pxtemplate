@@ -11,6 +11,7 @@
 	
 	<resultMap id="bbsAuth" type="portalxpert.organization.vo.BbsVO">
 		<result property="boardId" column="BOARD_ID"/>
+		<result property="boardOperYn" column="BOARD_OPER_YN"/>
 	</resultMap>
 	
 	<resultMap id="getUserSearchList" type="portalxpert.organization.vo.UserVO">
@@ -194,6 +195,21 @@
 			 where user_id = #{userid}
 			   and user_div <> 'DPT'
 		]]>
+	</select>	
+		
+	<select id="getBbsOperInfo" resultMap="bbsAuth">
+		<![CDATA[
+			SELECT BOARD_ID
+			       ,BOARD_OPER_YN
+		  	  FROM BBS_BOARD_INFO
+			 WHERE 1 = 1
+		]]>
+			<if test="boardId !=null and boardId !=''">
+		     AND   BOARD_ID = #{BOARDID}
+		    </if>
+			<if test="boardOperYn !=null and boardOperYn !=''">
+			 AND   BOARD_OPER_YN = #{boardOperYn}
+		    </if>
 	</select>	
 	
 	<select id="getBbsAuthListNew" resultMap="bbsAuth" parameterType="portalxpert.common.vo.BoardSearchVO">

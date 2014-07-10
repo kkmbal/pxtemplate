@@ -576,4 +576,17 @@ public class OrganizationServiceImpl extends AbstractServiceImpl implements  Org
     	
     	return "OK";
     }
+    
+    /**
+     * 게시판 운영 정보 조회
+     * @param vo 사용자 아이디
+     * @return 게시판 리스트
+     */
+    public List<BbsVO> getBbsOperInfo(BbsVO vo) throws Exception {
+    	try {
+    		return organizationMapper.getBbsOperInfo(vo);
+    	}catch(Exception e){
+    		throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+    	}
+    }
 }
