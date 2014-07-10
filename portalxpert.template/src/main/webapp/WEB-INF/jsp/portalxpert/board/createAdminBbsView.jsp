@@ -156,8 +156,8 @@
 <tr id="boardUrlDiv" style="display:none;">
 	<th scope="row"><label for="textbox01">제공 URL</label></th>
 	<td colspan="3">
-		로그인 <input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:468px"><br>
-		<span id="openBoardUrlTitle" style="display:none;">공개</span> <input type="text" class="text" id="openBoardUrl" name="openBoardUrl" title="제공  URL" readonly style="width:468px;magin-left:12px;margin-top:5px;display:none;">
+		내부사용 <input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:468px"><br>
+		<span id="openBoardUrlTitle" style="display:none;">외부공개</span> <input type="text" class="text" id="openBoardUrl" name="openBoardUrl" title="제공  URL" readonly style="width:468px;margin-top:5px;display:none;">
 		
 	</td>
 </tr>
@@ -170,7 +170,7 @@
 		<a href="#" class="btn_set bt_style2" id="btn_bbs_cancel2"><span>취소</span></a>
 	</div>
 	<div class="fr">
-		<a href="#" class="btn_set bt_style3" id="btn_bbs_create2"><span>완료</span></a>
+		<a href="#" class="btn_set bt_style3" id="btn_bbs_create2"><span>등록</span></a>
 	</div>
 </div>
 <!-- //버튼영역 -->

@@ -1174,7 +1174,7 @@ $(document).ready(function () {
 			return;
 		}
 		
-		history.back();
+		location.href=WEB_HOME+"/adm/stat/getAdmBbsStatList.do";
 	});
 	
 	//공개관련 RESET

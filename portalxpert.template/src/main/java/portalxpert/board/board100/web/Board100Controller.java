@@ -742,6 +742,9 @@ public class Board100Controller {
 		{
 			bbsInfo = list.get(0);
 			boardForm = bbsInfo.getBoardForm();
+			if("N".equals(bbsInfo.getBoardOperYn())){
+				throw new PortalxpertException(messageSource.getMessage("board.close"));
+			}
 		}
 		
 		
@@ -819,6 +822,9 @@ public class Board100Controller {
     	{
     		bbsInfo = list.get(0);
     		boardForm = bbsInfo.getBoardForm();
+    		if("N".equals(bbsInfo.getBoardOperYn())){
+				throw new PortalxpertException(messageSource.getMessage("board.close"));
+			}
     	}
     	
     	
