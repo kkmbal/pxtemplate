@@ -976,6 +976,7 @@ public class Board210Controller {
     	modelMap.put("thumbnailFile", PortalxpertConfigUtils.getString("upload.thumbnail.file"));
     	modelMap.put("boardExplUseYn", bbsInfo.getBoardExplUseYn());
 		modelMap.put("boardExpl", bbsInfo.getBoardExpl());
+		modelMap.put("opnWrteDiv", bbsInfo.getOpnWrteDiv());
 		modelMap.put("notiEmailSendYn", bbsInfo.getNotiEmailSendYn());
 		modelMap.put("searchCondition", searchCondition);
 		modelMap.put("searchKeyword", searchKeyword);

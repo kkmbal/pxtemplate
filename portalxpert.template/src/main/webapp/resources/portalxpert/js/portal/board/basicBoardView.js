@@ -486,7 +486,7 @@
 		if(agrmOppYn == 'Y'){
 			$("#agrmOppTd").show();
 		}
-		if(opnPrmsYn == 'Y'){
+		if(opnWrteDiv != '' && opnWrteDiv != '020' && opnPrmsYn == 'Y'){
 			$("#opnPrmsDiv").show();
 			$("#replyUl").show();
 			$(".reply_post").show();

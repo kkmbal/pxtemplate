@@ -19,6 +19,7 @@ if('${btnViewYn}' == "X"){
 	var notiKind = null;
 	var regrId = null;//게시글등록자
 	var opnMakrRealnameYn = null;
+	var opnWrteDiv = '${opnWrteDiv}';
 	var admYn = '${admYn}';
 	var eamAdminYn = '${eamAdminYn}';
 	var superAdmin = '${superAdmin}';
