@@ -18,10 +18,10 @@ import portalxpert.adm.sys.sc.AdmSysTagCloudService;
 import portalxpert.adm.sys.vo.AdmSysTagCloudInfoVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admSysTagCloudService")
-public class AdmSysTagCloudServiceImpl extends AbstractServiceImpl implements AdmSysTagCloudService {
+public class AdmSysTagCloudServiceImpl extends EgovAbstractServiceImpl implements AdmSysTagCloudService {
 	
 	/** AdmSysTagCloudMapper */
     @Resource(name="admSysMapper")

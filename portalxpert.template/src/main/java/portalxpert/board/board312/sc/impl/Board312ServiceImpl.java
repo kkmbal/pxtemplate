@@ -18,11 +18,11 @@ import portalxpert.board.board312.mapper.Board312Mapper;
 import portalxpert.board.board312.sc.Board312Service;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.BoardSearchVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 
 @Service("board312Service")
-public class Board312ServiceImpl extends AbstractServiceImpl implements  Board312Service {
+public class Board312ServiceImpl extends EgovAbstractServiceImpl implements  Board312Service {
 	
 	/** person100Mapper */
     @Resource(name="board312Mapper")

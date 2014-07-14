@@ -29,10 +29,10 @@ import portalxpert.board.board100.vo.PbsUserBoardInfoVO;
 import portalxpert.board.board100.vo.PbsUserBoardPartInfoVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admBoardNotiService")
-public class AdmBoardNotiServiceImpl extends AbstractServiceImpl implements AdmBoardNotiService {
+public class AdmBoardNotiServiceImpl extends EgovAbstractServiceImpl implements AdmBoardNotiService {
 	
 	/** AdmBoardNotiMapper */
     @Resource(name="admBoardNotiMapper")

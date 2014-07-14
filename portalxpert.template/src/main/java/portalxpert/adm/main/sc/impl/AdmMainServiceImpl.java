@@ -15,10 +15,10 @@ import portalxpert.adm.main.mapper.AdmMainMapper;
 import portalxpert.adm.main.sc.AdmMainService;
 import portalxpert.adm.main.vo.AdmMainVO;
 import portalxpert.common.config.Constant;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admMainService")
-public class AdmMainServiceImpl extends AbstractServiceImpl implements AdmMainService {
+public class AdmMainServiceImpl extends EgovAbstractServiceImpl implements AdmMainService {
 	
 	/** AdmMainMapper */
     @Resource(name="admMainMapper")

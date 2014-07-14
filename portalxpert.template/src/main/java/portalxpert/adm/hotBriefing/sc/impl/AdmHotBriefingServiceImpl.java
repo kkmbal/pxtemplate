@@ -13,10 +13,10 @@ import portalxpert.adm.hotBriefing.sc.AdmHotBriefingService;
 import portalxpert.adm.hotBriefing.vo.AdmHotBriefingVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admHotBriefingService")
-public class AdmHotBriefingServiceImpl extends AbstractServiceImpl implements AdmHotBriefingService {
+public class AdmHotBriefingServiceImpl extends EgovAbstractServiceImpl implements AdmHotBriefingService {
 	
 	/** AdmHotBriefingMapper */
     @Resource(name="admHotBriefingMapper")

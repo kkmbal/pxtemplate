@@ -18,11 +18,11 @@ import portalxpert.board.board211.sc.Board211Service;
 import portalxpert.board.board211.vo.BbsImgBoardNotiInfoVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.BoardSearchVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 
 @Service("board211Service")
-public class Board211ServiceImpl extends AbstractServiceImpl implements  Board211Service {
+public class Board211ServiceImpl extends EgovAbstractServiceImpl implements  Board211Service {
 	
 	/** person100Mapper */
     @Resource(name="board211Mapper")

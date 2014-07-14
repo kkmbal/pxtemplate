@@ -23,11 +23,11 @@ import portalxpert.person.person100.vo.PsnUserGrpInfoVO;
 import portalxpert.person.person200.mapper.Person200Mapper;
 import portalxpert.person.person200.sc.Person200Service;
 import portalxpert.person.person200.vo.MyProjectCommunityVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.property.EgovPropertyService;
 
 @Service("person200Service")
-public class Person200ServiceImpl extends AbstractServiceImpl implements  Person200Service {
+public class Person200ServiceImpl extends EgovAbstractServiceImpl implements  Person200Service {
 	
 	/** person200Mapper */
     @Resource(name="person200Mapper")

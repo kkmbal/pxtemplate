@@ -17,10 +17,10 @@ import portalxpert.adm.gen.sc.AdmGenLinkManageService;
 import portalxpert.adm.gen.vo.AdmGenLinkVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admGenLinkManageService")
-public class AdmGenLinkManageServiceImpl extends AbstractServiceImpl implements AdmGenLinkManageService {
+public class AdmGenLinkManageServiceImpl extends EgovAbstractServiceImpl implements AdmGenLinkManageService {
 	
 	/** AdmGenLinkManageMapper */
     @Resource(name="admGenManageMapper")

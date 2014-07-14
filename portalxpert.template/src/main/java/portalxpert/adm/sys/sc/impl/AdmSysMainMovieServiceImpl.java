@@ -16,12 +16,12 @@ import portalxpert.adm.sys.sc.AdmSysMainMovieService;
 import portalxpert.adm.sys.vo.AdmSysBbsNotiApndFileVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.property.EgovPropertyService;
 
 
 @Service("admSysMainMovieService")
-public class AdmSysMainMovieServiceImpl  extends AbstractServiceImpl implements AdmSysMainMovieService
+public class AdmSysMainMovieServiceImpl  extends EgovAbstractServiceImpl implements AdmSysMainMovieService
 {
 	
 	/** AdmSysMainMovieMapper */

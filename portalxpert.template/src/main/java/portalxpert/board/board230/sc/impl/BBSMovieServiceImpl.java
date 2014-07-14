@@ -10,10 +10,10 @@ import portalxpert.board.board230.mapper.BBSMovieMapper;
 import portalxpert.board.board230.sc.BBSMovieService;
 import portalxpert.board.board230.vo.BBSMovieVO;
 import portalxpert.common.config.Constant;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("bbsMovieService")
-public class BBSMovieServiceImpl extends AbstractServiceImpl implements BBSMovieService{
+public class BBSMovieServiceImpl extends EgovAbstractServiceImpl implements BBSMovieService{
 
 	/** BBSMovieMapper */
     @Resource(name="bbsMovieMapper")

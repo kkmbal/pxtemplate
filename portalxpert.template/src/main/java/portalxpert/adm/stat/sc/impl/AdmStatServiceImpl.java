@@ -16,14 +16,14 @@ import portalxpert.adm.stat.vo.AdmStatSearchVO;
 import portalxpert.adm.stat.vo.AdmStatSurveyVO;
 import portalxpert.adm.stat.vo.AdmStatUseVO;
 import portalxpert.common.config.Constant;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 /**
  * @author yoDJ
  *
  */
 @Service("admStatService")
-public class AdmStatServiceImpl extends AbstractServiceImpl implements AdmStatService {
+public class AdmStatServiceImpl extends EgovAbstractServiceImpl implements AdmStatService {
 
 	/** AdmGenLinkManageMapper */
     @Resource(name="admStatMapper")

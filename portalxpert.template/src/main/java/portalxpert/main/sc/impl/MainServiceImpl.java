@@ -16,10 +16,10 @@ import portalxpert.common.vo.UserInfoVO;
 import portalxpert.main.mapper.MainMapper;
 import portalxpert.main.sc.MainService;
 import portalxpert.main.vo.MainVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("mainService")
-public class MainServiceImpl extends AbstractServiceImpl implements MainService {
+public class MainServiceImpl extends EgovAbstractServiceImpl implements MainService {
 	
 	/** MainMapper */
     @Resource(name="mainMapper")

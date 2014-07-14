@@ -13,10 +13,10 @@ import portalxpert.adm.banner.sc.AdmBannerService;
 import portalxpert.adm.banner.vo.AdmBannerVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admBannerService")
-public class AdmBannerServiceImpl extends AbstractServiceImpl implements AdmBannerService {
+public class AdmBannerServiceImpl extends EgovAbstractServiceImpl implements AdmBannerService {
 	
 	/** AdmBannerMapper */
     @Resource(name="admBannerMapper")

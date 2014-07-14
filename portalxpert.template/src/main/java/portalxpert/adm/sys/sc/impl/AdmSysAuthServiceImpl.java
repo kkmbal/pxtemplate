@@ -19,10 +19,10 @@ import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.utils.CommUtil;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admSysAuthService")
-public class AdmSysAuthServiceImpl extends AbstractServiceImpl implements AdmSysAuthService {
+public class AdmSysAuthServiceImpl extends EgovAbstractServiceImpl implements AdmSysAuthService {
 	
     @Resource(name="admSysMapper")
     private AdmSysMapper admSysMapper;

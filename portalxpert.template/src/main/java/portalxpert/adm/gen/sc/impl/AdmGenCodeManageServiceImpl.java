@@ -12,11 +12,11 @@ import portalxpert.adm.gen.sc.AdmGenCodeManageService;
 import portalxpert.adm.gen.vo.AdmGenCodeManageVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 
 @Service("admGenCodeManageService")
-public class AdmGenCodeManageServiceImpl extends AbstractServiceImpl implements AdmGenCodeManageService{
+public class AdmGenCodeManageServiceImpl extends EgovAbstractServiceImpl implements AdmGenCodeManageService{
     
 	@Resource(name="admGenManageMapper")
     private AdmGenManageMapper admGenManageMapper;

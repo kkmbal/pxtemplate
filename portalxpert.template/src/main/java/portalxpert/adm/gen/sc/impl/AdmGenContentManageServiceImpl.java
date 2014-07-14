@@ -17,10 +17,10 @@ import portalxpert.adm.gen.sc.AdmGenContentManageService;
 import portalxpert.adm.gen.vo.AdmGenContentManageVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admGenContentManageService")
-public class AdmGenContentManageServiceImpl extends AbstractServiceImpl implements AdmGenContentManageService {
+public class AdmGenContentManageServiceImpl extends EgovAbstractServiceImpl implements AdmGenContentManageService {
 	
 	/** AdmGenContentManageMapper */
     @Resource(name="admGenManageMapper")

@@ -11,16 +11,14 @@ import org.springframework.stereotype.Service;
 
 import portalxpert.adm.sys.mapper.AdmSysMapper;
 import portalxpert.adm.sys.sc.AdmSysUserService;
-import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO;
 import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import portalxpert.common.config.Constant;
-import portalxpert.common.utils.CommUtil;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("admSysUserService")
-public class AdmSysUserServiceImpl extends AbstractServiceImpl implements AdmSysUserService {
+public class AdmSysUserServiceImpl extends EgovAbstractServiceImpl implements AdmSysUserService {
 	
     @Resource(name="admSysMapper")
     private AdmSysMapper admSysMapper;

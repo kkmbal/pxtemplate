@@ -36,13 +36,13 @@ import portalxpert.person.person100.vo.PsnUserGrpInfoVO;
 import portalxpert.person.person100.vo.PsnUserTmlnAlertSetVO;
 import portalxpert.person.person100.vo.SmsSendHistVO;
 import portalxpert.person.person100.vo.TmlnEnvInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.property.EgovPropertyService;
 
 
 
 @Service("person100Service")
-public class Person100ServiceImpl extends AbstractServiceImpl implements  Person100Service {
+public class Person100ServiceImpl extends EgovAbstractServiceImpl implements  Person100Service {
 	
 	/** person100Mapper */
     @Resource(name="person100Mapper")

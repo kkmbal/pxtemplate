@@ -28,12 +28,12 @@ import portalxpert.common.config.PortalxpertConfigUtils;
 import portalxpert.common.utils.CommUtil;
 import portalxpert.common.vo.BoardSearchVO;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 
 
 @Service("board330Service")
-public class Board330ServiceImpl extends AbstractServiceImpl implements  Board330Service {
+public class Board330ServiceImpl extends EgovAbstractServiceImpl implements  Board330Service {
 	
 	/** board330Mapper */
     @Resource(name="board330Mapper")

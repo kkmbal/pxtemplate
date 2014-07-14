@@ -11,10 +11,10 @@ import portalxpert.common.config.Constant;
 import portalxpert.common.mapper.UserLoginMapper;
 import portalxpert.common.sc.UserLoginService;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("userLoginService")
-public class UserLoginServiceImpl extends AbstractServiceImpl implements UserLoginService
+public class UserLoginServiceImpl extends EgovAbstractServiceImpl implements UserLoginService
 {
 	/** UserInfoMapper */
     @Resource(name="userLoginMapper")

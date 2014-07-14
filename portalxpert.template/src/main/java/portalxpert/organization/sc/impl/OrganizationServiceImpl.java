@@ -30,12 +30,12 @@ import portalxpert.organization.vo.OrganizationVO;
 import portalxpert.organization.vo.UserVO;
 import portalxpert.organization.web.OrganizationController;
 import portalxpert.person.person100.vo.ComUserPotoInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.property.EgovPropertyService;
 
 
 @Service("organizationService")
-public class OrganizationServiceImpl extends AbstractServiceImpl implements  OrganizationService {
+public class OrganizationServiceImpl extends EgovAbstractServiceImpl implements  OrganizationService {
 	
 	private final static Logger logger = LoggerFactory.getLogger(OrganizationController.class);
 	

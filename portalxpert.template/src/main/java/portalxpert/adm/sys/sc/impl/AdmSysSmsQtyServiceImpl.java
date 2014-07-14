@@ -15,12 +15,12 @@ import portalxpert.adm.sys.sc.AdmSysSmsQtyService;
 import portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.vo.UserInfoVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.property.EgovPropertyService;
 
 
 @Service("admSysSmsQtyService")
-public class AdmSysSmsQtyServiceImpl  extends AbstractServiceImpl implements AdmSysSmsQtyService
+public class AdmSysSmsQtyServiceImpl  extends EgovAbstractServiceImpl implements AdmSysSmsQtyService
 {
 	
 	/** AdmSysSmsQtyMapper */

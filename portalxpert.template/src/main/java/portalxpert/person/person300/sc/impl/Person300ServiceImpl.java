@@ -29,12 +29,12 @@ import portalxpert.person.person300.vo.PsnTmlnApndFileVO;
 import portalxpert.person.person300.vo.PsnTmlnEvalInfoVO;
 import portalxpert.person.person300.vo.PsnTmlnInfoVO;
 import portalxpert.person.person300.vo.PsnTmlnOpnVO;
-import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 
 
 @Service("person300Service")
-public class Person300ServiceImpl extends AbstractServiceImpl implements Person300Service {
+public class Person300ServiceImpl extends EgovAbstractServiceImpl implements Person300Service {
 	
 	/** person300Mapper */
     @Resource(name="person300Mapper")
