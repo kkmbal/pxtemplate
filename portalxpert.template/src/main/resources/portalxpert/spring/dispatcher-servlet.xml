@@ -25,7 +25,21 @@
         <context:exclude-filter type="annotation" expression="egovframework.rte.psl.dataaccess.mapper.Mapper"/>
     </context:component-scan>
   
+    <!-- eGov commandMap 사용안할때 -->
 	<mvc:annotation-driven />
+   
+   <!-- eGov commandMap 사용시 
+   <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+   		<property name="order" value="1" />
+   </bean>
+   <bean class="egovframework.rte.ptl.mvc.bind.annotation.EgovRequestMappingHandlerAdapter">
+		<property name="customArgumentResolvers">
+		   <list>
+	              <bean class="egovframework.rte.ptl.mvc.bind.AnnotationCommandMapArgumentResolver" />
+		   </list>
+		</property>
+   </bean>
+   -->
 
  	<mvc:interceptors>
 		<bean class="portalxpert.common.web.AuthInterceptor">
@@ -57,7 +71,6 @@
 	<bean id="tilesconfigurer"	class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<property name="definitions">
 			<list>
-<!-- 				<value>classpath:portalxpert/tiles/tiles-*.xml</value> -->
 				<value>classpath:portalxpert/tiles/tiles-def.xml</value>
 			</list>
 		</property>

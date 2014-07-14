@@ -9,7 +9,7 @@
 	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
 	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="alwaysUseFullPath" value="true" />
-		<property name="order" value="1" />
+		<property name="order" value="2" />
 		<property name="mappings">
 			<value>/**/*.do=urlController</value>
 		</property>
