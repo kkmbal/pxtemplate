@@ -2,8 +2,10 @@ package portalxpert.adm.banner.mapper;
 
 import java.util.List;
 
-import portalxpert.adm.banner.vo.AdmBannerVO;
+import org.omg.CORBA.portable.ApplicationException;
 
+import portalxpert.adm.banner.vo.AdmBannerApndFileVO;
+import portalxpert.adm.banner.vo.AdmBannerVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 
@@ -54,7 +56,7 @@ public interface AdmBannerMapper {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	public List<AdmBannerVO> getAdmBannerAppendImg(AdmBannerVO admBannerVO) throws Exception;
+	public List<AdmBannerVO> getAdmBannerAppendImg(AdmBannerApndFileVO admBannerVO) throws Exception;
 		  
 		
 	/**
@@ -75,7 +77,7 @@ public interface AdmBannerMapper {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	public void insertAdmBannerAppendImg(AdmBannerVO admBannerVO) throws Exception;
+	public void insertAdmBannerAppendImg(AdmBannerApndFileVO admBannerVO) throws Exception;
 	
 	/**
 	 * Method Desciption : 홍보배너수정
@@ -87,15 +89,6 @@ public interface AdmBannerMapper {
 	 */	
 	public void updateAdmBanner(AdmBannerVO admBannerVO) throws Exception;
 	
-	/**
-	 * Method Desciption : 홍보배너이미지수정
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public void updateAdmBannerAppendImg(AdmBannerVO admBannerVO) throws Exception;
 	
 	/**
 	 * Method Desciption : 홍보배너삭제
@@ -117,30 +110,6 @@ public interface AdmBannerMapper {
 	 */	
 	public int deleteAdmBannerAppendImg(AdmBannerVO admBannerVO) throws Exception;
 
-	/**
-	 * Method Desciption : 홍보배너삭제(다건)
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBanners(AdmBannerVO admBannerVO) throws Exception;
-	
-	/**
-	 * Method Desciption : 홍보배너이미지삭제(다건)
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBannerAppendImgs(AdmBannerVO admBannerVO) throws Exception;
 
-
-	public void bannerInnoApUpload(AdmBannerVO bannerFileVO) throws Exception;
-
-
-	public String getAdmBannerId() throws Exception;
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import portalxpert.adm.banner.vo.AdmBannerApndFileVO;
 import portalxpert.adm.banner.vo.AdmBannerVO;
 
 
@@ -36,16 +37,13 @@ public interface AdmBannerService {
 	 */
 	public AdmBannerVO getAdmBanner(AdmBannerVO admBannerVO) throws Exception;
 	
-	
-	
 	/**
 	 * 홍보배너 이미지 조회
 	 * @param AdmLinkUserInfoVO
 	 * @return List
 	 * @exception Exception
 	 */
-	public List<AdmBannerVO> getAdmBannerAppendImg(AdmBannerVO admBannerVO) throws Exception;
-	
+	public List<AdmBannerVO> getAdmBannerAppendImg(AdmBannerApndFileVO admBannerVO) throws Exception;
 	
 	 /**
 	 * 홍보배너 등록
@@ -53,15 +51,7 @@ public interface AdmBannerService {
 	 * @return
 	 * @exception Exception
 	 */
-    public void insertAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
-    
-    /** 
-	 * 홍보배너이미지등록
-	 * @param AdmSysBannerVO
-	 * @return void 
-	 * @exception Exception
-	 */
-    public void insertAdmBannerAppendImg(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
+    public void insertAdmBanner(String data, HttpSession session) throws Exception;
     
 	 /**
 	 * 홍보배너수정
@@ -69,18 +59,8 @@ public interface AdmBannerService {
 	 * @return
 	 * @exception Exception
 	 */
-    public void updateAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
+    //public void updateAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
     
-    /**
-	 * Method Desciption : 홍보배너이미지수정
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public void updateAdmBannerAppendImg(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
-	
 	/**
 	 * Method Desciption : 홍보배너삭제
 	 * 
@@ -89,52 +69,7 @@ public interface AdmBannerService {
 	 * @return
 	 * @throws ApplicationException
 	 */	
-	public int deleteAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
+	//public int deleteAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
 	
-	/**
-	 * Method Desciption : 홍보배너이미지삭제
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBannerAppendImg(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
-	
-	/**
-	 * Method Desciption : 홍보배너삭제(다건)
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBanners(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
-	
-	/**
-	 * Method Desciption : 홍보배너이미지삭제(다건)
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBannerAppendImgs(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
-
-
-	/**
-	 *  배너 첨부이미지 정보 저장
-	 * @param bannerFileVO
-	 * @throws Exception
-	 */
-	public void bannerInnoApUpload(AdmBannerVO bannerFileVO) throws Exception;
-
-
-	/**
-	 * MAX bnrId get
-	 * @return
-	 * @throws Exception
-	 */
-	public String getAdmBannerId() throws Exception;
 	
 }

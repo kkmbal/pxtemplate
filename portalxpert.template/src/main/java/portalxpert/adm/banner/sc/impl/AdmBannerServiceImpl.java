@@ -5,13 +5,17 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.portable.ApplicationException;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Service;
 
 import portalxpert.adm.banner.mapper.AdmBannerMapper;
 import portalxpert.adm.banner.sc.AdmBannerService;
+import portalxpert.adm.banner.vo.AdmBannerApndFileVO;
 import portalxpert.adm.banner.vo.AdmBannerVO;
 import portalxpert.common.config.Constant;
+import portalxpert.common.utils.CommUtil;
 import portalxpert.common.vo.UserInfoVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -74,7 +78,7 @@ public class AdmBannerServiceImpl extends EgovAbstractServiceImpl implements Adm
 	 * @return List 
 	 * @exception Exception
 	 */
-    public List<AdmBannerVO> getAdmBannerAppendImg(AdmBannerVO admBannerVO) throws Exception {
+    public List<AdmBannerVO> getAdmBannerAppendImg(AdmBannerApndFileVO admBannerVO) throws Exception {
     	try{
     		return admBannerMapper.getAdmBannerAppendImg(admBannerVO);
 		}catch(Exception e){
@@ -82,194 +86,61 @@ public class AdmBannerServiceImpl extends EgovAbstractServiceImpl implements Adm
 		}  
     }
     
-    
     /** 
 	 * 홍보배너등록
 	 * @param AdmSysBannerVO
 	 * @return void 
 	 * @exception Exception
 	 */
-    public void insertAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception 
-    {
+    public void insertAdmBanner(String data, HttpSession session) throws Exception{
     	try{
 	    	//로그인된 User 정보 세팅
 	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admBannerVO.setInsId((String)usrInfo.getId());
+	    	AdmBannerVO admBannerVO = new AdmBannerVO();
+	    	admBannerVO.setRegrId(usrInfo.getId());
+	    	admBannerVO.setUpdrId(usrInfo.getId());
 	    	
-	    	admBannerMapper.insertAdmBanner(admBannerVO);
+	    	JSONObject json = JSONObject.fromObject(data);
+	    	admBannerVO.setBnrId(json.getString("bnrId"));
+	    	admBannerVO.setBnrTitle(json.getString("bnrTitle"));
+	    	admBannerVO.setParRowPos(json.getString("parRowPos"));
+	    	admBannerVO.setRowPos(json.getString("rowPos"));
+	    	admBannerVO.setExpoBgnDttm(json.getString("expoBgnDttm"));
+	    	admBannerVO.setExpoEndDttm(json.getString("expoEndDttm"));
+	    	admBannerVO.setDelYn(json.getString("delYn"));
+	    	
+	    	if("".equals(admBannerVO.getBnrId())){
+	    		admBannerMapper.insertAdmBanner(admBannerVO); //신규
+	    	}else{
+	    		admBannerMapper.updateAdmBanner(admBannerVO); //수정
+	    	}
+	    	
+			//첨부파일 처리
+			JSONArray jsonArr = (JSONArray)json.get("appendFileList");
+			if(jsonArr.size() > 0){
+				admBannerMapper.deleteAdmBannerAppendImg(admBannerVO);
+			}
+			for (int i=0; i < jsonArr.size(); i++){
+				JSONObject obj = (JSONObject)jsonArr.get(i);
+				AdmBannerApndFileVO apndVO = new AdmBannerApndFileVO();
+				apndVO.setBnrId( admBannerVO.getBnrId()) ;
+				apndVO.setApndFileSeq(obj.getInt("apndFileSeq")) ;
+				apndVO.setApndFileSz( obj.getInt("apndFileSz")) ;
+				apndVO.setApndFileOrgn( (String)obj.get("apndFileOrgn")) ;
+				apndVO.setApndFileName( (String)obj.get("apndFileName")) ;				
+				apndVO.setApndFilePath( (String)obj.get("apndFilePath")) ;				
+				apndVO.setDelYn( (String)obj.get("delYn")) ;
+				apndVO.setRegrId( usrInfo.getId()) ;
+				apndVO.setUpdrId( usrInfo.getId()) ;
+				
+				String realPath = CommUtil.apndFileCopy(apndVO.getApndFilePath(), apndVO.getApndFileName());
+				apndVO.setApndFilePath(realPath);
+
+				admBannerMapper.insertAdmBannerAppendImg(apndVO);
+			}
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}  
         
     }
-    
-    /** 
-	 * 홍보배너이미지등록
-	 * @param AdmSysBannerVO
-	 * @return void 
-	 * @exception Exception
-	 */
-    public void insertAdmBannerAppendImg(AdmBannerVO admBannerVO, HttpSession session) throws Exception 
-    {
-    	try{
-	    	//로그인된 User 정보 세팅
-	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admBannerVO.setInsId((String)usrInfo.getId());
-	    	
-	    	admBannerMapper.insertAdmBannerAppendImg(admBannerVO);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  
-        
-    }
-    
-	/**
-	 *  배너 첨부이미지 정보 저장
-	 * @param bannerFileVO
-	 * @throws Exception
-	 */
-	public void bannerInnoApUpload(AdmBannerVO bannerFileVO) throws Exception{
-		try{
-			admBannerMapper.bannerInnoApUpload(bannerFileVO);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  
-    }
-    
-    /** 
-	 * 홍보배너수정
-	 * @param AdmSysBannerVO
-	 * @return void 
-	 * @exception Exception
-	 */
-    public void updateAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception 
-    {
-    	try{
-	    	//로그인된 User 정보 세팅
-	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admBannerVO.setUpdId((String)usrInfo.getId());
-	    	
-	    	admBannerMapper.updateAdmBanner(admBannerVO);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  
-    }
-    
-    /**
-	 * Method Desciption : 홍보배너이미지수정
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public void updateAdmBannerAppendImg(AdmBannerVO admBannerVO, HttpSession session) throws Exception
-	{
-		try{
-			//로그인된 User 정보 세팅
-	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admBannerVO.setUpdId((String)usrInfo.getId());
-	    	
-			admBannerMapper.updateAdmBannerAppendImg(admBannerVO);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  
-	}
-	
-	/**
-	 * Method Desciption : 홍보배너삭제
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception
-	{
-		try{
-			//로그인된 User 정보 세팅
-	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admBannerVO.setUpdId((String)usrInfo.getId());
-	    	
-			return admBannerMapper.deleteAdmBanner(admBannerVO);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  
-	}
-	
-	/**
-	 * Method Desciption : 홍보배너이미지삭제(단건)
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBannerAppendImg(AdmBannerVO admBannerVO, HttpSession session) throws Exception
-	{
-		try{
-			//로그인된 User 정보 세팅
-	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admBannerVO.setUpdId((String)usrInfo.getId());
-	    	
-			return admBannerMapper.deleteAdmBannerAppendImg(admBannerVO);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  
-	}
-
-	/**
-	 * Method Desciption : 홍보배너삭제(다건)
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBanners(AdmBannerVO admBannerVO, HttpSession session)
-			throws Exception {
-		try{
-			//로그인된 User 정보 세팅
-	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admBannerVO.setUpdId((String)usrInfo.getId());
-	    	
-			return admBannerMapper.deleteAdmBanners(admBannerVO);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  
-	}
-
-	/**
-	 * Method Desciption : 홍보배너이미지삭제(다건)
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	public int deleteAdmBannerAppendImgs(AdmBannerVO admBannerVO, HttpSession session)
-			throws Exception {
-		try{
-			//로그인된 User 정보 세팅
-	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
-	    	admBannerVO.setUpdId((String)usrInfo.getId());
-	    	
-			return admBannerMapper.deleteAdmBannerAppendImgs(admBannerVO);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  
-	}
-	
-	/**
-	 * MAX bnrId get
-	 * @return
-	 * @throws Exception
-	 */
-	public String getAdmBannerId() throws Exception{
-		try{
-			return admBannerMapper.getAdmBannerId();
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}  		
-	}
 }
