@@ -5,61 +5,44 @@
 
 	<!-- 홍보 배너조회 -->
 	<select id="getAdmBannerList" parameterType="portalxpert.adm.banner.vo.AdmBannerVO" resultType="portalxpert.adm.banner.vo.AdmBannerVO">
-	SELECT A.BNR_ID																	
-		, A.TITLE																		
-		, A.LINK_URL																    
-		, A.USE_YN																	
-		, A.ALT_TXT																	
-		, A.IMG_WIDTH																	
-		, A.IMG_HEIGHT
-		, A.IMG_SIZE	
-		, A.IMG_PATH                                                                  
-		, A.IMG_NAME_REAL                                                             
-		, A.FROM_DTS																	
-		, A.TO_DTS
+    SELECT A.BNR_ID																	
+		, A.BNR_TITLE																		
+		, A.EXPO_BGN_DTTM																	
+		, A.EXPO_END_DTTM
+		, A.USE_YN
+		, A.PAR_ROW_POS
+		, A.ROW_POS
+		, A.DEL_YN
+		, A.REGR_ID
+		, A.UPDR_ID
+		, A.RNUM SEQ
 	FROM (
-		SELECT S.BNR_ID																	
-		   , S.TITLE																		
-		   , S.LINK_URL																    
-		   , S.USE_YN																	
-		   , S.ALT_TXT																	
-		   , S.IMG_WIDTH																	
-		   , S.IMG_HEIGHT																
-		   , S.IMG_SIZE	
-		   , S.IMG_PATH                                                                  
-		   , S.IMG_NAME_REAL                                                             
-		   , S.FROM_DTS																	
-		   , S.TO_DTS
+	    SELECT S.BNR_ID																	
+			, S.BNR_TITLE																		
+			, S.EXPO_BGN_DTTM																	
+			, S.EXPO_END_DTTM
+			, S.USE_YN
+			, S.PAR_ROW_POS
+			, S.ROW_POS
+			, S.DEL_YN
+			, S.REGR_ID
+			, S.UPDR_ID
 		   , ROWNUM RNUM			
 		FROM (
 		    SELECT A.BNR_ID																	
-				, A.TITLE																		
-				, A.LINK_URL																    
-				, A.USE_YN																	
-				, A.ALT_TXT																	
-				, A.IMG_WIDTH																	
-				, A.IMG_HEIGHT																
-				, B.IMG_SIZE	
-				, B.IMG_PATH
-				, B.IMG_NAME_REAL                                                             
-				, A.FROM_DTS																	
-				, A.TO_DTS
-			FROM	INFO_BANNER A
-					,(
-						SELECT	BNR_ID
-						         ,IMG_SIZE
-						         ,IMG_PATH
-						         ,IMG_NAME_REAL
-						FROM	INFO_BANNER_FILE B
-						WHERE	FILE_ID = (SELECT MAX(FILE_ID) FROM INFO_BANNER_FILE WHERE BNR_ID = B.BNR_ID)
-					) B
-			<!-- 이미지가 없는 배너도 보이도록 아우터조인으로 변경함 -->                                            
-			WHERE A.BNR_ID = B.BNR_ID(+)
-			<if test="searchCondition=='title'">
-				AND A.TITLE LIKE '%'|| #{searchKeyword} || '%'
-			</if>
-			<if test="useYn!=null">
-				AND A.USE_YN = #{useYn}
+				, A.BNR_TITLE																		
+				, TO_CHAR(A.EXPO_BGN_DTTM, 'YYYY-MM-DD') EXPO_BGN_DTTM																	
+				, TO_CHAR(A.EXPO_END_DTTM, 'YYYY-MM-DD') EXPO_END_DTTM
+				, (CASE WHEN SYSDATE BETWEEN A.EXPO_BGN_DTTM AND A.EXPO_END_DTTM THEN 'Y' ELSE 'N' END) USE_YN
+				, A.ROW_POS
+				, A.PAR_ROW_POS
+				, A.DEL_YN
+				, A.REGR_ID
+				, A.UPDR_ID
+			FROM	ADM_BANNER_INFO A
+			WHERE DEL_YN = 'N'
+			<if test="searchCondition=='BNR_TITLE'">
+				AND A.BNR_TITLE LIKE '%'|| #{searchKeyword} || '%'
 			</if>
 			ORDER BY A.BNR_ID DESC                           
 		) S 
@@ -71,191 +54,145 @@
 	<!-- 배너조회  건수-->
 	<select id="getAdmBannerListToCnt" parameterType="portalxpert.adm.banner.vo.AdmBannerVO" resultType="int">
 		SELECT  COUNT(1)															
-		FROM INFO_BANNER A                                           
-		WHERE 1=1
-		<if test="searchCondition=='title'">
-			AND A.TITLE LIKE '%'|| #{searchKeyword} || '%'
+		FROM ADM_BANNER_INFO A                                           
+		WHERE DEL_YN = 'N'
+		<if test="searchCondition=='BNR_TITLE'">
+			AND A.BNR_TITLE LIKE '%'|| #{searchKeyword} || '%'
 		</if>
-		<if test="useYn!=null">
-			AND A.USE_YN = #{useYn}
-		</if>
-		ORDER BY A.BNR_ID DESC    
 	</select>
 	
 	
 	<!-- 홍보 배너상세 -->			
 	<select id="getAdmBanner" parameterType="portalxpert.adm.banner.vo.AdmBannerVO" resultType="portalxpert.adm.banner.vo.AdmBannerVO">
-		SELECT BNR_ID 					  
-			, TITLE                    
-			, LINK_URL                 
-			, ALT_TXT                  
-			, SORT                     
-			, USE_YN                   
-			, IMG_WIDTH                
-			, IMG_HEIGHT               
-		    , FROM_DTS                 
-			, TO_DTS                  
-		FROM INFO_BANNER            
-		WHERE BNR_ID = #{bnrId} 
+	    SELECT A.BNR_ID																	
+			, A.BNR_TITLE																		
+			, TO_CHAR(A.EXPO_BGN_DTTM, 'YYYY-MM-DD') EXPO_BGN_DTTM																	
+			, TO_CHAR(A.EXPO_END_DTTM, 'YYYY-MM-DD') EXPO_END_DTTM
+			, A.PAR_ROW_POS
+			, A.ROW_POS
+			, A.DEL_YN
+			, A.REGR_ID
+			, A.UPDR_ID                
+		FROM ADM_BANNER_INFO A            
+		WHERE A.BNR_ID = #{bnrId} 
 	</select>
 	
 	
 	<!-- 홍보 배너이미지 조회 -->			
-	<select id="getAdmBannerAppendImg" parameterType="portalxpert.adm.banner.vo.AdmBannerVO" resultType="portalxpert.adm.banner.vo.AdmBannerVO">
-		SELECT FILE_ID          
-			, BNR_ID           
-			, IMG_NAME_ORG     
-			, IMG_NAME_REAL    
-			, IMG_SIZE         
-			, IMG_PATH         
-			, IMG_WIDTH        
-			, IMG_HEIGHT        
-		FROM INFO_BANNER_FILE  B
+	<select id="getAdmBannerAppendImg" parameterType="portalxpert.adm.banner.vo.AdmBannerApndFileVO" resultType="portalxpert.adm.banner.vo.AdmBannerApndFileVO">
+		SELECT BNR_ID          
+			,APND_FILE_SEQ
+			,APND_FILE_SZ
+			,APND_FILE_ORGN
+			,APND_FILE_NAME
+			,APND_FILE_PATH
+			,DEL_YN        
+		FROM ADM_BANNER_APND_FILE  B
 		WHERE BNR_ID = #{bnrId}
-		<if test = "fileId!=null">
-			AND FILE_ID = DECODE(#{fileId}, '', FILE_ID, #{fileId})   
+		<if test = "apndFileSeq != null and apndFileSeq != ''">
+			AND APND_FILE_SEQ = #{apndFileSeq}   
 		</if> 
-		AND	FILE_ID = (SELECT MAX(FILE_ID) FROM INFO_BANNER_FILE WHERE BNR_ID = B.BNR_ID)
 	</select>
 	
 	
 	<!-- 홍보 배너 등록 -->
 	<insert id="insertAdmBanner" parameterType="portalxpert.adm.banner.vo.AdmBannerVO">
-		INSERT INTO INFO_BANNER (                                                                                                       
-			BNR_ID                                                                                               
-			, TITLE
-			, LINK_URL 
-			, ALT_TXT 
-			, SORT                                                                       
-			, USE_YN 
-			, IMG_WIDTH 
-			, IMG_HEIGHT 
-			, FROM_DTS                                                              
-			, TO_DTS 
-			, INS_ID 
-			, INS_DTS                                                                               
-		)                                                                                                       
-		VALUES                                                                                                  
-			(
-			#{bnrId}
-			, #{title, javaType=String, jdbcType=VARCHAR}
-			, #{linkUrl, javaType=String, jdbcType=VARCHAR}
-			, #{altTxt, javaType=String, jdbcType=VARCHAR}
-			, #{sort, javaType=Integer, jdbcType=NUMERIC} 
-			, #{useYn, javaType=String, jdbcType=VARCHAR}
-			<if test="imgWidth!=null">
-			, #{imgWidth, javaType=Integer, jdbcType=NUMERIC}
-			</if>
-			<if test="imgWidth==null">
-			,0
-			</if>
-			<if test="imgHeight!=null">
-			,#{imgHeight, javaType=Integer, jdbcType=NUMERIC}
-			</if>
-			<if test="imgHeight==null">
-			,0
-			</if>
-			, #{fromDts, javaType=String, jdbcType=VARCHAR}
-			, #{toDts, javaType=String, jdbcType=VARCHAR}
-			, #{insId}
-			, TO_CHAR(SYSDATE,'YYYYMMDDHHMISS')                                                       
+		<selectKey keyProperty="bnrId" resultType="String" order="BEFORE" >
+			SELECT	LPAD( NVL(MAX(TO_NUMBER(BNR_ID)) ,0)+1 , '6', '0') BNR_ID
+			FROM	ADM_BANNER_INFO   
+	    </selectKey>
+	    	
+		INSERT INTO ADM_BANNER_INFO (                                                                                                       
+		    BNR_ID																	
+			,BNR_TITLE																		
+			,EXPO_BGN_DTTM																	
+			,EXPO_END_DTTM
+			,PAR_ROW_POS
+			,ROW_POS
+			,DEL_YN
+			,REGR_ID
+			,REG_DTTM
+			,UPDR_ID 
+			,UPD_DTTM                                                                        
+		) VALUES (
+		    #{bnrId}																	
+			,#{bnrTitle}																		
+			,TO_DATE(#{expoBgnDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')																	
+			,TO_DATE(#{expoEndDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')
+			,#{parRowPos}
+			,#{rowPos}
+			,#{delYn}
+			,#{regrId}
+			,SYSDATE
+			,#{updrId} 
+			,SYSDATE                                                     
 		)                                                                                                       
 	</insert>
-	
-	<!-- 홍보배너이미지 등록 -->
-	<insert id="bannerInnoApUpload" parameterType="portalxpert.adm.banner.vo.AdmBannerVO">
-		INSERT INTO INFO_BANNER_FILE (
-         	FILE_ID
-	 			, BNR_ID
-         	, IMG_NAME_ORG
-         	, IMG_NAME_REAL
-         	, IMG_SIZE
-         	, IMG_PATH
-       		)                                                                                                     
-      	VALUES                                                                                                
-       		( 
-       		(SELECT (LPAD(TO_CHAR((SELECT NVL(MAX(FILE_ID),0)+1 FROM INFO_BANNER_FILE)), '6', '0')) FROM DUAL)
-         	, #{bnrId ,javaType=String, jdbcType=VARCHAR}    
-         	, #{imgNameOrg, javaType=String, jdbcType=VARCHAR}
-         	, #{imgNameReal, javaType=String, jdbcType=VARCHAR}
-         	, #{imgSize, javaType=Integer, jdbcType=NUMERIC}
-         	, #{imgPath, javaType=String, jdbcType=VARCHAR}                                                                                        
-       )                                                                                                       
-	</insert>
-	
-	<select	id="getAdmBannerId" resultType="java.lang.String">
-		SELECT	LPAD( NVL(MAX(BNR_ID) ,0)+1 , '6', '0') BNR_ID
-		FROM	INFO_BANNER
-	</select>
-	
 	
 	<!-- 홍보배너수정 -->
 	<update id="updateAdmBanner" parameterType="portalxpert.adm.banner.vo.AdmBannerVO">
-		UPDATE INFO_BANNER         
+		UPDATE ADM_BANNER_INFO         
 		SET
-			TITLE = #{title, javaType=String, jdbcType=VARCHAR}
-			, LINK_URL = #{linkUrl, javaType=String, jdbcType=VARCHAR}
-			, ALT_TXT = #{altTxt, javaType=String, jdbcType=VARCHAR}
-			, SORT = #{sort, javaType=Integer, jdbcType=NUMERIC}                                                              
-			, USE_YN = #{useYn, javaType=String, jdbcType=VARCHAR} 
-			, IMG_WIDTH = #{imgWidth, javaType=Integer, jdbcType=NUMERIC} 
-			, IMG_HEIGHT = #{imgHeight, javaType=Integer, jdbcType=NUMERIC} 
-			, FROM_DTS = #{fromDts, javaType=String, jdbcType=VARCHAR}                                                            
-			, TO_DTS = #{toDts, javaType=String, jdbcType=VARCHAR}
-			, UPD_ID = #{updId}
-			, UPD_DTS = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') 
+			BNR_TITLE = #{bnrTitle}
+			, EXPO_BGN_DTTM = TO_DATE(#{expoBgnDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')
+			, EXPO_END_DTTM = TO_DATE(#{expoEndDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')
+			, PAR_ROW_POS = #{parRowPos}                                                              
+			, ROW_POS = #{rowPos}                                                              
+			, UPDR_ID = #{updrId}
+			, UPD_DTTM = SYSDATE 
  		WHERE BNR_ID = #{bnrId}    
 	</update>	
 
-	<!-- 홍보배너이미지수정 -->
-	<!-- as-is와 동일하게 작성:로직확인필요 -->
-	<insert id="updateAdmBannerAppendImg" parameterType="portalxpert.adm.banner.vo.AdmBannerVO">
-		INSERT INTO INFO_BANNER_FILE                                                                                             
-		(                                                                                                     
-			FILE_ID                                                                                            
-	 		, BNR_ID																	           
-        	, IMG_NAME_ORG 
-        	, IMG_NAME_REAL 
-        	, IMG_SIZE 
-        	, IMG_PATH														     
-     	)                                                                                                     
-		VALUES                                                                                                
-     	(
-     		(SELECT (LPAD(TO_CHAR((SELECT NVL(MAX(FILE_ID),0)+1 FROM INFO_BANNER_FILE)), '6', '0')) FROM DUAL)
-        	, #{bnrId}    
-        	, #{imgNameOrg, javaType=String, jdbcType=VARCHAR}
-        	, #{imgNameReal, javaType=String, jdbcType=VARCHAR}
-        	, #{imgSize, javaType=Integer, jdbcType=NUMERIC}
-        	, #{imgPath, javaType=String, jdbcType=VARCHAR}                                                                                    
-       )  
+	<!-- 홍보배너이미지등록 -->
+	<insert id="insertAdmBannerAppendImg" parameterType="portalxpert.adm.banner.vo.AdmBannerApndFileVO">
+		<selectKey keyProperty="apndFileSeq" resultType="int" order="BEFORE" >
+			SELECT (LPAD(TO_CHAR((SELECT NVL(MAX(TO_NUMBER(APND_FILE_SEQ)),0)+1 FROM ADM_BANNER_APND_FILE)), '6', '0')) AS APND_FILE_SEQ
+			FROM DUAL     	    
+	    </selectKey>
+	    
+	    <![CDATA[
+			INSERT INTO ADM_BANNER_APND_FILE(
+			 BNR_ID
+			, APND_FILE_SEQ
+			, APND_FILE_SZ
+			, APND_FILE_ORGN
+			, APND_FILE_NAME
+			, APND_FILE_PATH
+			, DEL_YN
+			, REGR_ID
+			, REG_DTTM
+			, UPDR_ID
+			, UPD_DTTM
+			) VALUES (
+			 #{bnrId}
+			, #{apndFileSeq}
+			, #{apndFileSz}
+			, #{apndFileOrgn}
+			, #{apndFileName}
+			, #{apndFilePath}
+			, #{delYn}
+			, #{regrId}
+			, sysdate
+			, #{updrId}
+			, sysdate
+			)
+		]]>
+	
 	</insert>	
 	
 	<!-- 홍보배너삭제(단건) -->
 	<delete id="deleteAdmBanner"  parameterType="portalxpert.adm.banner.vo.AdmBannerVO">
 		DELETE                     
-  		FROM INFO_BANNER         
+  		FROM ADM_BANNER_INFO         
 		WHERE BNR_ID = #{bnrId}  
 	</delete>	
 	
 	<!-- 홍보배너이미지삭제(단건) -->
 	<delete id="deleteAdmBannerAppendImg"  parameterType="portalxpert.adm.banner.vo.AdmBannerVO">
 		DELETE                     
-  		FROM INFO_BANNER_FILE         
+  		FROM ADM_BANNER_APND_FILE         
 		WHERE BNR_ID = #{bnrId}  
 	</delete>	
 	
 
-	<!-- 홍보배너삭제(다건) -->
-	<delete id="deleteAdmBanners"  parameterType="portalxpert.adm.banner.vo.AdmBannerVO">
-		DELETE                     
-  		FROM INFO_BANNER         
-		WHERE BNR_ID IN ( ${bnrCheckbox} ) 
-	</delete>	
-	
-	<!-- 홍보배너이미지삭제(다건) -->
-	<delete id="deleteAdmBannerAppendImgs"  parameterType="portalxpert.adm.banner.vo.AdmBannerVO">
-		DELETE                     
-  		FROM INFO_BANNER_FILE         
-		WHERE BNR_ID IN ( ${bnrCheckbox} )
-	</delete>	
 </mapper>
