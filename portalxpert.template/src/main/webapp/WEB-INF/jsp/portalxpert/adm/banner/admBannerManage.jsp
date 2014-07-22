@@ -88,7 +88,9 @@ var jsonAppendFileList = [];  //첨부 리스트
 					<a href="#" onclick="fnImgPreview()">${appendImg.apndFileOrgn}</a>
 				</div>
 				<div id="apndImg-dialog" style="display:none;">
+					<c:if test="${not empty appendImg.apndFilePath}">
 					<img src="${WEB_HOME}/upload/${appendImg.apndFilePath}/${appendImg.apndFileName}">
+					</c:if>
 				</div>
 				</td>
 			</tr>			

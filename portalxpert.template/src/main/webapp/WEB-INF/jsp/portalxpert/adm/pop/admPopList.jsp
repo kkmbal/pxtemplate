@@ -8,19 +8,20 @@
 
 <script type="text/javascript">
 	
-	var pageIndex = '${admBannerVO.pageIndex}';
-	var pageUnit = '${admBannerVO.pageUnit}';
-	var searchKeyword = decodeURIComponent("${fn:replace(admBannerVO.searchKeyword,'"', '&quot;')}");
-	var searchCondition = '${admBannerVO.searchCondition}';	
+	var pageIndex = '${admPopVO.pageIndex}';
+	var pageUnit = '${admPopVO.pageUnit}';
+	var searchKeyword = decodeURIComponent("${fn:replace(admPopVO.searchKeyword,'"', '&quot;')}");
+	var searchCondition = '${admPopVO.searchCondition}';	
+
 	
 </script>
-<script type="text/javascript" src="${RES_HOME}/js/portal/adm/admBannerList.js"></script>
+<script type="text/javascript" src="${RES_HOME}/js/portal/adm/admPopList.js"></script>
 </head>
 
 <body>
 
-<form:form commandName="admBannerVO" action="${WEB_HOME}/adm/banner/getAdmBannerList.do" name="listForm" method="post">
-	<c:if test="${not empty admBannerVO }">
+<form:form commandName="admPopVO" action="${WEB_HOME}/adm/pop/getAdmPopList.do" name="listForm" method="post">
+	<c:if test="${not empty admPopVO }">
 	<form:hidden path="pageUnit" value="${pageUnit}"/>
 	<form:hidden path="pageIndex" />
 	<form:hidden path="searchCondition" />
@@ -29,11 +30,11 @@
 	
 <div class="container">	
 <div class="header">
-	<h1>배너관리</h1>
+	<h1>팝업관리</h1>
 	<div class="loc">
 		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
 		<span><a href="#">관리자</a></span>
-		<span><strong>배너관리</strong></span>
+		<span><strong>팝업관리</strong></span>
 	</div>
 </div>
  
@@ -45,12 +46,12 @@
 			<span>
 				<select title="" id="search_gubun">
 					<option value="">선택</option>
-					<option value="BNR_TITLE" ${admBannerVO.searchCondition == 'BNR_TITLE' ? 'selected' : ''}>이름</option>
+					<option value="BNR_TITLE" ${admPopVO.searchCondition == 'BNR_TITLE' ? 'selected' : ''}>이름</option>
 				</select>
 			</span>
 		</span>
 		<!-- //셀렉트박스 -->
-		<input type="text" value="${fn:replace(admBannerVO.searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:450px" /> 
+		<input type="text" value="${fn:replace(admPopVO.searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:450px" /> 
 		<a href="#" class="btn_set bt_style7" id="search"><span>검색</span></a>
 	</div>
 </div>
@@ -67,13 +68,13 @@
 <col style="width:7%" />
 <col style="width:25%" />
 <col style="width:*" />
-<col style="width:25%" />
+<col style="width:20%" />
 <col style="width:15%" />
 </colgroup>
 <thead>
 <tr>
 	<th scope="col" class="f"><span>번호</span></th>
-	<th scope="col"><span>배너이름</span></th>
+	<th scope="col"><span>팝업이름</span></th>
 	<th scope="col"><span>게시기간</span></th>
 	<th scope="col"><span>위치</span></th>
 	<th scope="col" class="e"><span>상태</span></th>
@@ -82,10 +83,10 @@
 <tbody>
 <c:choose>
 	<c:when test="${paginationInfo.totalRecordCount > 0}">
-		<c:forEach var="result" items="${bannerList}" varStatus="status">	
+		<c:forEach var="result" items="${popList}" varStatus="status">	
 			<tr>
 				<td>${result.seq}</td>
-				<td class="tit" title="${result.bnrTitle}"><a href="javascript:fnGetRegView('${result.bnrId}');" class="text_dot">${result.bnrTitle}</a> 
+				<td class="tit" title="${result.popTitle}"><a href="javascript:fnGetRegView('${result.popId}');" class="text_dot">${result.popTitle}</a> 
 				</td>
 				<td><p class="text_dot" title="${result.expoBgnDttm} ~ ${result.expoEndDttm}">${result.expoBgnDttm} ~ ${result.expoEndDttm}</p></td>
 				<td ><p class="text_dot" title="${result.parRowPos}>${result.rowPos}">${result.parRowPos}>${result.rowPos}</p></td>

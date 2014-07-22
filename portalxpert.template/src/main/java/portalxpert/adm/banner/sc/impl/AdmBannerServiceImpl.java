@@ -107,7 +107,7 @@ public class AdmBannerServiceImpl extends EgovAbstractServiceImpl implements Adm
 	    	admBannerVO.setRowPos(json.getString("rowPos"));
 	    	admBannerVO.setExpoBgnDttm(json.getString("expoBgnDttm"));
 	    	admBannerVO.setExpoEndDttm(json.getString("expoEndDttm"));
-	    	admBannerVO.setDelYn(json.getString("delYn"));
+	    	admBannerVO.setDelYn("N");
 	    	
 	    	if("".equals(admBannerVO.getBnrId())){
 	    		admBannerMapper.insertAdmBanner(admBannerVO); //신규

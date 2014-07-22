@@ -53,8 +53,8 @@ $(document).ready(function () {
 			}); 
 	
 	if(bnrId == ''){
-		$( "#expoBgnDttm" ).datepicker( "setDate", new Date() );
-	 	$( "#expoEndDttm" ).datepicker( "setDate", new Date() );	
+		$( "#expoBgnDttm_v" ).datepicker( "setDate", new Date() );
+	 	$( "#expoEndDttm_v" ).datepicker( "setDate", new Date() );	
 	}
 
 	//배너위치 selectbox

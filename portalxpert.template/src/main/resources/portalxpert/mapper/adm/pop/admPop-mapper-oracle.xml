@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portalxpert.adm.pop.mapper.AdmPopMapper">
+
+	<!--  팝업조회 -->
+	<select id="getAdmPopList" parameterType="portalxpert.adm.pop.vo.AdmPopVO" resultType="portalxpert.adm.pop.vo.AdmPopVO">
+    SELECT A.POP_ID																	
+		, A.POP_TITLE																		
+		, A.EXPO_BGN_DTTM																	
+		, A.EXPO_END_DTTM
+		, A.USE_YN
+		, (SELECT CD_NM FROM COM_CODE_SPEC WHERE CD = 'P_ROW_POS' AND CD_SPEC = A.PAR_ROW_POS) PAR_ROW_POS
+		, (SELECT CD_NM FROM COM_CODE_SPEC WHERE CD = 'ROW_POS' AND CD_SPEC = A.ROW_POS) ROW_POS
+		, A.POP_KIND
+		, A.EXPO_YN
+		, A.LINK_URL
+		, A.LINK_KIND		
+		, A.DEL_YN
+		, A.REGR_ID
+		, A.UPDR_ID
+		, A.RNUM SEQ
+	FROM (
+	    SELECT S.POP_ID																	
+			, S.POP_TITLE																		
+			, S.EXPO_BGN_DTTM																	
+			, S.EXPO_END_DTTM
+			, S.USE_YN
+			, S.PAR_ROW_POS
+			, S.POP_KIND
+			, S.EXPO_YN
+			, S.LINK_URL
+			, S.LINK_KIND	
+			, S.ROW_POS
+			, S.DEL_YN
+			, S.REGR_ID
+			, S.UPDR_ID
+		   , ROWNUM RNUM			
+		FROM (
+		    SELECT A.POP_ID																	
+				, A.POP_TITLE																		
+				, TO_CHAR(A.EXPO_BGN_DTTM, 'YYYY-MM-DD') EXPO_BGN_DTTM																	
+				, TO_CHAR(A.EXPO_END_DTTM, 'YYYY-MM-DD') EXPO_END_DTTM
+				, (CASE WHEN SYSDATE BETWEEN A.EXPO_BGN_DTTM AND A.EXPO_END_DTTM THEN 'Y' ELSE 'N' END) USE_YN
+				, A.ROW_POS
+				, A.PAR_ROW_POS
+				, A.POP_KIND
+				, A.EXPO_YN
+				, A.LINK_URL
+				, A.LINK_KIND
+				, A.DEL_YN
+				, A.REGR_ID
+				, A.UPDR_ID
+			FROM	ADM_POP_INFO A
+			WHERE DEL_YN = 'N'
+			<if test="searchCondition=='POP_TITLE'">
+				AND A.POP_TITLE LIKE '%'|| #{searchKeyword} || '%'
+			</if>
+			ORDER BY A.POP_ID DESC                           
+		) S 
+	) A
+	<![CDATA[ WHERE ROWNUM <= #{recordCountPerPage} and RNUM > #{firstIndex} ]]>
+	</select>
+	
+	
+	<!-- 팝업조회  건수-->
+	<select id="getAdmPopListToCnt" parameterType="portalxpert.adm.pop.vo.AdmPopVO" resultType="int">
+		SELECT  COUNT(1)															
+		FROM ADM_POP_INFO A                                           
+		WHERE DEL_YN = 'N'
+		<if test="searchCondition=='POP_TITLE'">
+			AND A.POP_TITLE LIKE '%'|| #{searchKeyword} || '%'
+		</if>
+	</select>
+	
+	
+	<!--  팝업상세 -->			
+	<select id="getAdmPop" parameterType="portalxpert.adm.pop.vo.AdmPopVO" resultType="portalxpert.adm.pop.vo.AdmPopVO">
+	    SELECT A.POP_ID																	
+			, A.POP_TITLE																		
+			, TO_CHAR(A.EXPO_BGN_DTTM, 'YYYY-MM-DD') EXPO_BGN_DTTM																	
+			, TO_CHAR(A.EXPO_END_DTTM, 'YYYY-MM-DD') EXPO_END_DTTM
+			, A.PAR_ROW_POS
+			, A.ROW_POS
+			, A.POP_KIND
+			, A.EXPO_YN
+			, A.LINK_URL
+			, A.LINK_KIND	
+			, A.POP_CONTS			
+			, A.DEL_YN
+			, A.REGR_ID
+			, A.UPDR_ID                
+		FROM ADM_POP_INFO A            
+		WHERE A.POP_ID = #{popId} 
+	</select>
+	
+	
+	<!--  팝업이미지 조회 -->			
+	<select id="getAdmPopAppendImg" parameterType="portalxpert.adm.pop.vo.AdmPopApndFileVO" resultType="portalxpert.adm.pop.vo.AdmPopApndFileVO">
+		SELECT POP_ID          
+			,APND_FILE_SEQ
+			,APND_FILE_SZ
+			,APND_FILE_ORGN
+			,APND_FILE_NAME
+			,APND_FILE_PATH
+			,DEL_YN        
+		FROM ADM_POP_APND_FILE  B
+		WHERE POP_ID = #{popId}
+		<if test = "apndFileSeq != null and apndFileSeq != ''">
+			AND APND_FILE_SEQ = #{apndFileSeq}   
+		</if> 
+	</select>
+	
+	
+	<!--  팝업 등록 -->
+	<insert id="insertAdmPop" parameterType="portalxpert.adm.pop.vo.AdmPopVO">
+		<selectKey keyProperty="popId" resultType="String" order="BEFORE" >
+			SELECT	LPAD( NVL(MAX(TO_NUMBER(POP_ID)) ,0)+1 , '6', '0') POP_ID
+			FROM	ADM_POP_INFO   
+	    </selectKey>
+	    	
+		INSERT INTO ADM_POP_INFO (                                                                                                       
+		    POP_ID																	
+			,POP_TITLE																		
+			,EXPO_BGN_DTTM																	
+			,EXPO_END_DTTM
+			,PAR_ROW_POS
+			,ROW_POS
+			, POP_KIND
+			, EXPO_YN
+			, LINK_URL
+			, LINK_KIND			
+			, POP_CONTS			
+			,DEL_YN
+			,REGR_ID
+			,REG_DTTM
+			,UPDR_ID 
+			,UPD_DTTM                                                                        
+		) VALUES (
+		    #{popId}																	
+			,#{popTitle}																		
+			,TO_DATE(#{expoBgnDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')																	
+			,TO_DATE(#{expoEndDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')
+			,#{parRowPos}
+			,#{rowPos}
+			, #{popKind}
+			, #{expoYn}
+			, #{linkUrl}
+			, #{linkKind}				
+			, #{popConts}				
+			,#{delYn}
+			,#{regrId}
+			,SYSDATE
+			,#{updrId} 
+			,SYSDATE                                                     
+		)                                                                                                       
+	</insert>
+	
+	<!-- 팝업수정 -->
+	<update id="updateAdmPop" parameterType="portalxpert.adm.pop.vo.AdmPopVO">
+		UPDATE ADM_POP_INFO         
+		SET
+			POP_TITLE = #{popTitle}
+			, EXPO_BGN_DTTM = TO_DATE(#{expoBgnDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')
+			, EXPO_END_DTTM = TO_DATE(#{expoEndDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')
+			, PAR_ROW_POS = #{parRowPos}                                                              
+			, ROW_POS = #{rowPos}  
+			, POP_KIND = #{popKind}
+			, EXPO_YN = #{expoYn}
+			, LINK_URL = #{linkUrl}
+			, LINK_KIND = #{linkKind}				                                                            
+			, POP_CONTS = #{popConts}				                                                            
+			, UPDR_ID = #{updrId}
+			, UPD_DTTM = SYSDATE 
+ 		WHERE POP_ID = #{popId}    
+	</update>	
+
+	<!-- 팝업이미지등록 -->
+	<insert id="insertAdmPopAppendImg" parameterType="portalxpert.adm.pop.vo.AdmPopApndFileVO">
+		<selectKey keyProperty="apndFileSeq" resultType="int" order="BEFORE" >
+			SELECT (LPAD(TO_CHAR((SELECT NVL(MAX(TO_NUMBER(APND_FILE_SEQ)),0)+1 FROM ADM_POP_APND_FILE)), '6', '0')) AS APND_FILE_SEQ
+			FROM DUAL     	    
+	    </selectKey>
+	    
+	    <![CDATA[
+			INSERT INTO ADM_POP_APND_FILE(
+			 POP_ID
+			, APND_FILE_SEQ
+			, APND_FILE_SZ
+			, APND_FILE_ORGN
+			, APND_FILE_NAME
+			, APND_FILE_PATH
+			, DEL_YN
+			, REGR_ID
+			, REG_DTTM
+			, UPDR_ID
+			, UPD_DTTM
+			) VALUES (
+			 #{popId}
+			, #{apndFileSeq}
+			, #{apndFileSz}
+			, #{apndFileOrgn}
+			, #{apndFileName}
+			, #{apndFilePath}
+			, #{delYn}
+			, #{regrId}
+			, sysdate
+			, #{updrId}
+			, sysdate
+			)
+		]]>
+	
+	</insert>	
+	
+	<!-- 팝업삭제(단건) -->
+	<delete id="deleteAdmPop"  parameterType="portalxpert.adm.pop.vo.AdmPopVO">
+		DELETE                     
+  		FROM ADM_POP_INFO         
+		WHERE POP_ID = #{popId}  
+	</delete>	
+	
+	<!-- 팝업이미지삭제(단건) -->
+	<delete id="deleteAdmPopAppendImg"  parameterType="portalxpert.adm.pop.vo.AdmPopVO">
+		DELETE                     
+  		FROM ADM_POP_APND_FILE         
+		WHERE POP_ID = #{popId}  
+	</delete>	
+	
+	<delete id="deleteAdmPopUserMap"  parameterType="portalxpert.adm.pop.vo.AdmPopUserMap">
+		DELETE                     
+  		FROM ADM_POP_USER_MAP         
+		WHERE POP_ID = #{popId}  
+	</delete>	
+
+	<insert id="insertAdmPopUserMap" parameterType="portalxpert.adm.pop.vo.AdmPopUserMap">
+	    
+	    <![CDATA[
+			INSERT INTO ADM_POP_USER_MAP(
+			 POP_ID
+			, USER_DIV
+			, USER_ID
+			, DEL_YN
+			, REGR_ID
+			, REG_DTTM
+			, UPDR_ID
+			, UPD_DTTM
+			) VALUES (
+			 #{popId}
+			, #{userDiv}
+			, #{userId}
+			, #{delYn}
+			, #{regrId}
+			, sysdate
+			, #{updrId}
+			, sysdate
+			)
+		]]>
+	
+	</insert>	
+	
+	<select id="getAdmPopUserMapList"  parameterType="portalxpert.adm.pop.vo.AdmPopVO" resultType="portalxpert.adm.pop.vo.AdmPopUserMap">
+		<![CDATA[
+		SELECT A.POP_ID
+        , A.USER_DIV
+        , A.USER_ID
+        , A.DEL_YN
+        , A.REGR_ID
+        , A.REG_DTTM
+        , A.UPDR_ID
+        , A.UPD_DTTM
+        , CASE WHEN A.USER_DIV = 'DPT' THEN C.DEPT_NAME WHEN A.USER_DIV = 'EMP' THEN B.USER_NAME ELSE A.USER_ID END AS DISPLAY_NAME   
+        FROM ADM_POP_USER_MAP A, PSN_USER_INFO B, PSN_DEPT_INFO C
+        WHERE A.USER_ID = B.USER_ID (+)
+           AND A.USER_ID = C.DEPT_CODE (+)
+          AND  A.POP_ID = #{popId}
+		]]>		
+	</select>	
+
+</mapper>

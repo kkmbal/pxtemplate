@@ -53,23 +53,6 @@ public interface AdmBannerService {
 	 */
     public void insertAdmBanner(String data, HttpSession session) throws Exception;
     
-	 /**
-	 * 홍보배너수정
-	 * @param AdmRmgRestVO
-	 * @return
-	 * @exception Exception
-	 */
-    //public void updateAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
-    
-	/**
-	 * Method Desciption : 홍보배너삭제
-	 * 
-	 * @param con
-	 * @param box
-	 * @return
-	 * @throws ApplicationException
-	 */	
-	//public int deleteAdmBanner(AdmBannerVO admBannerVO, HttpSession session) throws Exception;
 	
 	
 }
