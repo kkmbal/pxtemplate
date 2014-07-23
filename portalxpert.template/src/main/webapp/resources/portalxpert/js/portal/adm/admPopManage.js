@@ -190,7 +190,7 @@ $(document).ready(function () {
 		}		
 		
 		$("#expoBgnDttm").val($("#expoBgnDttm_v").val().replace(/-/g,''));
-		$("#expoEndDttm").val($("#expoEndDttm_v").val().replace(/-/g,''));
+		$("#expoEndDttm").val($("#expoEndDttm_v").val().replace(/-/g,'')+"235959");
 		
 		
 		var expoYn = "N";
