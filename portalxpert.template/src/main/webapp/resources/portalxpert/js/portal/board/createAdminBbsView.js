@@ -588,6 +588,7 @@
 	    			$('#boardFormSub').focus();
 	    			return;
 	    		}
+	    		BbsKind = "010";
 	    	}
 	    	//모바일 연동(Y,N)
 	    	mobileLink = $(':radio[name="moblLinkYn"]:checked').val();

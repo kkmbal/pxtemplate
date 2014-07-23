@@ -20,6 +20,7 @@ import portalxpert.adm.stat.vo.AdmStatBBSVO;
 import portalxpert.adm.stat.vo.AdmStatSearchVO;
 import portalxpert.adm.stat.vo.AdmStatSurveyVO;
 import portalxpert.adm.stat.vo.AdmStatUseVO;
+import portalxpert.common.config.Constant;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -292,6 +293,33 @@ public class AdmStatController {
 		
 		paginationInfo.setTotalRecordCount(totCnt);
 		
+		for(AdmStatBBSVO vo : notiList){
+			if(vo.getBoardKind().equals(Constant.BOARD_KIND_010.getVal())){
+				vo.setBoardKind("일반");
+			}else if(vo.getBoardKind().equals(Constant.BOARD_KIND_020.getVal())){
+				vo.setBoardKind("폐쇄");
+			}else if(vo.getBoardKind().equals(Constant.BOARD_KIND_030.getVal())){
+				vo.setBoardKind("경조사");
+			}else if(vo.getBoardKind().equals(Constant.BOARD_KIND_110.getVal())){
+				vo.setBoardKind("설문");
+			}else if(vo.getBoardKind().equals(Constant.BOARD_KIND_120.getVal())){
+				vo.setBoardKind("CMS");
+			}
+			
+			if(vo.getBoardForm().equals(Constant.BOARD_FORM_010.getVal())){
+				vo.setBoardForm("리스트형");
+			}else if(vo.getBoardForm().equals(Constant.BOARD_FORM_020.getVal())){
+				vo.setBoardForm("SNS형");
+			}else if(vo.getBoardForm().equals(Constant.BOARD_FORM_030.getVal())){
+				if(vo.getBoardFormSpec().equals(Constant.BOARD_FORM_SPEC_010.getVal())){
+					vo.setBoardForm("이미지형");
+				}else if(vo.getBoardFormSpec().equals(Constant.BOARD_FORM_SPEC_020.getVal())){
+					vo.setBoardForm("동영상형");
+				}
+			}else if(vo.getBoardForm().equals(Constant.BOARD_FORM_040.getVal())){
+				vo.setBoardForm("달력형");
+			}
+		}
 		modelMap.put("paginationInfo", paginationInfo);
 		modelMap.put("admStatSearchVO", admStatSearchVO);
 		modelMap.put("notiList", notiList);

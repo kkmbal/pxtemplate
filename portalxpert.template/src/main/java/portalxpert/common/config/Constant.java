@@ -7,9 +7,9 @@ public enum Constant {
 	BOARD_KIND_030("030"), //경조사
 	BOARD_KIND_110("110"), //설문조사
 	BOARD_KIND_120("120"), //제도안내
-	BOARD_KIND_130("130"), //QNA
-	BOARD_KIND_140("140"), //FAQ
-	BOARD_KIND_150("150"), //자료실
+	//BOARD_KIND_130("130"), //QNA
+	//BOARD_KIND_140("140"), //FAQ
+	//BOARD_KIND_150("150"), //자료실
 
 	BOARD_FORM_010("010"), //리스트
 	BOARD_FORM_020("020"), //SNS
