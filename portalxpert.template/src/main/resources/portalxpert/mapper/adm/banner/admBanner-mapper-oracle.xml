@@ -70,6 +70,8 @@
 			, TO_CHAR(A.EXPO_END_DTTM, 'YYYY-MM-DD') EXPO_END_DTTM
 			, A.PAR_ROW_POS
 			, A.ROW_POS
+			, A.LINK_URL
+			, A.SORT_SEQ
 			, A.DEL_YN
 			, A.REGR_ID
 			, A.UPDR_ID                
@@ -109,6 +111,8 @@
 			,EXPO_END_DTTM
 			,PAR_ROW_POS
 			,ROW_POS
+			,LINK_URL
+			,SORT_SEQ
 			,DEL_YN
 			,REGR_ID
 			,REG_DTTM
@@ -121,6 +125,8 @@
 			,TO_DATE(#{expoEndDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')
 			,#{parRowPos}
 			,#{rowPos}
+			,#{linkUrl}
+			,#{sortSeq}
 			,#{delYn}
 			,#{regrId}
 			,SYSDATE
@@ -138,6 +144,8 @@
 			, EXPO_END_DTTM = TO_DATE(#{expoEndDttm, jdbcType=VARCHAR}, 'YYYYMMDDHH24MISS')
 			, PAR_ROW_POS = #{parRowPos}                                                              
 			, ROW_POS = #{rowPos}                                                              
+			, LINK_URL = #{linkUrl}                                                              
+			, SORT_SEQ = #{sortSeq}                                                              
 			, UPDR_ID = #{updrId}
 			, UPD_DTTM = SYSDATE 
  		WHERE BNR_ID = #{bnrId}    

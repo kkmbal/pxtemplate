@@ -76,11 +76,15 @@ $(document).ready(function () {
 			return;
 		}
 		if($("#expoBgnDttm_v").val() == ""){
-			alert("게시기간을 입력하세요.")
+			alert("게시기간을 입력하세요.");
 			return;
 		}
 		if($("#expoEndDttm_v").val() == ""){
-			alert("게시기간을 입력하세요.")
+			alert("게시기간을 입력하세요.");
+			return;
+		}
+		if($("#linkUrl").val() == ""){
+			alert("링크URL을 입력하세요.");
 			return;
 		}
 		if($("#bnrId").val() == ""){
@@ -96,7 +100,12 @@ $(document).ready(function () {
 		}		
 		
 		$("#expoBgnDttm").val($("#expoBgnDttm_v").val().replace(/-/g,''));
-		$("#expoEndDttm").val($("#expoEndDttm_v").val().replace(/-/g,''));
+		$("#expoEndDttm").val($("#expoEndDttm_v").val().replace(/-/g,'')+"235959");
+		
+		var sortSeq = 0;
+		if($("#sortSeq").val() !== ''){
+			sortSeq = $("#sortSeq").val();
+		}
 		
 		if (!confirm('등록 하시겠습니까?')) {
 			return;
@@ -109,6 +118,8 @@ $(document).ready(function () {
 			"expoEndDttm" : $("#expoEndDttm").val(),
 			"parRowPos" : $("#parRowPos").val(),
 			"rowPos" : $("#rowPos").val(),
+			"linkUrl" : $("#linkUrl").val(),
+			"sortSeq" : sortSeq,
 			"delYn" : 'N',
 			"appendFileList" : []
 		}

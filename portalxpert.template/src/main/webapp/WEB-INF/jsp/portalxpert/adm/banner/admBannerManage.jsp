@@ -74,6 +74,18 @@ var jsonAppendFileList = [];  //첨부 리스트
 					</span>					
 				</td>
 			</tr>
+			<tr>
+				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input01">링크URL</label></th>
+				<td colspan="3">
+					<input type="text"  class="text" style="width:443px" title="팝업이름" id="linkUrl" name="linkUrl" value="${admBanner.linkUrl}" />		
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="input01">정렬순서</label></th>
+				<td colspan="3">
+					<input type="text"  class="text" style="width:50px" title="팝업이름" id="sortSeq" name="sortSeq" value="${admBanner.sortSeq}" />		
+				</td>
+			</tr>
 			</form:form>
 			<tr>
 				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">배너등록</label></th>

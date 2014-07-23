@@ -2,7 +2,7 @@ package portalxpert.adm.banner.vo;
 
 import portalxpert.common.vo.SearchConditionVO;
 
-public class AdmBannerVO extends SearchConditionVO 
+public class AdmBannerVO extends SearchConditionVO  
 {
 	
 	private static final long serialVersionUID = 1L;
@@ -15,6 +15,8 @@ public class AdmBannerVO extends SearchConditionVO
 	private String rowPos; /*열위치*/                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 	private String delYn; /*삭제여부*/
 	private String useYn; /*운영여부*/
+	private String linkUrl; /*링크URL*/
+	private String sortSeq; /*정렬순서*/
 	
 	private String regrId;
 	private String updrId;
@@ -22,6 +24,18 @@ public class AdmBannerVO extends SearchConditionVO
 	private String seq; //순번
 	
 	
+	public String getSortSeq() {
+		return sortSeq;
+	}
+	public void setSortSeq(String sortSeq) {
+		this.sortSeq = sortSeq;
+	}
+	public String getLinkUrl() {
+		return linkUrl;
+	}
+	public void setLinkUrl(String linkUrl) {
+		this.linkUrl = linkUrl;
+	}
 	public String getParRowPos() {
 		return parRowPos;
 	}

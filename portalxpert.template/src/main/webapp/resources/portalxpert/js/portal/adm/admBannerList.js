@@ -16,7 +16,7 @@
 	};	
 	
 	function fnGetRegView(bnrId){
-		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/banner/getAdmBannerView.do?bnrId='+bnrId, '배너정보',700,290);
+		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/banner/getAdmBannerView.do?bnrId='+bnrId, '배너정보',700,360);
 	}
 	
 	
@@ -39,7 +39,7 @@ $(document).ready(function () {
 	});
 	
 	$('#createAuth').click(function() {//등록
-		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/banner/getAdmBannerView.do?bnrId=', '배너정보',700,290);
+		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/banner/getAdmBannerView.do?bnrId=', '배너정보',700,360);
 	});	
 	
 	parent.document.getElementById("admFrame").height = "700px";
