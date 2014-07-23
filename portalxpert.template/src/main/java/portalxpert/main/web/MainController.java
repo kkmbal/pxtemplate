@@ -88,15 +88,6 @@ public class MainController {
         	modelMap.put("noticePopYn", "N");
         }
         
-        int hotBrifPopCnt = 0 ;
-        hotBrifPopCnt = mainService.getHotBriefingPopupCnt();
-        
-        if (hotBrifPopCnt > 0) {
-        	modelMap.put("hotBrifPopYn", "Y");
-        } else {
-        	modelMap.put("hotBrifPopYn", "N");
-        }
-        
         modelMap.put("adminYn", adminYn);
     	return "main/mainHome";
     }
@@ -182,69 +173,6 @@ public class MainController {
     	return modelMap;
     }
     
-    /**
-  	 * 홍보배너 조회
-  	 * @param modelMap
-     * @return
-     * @throws Exception
-     * @author crossent
-  	 */
-    @RequestMapping(value="/getPromoteBannerList")
-    public ModelMap getPromoteBannerList( 
-    		ModelMap modelMap
-    		) throws Exception { 
-    	
-    	JSONResult jsonResult = new JSONResult();
-    	JSONObject jsonObj = new JSONObject();    
-    	
-    	List resultList = null;
-    	String filePath = "/uploadimage"; 
-    	
-    	try {
-    		resultList = mainService.getPromoteBannerList();
-    		
-    		JSONArray jsonArr = new JSONArray();
-    		
-    		for (int i=0; i < resultList.size(); i++) {
-    			
-    			MainVO resultVO = (MainVO) resultList.get(i);
-    			
-    			resultVO.setTitle(resultVO.getTitle().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""));
-	    		resultVO.setTitle(resultVO.getTitle().replaceAll("'", "`"));
-	    		resultVO.setTitle(CommUtil.cutString(resultVO.getTitle(), 26, "..."));
-	    		
-    			jsonObj.put("title", resultVO.getTitle());
-    			jsonObj.put("linkUrl", resultVO.getLinkUrl());
-    			jsonObj.put("altTxt", resultVO.getAltTxt());
-    			
-    			if (resultVO.getSetWidth().equals("0")) {
-    				resultVO.setSetWidth("1024");
-    				jsonObj.put("setWidth", resultVO.getSetWidth());
-    			}
-    			
-        		if (resultVO.getSetHeight().equals("0")) {
-        			resultVO.setSetHeight("768");
-        			jsonObj.put("setHeight", resultVO.getSetHeight());
-        		}
-        		
-        		jsonObj.put("imgNameOrg", resultVO.getImgNameOrg());
-    			jsonObj.put("imgNameReal", resultVO.getImgNameReal());
-    			jsonObj.put("imgPath", resultVO.getImgPath());
-    			
-    			jsonArr.add(jsonObj);
-    		}
-			    		
-    		modelMap.put("resultList", JSONUtils.objectToJSON(jsonArr));
-    		modelMap.put("filePath", JSONUtils.objectToJSON(filePath));
-    	} catch (Exception e) {
-    		jsonResult.setSuccess(false);
-			jsonResult.setMessage(messageSource.getMessage("common.error")); 
- 			jsonResult.setErrMessage(e.getMessage());
-		}    	
-    	
-    	modelMap.put("jsonResult", jsonResult);
-    	return modelMap;
-    }
     
     /**
      * 최근게시물 설정 팝업화면
@@ -836,39 +764,5 @@ public class MainController {
     	return modelMap;
     }
     
-    /**
-     * 핫브리핑 팝업 
-     * @param modelMap
-     * @return
-     * @throws Exception
-     * @author crossent
-     */
-    @RequestMapping(value="/getHotBriefingPopup")
-    public ModelMap getHotBriefingPopup(
-    		ModelMap modelMap
-    		) throws Exception {
-    	
-    	JSONResult jsonResult = new JSONResult();	
-    	
-    	//String filePath = "/uploadimage";
-    	
-    	try {
-    		List resultList = mainService.getHotBriefingPopup();
-    		
-    		if (resultList.size() > 0) {
-    			modelMap.put("resultList", JSONUtils.objectToJSON(resultList));
-    			//modelMap.put("filePath", JSONUtils.objectToJSON(filePath));
-    		} else {
-    			modelMap.put("resultList", "[]");
-    		}
-		} catch (Exception e) {	
-			jsonResult.setSuccess(false);
-			jsonResult.setMessage(messageSource.getMessage("common.error")); 
- 			jsonResult.setErrMessage(e.getMessage());
-		}
-		
-		modelMap.put("jsonResult", jsonResult);
-    	return modelMap;
-    }
     
 }    

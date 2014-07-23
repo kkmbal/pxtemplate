@@ -509,8 +509,8 @@
 			     , A.MAIN_DSP_GB                     
 				 , C.LINK_CAT_ID PSN_CAT_ID          
 				 , C.LINK_CD PSN_CD                  
-			  FROM BIZ_LINK A                        
-			     , BIZ_LINK_CATEGORY B               
+			  FROM ADM_BIZ_LINK A                        
+			     , ADM_BIZ_LINK_CATEGORY B               
 			     , PSN_JOB_DESK C                    
 			 WHERE B.LINK_CAT_ID (+) = A.LINK_CAT_ID 
 			   AND A.LINK_CAT_ID = C.LINK_CAT_ID (+) 
@@ -523,7 +523,7 @@
 	<select id="getUserWorkDeskCnt" parameterType="portalxpert.common.vo.UserInfoVO" resultType="int">
 		/* === MainMapper.getUserWorkDeskCnt === */
 			SELECT COUNT(A.LINK_CAT_ID) CNT         
-			  FROM BIZ_LINK A
+			  FROM ADM_BIZ_LINK A
 			     , PSN_JOB_DESK B                   
 			 WHERE A.LINK_CAT_ID = B.LINK_CAT_ID    
 			   AND A.LINK_CD = B.LINK_CD        
@@ -533,7 +533,7 @@
 	<select id="getDefaultWorkDeskCnt" resultType="int">
 		/* === MainMapper.getDefaultWorkDeskCnt === */	
 			SELECT COUNT(1) AS CNT                        
-			  FROM BIZ_LINK 
+			  FROM ADM_BIZ_LINK 
 			 WHERE MAIN_DSP_GB = 'Y'   
 	</select>
                       
@@ -752,12 +752,7 @@
 			 WHERE EXPO_YN = 'Y'
 	</select>
 	
-	<select id="getHotBriefingPopupCnt" resultType="int">
-		/* === MainMapper.getHotBriefingPopupCnt === */	
-			SELECT COUNT(1) AS COUNT
-			  FROM HOT_BRIEFING
-			 WHERE USE_YN = 'Y'
-	</select>
+
 	
 	<select id="getNotiPopup" resultMap="getNotiPopup">
 		/* === MainMapper.getNoticePopup === */	
@@ -779,27 +774,4 @@
 		]]>
 	</select>
 	
-	<select id="getHotBriefingPopup" resultMap="getHotBriefingPopup">
-		/* === MainMapper.getHotBriefingPopup === */
-			SELECT A.BNR_ID 																		   
-			     , A.TITLE                                                                          
-			     , A.LINK_URL                                                                       
-			     , A.TARGETING															             
-			     , A.CONTENTS															             
-			     , A.IMGUSE_YN																           
-			     , A.ALT_TXT                                                                       
-			     , A.IMG_WIDTH                                                     
-			     , A.IMG_HEIGHT                                                      
-			     , A.INS_DTS                                                                  
-			     , B.IMG_NAME_ORG                                                                   
-			     , B.IMG_NAME_REAL                                                                  
-			     , B.IMG_SIZE                                                                       
-			     , B.IMG_PATH                                                                       
-			  FROM HOT_BRIEFING A                                                                   
-			     , HOT_BRIEFING_FILE B                                                               
-			 WHERE A.BNR_ID = B.BNR_ID(+)                                                            
-			   AND A.USE_YN = 'Y'    
-			   AND TO_CHAR(SYSDATE, 'YYYYMMDDHH24MM') BETWEEN A.FROM_DTS AND A.TO_DTS            
-		  ORDER BY A.BNR_ID DESC
-	</select>
 </mapper>

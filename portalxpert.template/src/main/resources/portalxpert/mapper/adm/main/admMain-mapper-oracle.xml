@@ -189,7 +189,7 @@
 		/* === AdmMainMapper.getWorkDeskCategoryList === */
 			SELECT LINK_CAT_ID
 				 , LINK_CAT_NM
-	 	      FROM BIZ_LINK_CATEGORY
+	 	      FROM ADM_BIZ_LINK_CATEGORY
  			 WHERE END_DATE IS NULL
  		  ORDER BY LINK_CAT_ORDER
  	</select>
@@ -201,8 +201,8 @@
 			     , A.LINK_CD                         
 			     , A.LINK_NM                         
 			     , A.MAIN_DSP_GB                     
-			  FROM BIZ_LINK A                        
-			     , BIZ_LINK_CATEGORY B               
+			  FROM ADM_BIZ_LINK A                        
+			     , ADM_BIZ_LINK_CATEGORY B               
 			 WHERE B.LINK_CAT_ID (+) = A.LINK_CAT_ID 
 			   AND A.END_DATE IS NULL                
 			ORDER BY B.LINK_CAT_ORDER ASC, A.LINK_NM ASC  
@@ -211,19 +211,19 @@
 	<select id="getWorkDeskCnt" resultType="int">
 		/* === AdmMainMapper.getWorkDeskCnt === */	
 			SELECT COUNT(1) AS CNT                        
-			  FROM BIZ_LINK 
+			  FROM ADM_BIZ_LINK 
 			 WHERE MAIN_DSP_GB = 'Y'   
 	</select>
                       
 	<update id="updateWorkDeskReset">
 		/* === AdmMainMapper.updateWorkDeskReset === */
-			UPDATE BIZ_LINK
+			UPDATE ADM_BIZ_LINK
 			   SET MAIN_DSP_GB = ''
 	</update>
 	
 	<update id="updateWorkDesk">
 		/* === AdmMainMapper.updateWorkDesk === */	
-			UPDATE BIZ_LINK
+			UPDATE ADM_BIZ_LINK
 			   SET MAIN_DSP_GB = 'Y'
 			     , UPD_DTTM = SYSDATE
 			     , UPDR_ID = #{userId}

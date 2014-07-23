@@ -7,13 +7,6 @@ import portalxpert.main.vo.MainVO;
 
 public interface MainService {
 	
-	/**
-	 * 홍보배너 조회
-	 * @return
-	 * @exception Exception
-	 * @author crossent 
-	 */
-	List getPromoteBannerList() throws Exception;
 	
 	/**
 	 * 최근게시물 - 전체공지 조회
@@ -153,13 +146,6 @@ public interface MainService {
 	 */
 	List getNotiPopup() throws Exception;
 	
-	/**
-	 * 핫브리핑 팝업 조회
-	 * @return
-	 * @throws Exception
-	 * @author crossent
-	 */
-	List getHotBriefingPopup() throws Exception;
 	
 	/**
 	 * 공지게시 팝업 카운트
@@ -169,12 +155,5 @@ public interface MainService {
 	 */
 	int getNotiPopupCnt() throws Exception;
 	
-	/**
-	 * 핫브리핑 팝업 카운트
-	 * @return
-	 * @throws Exception
-	 * @author crossent
-	 */
-	int getHotBriefingPopupCnt() throws Exception;
 	
 }

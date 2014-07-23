@@ -513,7 +513,7 @@
 	<!-- SMS 전송 정보  -->
 	<insert id="insertSmsSendHist" parameterType="portalxpert.person.person100.vo.SmsSendHistVO">
 	<![CDATA[	
-		INSERT INTO SMS_SEND_HIST
+		INSERT INTO PSN_SMS_SEND_HIST
 		(
 		    SEND_SEQ,
 			OBJ_TELNO,
@@ -534,8 +534,8 @@
 		 VALUES
 		 (
 		 	 (SELECT 
-            	(CASE ( SELECT 0 FROM DUAL WHERE NOT EXISTS ( SELECT SEND_SEQ FROM SMS_SEND_HIST ))
-                WHEN 0 THEN 0 ELSE ( SELECT MAX(SEND_SEQ) + 1 FROM SMS_SEND_HIST ) END ) As  sendSeq
+            	(CASE ( SELECT 0 FROM DUAL WHERE NOT EXISTS ( SELECT SEND_SEQ FROM PSN_SMS_SEND_HIST ))
+                WHEN 0 THEN 0 ELSE ( SELECT MAX(SEND_SEQ) + 1 FROM PSN_SMS_SEND_HIST ) END ) As  sendSeq
         		FROM DUAL)
 		 	 ,#{objTelno}
 		 	 ,#{sendTelno}
@@ -1012,7 +1012,7 @@
 		                    , UPDR_NAME
 		                    , UPD_DTTM
 		                    , ROW_NUMBER() OVER (ORDER BY SEND_DTTM  ) AS RNUM
-		                    FROM SMS_SEND_HIST
+		                    FROM PSN_SMS_SEND_HIST
 		                    ]]>
 		                    WHERE USER_ID = #{userId}
 		                    AND DEL_YN = 'N'
@@ -1036,7 +1036,7 @@
 	    	resultType="int">
 	    	<![CDATA[
 	    	SELECT COUNT(SEND_SEQ) TOTCNT
-			FROM SMS_SEND_HIST
+			FROM PSN_SMS_SEND_HIST
             WHERE USER_ID = #{userId}
             AND DEL_YN = 'N'
             ]]>
@@ -1051,7 +1051,7 @@
 	
 	<update id="deleteSmsSendHist" parameterType="portalxpert.person.person100.vo.SmsSendHistVO">
 		<![CDATA[
-		UPDATE SMS_SEND_HIST SET 
+		UPDATE PSN_SMS_SEND_HIST SET 
 		  UPDR_ID = #{updrId}
 		, UPDR_NAME = #{updrName} 
 		, UPD_DTTM = sysdate

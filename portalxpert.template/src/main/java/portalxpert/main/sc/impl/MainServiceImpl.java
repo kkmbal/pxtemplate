@@ -27,17 +27,6 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
     
 	private final static Logger logger = LoggerFactory.getLogger(MainServiceImpl.class);
 	
-    /**
-	 * 홍보배너 조회
-	 * @author crossent	 
-	 */
-	public List getPromoteBannerList() throws Exception {
-		try{
-			return mainMapper.getPromoteBannerList();
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}
-    }
 	
 	/**
 	 * 최근게시물 - 전체공지 조회
@@ -283,17 +272,6 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 		}
 	}
 	
-	/**
-	 * 핫브리핑 팝업 조회
-	 * @author crossent	
-	 */
-	public List getHotBriefingPopup() throws Exception {
-		try{
-			return mainMapper.getHotBriefingPopup();
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}
-	}
 	
 	/**
 	 * 공지게시 팝업 카운트
@@ -307,16 +285,5 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 		}
 	}
 	
-	/**
-	 * 핫브리핑 팝업 카운트
-	 * @author crossent	
-	 */
-	public int getHotBriefingPopupCnt() throws Exception {
-		try{
-			return mainMapper.getHotBriefingPopupCnt();
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}
-	}
 
 }

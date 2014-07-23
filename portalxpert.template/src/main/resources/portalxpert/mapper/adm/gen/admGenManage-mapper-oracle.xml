@@ -397,7 +397,7 @@
 					LINK_CAT_ID
 					, LINK_CAT_NM
 				    , LINK_CAT_ORDER
-				FROM BIZ_LINK_CATEGORY
+				FROM ADM_BIZ_LINK_CATEGORY
 				WHERE END_DATE IS NULL
 					<if test="searchKeyword != null and searchKeyword != ''">
 					AND LINK_CAT_NM LIKE '%'|| #{searchKeyword} ||'%'
@@ -413,7 +413,7 @@
   	<!-- 링크분류조회 목록 Count -->
 	<select id="getAdmGenSysLinkCtlgCnt" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="int">
 		SELECT COUNT(1)
-  		FROM BIZ_LINK_CATEGORY
+  		FROM ADM_BIZ_LINK_CATEGORY
   		WHERE END_DATE IS NULL
   			<if test="searchKeyword != null and searchKeyword != ''">
 			AND LINK_CAT_NM LIKE '%'|| #{searchKeyword} ||'%'
@@ -426,22 +426,22 @@
 			LINK_CAT_ID
 		    , LINK_CAT_NM
 		    , LINK_CAT_ORDER
-		    , (SELECT MAX(LINK_CAT_ORDER) FROM BIZ_LINK_CATEGORY WHERE END_DATE IS NULL) AS linkCatCount
-		FROM BIZ_LINK_CATEGORY A
+		    , (SELECT MAX(LINK_CAT_ORDER) FROM ADM_BIZ_LINK_CATEGORY WHERE END_DATE IS NULL) AS linkCatCount
+		FROM ADM_BIZ_LINK_CATEGORY A
 		WHERE LINK_CAT_ID = #{linkCatId}
 			AND END_DATE IS NULL
 	</select>
  
  	<!-- 링크분류등록시 분류순서 수정 -->
  	<update id="updateAdmGenSysLinkCtlgIOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
- 		UPDATE BIZ_LINK_CATEGORY
+ 		UPDATE ADM_BIZ_LINK_CATEGORY
    		SET LINK_CAT_ORDER = LINK_CAT_ORDER + 1
  		WHERE LINK_CAT_ORDER >= #{linkCatOrder}
  	</update>
 	
 	<!-- 링크분류 등록 -->
 	<insert id="insertAdmGenSysLinkCtlg" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		INSERT INTO BIZ_LINK_CATEGORY (
+		INSERT INTO ADM_BIZ_LINK_CATEGORY (
 			LINK_CAT_ID
 			, LINK_CAT_NM
 			, LINK_CAT_ORDER
@@ -450,7 +450,7 @@
 			, UPD_DTTM
 			, UPDR_ID
 		) VALUES (
-			NVL((SELECT LPAD(MAX(LINK_CAT_ID) + 1, 3, '0') FROM BIZ_LINK_CATEGORY), '001')
+			NVL((SELECT LPAD(MAX(LINK_CAT_ID) + 1, 3, '0') FROM ADM_BIZ_LINK_CATEGORY), '001')
 			, #{linkCatNm, javaType=String, jdbcType=VARCHAR}
 			, #{linkCatOrder, javaType=Long, jdbcType=NUMERIC}
 			, SYSDATE
@@ -464,7 +464,7 @@
 	
 	<!-- 링크분류 수정(링크명) -->
 	<update id="updateAdmGenSysLinkCtlg" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		UPDATE BIZ_LINK_CATEGORY SET 
+		UPDATE ADM_BIZ_LINK_CATEGORY SET 
 			LINK_CAT_NM = #{linkCatNm}
 		    , UPD_DTTM = SYSDATE
 		    , UPDR_ID = #{updMan}
@@ -474,7 +474,7 @@
 	<!-- 링크분류수정시 링크분류 순서 수정1 -->
 	<update id="updateAdmGenSysLinkCtlgUOrder1" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
 		<![CDATA[
-		UPDATE BIZ_LINK_CATEGORY A
+		UPDATE ADM_BIZ_LINK_CATEGORY A
    		SET LINK_CAT_ORDER = A.LINK_CAT_ORDER + 1
  		WHERE LINK_CAT_ORDER >= #{linkCatOrderNew}
    			AND LINK_CAT_ORDER < #{linkCatOrder}
@@ -484,7 +484,7 @@
 	<!-- 링크분류수정시 링크분류 순서 수정2 -->
 	<update id="updateAdmGenSysLinkCtlgUOrder2" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
 		<![CDATA[
-		UPDATE BIZ_LINK_CATEGORY A
+		UPDATE ADM_BIZ_LINK_CATEGORY A
    		SET LINK_CAT_ORDER = A.LINK_CAT_ORDER - 1
  		WHERE LINK_CAT_ORDER <= #{linkCatOrderNew}
    			AND LINK_CAT_ORDER > #{linkCatOrder}
@@ -493,7 +493,7 @@
 	
 	<!-- 링크분류 수정(링크순서) -->
 	<update id="updateAdmGenSysLinkCtlgUOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		UPDATE BIZ_LINK_CATEGORY
+		UPDATE ADM_BIZ_LINK_CATEGORY
    		SET LINK_CAT_ORDER = #{linkCatOrderNew}
  		WHERE LINK_CAT_ID = #{linkCatId}
 	</update>
@@ -503,11 +503,11 @@
 	<!-- 링크분류삭제시 링크분류 순서 수정 -->
 	<update id="updateAdmGenSysLinkCtlgDOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
 		<![CDATA[
-		UPDATE BIZ_LINK_CATEGORY A SET 
+		UPDATE ADM_BIZ_LINK_CATEGORY A SET 
 			LINK_CAT_ORDER = A.LINK_CAT_ORDER - 1
 		WHERE LINK_CAT_ORDER > (
 								SELECT LINK_CAT_ORDER
-	                            FROM BIZ_LINK_CATEGORY
+	                            FROM ADM_BIZ_LINK_CATEGORY
 	                          	WHERE LINK_CAT_ID = #{linkCatId}
 	                          	)
 	    ]]>
@@ -515,14 +515,14 @@
 	
 	<!-- 링크 삭제 -->
 	<update id="deleteAdmGenSysLinkAll" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		UPDATE BIZ_LINK SET 
+		UPDATE ADM_BIZ_LINK SET 
 			END_DATE = SYSDATE 
  		WHERE LINK_CAT_ID = #{linkCatId}
 	</update>
  
 	<!-- 링크분류 삭제 -->
 	<delete id="deleteAdmGenSysLinkCtlg" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		UPDATE BIZ_LINK_CATEGORY SET 
+		UPDATE ADM_BIZ_LINK_CATEGORY SET 
 			END_DATE = SYSDATE
  		WHERE LINK_CAT_ID = #{linkCatId}
 	</delete>
@@ -562,8 +562,8 @@
 				    , A.POPUP_USE_GB
 				    , A.LINK_SNM
 				FROM 
-					BIZ_LINK A
-				    , BIZ_LINK_CATEGORY B
+					ADM_BIZ_LINK A
+				    , ADM_BIZ_LINK_CATEGORY B
 				WHERE B.LINK_CAT_ID = A.LINK_CAT_ID
 					AND A.END_DATE IS NULL
 		
@@ -598,7 +598,7 @@
   	<!-- 링크조회 목록 Count -->
 	<select id="getAdmGenSysLinkCnt" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO" resultType="int">
   		SELECT COUNT(1)
-		FROM BIZ_LINK
+		FROM ADM_BIZ_LINK
 		WHERE END_DATE IS NULL
 		
 <!-- 		2013-09-04  요구사항으로 제거			 -->		
@@ -626,7 +626,7 @@
 		SELECT 
 			LINK_CAT_ID
 		    , LINK_CAT_NM
-		FROM BIZ_LINK_CATEGORY
+		FROM ADM_BIZ_LINK_CATEGORY
 		WHERE END_DATE IS NULL
 		ORDER BY LINK_CAT_ORDER
 	</select>
@@ -641,9 +641,9 @@
 		     , A.LINK_NM
 		     , A.POPUP_USE_GB
 		     , A.LINK_SNM
-		     , (SELECT MAX(LINK_ORDER) FROM BIZ_LINK WHERE LINK_CAT_ID=A.LINK_CAT_ID ) AS linkCount
-		  FROM BIZ_LINK A
-		     , BIZ_LINK_CATEGORY B
+		     , (SELECT MAX(LINK_ORDER) FROM ADM_BIZ_LINK WHERE LINK_CAT_ID=A.LINK_CAT_ID ) AS linkCount
+		  FROM ADM_BIZ_LINK A
+		     , ADM_BIZ_LINK_CATEGORY B
 		 WHERE B.LINK_CAT_ID (+) = A.LINK_CAT_ID
 		   AND A.LINK_CAT_ID = #{linkCatId}
 		   AND A.LINK_CD = #{linkCd}
@@ -653,7 +653,7 @@
 	<!-- 링크등록시 분류순서 수정 -->
  	<update id="updateAdmGenSysLinkIOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
  		<![CDATA[
- 		UPDATE BIZ_LINK A
+ 		UPDATE ADM_BIZ_LINK A
     	SET LINK_ORDER = A.LINK_ORDER + 1
  		WHERE LINK_CAT_ID = #{linkCatId}
    			AND LINK_ORDER >= #{linkOrder}
@@ -662,7 +662,7 @@
 	
 	<!-- 링크 등록 -->
 	<insert id="insertAdmGenSysLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		INSERT INTO BIZ_LINK (
+		INSERT INTO ADM_BIZ_LINK (
 			LINK_CAT_ID
 			, LINK_CD
 			, LINK_ORDER
@@ -678,7 +678,7 @@
        	, LINK_SNM
 		) VALUES (
 			#{linkCatId}
-			, NVL((SELECT LPAD(MAX(LINK_CD) + 1, 3, '0') FROM BIZ_LINK WHERE LINK_CAT_ID = #{linkCatId}), '001')
+			, NVL((SELECT LPAD(MAX(LINK_CD) + 1, 3, '0') FROM ADM_BIZ_LINK WHERE LINK_CAT_ID = #{linkCatId}), '001')
 			, #{linkOrder, javaType=Long, jdbcType=NUMERIC}
 			, #{linkAddress, javaType=String, jdbcType=VARCHAR}
 			, #{linkNm, javaType=String, jdbcType=VARCHAR}
@@ -695,7 +695,7 @@
 	
 	<!-- 링크 수정(링크명) -->
 	<update id="updateAdmGenSysLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		UPDATE BIZ_LINK SET 
+		UPDATE ADM_BIZ_LINK SET 
 			LINK_ADDRESS = #{linkAddress, javaType=String, jdbcType=VARCHAR}
 	     	, LINK_NM = #{linkNm, javaType=String, jdbcType=VARCHAR}
 	     	, POPUP_USE_GB = #{popupUseGb, javaType=String, jdbcType=VARCHAR}
@@ -709,7 +709,7 @@
 	<!-- 링크수정시 링크 순서 수정1 -->
 	<update id="updateAdmGenSysLinkUOrder1" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
 		<![CDATA[	
-   		UPDATE BIZ_LINK A SET 
+   		UPDATE ADM_BIZ_LINK A SET 
    			LINK_ORDER = A.LINK_ORDER + 1
  		WHERE LINK_CAT_ID = #{linkCatId}
    			AND LINK_ORDER >= #{linkOrderNew}
@@ -720,7 +720,7 @@
 	<!-- 링크수정시 링크 순서 수정2 -->
 	<update id="updateAdmGenSysLinkUOrder2" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
 		<![CDATA[	
-   		UPDATE BIZ_LINK A SET 
+   		UPDATE ADM_BIZ_LINK A SET 
    			LINK_ORDER = A.LINK_ORDER - 1
  		WHERE LINK_CAT_ID = #{linkCatId}
    			AND LINK_ORDER <= #{linkOrderNew}
@@ -730,7 +730,7 @@
 	
 	<!-- 링크 수정(링크순서) -->
 	<update id="updateAdmGenSysLinkUOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
- 		UPDATE BIZ_LINK SET 
+ 		UPDATE ADM_BIZ_LINK SET 
  			LINK_ORDER = #{linkOrderNew}
  		WHERE LINK_CAT_ID = #{linkCatId}
    			AND LINK_CD = #{linkCd}
@@ -739,12 +739,12 @@
     <!-- 링크삭제시 링크순서 수정 -->
 	<update id="updateAdmGenSysLinkDOrder" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
 		<![CDATA[
-		UPDATE BIZ_LINK A SET 
+		UPDATE ADM_BIZ_LINK A SET 
 		LINK_ORDER = A.LINK_ORDER - 1
 		WHERE LINK_CAT_ID = #{linkCatId}
 			AND LINK_ORDER > (
 								SELECT LINK_ORDER
-		                        FROM BIZ_LINK
+		                        FROM ADM_BIZ_LINK
 		                        WHERE LINK_CAT_ID = #{linkCatId}
 		                        AND LINK_CD = #{linkCd}
 		                      )
@@ -753,7 +753,7 @@
 	
 	<!-- 링크 삭제 -->
 	<update id="deleteAdmGenSysLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		UPDATE BIZ_LINK SET END_DATE = SYSDATE
+		UPDATE ADM_BIZ_LINK SET END_DATE = SYSDATE
  		WHERE LINK_CAT_ID = #{linkCatId}
    			AND LINK_CD = #{linkCd}
 	</update>
@@ -782,8 +782,8 @@
 		    , A.POPUP_USE_GB
 		    , A.MAIN_DSP_GB
 		    , A.LINK_SNM
-		FROM BIZ_LINK A
-		   , BIZ_LINK_CATEGORY B
+		FROM ADM_BIZ_LINK A
+		   , ADM_BIZ_LINK_CATEGORY B
 		WHERE B.LINK_CAT_ID (+) = A.LINK_CAT_ID
 			AND A.END_DATE IS NULL
 		/*ORDER BY B.LINK_CAT_ORDER, A.LINK_ORDER*/
@@ -792,7 +792,7 @@
 	
 	<!-- 메인화면에 표시되는 링크 설정 초기화 -->
 	<update id="updateAdmGenMainLinkAll" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		UPDATE BIZ_LINK SET 
+		UPDATE ADM_BIZ_LINK SET 
 	    	MAIN_DSP_GB = ''
 	    	, UPD_DTTM = SYSDATE
 	    	, UPDR_ID = #{updMan}
@@ -800,7 +800,7 @@
 	
 	<!-- 메인화면에 표시되는 링크 설정 -->
 	<update id="updateAdmGenMainLink" parameterType="portalxpert.adm.gen.vo.AdmGenLinkVO">
-		UPDATE BIZ_LINK SET 
+		UPDATE ADM_BIZ_LINK SET 
 		    MAIN_DSP_GB = 'Y'
 		    , UPD_DTTM = SYSDATE
 		    , UPDR_ID = #{updMan}

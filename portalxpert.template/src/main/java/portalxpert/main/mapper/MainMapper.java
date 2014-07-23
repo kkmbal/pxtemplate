@@ -9,13 +9,6 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 @Mapper("mainMapper")
 public interface MainMapper {
 
-	/**
-	 * 홍보배너 조회
-	 * @return
-	 * @throws Exception
-	 * @author crossent
-	 */
-	public List getPromoteBannerList() throws Exception;
 	
 	/**
 	 * 최근게시물 - 전체공지 조회
@@ -179,13 +172,7 @@ public interface MainMapper {
 	 */
 	public List getNotiPopup() throws Exception;
 	
-	/**
-	 * 핫브리핑 팝업 조회
-	 * @return
-	 * @throws Exception
-	 * @author crossent
-	 */
-	public List getHotBriefingPopup() throws Exception;
+
 	
 	/**
 	 * 공지게시 팝업 카운트
@@ -195,12 +182,5 @@ public interface MainMapper {
 	 */
 	public int getNotiPopupCnt() throws Exception;
 	
-	/**
-	 * 핫브리핑 팝업 카운트
-	 * @return
-	 * @throws Exception
-	 * @author crossent
-	 */
-	public int getHotBriefingPopupCnt() throws Exception;
 	
 }
