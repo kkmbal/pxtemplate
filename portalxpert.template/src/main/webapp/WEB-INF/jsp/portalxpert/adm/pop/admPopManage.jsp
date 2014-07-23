@@ -170,7 +170,7 @@ var userMapList = ${userMapList};
 		<a href="#" class="btn_set bt_style2" id="btnCancel"><span>목록</span></a>
 	</div>
 	<div class="fr">
-		<a href="#" class="btn_set bt_style2" id="btn_bbs_preview"><span>미리보기</span></a>
+<!-- 		<a href="#" class="btn_set bt_style2" id="btn_bbs_preview"><span>미리보기</span></a> -->
 		<a href="#" class="btn_set bt_style3" id="btnSave"><span>등록</span></a>
 	</div>
 </div>
