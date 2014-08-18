@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 <meta name="author" content="">
 <meta name="description" content="">
 <meta name="copyright" content="" >
