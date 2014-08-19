@@ -12,6 +12,13 @@
 </head>
 
 <body>
+		<tiles:insertAttribute name="body" />
+</body>
+</html>
+
+
+<%--
+<body>
 <div id="wrap">
 	<tiles:insertAttribute name="header" />
 	  <!--container-->
@@ -29,3 +36,4 @@
 </div>	
 </body>
 </html>
+ --%>

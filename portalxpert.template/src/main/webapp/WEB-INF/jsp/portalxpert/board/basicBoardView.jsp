@@ -1,6 +1,6 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <head>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/taglibs.jsp"%>
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/jsLibs.jsp"%>
@@ -84,13 +84,225 @@ if('${btnViewYn}' == "X"){
 </head>
 
 <body>
+<div class="container">
+	<div class="header">
+		<div class="h1">${boardName}</div>
+		<div class="loc">
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<a href="#">커뮤니티</a>
+			<strong class="str">${boardName}</strong>
+		</div>
+	</div>
+	
+	<p class="txt_notice">게시판 게시기준에 맞지 않는 부적절한 게시물은 작성자의 동의 없이 삭제됩니다.</p>
+	<div class="btn_board_sec mt13">
+		<div class="fl">
+			<c:if test="${btnViewYn == 'Y'}">
+			<button class="btn_write" type="button" >글쓰기</button>
+			<c:if test="${boardForm != '030'}">
+			<button class="btn_style2_4 btn_reply" type="button" style="display:none;">답글쓰기</button>
+			</c:if>
+			<button class="btn_style2_2 btn_modify" type="button" >수정</button>
+			<button class="btn_style2_2 btn_delete" type="button" >삭제</button>
+			</c:if>
+			<button class="btn_style2_2 btn_printing" type="button" >출력</button>
+			<button class="btn_style2_5 btn_boardMove" type="button" >게시물 이동</button>
+		</div>
+		<div class="fr">
+			<button class="btn_style4_2 btn_list" type="button" >목록</button>
+		</div>
+	</div>
+
+	<table class="tbl_view mt10" summary="번호, 조회수, 공개여부에 관한 정보제공">
+	<caption>게시판 입력목록</caption>
+	<colgroup>
+		<col style="width:7%" />
+		<col style="width:17%" />
+		<col style="width:7%" />
+		<col style="width:17%" />
+		<col style="width:7%" />
+		<col style="width:17%" />
+		<col style="width:28%" />
+	</colgroup>
+	<thead>
+	<tr>
+		<th scope="row">번호</th>
+		<td><span id="notiNum"></span></td>
+		<th scope="row">조회수</th>
+		<td><span id="notiReadCnt"></span></td>
+		<th scope="row">의견</th>
+		<td><span id="opnCnt"></span></td>
+		<td class="last"><a href="#" class="allopen">전체공개</a></td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td colspan="7">
+			<div class="inner">
+				<span class="title" id="notiTitle"></span>
+				<ul>
+					<li>
+						<span class="tit">작성자</span>
+						<span class="desc"><span id="userName"></span> <span><img src="${RES_HOME}/images/ico_room.png" alt="부서" /><label id="deptName"></label></span> <span><img src="${RES_HOME}/images/ico_email.png" alt="이메일" /><label id="mailTo"></label></span></span>
+					</li>
+					<li class="half2 other2">
+						<span class="tit">등록일</span>
+						<span class="desc" id="regDttm"></span>
+					</li>
+				</ul>
+				<span class="notice" id="anmtDiv" style="display:none;"> <label for="notice">공지</label></span>
+			</div>
+			<!-- 글내용  -->
+			<div class="intxt">
+<!-- 				<span class="viewer"> -->
+<!-- 				</span> -->
+				<ul id="imgNotiConts" class="sns_imgs" style="display:none"></ul><!-- 이미지형 게시판 -->		
+				<p class="te_center" id="movNotiConts" style="display:none"></p><!-- 동영상 게시판 -->
+				<span id="notiConts">
+				${notiConts}
+				</span>
+			</div>
+			<!-- 글내용 끝 -->
+		</td>
+	</tr>
+	<tr>
+		<td colspan="7">
+		<div class="rbox02 mt0">
+			<span class="top"></span>
+			<div class="mid">
+				<div class="inquiry_top">
+<!-- 					<span class="ico_file"><strong>첨부파일</strong> <a href="#">document.hwp</a> (1.244kb)</span> -->
+					<dl id="notiFileDl">
+					</dl>
+				</div>
+			</div>
+			<span class="btm"></span>
+		</div>
+		</td>
+	</tr>
+	</tbody>
+	</table>
+	
+	
+	<!--댓글-->
+	<div class="reply_sec" id="opnPrmsDiv" style="display:none;">
+		<div id="replyUl" class="clearfix" style="display:none;">
+		</div>
+		<div style="display:none;">
+			<textarea cols="" rows="" class="textbox" style="width:610px;height:40px" id="noti_reply" title="댓글 입력"></textarea>
+			<span class="textbox_btns">
+				<span class="btn_st01 w01"><button type="button" onclick="fnInsertBbsNotiOpnForView()">등록</button></span>
+			</span>
+		</div>
+	</div>	
+	
+	<%--
+	<div class="reply_sec"  id="opnPrmsDiv" style="display:none;">
+		<ul>
+			<li>
+				<div class="re_tit">
+					<span>작성자</span> <span>2014-06-01 17:33</span> <span><a href="#">의견</a></span> <span><a href="#">삭제</a></span>
+				</div>
+				<p>인생에는 두가지 고통이 있다. 하나는 훈련의 고통이고, 또 하나는 후회의 고통이다. 훈련의 고통은 가볍지만 후회의 고통은 무겁다. 기적은 훈련이 만든다.</p>
+			</li>
+			<li class="re">
+				<div class="re_inner">
+					<ul>
+						<li>
+							<div class="re_tit">
+								<span>이선미</span> <span>2014-06-02 17:33</span> <span><a href="#">의견</a></span>
+								<p>좋은 의견입니다. 많은 분들이 봐주셨으면 좋겠습니다. ~</p>
+							</div>
+						</li>
+						<li>
+							<div class="re_tit">
+								<span>은하림</span> <span>2014-06-03 17:33</span> <span><a href="#">의견</a></span>
+								<p>이선미&gt; 열심히 노력하셨던 결실을 이루는 날이 어서 왔으면 좋겠습니다. ^^</p>
+							</div>
+						</li>
+						<li>
+							<div class="re_tit">
+								<span>이선미</span> <span>2014-06-03 20:40</span> <span><a href="#">의견</a></span>
+								<p>은하림&gt; 감사합니다.</p>
+							</div>
+						</li>
+					</ul>
+					<div>
+						<textarea cols="" rows="" class="textbox" style="width:560px;height:40px" title="댓글 입력"></textarea>
+						<span class="textbox_btns">
+							<span class="btn_st01 w01"><button>등록</button></span>
+							<span class="btn_st02 w01"><button>취소</button></span>
+						</span>
+					</div>
+				</div>
+			</li>
+			<li>
+				<div class="re_tit">
+					<span>강하나</span> <span>2014-06-01 17:33</span> <span><a href="#">의견</a></span>
+				</div>
+				<p>인생에는 두가지 고통이 있다. 하나는 훈련의 고통이고, 또 하나는 후회의 고통이다. 훈련의 고통은 가볍지만 후회의 고통은 무겁다. 기적은 훈련이 만든다.</p>
+			</li>
+			<li>
+				<textarea cols="" rows="" class="textbox" style="width:610px;height:40px" title="댓글 입력"></textarea>
+				<span class="textbox_btns">
+					<span class="btn_st01 w01"><button>등록</button></span>
+					<span class="btn_st02 w01"><button>취소</button></span>
+				</span>
+			</li>
+		</ul>
+	</div>
+	 --%>
+
+	<div class="pageNavi" id="boardPage">
+		<ul>
+			<li>
+				<span class="arr prev">이전 글</span>
+				<span class="title"><a href="#">이전 글의 제목입니다.</a></span>
+			</li>
+			<li>
+				<span class="arr next">다음 글</span>
+				<span class="title"><a href="#">다음 글의 제목입니다.</a></span>
+			</li>
+		</ul>
+	</div>
+	
+	
+	<div class="btn_board_sec mt13">
+		<div class="fl">
+			<c:if test="${btnViewYn == 'Y'}">
+			<button class="btn_write" type="button" >글쓰기</button>
+			<c:if test="${boardForm != '030'}">
+			<button class="btn_style2_4 btn_reply" type="button" style="display:none;">답글쓰기</button>
+			</c:if>
+			<button class="btn_style2_2 btn_modify" type="button" >수정</button>
+			<button class="btn_style2_2 btn_delete" type="button" >삭제</button>
+			</c:if>
+			<button class="btn_style2_2 btn_printing" type="button" >출력</button>
+			<button class="btn_style2_5 btn_boardMove" type="button" >게시물 이동</button>
+		</div>
+		<div class="fr">
+			<button class="btn_style4_2 btn_list" type="button" >목록</button>
+		</div>
+	</div>
+	
+</div>
+
+<iframe name="dummy" width=0 height=0 border=0 style="visibility:hidden"></iframe>
+	
+</body>
+</html>	
+
+
+<%--
+
+<body>
 
 <div class="container">
 
 	<div class="header">
 		<h1>${boardName}</h1>
 		<div class="loc">
-			<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
+			<span><a href="#"><img src="${RES_HOME}/${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
 			<span><a href="#">커뮤니티</a></span>
 			<span><strong>${boardName}</strong></span>
 		</div>
@@ -233,76 +445,6 @@ if('${btnViewYn}' == "X"){
 
 </div><!-- end of container -->
 <iframe name="dummy" width=0 height=0 border=0 style="visibility:hidden"></iframe>
-	
-</body>
-</html>	
-
-
-<%--
-
-<body>
-
-	<div>${boardName}</div>
-	<div>
-		<input type="button" value="목록"  class="btn_list">
-		<input type="button" value="출력" class="btn_print">
-		<c:if test="${btnViewYn == 'Y'}">
-		<input type="button" value="수정"  class="btn_modify">
-		<input type="button" value="삭제" class="btn_delete">
-		</c:if>
-		<input type="button" value="게시물이동" id="btn_boardMove">
-		<c:if test="${btnViewYn == 'Y'}">
-		<input type="button" value="답글" class="btn_reply">
-		<input type="button" value="글쓰기"  class="btn_write">
-		</c:if>
-	</div>
-	작성자:<div id="userName"></div>
-	소속기관:<div id="cdlnDeptFname"></div>
-	<div>공개설정</div>
-	<div><input type="checkbox" name="">공지</div>
-	번호:<div id="notiNum"></div>
-	조회수:<div id="notiReadCnt"></div>
-	의견:<div id="opnCnt"></div>
-	등록일:<div id="regDttm"></div>
-	제목:<div id="notiTitle"></div>
-	<div id="notiConts">
-	${notiConts}
-	</div>
-	<div>
-		<dl id="notiFileDl">
-			<dt><img src="${RES_HOME}/images/img/txt_file.png" alt="첨부파일"></dt>
-		</dl>
-	</div>
-	<div>
-		<ul id="replyUl" style="display:none;">
-		</ul>
-		<div class="reply_post"  style="display:none;">
-			<textarea cols="5" rows="3" id="noti_reply"></textarea>
-			<a href="javascript:fnInsertBbsNotiOpnForView()" title="의견등록">의견등록</a>
-		</div>
-	</div>
-
-	<!-- 게시판이전글다음글 -->
-	<div id="boardPage">
-	</div>
-
-
-	<div>
-		<input type="button" value="목록"  class="btn_list">
-		<input type="button" value="출력" class="btn_print">
-		<c:if test="${btnViewYn == 'Y'}">
-		<input type="button" value="수정"  class="btn_modify">
-		<input type="button" value="삭제" class="btn_delete">
-		</c:if>
-		<input type="button" value="게시물이동" id="btn_boardMove">
-		<c:if test="${btnViewYn == 'Y'}">
-		<input type="button" value="답글" class="btn_reply">
-		<input type="button" value="글쓰기"  class="btn_write">
-		</c:if>
-	</div>
-	
-<iframe name="dummy" width=0 height=0 border=0 style="visibility:hidden"></iframe>
-
 	
 </body>
 

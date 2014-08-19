@@ -277,30 +277,30 @@
 	//일반 게시글 이전글 다음글 
 	var fnGetPrevNextNotiInfo = function(notiJson){
 		
-		$("#boardPage > table").append('<tbody id="post_sltUl"></tbody>');	
-		$("#post_sltUl tr").remove();
+		$("#boardPage").append('<ul id="post_sltUl"></ul>');	
+		$("#post_sltUl li").remove();
 		if(notiJson !=null){
 			
 			if(notiJson.prevNotiId != null){
 				if(notiJson.prevNotiKind =='060'){
-					$("#post_sltUl").append('<tr><th scope="row">이전글</th><td id="prevNotiTitle"><a href="javascript:fnOpenLinkUrl(\''+notiJson.prevLinkUrl+'\' , \''+notiJson.prevNotiId+'\')" id="prevNotiId">'+notiJson.prevNotiTitle+'</a></td></tr>');					
+					$("#post_sltUl").append('<li><span class="arr prev">이전글</span><a href="javascript:fnOpenLinkUrl(\''+notiJson.prevLinkUrl+'\' , \''+notiJson.prevNotiId+'\')" id="prevNotiId"><span id="prevNotiTitle" class="title">'+notiJson.prevNotiTitle+'</span></a></li>');					
 				}else{
-					$("#post_sltUl").append('<tr><th scope="row">이전글</th><td id="prevNotiTitle"><a href="javascript:fnGetBoardView(\''+notiJson.prevNotiId+'\' , \''+prev_pnum+'\')" id="prevNotiId">'+notiJson.prevNotiTitle+'</a></td></tr>');	
+					$("#post_sltUl").append('<li><span class="arr prev">이전글</span><a href="javascript:fnGetBoardView(\''+notiJson.prevNotiId+'\' , \''+prev_pnum+'\')" id="prevNotiId"><span id="prevNotiTitle" class="title">'+notiJson.prevNotiTitle+'</span></a></li>');	
 				}
 				
 			}else{
-				$("#post_sltUl").append('<tr><th scope="row">이전글</th><td id="prevNotiTitle">처음 게시물 입니다.</td></tr>');
+				$("#post_sltUl").append('<li><span class="arr prev">이전글</span><span id="prevNotiTitle" class="title">처음 게시물 입니다.</span></li>');
 			}
 			if(notiJson.nextNotiId != null){
 				
 				if(notiJson.nextNotiKind == '060'){
-					$("#post_sltUl").append('<tr><th scope="row">다음글</th><td id="nextNotiTitle"><a href="javascript:fnOpenLinkUrl(\''+notiJson.nextLinkUrl+'\' , \''+notiJson.nextNotiId+'\')" id="nextNotiId">'+notiJson.nextNotiTitle+'</a></td></tr>');											
+					$("#post_sltUl").append('<li><span class="arr next">다음글</span><a href="javascript:fnOpenLinkUrl(\''+notiJson.nextLinkUrl+'\' , \''+notiJson.nextNotiId+'\')" id="nextNotiId"><span id="nextNotiTitle" class="title">'+notiJson.nextNotiTitle+'</span></a></li>');											
 				}else{
-					$("#post_sltUl").append('<tr><th scope="row">다음글</td><td id="nextNotiTitle"><a href="javascript:fnGetBoardView(\''+notiJson.nextNotiId+'\' , \''+next_pnum+'\')" id="nextNotiId"><span class="bl_next">'+notiJson.nextNotiTitle+'</a></td></tr>');
+					$("#post_sltUl").append('<li><span class="arr next">다음글</span><a href="javascript:fnGetBoardView(\''+notiJson.nextNotiId+'\' , \''+next_pnum+'\')" id="nextNotiId"><span id="nextNotiTitle" class="title">'+notiJson.nextNotiTitle+'</span></a></li>');
 				}
 				
 			}else{
-				$("#post_sltUl").append('<tr><th scope="row">다음글</th><td id="nextNotiTitle">마지막 게시물 입니다.</td></tr>');
+				$("#post_sltUl").append('<li><span class="arr next">다음글</span><span id="nextNotiTitle" class="title">마지막 게시물 입니다.</span></li>');
 			}
 		}
 		
@@ -506,7 +506,7 @@
 			
 		}else{
 			$("#userName").html(notiJson.userName);
-			$("#deptName").html(notiJson.deptFname);
+			$("#deptName").html(notiJson.deptName);
 			if(notiJson.mail ==null ){
 				$("#mailTo").removeClass("read_info");
 	 			$("#mailTo").html("");
@@ -604,14 +604,15 @@
 		var apFileCnt = 0;
 		for (var i=0; i < notiFileJson.length ; i++){
 			if(notiFileJson[i].apndFileTp == '050'){
-				$('#notiFileDl:last').append('<dd><a class="bl_file2 fo_blue" href="javascript:fnDoFileDown(\''+ notiFileJson[i].apndFileSeq +'\',\''+ notiFileJson[i].apndFileName +'\',\''+ notiFileJson[i].apndFileOrgn +'\')">'+notiFileJson[i].apndFileOrgn+'</a>'
-						+'<span class="fo_gray">('+getFileSzForKb(notiFileJson[i].apndFileSz)+"kb"+')</span></dd>');	
+				$('#notiFileDl:last').append('<dd><span class="ico_file"><strong>첨부파일</strong> <a class="bl_file2 fo_blue" href="javascript:fnDoFileDown(\''+ notiFileJson[i].apndFileSeq +'\',\''+ notiFileJson[i].apndFileName +'\',\''+ notiFileJson[i].apndFileOrgn +'\')">'+notiFileJson[i].apndFileOrgn+'</a>'
+						+' ('+getFileSzForKb(notiFileJson[i].apndFileSz)+"kb"+')</span></dd>');	
 				
 				apFileCnt++;	
 			 	    
 			}
 		}
 		  
+		
 		if(apFileCnt > 0){
 			$(".btn_apnd_save").show();
 		}
