@@ -903,19 +903,20 @@
 	//의견1 조회 (본문의 의견)
 	var fnSetDataNotiOpn1 = function(notiOpn1){
 		var pName = '', ip = '',appendBtn='';
-		$("#replyUl div").remove();
+		//$("#replyUl li:not(:last)").remove();
+		$("#replyUl li").remove();
 		for (var i=0; i < notiOpn1.length ; i++){
 			
 			if(opnMakrRealnameYn == 'Y'){//실명공개 
 				ip = '';
-				pName = '<a href="javascript:doLikeUserInfoPop(\''+notiOpn1[i].userId+'\')" class="tit">'+notiOpn1[i].userName+'</a>';
+				pName = notiOpn1[i].userName;
 			}else{//비실명 
 				ip = fnGetIpUtil(notiOpn1[i].makeIp);
 				pName = '의견'+Number(notiOpn1.length - i);
 			}
 			if(userId == notiOpn1[i].userId){//권한이 있는 사용자 혹은 작성자 
-				appendBtn = '<div class="innerbox link"><a id="btnModify_'+notiOpn1[i].notiOpnSeq+'" modiMode="N" class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">수정</a></div>'
-				+'<div class="innerbox link"><a id="btnDel_'+notiOpn1[i].notiOpnSeq+'"    class="link" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">삭제</a></div>';
+				appendBtn = '<span><a id="btnModify_'+notiOpn1[i].notiOpnSeq+'" modiMode="N" class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">수정</a></span>'
+				+'<span><a id="btnDel_'+notiOpn1[i].notiOpnSeq+'"    class="link" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'">삭제</a></span>';
 			}else{
 				appendBtn = '';
 			}
@@ -935,7 +936,7 @@
 					+'</div>'
 					+'</li>');
 					*/
-			
+			/*
 			$("#replyUl").append(
 			'<div id="noti_opn_'+notiOpn1[i].notiOpnSeq+'">' 
 			+'<div>' 
@@ -952,6 +953,25 @@
 			+'		<a class="btn_set bt_style1" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')" title="의견등록"><span>의견등록</span></a>'
 			+'	</div>'			
 			+'</div>' );			
+			*/
+			
+			$("#replyUl").append(
+					'<li>'
+					+'<div class="re_tit" id="noti_opn_'+notiOpn1[i].notiOpnSeq+'">'	
+					+'  <span notiOpnSeq = '+notiOpn1[i].notiOpnSeq+' chNotiOpnCnt ='+notiOpn1[i].chNotiOpnCnt+' id="noti_opn_name_'+notiOpn1[i].notiOpnSeq+'">'+pName+'</span> <span>'+notiOpn1[i].regDttm+'</span> <span><a href="#" notiOpnSeq="'+notiOpn1[i].notiOpnSeq+'" id="btnOpn_'+notiOpn1[i].notiOpnSeq+'">의견</a></span>'+appendBtn+' '
+					+'  <p id="opnDd_'+notiOpn1[i].notiOpnSeq+'">'+notiOpn1[i].opnConts+'</p>'
+					+'</div>'
+					+'<div id="opnTxtSapn_'+notiOpn1[i].notiOpnSeq+'" style="display:none;" class="reply_post2 reply_mod">'
+					+'  <textarea cols="" rows="" class="textbox" style="width:610px;height:40px" id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" title="댓글 입력">'+notiOpn1[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
+					+'  <span class="textbox_btns">'
+					+'	<span class="btn_st01 w01"><button type="button" onclick="fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')">등록</button></span>'
+					+'	<span class="btn_st02 w01"><button>취소</button></span>'
+					+'</div>'					
+					+'</li>');
+		
+			
+			
+		
 			
 			
 			
@@ -959,13 +979,21 @@
 			$("#btnOpn_"+notiOpn1[i].notiOpnSeq).click(function(){//의견
 				
 				$(".reply_post2").remove();
-				//$("#noti_opn_"+$(this).attr("notiOpnSeq")).parent("li").children(":last").after(
-				$("#noti_opn_"+$(this).attr("notiOpnSeq")).append(
-						'<div class="clearfix reply_post2">'
-						+'	<span class="bl_reply" title="답글"><!--답글--></span>'
-						+'	<textarea class="textbox" cols="5" rows="3" id="re_reply_'+$(this).attr("notiOpnSeq")+'" style="width:570px;margin-left:50px;margin-bottom:10px;"></textarea>'
-						+'  <a class="btn_set bt_style1" href="javascript:fnInsertBbsNotiOpnForView('+$(this).attr("notiOpnSeq")+')" title="의견등록"><span>의견등록</span></a>'
-						+'</div>');
+				$("#noti_opn_"+$(this).attr("notiOpnSeq")).parent("li").after(
+				//$("#noti_opn_"+$(this).attr("notiOpnSeq")).append(
+						'<li class="re">'
+						+'<div class="reply_post2">'	
+					 	+'  	<textarea class="textbox" id="re_reply_'+$(this).attr("notiOpnSeq")+'"  cols="5" rows="3" style="width:560px;height:40px" title="댓글 입력"></textarea>'
+					 	+'      <span class="textbox_btns">'
+						+'	    <span class="btn_st01 w01"><button type="button" onclick="fnInsertBbsNotiOpnForView('+$(this).attr("notiOpnSeq")+')">등록</button></span>'
+						+'	    <span class="btn_st02 w01"><button>취소</button></span>'
+						+'</div>'
+						+'</li>');
+				
+									
+				
+				
+				
 			});
 			
 			$("#btnModify_"+notiOpn1[i].notiOpnSeq).click(function(){//수정
@@ -987,6 +1015,16 @@
 		}
 		
 		fnSetDataNotiOpn2(notiOpn2);
+
+		$("#replyUl").append(
+				'<li class="reply_post">'
+				+'<textarea cols="" rows="" class="textbox" style="width:610px;height:40px" id="noti_reply" title="댓글 입력"></textarea>'
+				+'<span class="textbox_btns">'
+				+'	<span class="btn_st01 w01"><button type="button" onclick="fnInsertBbsNotiOpnForView()">등록</button></span>'
+				+'	<span class="btn_st02 w01"><button>취소</button></span>'
+				+'</span>'
+				+'</li>'		
+				);
 	};
 	
 	//의견2 조회 (의견의 의견)
@@ -996,19 +1034,39 @@
 			
 			if(opnMakrRealnameYn == 'Y'){//실명공개 
 				ip = '';
-				pName = '<a href="javascript:doLikeUserInfoPop(\''+notiOpn2[i].userId+'\')" class="tit">'+notiOpn2[i].userName+'</a>';
+				pName = notiOpn2[i].userName;
 			}else{//비실명 
 				ip = fnGetIpUtil(notiOpn2[i].makeIp);
 				pName = $("#noti_opn_name_"+notiOpn2[i].upOpnSeq).html()+"-"+ notiOpn2[i].rank;
 			}
 			
 			if(userId == notiOpn2[i].userId){
-				appendBtn = '<div class="innerbox link"><a id="btnModify_'+notiOpn2[i].notiOpnSeq+'" modiMode="N" class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">수정</a></div>'
-						   +'<div class="innerbox link"><a id="btnDel_'+notiOpn2[i].notiOpnSeq+'"    class="link" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">삭제</a></div>';
+				appendBtn = '<span><a id="btnModify_'+notiOpn2[i].notiOpnSeq+'" modiMode="N" class="link" href="#" onclick="return false;" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">수정</a></span>'
+						   +'<span><a id="btnDel_'+notiOpn2[i].notiOpnSeq+'"    class="link" href="javascript:fnDeleteBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" notiOpnSeq="'+notiOpn2[i].notiOpnSeq+'">삭제</a></span>';
 			}else{
 				appendBtn = '';
 			}
 			
+			
+			$("#noti_opn_"+notiOpn2[i].upOpnSeq).parent("li").after(
+					'<li class="re">'
+					+'<div class="re_inner" id="noti_opn_'+notiOpn2[i].notiOpnSeq+'">'	
+					+'	<ul>'
+					+'	  <li>'
+					+'     <div class="re_tit">'
+					+'		   <span>'+pName+'</span><span>'+notiOpn2[i].regDttm+'</span>'+appendBtn+'</dt>'
+					+'		   <p id="opnDd_'+notiOpn2[i].notiOpnSeq+'">'+notiOpn2[i].opnConts+'</p>'
+					+'     </div>'
+					+'	  </li>'
+					+'	</ul>'
+					+'	<div id="opnTxtSapn_'+notiOpn2[i].notiOpnSeq+'" style="display:none;" class="reply_post2 reply_mod">'
+				 	+'  	<textarea class="textbox" id="opnTxt_'+notiOpn2[i].notiOpnSeq+'" cols="5" rows="3" style="width:560px;height:40px" title="댓글 입력">'+notiOpn2[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
+				 	+'      <span class="textbox_btns">'
+					+'	    <span class="btn_st01 w01"><button type="button" onclick="fnUpdateBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')">등록</button></span>'
+					+'	    <span class="btn_st02 w01"><button>취소</button></span>'
+				 	+'	</div>'
+					+'</div>'
+					+'</li>');			
 			
 			/*
 			$("#noti_opn_"+notiOpn2[i].upOpnSeq).parent("li").children(":first").after(
@@ -1025,6 +1083,7 @@
 			+'</div>');
 			*/
 			
+			/*
 			$("#noti_opn_"+notiOpn2[i].upOpnSeq).children(":last").after(
 					'<div class="rereply" id="noti_opn_'+notiOpn2[i].notiOpnSeq+'">' 
 					+'<div>' 
@@ -1040,7 +1099,7 @@
 					+'		<a class="btn_set bt_style1" href="javascript:fnUpdateBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')" title="의견등록"><span>의견등록</span></a>'
 					+'	</div>'			
 					+'</div>' );			
-			
+			*/
 			$("#btnModify_"+notiOpn2[i].notiOpnSeq).click(function(){//수정
 				
 				if($(this).attr("modiMode") == "N"){

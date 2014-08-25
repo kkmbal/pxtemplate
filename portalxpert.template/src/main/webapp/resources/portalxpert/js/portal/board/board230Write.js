@@ -247,7 +247,7 @@ var callbackOpenDept = function(data){
     			break;
 			}
     	}	    	
-    	if (!contains) $('#OpenDeptCategories').append('<li id="'+json[i].id+'"><a class="ico_del" style="cursor:pointer;" onclick="javascript:fnOpenDeptListRemove(\''+json[i].id+'\')" ></a>'+json[i].name+'</li>');
+    	if (!contains) $('#OpenDeptCategories').append('<li id="'+json[i].id+'"><a style="cursor:pointer;" onclick="javascript:fnOpenDeptListRemove(\''+json[i].id+'\')" ></a>'+json[i].name+'</li>');
 	}
 };
 
@@ -267,7 +267,7 @@ var callbackOpenPerson = function(data){
     			break;
 			};
     	};	
-    	if (!contains) $('#OpenEmpCategories').append('<li id="'+json[i].id+'"><a class="ico_del" style="cursor:pointer;" onclick="javascript:fnOpenPersonListRemove(\''+json[i].id+'\')" ></a>'+json[i].ou+' '+json[i].name+'</li>');
+    	if (!contains) $('#OpenEmpCategories').append('<li id="'+json[i].id+'"><a style="cursor:pointer;" onclick="javascript:fnOpenPersonListRemove(\''+json[i].id+'\')" ></a>'+json[i].ou+' '+json[i].name+'</li>');
 	};
 };
 
@@ -1533,10 +1533,10 @@ var fnAddFileList = function()
       //+'</span>'
       //+'</li>'
 			'<li id="apnd-'+id+'" class="ma_bot5"> '
-			+'<input type="text" class="text" style="width:476px" title="파일을 넣으세요" readonly> ' 
+			+'<input type="text" class="text" style="width:476px;height:30px;" title="파일을 넣으세요" readonly> ' 
 			+'<a href="#" class="btn_set bt_style1 mv_file_a"><input type="file" class="mv_file" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"> '
-			+'<span>파일</span></a> '
-			+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_set bt_style1"><span>삭제</span></a> '
+			+'<button type="button" class="btn_style2_2">파일</button></a> '
+			+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_set bt_style1"><button type="button" class="btn_style2_2">삭제</button></a> '
 			+'</li>'
 	);
 	

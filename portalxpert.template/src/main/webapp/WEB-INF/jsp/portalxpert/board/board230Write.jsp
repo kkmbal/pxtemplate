@@ -93,6 +93,202 @@
 </head>
 
 <body>
+<div class="container">
+	<div class="header">
+		<div class="h1">${boardName}</div>
+		<div class="loc">
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<a href="#">커뮤니티</a>
+			<strong class="str">${boardName}</strong>
+		</div>
+	</div>
+
+	<p class="txt_notice">게시판 게시기준에 맞지 않는 부적절한 게시물은 작성자의 동의 없이 삭제됩니다.</p>
+
+	<div class="btn_board_top">
+		<div class="fl">
+			<button type="button" class="btn_style2_4" onclick="javascript:fnWriteTempInsert();">임시저장</button>
+			<button type="button" class="btn_style2_2" onclick="javascript:fnWriteCancel();">취소</button>
+		</div>
+		<div class="fr">
+			<button type="button" class="btn_style3_2" onclick="javascript:fnWriteInsert();">등록</button>
+			<button type="button" class="btn_style4_2" id="btn_item_list">목록</button>
+		</div>
+	</div>
+	<table class="tbl_form" summary="이 표는 소속기관, 작성자, 제목, 공개대상, 내용, 첨부로 구성된 게시판A를 입력합니다.">
+	<caption>게시판A</caption>
+	<colgroup>
+		<col style="width:15%" />
+		<col style="width:35%" />
+		<col style="width:15%" />
+		<col style="width:auto" />
+	</colgroup>
+	<tbody>
+	<tr>
+		<th scope="row">소속 기관</th>
+		<td>${deptName}</td>
+		<th scope="row">작성자</th>
+		<td>${userName}</td>
+	</tr>
+	<tr>
+		<th scope="row"><label for="input01">제목</label></th>
+		<td colspan="3">
+			<input type="text" class="text" id="txt_title" style="width:503px" value=""  title="제목을 입력합니다." /> &nbsp;
+			<input type="checkbox" class="check" id="rt4" value=""  title="공지를 체크합니다." /> <strong><label for="check01" class="mgrn">공지</label></strong>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><label for="input01">게시기간</label></th>
+		<td colspan="3">
+			<div class="sec_calender">
+				<input type="text" class="text" id="openReserveDate" name="openReserveDate" title="시작날짜를 입력합니다. 예)YYYY.MM.DD">
+			</div> ~ 
+			<div class="sec_calender">
+				<input type="text" class="text" id="openCloseDate" name="openCloseDate" title="종료날짜를 입력합니다. 예)YYYY.MM.DD">
+			</div>		
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><label for="input04">공개 대상</label></th>
+		<td colspan="3">
+			<span class="selectN" style="width:150px">
+				<span>
+					<select title="" name="notiOpenDiv" id="notiOpenDiv">
+						<option value="010" selected>전체공개
+						<option value="020">사용자지정
+						<option value="030">부서지정
+					</select>
+				</span>
+			</span>
+<!-- 			<button type="button" class="btn_style1_3">조직도</button> -->
+			<div class="listbox">
+				<ul id="OpenDeptCategories">
+				</ul>
+				<ul id="OpenEmpCategories">
+				</ul>
+			</div>
+		</td>
+	</tr>
+	<tr id="div_img_view" style="display:none;">
+	<th scope="row">이미지등록</th>
+	<td colspan="3">
+	<ul style="list-style-type:none;float:left;">
+		    <li class="img_imgadd">
+			<form id="bbsImgform1" name="bbsImgform1" enctype="multipart/form-data" method="post">
+			<input type="file" size="1" title="이미지추가" id="apndImg1" name="bbsUpImg1" class="img_file">
+			</form>
+			</li>
+	
+		    <li class="img_imgadd">
+		    <form id="bbsImgform2" name="bbsImgform2" enctype="multipart/form-data" method="post">
+			<input type="file" size="1" title="이미지추가" id="apndImg2" name="bbsUpImg2" class="img_file">
+			</form>
+			</li>
+	
+		    <li class="img_imgadd">
+		    <form id="bbsImgform3" name="bbsImgform3" enctype="multipart/form-data" method="post">
+			<input type="file" size="1" title="이미지추가" id="apndImg3" name="bbsUpImg3" class="img_file">
+			</form>
+			</li>
+	
+		    <li class="img_imgadd">
+		    <form id="bbsImgform4" name="bbsImgform4" enctype="multipart/form-data" method="post">
+			<input type="file" size="1" title="이미지추가" id="apndImg4" name="bbsUpImg4" class="img_file">
+			</form>
+			</li>
+	
+		</ul>
+	</td>
+	</tr>
+	<tr id="div_mv_view" style="display:none;">
+	<th scope="row">동영상등록</th>
+	<td colspan="3">
+		
+		<div id="movieImgformDiv">
+		<ul>
+		    <li>
+		    <form id="movieImgform" name="movieImgform" enctype="multipart/form-data" method="post">
+		    <input type="text" class="text" style="width:520px">
+		    <a href="#" class="btn_set bt_style1 mv_file_a">   
+			<input type="file" size="1" id="apndMovie" name="bbsUpMovie" class="mv_file">
+			<span>파일</span></a>
+	<!-- 		<a href="#" class="btn_set bt_style1" onclick="fnAddMovieFileList()"><span>추가</span></a> -->
+			</form>
+			</li>	
+		</ul>
+		</div>
+		<div id="movieFileDiv" class="mv_file_div">
+			<dl></dl>
+		</div>
+		</div>
+	</td>
+	</tr>	
+	<tr>
+		<td colspan="4" class="editor">
+			<!-- 에디터들어가는자리 -->
+			<textarea class="editor ma_none" id="editor" style="height:360px;"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">첨부</th>
+		<td colspan="3" class="fileattach">
+			<div id="movieImgformDiv">
+				    <form id="apndFileform" name="apndFileform" enctype="multipart/form-data" method="post">
+					<ul>
+					    <li class="ma_bot5">
+					    <input type="text" class="text" style="width:476px;height:30px;" readonly>
+					    <a href="#" class="btn_set bt_style1 mv_file_a">
+					    <input type="file" size="1" name="upFile-" class="mv_file"><button type="button" class="btn_style2_2">파일</button></a>
+					    <a style="cursor:pointer;" class="btn_set bt_style1" onclick="fnAddFileList();"><button type="button" class="btn_style2_2">추가</button></a>
+					    </li>	
+					</ul>
+					</form>
+				</div>
+				<div id="innoApDiv" class="mv_file_div" style="display:none;">
+					<dl></dl>
+				</div>
+				</div>
+		</td>
+	</tr>
+	</tbody>
+	</table>
+	<div class="btn_board_sec">
+		<div class="fl">
+			<button type="button" class="btn_style2_4" onclick="javascript:fnWriteTempInsert();">임시저장</button>
+			<button type="button" class="btn_style2_2" onclick="javascript:fnWriteCancel();">취소</button>
+		</div>
+		<div class="fr">
+			<button type="button" class="btn_style3_2" onclick="javascript:fnWriteInsert();">등록</button>
+			<button type="button" class="btn_style4_2" id="btn_item_list">목록</button>
+		</div>
+	</div>
+</div>
+
+
+<div style="display:none;">
+	<input type="radio" name="apndKind" value="010" checked>일반
+	<input type="radio" name="apndKind" value="020">이미지
+	<input type="radio" name="apndKind" value="030">동영상
+</div>
+<div style="display:none;">
+	<div id ="replyPrmsTR">
+		<div>답글 허용</div>
+		<div><input type="checkbox" id="replyPrmsYn" name="opnPrmsYN" class="ma_none" title="허용" checked><label for="replyPrmsYn">허용</label></div>
+	</div>
+	<div id ="opnPrmsTR">
+		<div>의견 허용</div>
+		<div><input type="checkbox" id="opnPrmsYN" name="opnPrmsYN" class="ma_none" title="허용" checked><label for="opnPrmsYN">허용</label><input type="radio" id="opnMarkRealNameYN_Y" name="opnMarkRealNameYN" value="Y" checked ></div>
+	</div>
+	<input type="checkbox"  id="chkReserveDate" title="예약게시사용" checked>
+</div>
+
+</body>
+
+</html>		
+
+<%--
+
+<body>
 
 <div class="container">
 <br/>
@@ -294,116 +490,5 @@
 </div>
 
 </body>
-</html>		
 
-<%--
-
-
-	<div>${boardName}</div>
-	<div><input type="button" value="임시저장" onclick="javascript:fnWriteTempInsert();"><input type="button" value="목록" id="btn_item_list"><input type="button" value="완료" onclick="javascript:fnWriteInsert();"></div>
-	<div>제목 <input type="text" id="txt_title"></div>
-	<div>작성자 ${userName}</div>
-	<div>소속기관</div>
-	<div><input type="checkbox" id="rt4">공지</div>
-	<div>공개설정
-		<select name="notiOpenDiv" id="notiOpenDiv">
-			<option value="010" selected>전체공개
-			<option value="020">운영자만공개
-			<option value="030">부서지정
-		</select>
-	</div>
-	<div>
-		부서
-		<ul id="OpenDeptCategories">
-		</ul>
-		개인
-		<ul id="OpenEmpCategories">
-		</ul>
-	</div>
-	
-	<div>
-		<input type="radio" name="apndKind" value="010" checked>일반
-		<input type="radio" name="apndKind" value="020">이미지
-		<input type="radio" name="apndKind" value="030">동영상
-	</div>
-	
-	<ul style="list-style-type:none;float:left;">
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
-		<form id="bbsImgform1" name="bbsImgform1" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg1" name="bbsUpImg1" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
-		</form>
-		</li>
-
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
-	    <form id="bbsImgform2" name="bbsImgform2" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg2" name="bbsUpImg2" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
-		</form>
-		</li>
-
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
-	    <form id="bbsImgform3" name="bbsImgform3" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg3" name="bbsUpImg3" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
-		</form>
-		</li>
-
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
-	    <form id="bbsImgform4" name="bbsImgform4" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg4" name="bbsUpImg4" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
-		</form>
-		</li>
-
-	    <li style="border:1px dashed #999999;width:124px; height:124px;list-style-type:none;float:left;">
-	    <input type="radio" name="seq">
-	    <form id="bbsImgform5" name="bbsImgform5" enctype="multipart/form-data" method="post">
-		<input type="file" size="1" title="이미지추가" id="apndImg5" name="bbsUpImg5" style="position:relative;left:0;top:0;width:124px; height:124px; opacity:0; filter:alpha(opacity:0);">
-		</form>
-		</li>
-	</ul>
-
-
-	
-	<div style="clear:both">
-	
-	동영상파일올리기
-	<div id="movieImgformDiv">
-	<ul>
-	    <li>
-	    <form id="movieImgform" name="movieImgform" enctype="multipart/form-data" method="post">
-	    <input type="text" style="width:100px">
-		<input type="file" size="1" title="동영상추가" id="apndMovie" name="bbsUpMovie">
-		<input type="button" onclick="fnAddMovieFileList()" value="추가">
-		</form>
-		</li>	
-	</ul>
-	</div>
-	<div id="movieFileDiv" style="width:97%; height:130px; overflow:auto ">
-		<dl></dl>
-	</div>	
-	
-	
-	<textarea class="editor ma_none" id="editor" style="height:100px;"></textarea>
-	</div>
-	<div>
-		<form id="apndFileform" name="apndFileform" enctype="multipart/form-data" method="post">
-		<ul>
-		<li>
-		<input type="text" style="width:100px">
-		<div style="border:1px dashed #999999;width:42px; height:23px;">
-	 	<input type="file" size="1" name="upFile-" style="position:relative;left:0;top:0;width:42px; height:23px; opacity:0; filter:alpha(opacity:0);">
-	 	</div>
-	 	<input type="button" onclick="fnAddFileList()" value="추가">
-	 	</li>
-	 	</ul>
-	 	</form>
-	</div>
-	<div id="innoApDiv" style="width:97%; height:130px; overflow:auto ">
-		<dl></dl>
-	</div>	
-	
-	<div><input type="button" value="임시저장" onclick="javascript:fnWriteTempInsert();"><input type="button" value="목록" id="btn_item_list"><input type="button" value="완료" onclick="javascript:fnWriteInsert();"></div>
-
- --%>	 
+--%>
