@@ -403,7 +403,7 @@ $(document).ready(function () {
 		$('#apndFileDiv').show();
 	});
 	
-	$("#btnCancel").click(function(){
+	$("#btnCancel,#btnList").click(function(){
 		location.href = WEB_HOME+"/adm/pop/getAdmPopList.do";	
 	});	
 	

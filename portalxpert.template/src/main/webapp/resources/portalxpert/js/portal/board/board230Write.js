@@ -1525,18 +1525,19 @@ var fnAddFileList = function()
 {
 	var id = Math.floor(Math.random() * (9999998))+2;
 	$("#apndFileform ul").append(
-	  //'<li id="apnd-'+id+'" class="fo_11px ma_bot5">'
-      //+'<span class="inp_file2">'
-      //+'<input type="text" title="파일을 넣으세요">' 
-      //+'<a href="#" class="btn_file"><input type="file" class="file2" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"></a>'
-      //+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_grid2"><span class="btn_text">삭제</span></a>'
-      //+'</span>'
-      //+'</li>'
+			//'<li id="apnd-'+id+'" class="ma_bot5"> '
+			//+'<input type="text" class="text" style="width:476px;height:30px;" title="파일을 넣으세요" readonly> ' 
+			//+'<a href="#" class="btn_set bt_style1 mv_file_a"><input type="file" class="mv_file" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"> '
+			//+'<button type="button" class="btn_style2_2">파일</button></a> '
+			//+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_set bt_style1"><button type="button" class="btn_style2_2">삭제</button></a> '
+			//+'</li>'
 			'<li id="apnd-'+id+'" class="ma_bot5"> '
-			+'<input type="text" class="text" style="width:476px;height:30px;" title="파일을 넣으세요" readonly> ' 
-			+'<a href="#" class="btn_set bt_style1 mv_file_a"><input type="file" class="mv_file" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"> '
-			+'<button type="button" class="btn_style2_2">파일</button></a> '
-			+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_set bt_style1"><button type="button" class="btn_style2_2">삭제</button></a> '
+			+'<input type="text" class="text" style="width:476px" readonly>'
+			+'<span class="file_wrap">'
+			+'	<button class="btn_style1_2" type="button">파일</button>'
+			+'	<input type="file" id="file-'+id+'" name="upFile-'+id+'" class="file_hidden" />'
+			+'</span>'					    
+			+'<button type="button" class="btn_style1_2" onclick="fnDelFileList(\'apnd-'+id+'\')">삭제</button>'		
 			+'</li>'
 	);
 	
