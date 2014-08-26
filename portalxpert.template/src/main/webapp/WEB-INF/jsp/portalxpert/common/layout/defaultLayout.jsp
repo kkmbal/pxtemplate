@@ -11,13 +11,14 @@
 <%@ include file="/WEB-INF/jsp/portalxpert/common/inc/jsLibs.jsp"%>
 </head>
 
+<%--
 <body>
 		<tiles:insertAttribute name="body" />
 </body>
 </html>
+ --%>
 
 
-<%--
 <body>
 <div id="wrap">
 	<tiles:insertAttribute name="header" />
@@ -36,4 +37,3 @@
 </div>	
 </body>
 </html>
- --%>

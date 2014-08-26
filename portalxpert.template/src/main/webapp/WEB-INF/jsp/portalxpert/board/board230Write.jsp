@@ -236,10 +236,12 @@
 				    <form id="apndFileform" name="apndFileform" enctype="multipart/form-data" method="post">
 					<ul>
 					    <li class="ma_bot5">
-					    <input type="text" class="text" style="width:476px;height:30px;" readonly>
-					    <a href="#" class="btn_set bt_style1 mv_file_a">
-					    <input type="file" size="1" name="upFile-" class="mv_file"><button type="button" class="btn_style2_2">파일</button></a>
-					    <a style="cursor:pointer;" class="btn_set bt_style1" onclick="fnAddFileList();"><button type="button" class="btn_style2_2">추가</button></a>
+						    <input type="text" class="text" style="width:476px" readonly>
+							<span class="file_wrap">
+								<button class="btn_style1_2" type="button">파일</button>
+								<input type="file" name="upFile-" class="file_hidden" />
+							</span>					    
+					    	<button type="button" class="btn_style1_2" onclick="fnAddFileList();">추가</button>
 					    </li>	
 					</ul>
 					</form>
