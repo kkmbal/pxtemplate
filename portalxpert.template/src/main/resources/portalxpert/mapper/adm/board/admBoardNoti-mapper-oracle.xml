@@ -1239,4 +1239,66 @@
 		
 	</select>
 		
+		
+	<!-- 일반게시판 게시글 삭제 -->
+	<delete id="deleteNotiInfoRollback" parameterType="portalxpert.adm.board.vo.AdmBoardNotiDelInfoVO">
+		DELETE BBS_NOTI_INFO 
+		WHERE NOTI_ID = #{notiId}
+	</delete>
+	
+	<!-- BBS_게시물_추가_항목 게시글 삭제  -->
+	<delete id="deleteBbsNotiAddItemRollback" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		DELETE BBS_NOTI_ADD_ITEM   
+		WHERE NOTI_ID = #{notiId}
+	</delete>
+	
+	<!-- BBS_게시물_첨부_파일 게시글 삭제  -->
+	<delete id="deleteBbsNotiApndFileRollback" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		DELETE BBS_NOTI_APND_FILE 
+		WHERE NOTI_ID = #{notiId}	
+	</delete>
+	
+	<!-- BBS_게시물_평가_정보 게시글 삭제  -->
+	<delete id="deleteBbsNotiEvalInfoRollback" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		DELETE BBS_NOTI_EVAL_INFO 
+		WHERE NOTI_ID = #{notiId}	
+	</delete>
+	
+	<!-- BBS_게시물_의견 게시글 삭제  -->
+	<delete id="deleteBbsNotiOpnRollback" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		DELETE BBS_NOTI_OPN 
+		WHERE NOTI_ID = #{notiId}
+	</delete>		
+	
+	<!-- BBS_게시물_설문 게시글 삭제  -->
+	<delete id="deleteBbsNotiSurveyRollback" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		DELETE BBS_NOTI_SURVEY 
+		WHERE NOTI_ID = #{notiId}	
+	</delete>
+
+	<!-- BBS_게시물_설문_답변 게시글 삭제  -->
+	<delete id="deleteBbsNotiSurveyAnswRollback" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		DELETE BBS_NOTI_SURVEY_ANSW 
+		WHERE SURVEY_NO IN  (
+        	SELECT SURVEY_NO
+        	FROM BBS_NOTI_SURVEY
+			WHERE NOTI_ID = #{notiId}	
+       		)
+	</delete>
+	
+	<!-- BBS_게시물_설문_예문 게시글 삭제  -->
+	<delete id="deleteBbsNotiSurveyExmplRollback" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		DELETE BBS_NOTI_SURVEY_EXMPL 
+		WHERE SURVEY_NO IN  (
+        	SELECT SURVEY_NO
+        	FROM BBS_NOTI_SURVEY
+			WHERE NOTI_ID = #{notiId}	
+       		)
+	</delete>
+	
+	<!-- BBS_게시물_사용자_매핑 게시글 삭제  -->
+	<delete id="deleteBbsNotiUserMapRollback" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO">
+		DELETE BBS_NOTI_USER_MAP 
+		WHERE NOTI_ID = #{notiId}			
+	</delete>					
 </mapper>

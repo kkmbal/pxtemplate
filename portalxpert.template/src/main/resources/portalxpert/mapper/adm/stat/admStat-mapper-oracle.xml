@@ -703,7 +703,7 @@
 					</if>				
 				</if>
 				<if test="orderType == 'END_DTTM' ">
-				ORDER BY A.BOARD_OPER_END_DTTM
+				ORDER BY A.END_DTTM
 					<if test="isDesc != true ">
 						 DESC
 					</if>				

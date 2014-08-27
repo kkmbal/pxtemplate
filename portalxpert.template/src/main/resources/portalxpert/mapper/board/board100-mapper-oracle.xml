@@ -2720,4 +2720,30 @@
 		</if>
 	</select>
 		
+	<!-- 게시판 사용현황 -->	
+	<select id="getAdmBbsStat" parameterType="portalxpert.board.board100.vo.BbsBoardInfoVO" resultType="portalxpert.board.board100.vo.BbsBoardInfoVO">
+			SELECT A.BOARD_ID
+			      ,A.BOARD_NAME
+			      ,A.BOARD_KIND
+			      ,A.BOARD_FORM
+			      ,A.BOARD_FORM_SPEC
+			      ,A.REGR_NAME
+			      ,(SELECT	NVL(SUM(B.TOT_COUNT) ,0)
+					FROM
+					(   SELECT	BOARD_ID
+					            ,DECODE(MAX(UP_NOTI_ID),'*' ,COUNT(UP_NOTI_ID) ,0) TOT_COUNT
+								,DECODE(MAX(UP_NOTI_ID),'*' ,0 ,COUNT(UP_NOTI_ID)) REPL_COUNT
+						FROM	BBS_NOTI_INFO
+						GROUP BY BOARD_ID, UP_NOTI_ID
+					) B WHERE B.BOARD_ID = A.BOARD_ID) NOTI_CNT
+			      ,(SELECT NVL(SUM(NOTI_READ_CNT) ,0) FROM BBS_NOTI_INFO 
+			        WHERE BOARD_ID = A.BOARD_ID) NOTI_READ_CNT
+			      ,TO_CHAR(REG_DTTM ,'YYYY.MM.DD') REG_DTTM
+			      ,A.BOARD_OPER_BGN_DTTM
+			      ,DECODE(A.BOARD_OPER_YN,'N',TO_CHAR(A.UPD_DTTM,'YYYY.MM.DD'), '운영중') BOARD_OPER_END_DTTM
+			      ,A.DEL_YN
+			FROM BBS_BOARD_INFO A
+			WHERE A.BOARD_ID = #{boardId}
+	</select>		
+		
 </mapper>
