@@ -268,5 +268,16 @@ public interface AdmBoardNotiMapper  {
     public int deleteBbsNotiSurveyAnswForBoard (Map<String, Object> map) throws Exception ;
     public int deleteBbsNotiSurveyExmplForBoard (Map<String, Object> map) throws Exception ;
     public int deleteBbsNotiUserMapForBoard (Map<String, Object> map) throws Exception ;
-    
+
+    /* 게시물 영구삭제 */
+	public void deleteNotiInfoRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	public void deleteBbsNotiAddItemRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	public void deleteBbsNotiApndFileRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	public void deleteBbsNotiEvalInfoRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	public void deleteBbsNotiOpnRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	public void deleteBbsNotiUserMapRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	public void deleteBbsNotiSurveyRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	public void deleteBbsNotiSurveyAnswRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	public void deleteBbsNotiSurveyExmplRollback(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO) throws Exception ;
+	/* 게시물 영구삭제 */
 }

@@ -70,6 +70,22 @@ public class BbsBoardInfoVO {
 	
 	private String category;
 	
+	private int notiReadCnt;
+	private int notiCnt;
+	
+	
+	public int getNotiReadCnt() {
+		return notiReadCnt;
+	}
+	public void setNotiReadCnt(int notiReadCnt) {
+		this.notiReadCnt = notiReadCnt;
+	}
+	public int getNotiCnt() {
+		return notiCnt;
+	}
+	public void setNotiCnt(int notiCnt) {
+		this.notiCnt = notiCnt;
+	}
 	public String getRedYn() {
 		return redYn;
 	}

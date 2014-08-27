@@ -112,6 +112,8 @@ public class Board100Controller {
     			userVO.setBoardId(boardId);    			
     			List<BbsBoardUserMapVO> user_list = board100Service.getAdminBbsBoardUserMapList(userVO);
     			
+    			BbsBoardInfoVO bbsStat = board100Service.getAdmBbsStat(bbsVO);
+    			
     			logger.debug("user_list : "+JSONUtils.objectToJSON(user_list));
     			modelMap.put("boardId", boardId);
     			modelMap.put("bbsList", JSONUtils.objectToJSON(list));
@@ -119,6 +121,7 @@ public class Board100Controller {
     			modelMap.put("userId", info.getId());
     			modelMap.put("userNm", info.getName());
     			modelMap.put("deptNm", info.getOu());
+    			modelMap.put("bbsStat", bbsStat);
     			
     		}
   

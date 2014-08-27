@@ -475,4 +475,28 @@ public class AdmBoardNotiServiceImpl extends EgovAbstractServiceImpl implements 
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
     }
+    
+    /**
+	 * 삭제게시물 영구삭제
+	 * @param AdmBoardNotiDelInfoVO
+	 * @return
+	 * @exception Exception
+	 */
+    public void deleteAdmBoardNotiDel(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO, HttpSession session) throws Exception{
+    	try{
+    		admBoardNotiMapper.deleteAdmBoardNotiDelRollBack1(admBoardNotiDelInfoVO);
+    		admBoardNotiMapper.deleteNotiInfoRollback(admBoardNotiDelInfoVO);//게시글 삭제
+    		admBoardNotiMapper.deleteBbsNotiAddItemRollback(admBoardNotiDelInfoVO);
+    		admBoardNotiMapper.deleteBbsNotiApndFileRollback(admBoardNotiDelInfoVO);
+    		admBoardNotiMapper.deleteBbsNotiEvalInfoRollback(admBoardNotiDelInfoVO);
+    		admBoardNotiMapper.deleteBbsNotiOpnRollback(admBoardNotiDelInfoVO);
+    		admBoardNotiMapper.deleteBbsNotiUserMapRollback(admBoardNotiDelInfoVO);
+    		admBoardNotiMapper.deleteBbsNotiSurveyRollback(admBoardNotiDelInfoVO);
+    		admBoardNotiMapper.deleteBbsNotiSurveyAnswRollback(admBoardNotiDelInfoVO);
+    		admBoardNotiMapper.deleteBbsNotiSurveyExmplRollback(admBoardNotiDelInfoVO);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+    }
+
 }

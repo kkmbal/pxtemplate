@@ -230,5 +230,14 @@ public interface AdmBoardNotiService {
      * @auther crossent 
      */
     public BbsNotiApndFileVO getBbsNotiApndFile(BbsNotiApndFileVO vo)throws Exception;    
+    
+    /**
+	 * 삭제게시물 영구삭제
+	 * @param AdmBoardNotiDelInfoVO
+	 * @return
+	 * @exception Exception
+	 */
+    public void deleteAdmBoardNotiDel(AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO, HttpSession session) throws Exception;
+ 
 }
  

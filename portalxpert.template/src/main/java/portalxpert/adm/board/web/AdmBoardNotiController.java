@@ -519,6 +519,35 @@ public class AdmBoardNotiController {
  		return modelMap;
  	} 	
  	
+ 	/**
+     * 삭제게시물 영구삭제
+     * @param AdmBoardNotiDelInfoVO
+     * @return ModelMap
+     * @exception Exception
+     */
+ 	@RequestMapping(value = "/deleteAdmBoardNotiDel", method = RequestMethod.POST)
+    public ModelMap deleteAdmBoardNotiDel(
+    										AdmBoardNotiDelInfoVO admBoardNotiDelInfoVO,
+    										ModelMap modelMap,
+    										HttpSession session
+    										) throws Exception {
+ 		
+ 		JSONResult jsonResult = new JSONResult();
+ 			
+		try{
+			admBoardNotiService.deleteAdmBoardNotiDel(admBoardNotiDelInfoVO, session);
+			jsonResult.setMessage("영구삭제 되었습니다");
+    		
+    	}catch (Exception e) {
+    		jsonResult.setSuccess(false);
+    		jsonResult.setMessage(messageSource.getMessage("common.error"));
+    		jsonResult.setErrMessage(e.getMessage());
+		}
+ 		
+ 		modelMap.put("jsonResult", jsonResult);
+ 		return modelMap;
+ 	} 
+ 	
     /**
 	 * 삭제이동게시물조회 내용 조회
 	 * @param AdmBoardNotiDelInfoVO

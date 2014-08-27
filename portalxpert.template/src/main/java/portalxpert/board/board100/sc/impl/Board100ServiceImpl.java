@@ -1713,4 +1713,19 @@ public class Board100ServiceImpl extends EgovAbstractServiceImpl implements  Boa
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}    		
     }
+    
+    /**
+     * 게시판 사용현황 가져오기
+     * @param BbsBoardInfoVO
+     * @return int 
+     * @exception Exception
+     * @auther  
+     */
+    public BbsBoardInfoVO getAdmBbsStat(BbsBoardInfoVO vo) throws Exception {
+    	try{
+    		return board100Mapper.getAdmBbsStat(vo);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}    		
+    }
 }
