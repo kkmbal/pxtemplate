@@ -77,119 +77,114 @@
 </head>
 
 <body>
-
 <div class="container">
-
 	<div class="header">
-		<h1>${boardName}</h1>
+		<div class="h1">${boardName}</div>
 		<div class="loc">
-			<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
-			<span><a href="#">관리자</a></span>
-			<span><strong>삭제게시물</strong></span>
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<strong class="str">삭제게시물</strong>
 		</div>
-	</div><!-- end of header -->
-
-
-
-
-	<!-- 테이블상단 버튼영역 -->
-	<div class="btn_board_top">
-	<div class="fl">
-		<a href="#" class="btn_set bt_style2 btn_back"><span>복원</span></a>
 	</div>
-	<div class="fr">
-
-		<a href="#" class="btn_set bt_style7 btn_list"><span>목록</span></a>
+	
+	<div class="btn_board_sec mt13">
+		<div class="fl">
+			<button type="button" class="btn_style2_4 btn_delete">영구삭제</button>
+		</div>
+		<div class="fr">
+			<button class="btn_style3_2 btn_back" type="button" >복원</button>
+			<button class="btn_style4_2 btn_list" type="button" >목록</button>
+		</div>
 	</div>
-	</div>
-	<!-- //테이블상단 버튼영역 -->
 
-	<div>
-		<div class="toptable" >
-			<div class="fl">
-				<div class="innerbox tit">번호</div>
-				<div class="innerbox" id="notiNum"></div>
-				<div class="innerbox"> &nbsp;</div>
-				<div class="innerbox tit">조회수</div>
-				<div class="innerbox" id="notiReadCnt"></div>
-				<div class="innerbox"> &nbsp;</div>
-				<div class="innerbox tit">의견</div>
-				<div class="innerbox" id="opnCnt"></div>		
+	<table class="tbl_view mt10" summary="번호, 조회수, 공개여부에 관한 정보제공">
+	<caption>게시판 입력목록</caption>
+	<colgroup>
+		<col style="width:7%" />
+		<col style="width:17%" />
+		<col style="width:7%" />
+		<col style="width:17%" />
+		<col style="width:7%" />
+		<col style="width:17%" />
+		<col style="width:28%" />
+	</colgroup>
+	<thead>
+	<tr>
+		<th scope="row">번호</th>
+		<td><span id="notiNum"></span></td>
+		<th scope="row">조회수</th>
+		<td><span id="notiReadCnt"></span></td>
+		<th scope="row">의견</th>
+		<td><span id="opnCnt"></span></td>
+		<td class="last"><a href="#" class="allopen">전체공개</a></td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td colspan="7">
+			<div class="inner">
+				<span class="title" id="notiTitle"></span>
+				<ul>
+					<li>
+						<span class="tit">작성자</span>
+						<span class="desc"><span id="userName"></span> <span><img src="${RES_HOME}/images/ico_room.png" alt="부서" /><label id="deptName"></label></span> <span><img src="${RES_HOME}/images/ico_email.png" alt="이메일" /><label id="mailTo"></label></span></span>
+					</li>
+					<li class="half2 other2">
+						<span class="tit">등록일</span>
+						<span class="desc" id="regDttm"></span>
+					</li>
+				</ul>
+				<span class="notice" id="anmtDiv" style="display:none;"> <label for="notice">공지</label></span>
 			</div>
-			<div class="fr">
-<!-- 				<div class="innerbox">전체공개</div> -->
-			</div>	
+			<!-- 글내용  -->
+			<div class="intxt">
+<!-- 				<span class="viewer"> -->
+<!-- 				</span> -->
+				<ul id="imgNotiConts" class="sns_imgs" style="display:none"></ul><!-- 이미지형 게시판 -->		
+				<p class="te_center" id="movNotiConts" style="display:none"></p><!-- 동영상 게시판 -->
+				<span id="notiConts">
+				${notiConts}
+				</span>
+			</div>
+			<!-- 글내용 끝 -->
+		</td>
+	</tr>
+	<tr>
+		<td colspan="7">
+		<div class="rbox02 mt0">
+			<span class="top"></span>
+			<div class="mid">
+				<div class="inquiry_top">
+					<dl id="notiFileDl">
+					</dl>
+				</div>
+			</div>
+			<span class="btm"></span>
 		</div>
-	</div>
-
+		</td>
+	</tr>
+	</tbody>
+	</table>
+	
+	
+	<!--댓글-->
+	<div class="reply_sec" id="opnPrmsDiv">
+		<ul id="replyUl">
+		</ul>
+	</div>	
 	
 
-	<div class="titlebox fl">
+	<div class="btn_board_sec mt13">
 		<div class="fl">
-			<h1 id="notiTitle" style="width:660px;"> </h1>
-			<div class="innerbox tit">작성자</div>
-			<div class="innerbox" id="userName"></div>
-			<div class="innerbox" id="deptName"></div>
-			<div class="innerbox" id="mailTo"></div>
+			<button type="button" class="btn_style2_4 btn_delete">영구삭제</button>
 		</div>
-		<div class="fl">
-			<div class="innerbox tit">등록일</div>
-			<div class="innerbox" id="regDttm"></div>
-		</div>
-		<div class="fr" id="anmtDiv" style="display:none;">
-			<strong>공지</strong>
-		</div>
-	</div>
-
-
-	<!--  글내용 -->
-	<div class="view_post">
-		<ul id="imgNotiConts" class="sns_imgs" style="display:none"></ul><!-- 이미지형 게시판 -->		
-		<p class="te_center" id="movNotiConts" style="display:none"></p><!-- 동영상 게시판 -->
-		<span id="notiConts">
-		${notiConts}
-		</span>
-	</div>
-	<!-- 글내용 끝 -->
-
-	<div class="attachbox">
-		<span class="tit" style="vertical-align:top;">첨부파일</span>
-		<span class="ico_fileAttch2">
-			<dl id="notiFileDl">
-			</dl>
-		</span>
-	</div>
-
-
-
-
-<!--댓글-->
-	<div class="replybox fl" id="opnPrmsDiv">
-		<div id="replyUl" class="clearfix" style="display:none;">
+		<div class="fr">
+			<button class="btn_style3_2 btn_back" type="button" >복원</button>
+			<button class="btn_style4_2 btn_list" type="button" >목록</button>
 		</div>
 	</div>
 	
-	
-
-
-<!-- //입력테이블2 -->
-<!-- 버튼영역 -->
-<div style="padding:10px 0px 0px 0px" >
-	<div class="fl">
-		<a href="#" class="btn_set bt_style2 btn_back"><span>복원</span></a>
-	</div>
-	<div class="fr">
-
-		<a href="#" class="btn_set bt_style7 btn_list"><span>목록</span></a>
-	</div>
 </div>
-<!-- //버튼영역 -->
 
-
-
-
-
-</div><!-- end of container -->
 <iframe name="dummy" width=0 height=0 border=0 style="visibility:hidden"></iframe>
 <form name="frmMain" method="post">
 <input type="hidden" name="notiId"  value="${notiId}">
@@ -199,52 +194,3 @@
 </html>			 
 
 
-<%--
-
-	<div>${boardName}</div>
-	<div>
-		<input type="button" value="목록"  class="btn_list">
-		<input type="button" value="출력" class="btn_print">
-		<input type="button" value="복원" class="btn_back">
-	</div>
-	작성자:<div id="userName"></div>
-	소속기관:<div id="cdlnDeptFname"></div>
-	<div>공개설정</div>
-	<div><input type="checkbox" name="">공지</div>
-	번호:<div id="notiNum"></div>
-	조회수:<div id="notiReadCnt"></div>
-	의견:<div id="opnCnt"></div>
-	등록일:<div id="regDttm"></div>
-	제목:<div id="notiTitle"></div>
-	<div id="notiConts">
-	${notiConts}
-	</div>
-	<div>
-	첨부
-	</div>
-	<div>
-		<ul id="replyUl" style="display:none;">
-		</ul>
-		<div class="reply_post"  style="display:none;">
-			<textarea cols="5" rows="3" id="noti_reply"></textarea>
-			<a href="javascript:fnInsertBbsNotiOpnForView()" title="의견등록">의견등록</a>
-		</div>
-	</div>
-
-	<!-- 게시판이전글다음글 -->
-	<div id="boardPage">
-	</div>
-
-
-	<div>
-		<input type="button" value="목록"  class="btn_list">
-		<input type="button" value="출력" class="btn_print">
-		<input type="button" value="복원" class="btn_back">
-	</div>
-	
-<iframe name="dummy" width=0 height=0 border=0 style="visibility:hidden"></iframe>
-<form name="frmMain" method="post">
-<input type="hidden" name="notiId"  value="${notiId}">
-</form>
-
---%>

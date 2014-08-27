@@ -151,14 +151,14 @@
 					{
 						$("#boardNameInfo").removeClass('bl_o');
 						$("#boardNameInfo").addClass('bl_x');
-						$("#boardNameInfo").html("이미 사용 중입니다. 다른 이름을 입력해주세요.");
+						$("#boardNameInfo").html("ⓧ 이미 사용 중입니다. 다른 이름을 입력해주세요.");
 						boardTitleYn = 'N';
 					}
 					else
 					{						
 						$("#boardNameInfo").addClass('bl_o');
 						$("#boardNameInfo").removeClass('bl_x');
-						$("#boardNameInfo").html("사용할수 있는 게시판명  입니다.");
+						$("#boardNameInfo").html("ⓞ 사용할수 있는 게시판명  입니다.");
 						boardTitleYn = 'Y';
 					}
 				}
@@ -1171,8 +1171,10 @@ $(document).ready(function () {
 	//게시판 취소 버튼
 	$("#btn_bbs_cancel, #btn_bbs_cancel2").click(function(eventObject) {
 		
-		if (!confirm('취소 하시겠습니까?')) {
-			return;
+		if($(this).attr('id') == 'btn_bbs_cancel2'){
+			if (!confirm('취소 하시겠습니까?')) {
+				return;
+			}
 		}
 		
 		location.href=WEB_HOME+"/adm/stat/getAdmBbsStatList.do";

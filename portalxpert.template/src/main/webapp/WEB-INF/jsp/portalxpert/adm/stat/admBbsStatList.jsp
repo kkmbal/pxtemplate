@@ -31,136 +31,136 @@
 	<form:hidden path="isDesc" />
 	</c:if>
 	
-<div class="container">	
-<div class="header">
-	<h1>게시판현황</h1>
-	<div class="loc">
-		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
-		<span><a href="#">관리자</a></span>
-		<span><strong>게시판현황</strong></span>
-	</div>
-</div>
- 
-<!-- 검색조건 2줄 이상일때 -->
-<div class="rbox">
-	<span class="rbox_top"></span>
-	<div class="rboxInner">
-		<ul>
-			<li style="display:none;">
-			</li>			
-			<li class="half">
-			    <label for="subtitle">검색조건</label>
-				<!-- 셀렉트박스 -->
-				<span class="selectN" style="width:70px">
-					<span>
-						<select id="search_gubun">
-							<option value="">선택</option>
-							<option value="BOARD_NAME" ${admStatSearchVO.searchCondition == 'BOARD_NAME' ? 'selected' : ''}>게시판명</option>
-							<option value="REGR_NAME" ${admStatSearchVO.searchCondition == 'REGR_NAME' ? 'selected' : ''}>관리자</option>
-						</select>  
-					</span>
-				</span>
-				<!-- //셀렉트박스 -->
-				<input type="text" value="${fn:replace(admStatSearchVO.searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:120px" />
-			</li>
-			<li class="half">
-				<label for="status">상태</label>
-				<span class="selectN" style="width:133px">
-					<span>
-						<select id="stat" name="stat">
-							<option value="">선택</option>
-							<option value="ALL" ${admStatSearchVO.stat == 'ALL' ? 'selected' : ''}>전체</option>
-							<option value="USE" ${admStatSearchVO.stat == 'USE' ? 'selected' : ''}>운영중</option>
-							<option value="NOT_USE" ${admStatSearchVO.stat == 'NOT_USE' ? 'selected' : ''}>폐쇄</option>
-						</select> 
-					</span>
-				</span>
-			</li>
-			<li>
-			    <label for="period">기간</label>
-				<span class="radiogroup1">
-					<input type="radio" name="searchDttm" value="REG" />
-					<label for="radio01">생성일</label>
-					<input type="radio" name="searchDttm" value="END" />
-					<label for="radio02" class="mgrn">폐쇄일</label>	
-					<input type="radio" name="searchDttm" checked value="" />
-					<label for="radio02" class="mgrn">선택안함</label>	
-				</span>			
-				<div class="sec_calender">
-					<input type="text" class="text" id="sFromDt" name="sFromDt" title="시작날짜를 입력합니다. 예)YYYY.MM.DD">
-				</div> ~ 
-				<div class="sec_calender">
-					<input type="text" class="text" id="sToDt" name="sToDt" title="시작날짜를 입력합니다. 예)YYYY.MM.DD">
-				</div>
-			</li>			
-		</ul>
-		<div class="rbox_btns">
-			<a href="#" class="btn_set bt_style7" id="search"><span>검색</span></a> 
-			<a href="#" class="btn_set bt_style6" id="reset"><span>초기화</span></a>
+<div class="container">
+	<div class="header">
+		<div class="h1">게시판 현황</div>
+		<div class="loc">
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<a href="#">게시판관리</a>
+			<strong class="str">게시판현황</strong>
 		</div>
 	</div>
-</div>
-<!-- //검색조건 2줄 이상일때 -->
+	<div class="rbox">
+		<div class="rbox_top"></div>
+		<div class="rboxInner">
+			<div class="halfWrap">
+				<div class="half" style="width:70%">
+					<span class="selectN" style="width:120px">
+						<span>
+							<label for="selectN_id1" class="hidden">구분</label>
+							<select id="search_gubun">
+								<option value="">선택</option>
+								<option value="BOARD_NAME" ${admStatSearchVO.searchCondition == 'BOARD_NAME' ? 'selected' : ''}>게시판명</option>
+								<option value="REGR_NAME" ${admStatSearchVO.searchCondition == 'REGR_NAME' ? 'selected' : ''}>관리자</option>
+							</select> 
+						</span>
+					</span>
+					<input type="text" value="${fn:replace(admStatSearchVO.searchKeyword,'"', '&quot;')}" id="keyword" class="text" style="width:300px" title="검색제목" />
+				</div>
+				<div class="half" style="width:30%">
+					<label class="lbl">상태</label>
+					<span class="selectN" style="width:100px">
+						<span>
+							<label for="selectN_id1" class="hidden">상태값 선택</label>
+							<select id="stat" name="stat">
+								<option value="">선택</option>
+								<option value="ALL" ${admStatSearchVO.stat == 'ALL' ? 'selected' : ''}>전체</option>
+								<option value="USE" ${admStatSearchVO.stat == 'USE' ? 'selected' : ''}>운영중</option>
+								<option value="NOT_USE" ${admStatSearchVO.stat == 'NOT_USE' ? 'selected' : ''}>폐쇄</option>
+							</select> 
+						</span>
+					</span>
+				</div>
+			</div>
+			<div>
+				<div class="radiogroup fl mt5">
+					<input type="radio" name="searchDttm" value="REG" title="생성일을 선택합니다." />
+					<label for="radio01">생성일</label>
+					<input type="radio" name="searchDttm" value="END" title="폐쇄일을 선택합니다." />
+					<label for="radio02">폐쇄일</label>
+					<input type="radio" name="searchDttm" checked value="" title="선택안함을 선택합니다." />
+					<label for="radio03" class="mgrn">선택안함</label>
+				</div>
+				&nbsp;
+				<div class="sec_calender">
+					<input type="text" class="text" id="sFromDt" name="sFromDt" title="시작날짜를 입력합니다. 예)YYYY.MM.DD"/>
+				</div> ~ 
+				<div class="sec_calender">
+					<input type="text" class="text" id="sToDt" name="sToDt" title="시작날짜를 입력합니다. 예)YYYY.MM.DD"/>
+				</div>
+			</div>
 
-<br/>
-<div class="btn_board_top">
-	<div class="fl">
-		<a href="#" id="createBbs" class="btn_write"><span>게시판생성</span></a> 
+			<div class="rbox_btns">
+				<button type="button" class="btn_style7_2" id="search">검색</button> 
+				<button type="button" class="btn_style6_3" id="btnReset">초기화</button>
+			</div>
+		</div>
 	</div>
-	<div class="fr">
-		<span class="selectN" style="width:80px">
-			<span>
-				<select id="list_cnt" title="게시물수 보기">
-					<option value="10">10개보기</option>
-					<option value="20">20개보기</option>
-					<option value="30">30개보기</option>
-				</select>
+
+	<div class="btn_board_top">
+		<div class="fl">
+			<button type="button" class="btn_write6" id="createBbs">게시판 생성</button>
+		</div>
+		<div class="fr mt5">
+			<span class="selectN" style="width:100px">
+				<span>
+					<label for="selectN_id1" class="hidden">게시물수</label>
+					<select id="list_cnt" title="게시물수 보기">
+						<option value="10">10개보기</option>
+						<option value="20">20개보기</option>
+						<option value="30">30개보기</option>
+					</select>
+				</span>
 			</span>
-		</span>
+		</div>
 	</div>
-</div>
-
-<table summary="" class="tbl_list">
-<caption></caption>
-<colgroup>
-<col style="width:7%" />
-<col style="width:10%" />
-<col style="width:*" />
-<col style="width:8%" />
-<col style="width:8%" />
-<col style="width:11%" />
-<col style="width:11%" />
-<col style="width:11%" />
-<col style="width:11%" />
-</colgroup>
-<thead>
-<tr>
-	<th scope="col" class="f"><span>번호</span></th>
-	<th scope="col"><span>게시판ID</span></th>
-	<th scope="col"><span>게시판명</span></th>
-	<th scope="col"><span>종류</span></th>
-	<th scope="col"><span>관리자</span></th>
-	<th scope="col"><span><a href="javascript:fnSearchList('TOT_CNT')">게시물수</a></span></th>
-	<th scope="col"><span><a href="javascript:fnSearchList('READ_CNT')">방문자수</a></span></th>
-	<th scope="col"><span><a href="javascript:fnSearchList('REG_DTTM')">생성일</a></span></th>
-	<th scope="col" class="e"><span><a href="javascript:fnSearchList('END_DTTM')">폐쇄일</a></span></th>
-</tr>
-</thead>
-<tbody>
+	<table summary="이 표는 번호, 게시판명, 종류, 관리자, 게시물수, 방문자수, 생성일, 폐쇄일로 구성된 게시판 현황목록입니다." class="tbl_list">
+	<caption>게시판 현황</caption>
+	<colgroup>
+	<col style="width:7%" />
+	<col style="width:*" />
+	<col style="width:*" />
+	<col style="width:11%" />
+	<col style="width:11%" />
+	<col style="width:11%" />
+	<col style="width:11%" />
+	<col style="width:11%" />
+	<col style="width:11%" />
+	</colgroup>
+	<thead>
+	<tr>
+		<th scope="col" class="f"><div class="col">번호</div></th>
+		<th scope="col"><div class="col">게시판ID</div></th>
+		<th scope="col"><div class="col">게시판명</div></th>
+		<th scope="col"><div class="col">종류</div></th>
+		<th scope="col"><div class="col">관리자</div></th>
+		<th scope="col"><div class="col"><a href="javascript:fnSearchList('TOT_CNT')">게시물수</a></div></th>
+		<th scope="col"><div class="col"><a href="javascript:fnSearchList('READ_CNT')">방문자수</a></div></th>
+		<th scope="col"><div class="col"><a href="javascript:fnSearchList('REG_DTTM')">생성일</a></div></th>
+		<th scope="col" class="e"><div class="col"><a href="javascript:fnSearchList('END_DTTM')">폐쇄일</a></div></th>
+	</tr>
+	</thead>
+	<tbody>
 <c:choose>
 	<c:when test="${paginationInfo.totalRecordCount > 0}">
-		<c:forEach var="result" items="${notiList}" varStatus="status">	
+		<c:forEach var="result" items="${notiList}" varStatus="status">		
 			<tr>
 				<td>${result.seq}</td>
-				<td>${result.boardId}</td>
-				<td class="tit" title="${result.boardName}"><a href="javascript:fnGetBoardView('${result.boardId}');" class="text_dot">${result.boardName}</a> 
-				</td>
-				<td>${result.boardKind}(${result.boardForm})</td>
+				<td class="tit"><a href="javascript:fnGetBoardView('${result.boardId}');">${result.boardId}</a></td>
+				<td class="tit"><a href="javascript:fnGetBoardView('${result.boardId}');" class="text_dot" title="${result.boardName}">${result.boardName}</a></td>
+				<td>${result.boardKind}<br>(${result.boardForm})</td>
 				<td>${result.regrName}</td>
 				<td>${result.totCnt}</td>
 				<td>${result.readCnt}</td>
 				<td>${result.regDttm}</td>
-				<td>${result.endDttm}</td>
+				<td>
+					<c:if test="${result.endDttm == '운영중'}">
+						<span>운영중</span>
+					</c:if>
+					<c:if test="${result.endDttm != '운영중'}">
+						<span class="txt_point">${result.endDttm}</span>
+					</c:if>				
+				</td>
 			</tr>
 		</c:forEach>
 	</c:when>
@@ -169,108 +169,17 @@
 			<td colspan="9">검색된 데이터가 없습니다.</td>
 		</tr>
 	</c:otherwise>
-</c:choose>		
-</tbody>
-</table>
+</c:choose>	
+	</tbody>
+	</table>
+	<div class="paging">
+	<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_link_page" />
+	</div>
 
-<div class="paging">
-<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_link_page" />
 </div>
-</div>	 
-	 
 </form:form>
 
 </body>
+
 </html>		
 
-<%--
-
-<form:form commandName="admStatSearchVO" action="${WEB_HOME}/adm/stat/getAdmBbsStatList.do" name="listForm" method="post">
-	<c:if test="${not empty admStatSearchVO }">
-	<form:hidden path="pageUnit" value="${pageUnit}"/>
-	<form:hidden path="pageIndex" />
-	<form:hidden path="searchCondition" />
-	<form:hidden path="searchKeyword" value=""/>
-	<form:hidden path="orderType" />
-	<form:hidden path="isDesc" />
-	</c:if>
-	
-	<div>게시판현황</div>
-	<div>
-		<select id="search_gubun">
-			<option value="">선택</option>
-			<option value="BOARD_NAME" ${admStatSearchVO.searchCondition == 'BOARD_NAME' ? 'selected' : ''}>게시판명</option>
-			<option value="REGR_NAME" ${admStatSearchVO.searchCondition == 'REGR_NAME' ? 'selected' : ''}>관리자</option>
-		</select>  
-		<input type="text" id="keyword" value="${fn:replace(admStatSearchVO.searchKeyword,'"', '&quot;')}"> 
-		<input type="button" value="검색" id="search">
-	</div>
-	<div>
-		<select id="stat" name="stat">
-			<option value="">선택</option>
-			<option value="ALL" ${admStatSearchVO.stat == 'ALL' ? 'selected' : ''}>전체</option>
-			<option value="USE" ${admStatSearchVO.stat == 'USE' ? 'selected' : ''}>운영중</option>
-			<option value="NOT_USE" ${admStatSearchVO.stat == 'NOT_USE' ? 'selected' : ''}>폐쇄</option>
-		</select>  
-	</div>	
-	<div>
-		<input type="radio" name="searchDttm" value="REG">생성일 <input type="radio" name="searchDttm" value="END">폐쇄일 <input type="radio" name="searchDttm" checked value="">선택안함
-		<input id="sFromDt" name="sFromDt"  type="text">~ 
-		<input id="sToDt" name="sToDt" type="text">		
-	</div>	
-	<div>
-		<input type="button" id="createBbs" value="게시판생성">
-		<select id="list_cnt">
-			<option value="10">10개 보기</option>
-			<option value="20">20개 보기</option>
-			<option value="30">30개 보기</option>
-		</select>
-	</div>
-	<div>
-		<table>
-		<tr>
-			<td>번호</td>
-			<td>게시판ID</td>
-			<td>게시판명</td>
-			<td>종류</td>
-			<td>관리자</td>
-			<td><a href="javascript:fnSearchList('TOT_CNT')">게시물수</a></td>
-			<td><a href="javascript:fnSearchList('READ_CNT')">방문자수</a></td>
-			<td><a href="javascript:fnSearchList('REG_DTTM')">생성일</a></td>
-			<td><a href="javascript:fnSearchList('END_DTTM')">폐쇄일</a></td>
-		</tr>
-<c:choose>
-	<c:when test="${paginationInfo.totalRecordCount > 0}">
-		<c:forEach var="result" items="${notiList}" varStatus="status">	
-			
-		<tr>
-			<td>${result.seq}</td>
-			<td>${result.boardId}</td>
-			<td><a href="javascript:fnGetBoardView('${result.boardId}');">${result.boardName}</a></td>
-			<td>${result.boardKind}</td>
-			<td>${result.regrName}</td>
-			<td>${result.totCnt}</td>
-			<td>${result.readCnt}</td>
-			<td>${result.regDttm}</td>
-			<td>${result.endDttm}</td>
-		</tr>
-		
-		</c:forEach>
-	</c:when>
-	<c:otherwise>
-		<tr>
-			<td colspan="6">검색된 데이터가 없습니다.</td>
-		</tr>
-	</c:otherwise>
-</c:choose>		
-		</table>
-	</div>
-	<div>
-		<c:if test="${not empty paginationInfo }">
-		<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_link_page" />
-		</c:if>
-	</div>
-	
-</form:form>	
-
- --%>	 

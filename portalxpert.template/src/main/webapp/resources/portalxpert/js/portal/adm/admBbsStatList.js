@@ -72,7 +72,7 @@ $(document).ready(function () {
 		location.href = WEB_HOME+"/board100/createAdminBbsView.do";
 	});	
 	
-	$("#reset").click(function(){
+	$("#btnReset").click(function(){
 		listForm.reset();
 	});
 	

@@ -989,11 +989,6 @@
 						+'	    <span class="btn_st02 w01"><button>취소</button></span>'
 						+'</div>'
 						+'</li>');
-				
-									
-				
-				
-				
 			});
 			
 			$("#btnModify_"+notiOpn1[i].notiOpnSeq).click(function(){//수정
