@@ -24,103 +24,78 @@ var nodeCount = 0;
 </head>
 
 <body>
-<div id="ttree"></div>
-<div class="container">	
+<div class="container">
 	<div class="header">
-		<h1>메뉴관리</h1>
+		<div class="h1">메뉴관리</div>
 		<div class="loc">
-			<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
-			<span><a href="#">관리자</a></span>
-			<span><strong>메뉴관리</strong></span>
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<strong class="str">메뉴관리</strong>
 		</div>
 	</div>
-
-<div class="rbox">
-	<span class="rbox_top"></span>
-	<div class="rboxInner">
-		<ul>
-			<li>
-				<label for="pname">권한</label> 
-				<span class="selectN" style="width:100px">
-					<span>
-						<select title="" id="authCd">
-							<option value="${ROLE_SUPER}">[ 메뉴관리 ]</option>
-						</select>
-					</span>
+	
+	<div class="rbox">
+		<span class="rbox_top"></span>
+		<div class="rboxInner">
+			<!-- 셀렉트박스 -->
+			<span class="selectN" style="width:100px">
+				<span>
+					<label for="selectN_id1" class="hidden">권한</label>
+					<select title="" id="authCd">
+						<option value="${ROLE_SUPER}">선택</option>
+					</select>
 				</span>
-				<a href="#" class="btn_set bt_style7"><span id="search">조회</span></a>
-			</li>
-		</ul>
+			</span>
+			<!-- //셀렉트박스 -->
+			<button class="btn_style7_2" type="button" id="search">검색</button>
+		</div>
 	</div>
-</div>
-<br/>
-
-    <div class="tree_list">
-    	<div class="p_left">
-		    <div class="btn_area">
-				<div class="fl_left">
-					<a href="#" class="btn_set bt_style2">
-						<span id="btn_catageory_create">생성</span>
-					</a>
-					<a href="#" class="btn_set bt_style2">
-						<span id="btn_catageory_delete">삭제</span>
-					</a>
-				</div>
-				<div class="fl_right">
-					<a href="#" class="btn_set bt_style3">
-						<span id="saveMenu">저장</span>
-					</a>
-				</div>
-			</div>	
-		    <div class="btn_area">
-				<div class="fl_left">
-					<div class="lnb_clop"><a href="#" id="btn_all_close_ca"><span class="ico_allcl" ></span>모두닫음</a> | <a href="#" id="btn_all_open_ca"><span class="ico_allop"></span>모두펼침</a></div>
-				</div>
-			</div>	
-			<div class="tree" id="boardCategoryListDiv" style="height:550px !important ; border:1px solid #ddd">
+	
+	<div class="btn_board_top">
+		<div class="fl">
+			<button class="btn_write5" type="button" id="btn_catageory_create">신규 등록</button>
+			<button class="btn_style4_4" type="button" id="btn_all_close_ca">모두닫음</button>
+			<button class="btn_style4_4" type="button" id="btn_all_open_ca">모두펼침</button>
+			<div class="tree" id="boardCategoryListDiv" style="margin-top:10px;width:350px;height:550px !important ; border:1px solid #ddd">
 				<ul id="categoryTreeObj" class="ztree"></ul>
+			</div>			
+		</div>
+		<div class="fr mt5">
+			<table class="tbl_form" style="margin-top:35px; width:330px !important;" summary="이 표는 메뉴ID, 메뉴명을 입력하는 메뉴정보 표입니다.">
+			<caption>사용자</caption>
+			<colgroup>
+				<col style="width:30%" />
+				<col style="*" />
+			</colgroup>
+			<tbody>
+			<tr>
+				<th scope="row"><label for="input01">메뉴ID</label></th>
+				<td><input type="text" id="menuId" name="menuId" disabled="disabled" class="text" style="width:200px" title="메뉴ID를 입력합니다." /></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="input01">상위메뉴ID</label></th>
+				<td><input type="text" id="menuPId" name="menuPId" disabled="disabled" class="text" style="width:200px" title="상위메뉴ID를 입력합니다." /></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="input01">메뉴명</label></th>
+				<td><input type="text" id="menuNm" name="menuNm"  class="text" style="width:200px" title="메뉴명을 입력합니다." /></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="input01">URL</label></th>
+				<td><textarea id="menuUrl" name="menuUrl" cols="28" rows="5" maxlength="100"  title="URL을 입력합니다."></textarea></td>
+			</tr>
+			</tbody>
+			</table>
+			<div class="btn_board_sec">
+				<div class="fr">
+					<button class="btn_style4_2" type="button" id="btn_board_update">수정</button>
+					<button class="btn_style4_2" type="button" id="btn_catageory_delete">삭제</button>
+					<button class="btn_style3_2" type="button" id="saveMenu">저장</button>
+				</div>			
 			</div>
-	    </div>
-	    <div class="p_right">
-
-			 <div class="te_center te90">
-		      
-					<table class="tbl_form" summary="제목에 대한 입력테이블입니다.">
-					<caption>제목</caption>
-					<colgroup>
-						<col style="width:30%" />
-						<col style="*" />
-					</colgroup>
-					<tbody>
-					<tr>
-						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">메뉴ID</label></th>
-						<td><input type="text" class="text" style="width:200px" title="아이디" id="menuId" name="menuId" disabled="disabled" /></td>
-					</tr>
-					<tr>
-						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">상위메뉴ID</label></th>
-						<td><input type="text" class="text" style="width:200px" title="아이디" id="menuPId" name="menuPId" disabled="disabled" /></td>
-					</tr>
-					<tr>
-						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">메뉴명</label></th>
-						<td><input type="text" class="text" style="width:200px" title="아이디" id="menuNm" name="menuNm" value="" /></td>
-					</tr>
-					<tr>
-						<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">URL</label></th>
-						<td><textarea id="menuUrl" name="menuUrl" cols="32" rows="5" maxlength="100"  title="URL"></textarea></td>
-					</tr>
-					</tbody>
-					</table>		      
-		      
-	    	</div>
-	    	<br>
-	    	<div class="btn_area">
-	    		<div class="fl_right">
-	    			<a id="btn_board_update" class="btn_set bt_style2">
-	    				<span>수정</span>
-	    			</a>
-	    		</div>
-	    	</div>	    	
+		</div>		
 	</div>
 </div>
-</div>
+
 </body>
+</html>
+

@@ -17,7 +17,7 @@
 	};	
 	
 	function fnGetRegView(authCd){
-		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysAuthManage.do?authCd='+authCd, '권한',900,260);
+		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysAuthManage.do?authCd='+authCd, '권한',900,310);
 	}
 	
 	
@@ -41,7 +41,7 @@ $(document).ready(function () {
 	});
 	
 	$('#createAuth').click(function() {//등록
-		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysAuthManage.do?authCd=', '사용자',900,260);
+		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysAuthManage.do?authCd=', '사용자',900,310);
 	});	
 	
 	parent.document.getElementById("admFrame").height = "700px";

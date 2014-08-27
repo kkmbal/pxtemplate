@@ -19,17 +19,15 @@ var authCd = '${admSysPsnUserInfoVO.authCd}';
 </script>
 <script type="text/javascript" src="${RES_HOME}/js/portal/adm/admSysUserManage.js"></script>
 <body>
-<!--pop_wrap-->
-<div class="pop_wrap" style="width:898px;">
 
-	<div class="pop_header">사용자</div>
-	<div class="pop_content">
-	<!-- popup 본문 -->
-	 	<div class="pop_post clearfix">
-			<form:form commandName="admSysPsnUserInfoVO" action="${WEB_HOME}/adm/sys/getAdmSysUserManage.do" name="listForm" method="post">
-			<input type="hidden" name="userId" id="userId" value="${admSysPsnUserInfoVO.userId}">
-			<table class="tbl_form" summary="제목에 대한 입력테이블입니다.">
-			<caption>제목</caption>
+<div class="pop_wrap">
+	<div class="pop_type1">
+		<div class="header">
+			<h1  style="font-size:25px;font-weight:bold;">사용자</h1>
+		</div>
+		<div class="contents">
+			<table class="tbl_form" summary="이 표는 사용자이름, 휴대폰, 이메일, 부서, 권한사항을 입력하는 사용자정보 표입니다.">
+			<caption>사용자</caption>
 			<colgroup>
 				<col style="width:15%" />
 				<col style="width:35%" />
@@ -38,27 +36,28 @@ var authCd = '${admSysPsnUserInfoVO.authCd}';
 			</colgroup>
 			<tbody>
 			<tr>
-				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">아이디</label></th>
-				<td><input type="text" class="text" style="width:222px" title="아이디" id="userId_v" name="userId_v" value="${admSysPsnUserInfoVO.userId}" /></td>
-				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input03">이름</label></th>
-				<td><input type="text"  class="text" style="width:222px" title="이름" id="userName" name="userName" value="${admSysPsnUserInfoVO.userName}" /></td>
+				<th scope="row"><label for="input01">아이디</label></th>
+				<td><input type="text" id="userId_v" name="userId_v" value="${admSysPsnUserInfoVO.userId}" class="text" style="width:222px" title="아이디를 입력합니다." /></td>
+				<th scope="row"><label for="input01">이름</label></th>
+				<td><input type="text" id="userName" name="userName" value="${admSysPsnUserInfoVO.userName}" class="text" style="width:222px" title="이름을 입력합니다." /></td>
 			</tr>
 			<tr>
-				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력"  /> <label for="input02">비밀번호</label></th>
-				<td><input type="password"  class="text" style="width:222px" title="비밀번호" id="userPassword" name="userPassword" value="${admSysPsnUserInfoVO.userPassword}" /></td>
-				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input03">비밀번호확인</label></th>
-				<td><input type="password"  class="text" style="width:222px" title="비밀번호확인" id="userPassword2" name="userPassword2" /></td>
+				<th scope="row"><label for="input01">비밀번호</label></th>
+				<td><input type="password" id="userPassword" name="userPassword" value="${admSysPsnUserInfoVO.userPassword}" class="text" style="width:222px" title="비밀번호를 입력합니다." /></td>
+				<th scope="row"><label for="input01">비밀번호확인</label></th>
+				<td><input type="password" id="userPassword2" name="userPassword2" class="text" style="width:222px" title="비밀번호를 입력합니다." /></td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="input02">휴대폰</label></th>
-				<td><input type="text"  class="text" style="width:222px" title="휴대폰" id="mobile" name="mobile" value="${admSysPsnUserInfoVO.mobile}"  /></td>
-				<th scope="row"><label for="input03">이메일</label></th>
-				<td><input type="text"  class="text" style="width:222px" title="이메일" id="mail" name="mail" value="${admSysPsnUserInfoVO.mail}" /></td>
+				<th scope="row"><label for="input01">휴대폰</label></th>
+				<td><input type="text" id="mobile" name="mobile" value="${admSysPsnUserInfoVO.mobile}"  class="text" style="width:222px" title="휴대폰을 입력합니다." /></td>
+				<th scope="row"><label for="input01">이메일</label></th>
+				<td><input type="text" id="mail" name="mail" value="${admSysPsnUserInfoVO.mail}" class="text" style="width:222px" title="이메일을 입력합니다." /></td>
 			</tr>
+			
 			<tr>
-				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">부서</label></th>
+				<th scope="row"><label for="select02">부서</label></th>
 				<td>
-					<span class="selectN" style="width:222px">
+					<span class="selectN" style="width:150px">
 						<span>
 							<select title="" name="deptCode" id="deptCode">
 								<option value="">선택</option>
@@ -66,9 +65,9 @@ var authCd = '${admSysPsnUserInfoVO.authCd}';
 						</span>
 					</span>
 				</td>
-				<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input03">권한</label></th>
-				<td colspan="3">
-					<span class="selectN" style="width:222px">
+				<th scope="row"><label for="select02">권한</label></th>
+				<td>
+					<span class="selectN" style="width:150px">
 						<span>
 							<select title="" name="authCd" id="authCd">
 								<option value="">선택</option>
@@ -79,27 +78,15 @@ var authCd = '${admSysPsnUserInfoVO.authCd}';
 			</tr>
 			</tbody>
 			</table>
-			</form:form>
-			
-		</div>
-	</div>
-	
-	<!-- popup 본문 -->
-	<div class="pop_footer">
-	     
-		<!-- 버튼영역 -->
-		<div style="text-align:center;">
-			<div class="rbox_btns">
-				<a href="#" class="btn_set bt_style3" id="btnSave" ><span>저장</span></a>
-				<a href="#" class="btn_set bt_style2" id = "btnClose"><span>닫기</span></a>
+			<div class="pop_btn_sec">
+				<button class="btn_style3_2" type="button" id="btnSave">저장</button>
+				<button class="btn_style4_2" type="button" id="btnClose">취소</button>
 			</div>
 		</div>
-		<!-- //버튼영역 -->	     
-	     
-	      
-	 </div>  
-</div>	
-<!--//pop_wrap-->
+		<a href="#" onclick="window.close();return false" class="pop_close"><img src="${RES_HOME}/images/btn_pop_close.png" width="16" height="15" alt="닫기" /></a>
+	</div>
+</div>
 
 </body>
 </html>
+

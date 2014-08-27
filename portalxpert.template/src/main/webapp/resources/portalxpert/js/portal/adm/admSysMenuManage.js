@@ -412,10 +412,11 @@ $(document).ready(function() {
 		treeObj.updateNode(nodes[0]);
 		
 		
-		$("#menuId").val("");
-		$("#menuPId").val("");
-		$("#menuNm").val("");
-		$("#menuUrl").val("");
+		//$("#menuId").val("");
+		//$("#menuPId").val("");
+		//$("#menuNm").val("");
+		//$("#menuUrl").val("");
+		alert("수정되었습니다.");
 		
 	});
 
@@ -474,7 +475,8 @@ $(document).ready(function() {
 	});
 
 	$("#btn_catageory_delete").click(function() {//삭제
-
+		if ($("#menuId").val() == "") return;
+		
 		var nodes = zTree.getSelectedNodes();
 
 		if (nodes.length > 0) {
@@ -497,6 +499,11 @@ $(document).ready(function() {
 			}
 			*/
 			removeTreeNode();
+			
+			$("#menuId").val("");
+			$("#menuPId").val("");
+			$("#menuNm").val("");
+			$("#menuUrl").val("");
 		} else {
 			alert("삭제할 메뉴를 선택하세요");
 			return;
