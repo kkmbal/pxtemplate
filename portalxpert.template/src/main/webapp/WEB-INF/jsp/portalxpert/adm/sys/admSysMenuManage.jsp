@@ -36,6 +36,7 @@ var nodeCount = 0;
 	<div class="rbox">
 		<span class="rbox_top"></span>
 		<div class="rboxInner">
+			<label class="lbl">권한</label>
 			<!-- 셀렉트박스 -->
 			<span class="selectN" style="width:100px">
 				<span>

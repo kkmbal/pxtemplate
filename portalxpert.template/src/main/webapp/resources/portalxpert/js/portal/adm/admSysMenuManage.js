@@ -567,11 +567,17 @@ $(document).ready(function() {
 					var treeObj = $.fn.zTree.getZTreeObj("categoryTreeObj");
 					
 					if(data.authCd == 'SYSTEM'){
-						$(".fl_left").show();
+						$("#btn_catageory_create").show();
+						$("#btn_catageory_delete").show();
 						$("#btn_board_update").show();
+						$("#menuNm").attr("disabled", false);
+						$("#menuUrl").attr("disabled", false);
 					}else{
-						$(".fl_left").hide();
+						$("#btn_catageory_create").hide();
+						$("#btn_catageory_delete").hide();
 						$("#btn_board_update").hide();
+						$("#menuNm").attr("disabled", true);
+						$("#menuUrl").attr("disabled", true);
 					}
 					authCd = data.authCd;
 					treeObj.checkAllNodes(false);
