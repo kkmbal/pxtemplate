@@ -42,6 +42,10 @@ var fn_admGen_linkCtlg_modify = function(linkCatId){
 /* 링크분류 삭제 */
 var fn_admGen_linkCtlg_delete = function(linkCatId){
 	
+	if (!confirm('삭제 하시겠습니까?')) {
+		return;
+	}
+	
 	$("#linkCatId").val(linkCatId);
 	
 	PortalCommon.getJson({
@@ -213,7 +217,7 @@ $("document").ready(function(){
 				
 				<div class="btn_board_top">
 					<div class="fr mt5">
-						<c:out value="${pSearch.currentRecordCount}"/> 건
+						<c:out value="${paginationInfo.totalRecordCount}"/> 건
 					</div>					
 				</div>
 				<table summary="이 표는 링크분류 목록입니다." class="tbl_list">

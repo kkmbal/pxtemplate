@@ -44,6 +44,10 @@ var fn_admGen_link_modify = function(linkCatId,linkCd){
 /* 링크분류 삭제 */
 var fn_admGen_link_delete = function(linkCatId, linkCd){
 	
+	if (!confirm('삭제 하시겠습니까?')) {
+		return;
+	}
+	
 	$("form[name=frmAction] :input").each(function(){
 		$(this).val();
 	});
@@ -242,7 +246,7 @@ var fnAdwWin = function(url, popupYn) {
 				
 				<div class="btn_board_top">
 					<div class="fr mt5">
-						<c:out value="${pSearch.currentRecordCount}"/> 건
+						<c:out value="${paginationInfo.totalRecordCount}"/> 건
 					</div>					
 				</div>
 				<table summary="이 표는 링크분류 목록입니다." class="tbl_list">
