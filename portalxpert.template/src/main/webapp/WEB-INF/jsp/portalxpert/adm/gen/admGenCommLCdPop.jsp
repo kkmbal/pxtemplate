@@ -67,55 +67,49 @@ $("document").ready(function(){
 	});
 });
 </script>
+</head>
 
 <body>
-<!--pop_wrap-->
-<div class="pop_wrap" style="width:490px;"><!-- 팝업사이즈 width:800px; height:500px; -->
-	<div class="pop_header">코드 등록/수정</div>
-	<div class="pop_content ma_bot10">
-	<!-- popup 본문 -->
-	<form:form commandName="admGenCodeManageVO" name="popForm" id="popForm" method="post">
-	 	<div class="pop_post clearfix">
-			<table class="tbl_form" summary="제목에 대한 입력테이블입니다.">
-			<caption>제목</caption>
+
+<div class="pop_wrap">
+	<div class="pop_type1">
+		<div class="header">
+			<h1  style="font-size:25px;font-weight:bold;">코드 등록/수정</h1>
+		</div>
+		<div class="contents">
+			<form:form commandName="admGenCodeManageVO" name="popForm" id="popForm" method="post">
+			<table class="tbl_form" summary="이 표는 코드 등록/수정정보 표입니다.">
+			<caption>코드 등록/수정</caption>
 			<colgroup>
 				<col style="width:20%" />
 				<col style="*" />
 			</colgroup>
 			<tbody>
 			<tr>
-				<th scope="row"><label for="input02">코드</label></th>
-				<td><input type="text"  class="text" style="width:340px" title="코드" maxlength="10" id="cd" name="cd" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.cd} readonly="readonly"</c:if> ></td>
-			</tr>			
+				<th scope="row"><label for="input01">코드</label></th>
+				<td><input type="text" maxlength="10" id="cd" name="cd" <c:if test="${admGenCodeManage.pageType == 'U'}">value="${admGenCodeManage.cd}" readonly="readonly"</c:if> class="text" style="width:240px" title="코드를 입력합니다." /></td>
+			</tr>
 			<tr>
-				<th scope="row"><label for="input02">코드명</label></th>
-				<td><input type="text"  class="text" style="width:340px" title="코드명" maxlength="50" id="cdNm" name="cdNm" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.cdNm} </c:if> ></td>
-			</tr>			
+				<th scope="row"><label for="input01">코드명</label></th>
+				<td><input type="text" maxlength="50" id="cdNm" name="cdNm" <c:if test="${admGenCodeManage.pageType == 'U'}">value="${admGenCodeManage.cdNm}" </c:if> class="text" style="width:240px" title="코드명을 입력합니다." /></td>
+			</tr>
 			<tr>
-				<th scope="row"><label for="input02">코드설명</label></th>
-				<td><input type="text"  class="text" style="width:340px" title="코드설명" maxlength="2000" id="remark" name="remark" value=<c:if test="${admGenCodeManage.pageType == 'U'}"> ${admGenCodeManage.remark} </c:if> ></td>
-			</tr>			
+				<th scope="row"><label for="input01">코드설명</label></th>
+				<td><input type="text" maxlength="2000" id="remark" name="remark" <c:if test="${admGenCodeManage.pageType == 'U'}">value="${admGenCodeManage.remark}"</c:if>  class="text" style="width:240px" title="코드설명을 입력합니다." /></td>
+			</tr>
 			</tbody>
-			</table>	 	
-		</div>
-		<!-- popup 본문 -->
-	</form:form>
-	</div>
-	
-	<!-- popup 본문 -->
-	<div class="pop_footer">
-		<!-- 버튼영역 -->
-		<div style="text-align:center;">
-			<div class="rbox_btns">
-				<a href="#" class="btn_set bt_style3" id="btnOK" onclick="fn_adm_code_save();"><span>등록</span></a>
-				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="popForm.reset();"><span>초기화</span></a>
-				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="self.close();"><span>닫기</span></a>
+			</table>
+			</form:form>
+			<div class="pop_btn_sec">
+				<button class="btn_style3_2" type="button" id="btnOK" onclick="fn_adm_code_save();">등록</button>
+				<button class="btn_style4_3" type="button" id = "btnClose" onclick="popForm.reset();">초기화</button>
+				<button class="btn_style4_2" type="button" id = "btnClose" onclick="self.close();">닫기</button>
 			</div>
 		</div>
-		<!-- //버튼영역 -->	     
-	 </div>  
-	 	
-</div>	
-<!--//pop_wrap-->
+		<a href="#" onclick="window.close();return false" class="pop_close"><img src="${RES_HOME}/images/btn_pop_close.png" width="16" height="15" alt="닫기" /></a>
+	</div>
+</div>
+
 </body>
 </html>
+

@@ -36,7 +36,7 @@ var fn_admGen_linkCtlg_insert = function(){
 /* 링크분류 수정화면 */
 var fn_admGen_linkCtlg_modify = function(linkCatId){
 	PortalCommon.popupWindowCenter('${WEB_HOME}/adm/gen/getAdmGenSysLinkCtlg.do?linkCatId=' + linkCatId
-			,'linkCtlg_modify_pop',500,180);
+			,'linkCtlg_modify_pop',500,230);
 };
 
 /* 링크분류 삭제 */
@@ -139,150 +139,138 @@ $("document").ready(function(){
 	
 });
 </script>
+</head>
 
 <body>
-<div class="container">	
-<div class="header">
-	<h1>링크관리</h1>
-	<div class="loc">
-		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
-		<span><a href="#">관리자</a></span>
-		<span><strong>링크관리</strong></span>
+
+<div class="container">
+	<div class="header">
+		<div class="h1">링크관리</div>
+		<div class="loc">
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<strong class="str">링크관리</strong>
+		</div>
 	</div>
-</div>
+	
 	
 	<!--tab-->
 	<div class="tab_1">
-		
-		<!--tab링크-->
+		<!-- 제목부분 --> 
 		<ul class="clearfix">
 			<!--tab01-->
 			<li><a style="cursor:pointer;" onclick="javascript:fnMenuToggle(2)" class="tab_title" ><span>링크 관리</span></a></li>
 			<li class="on"><a style="cursor:pointer;" onclick="javascript:fnMenuToggle(1)" class="tab_title" ><span>링크분류 관리</span></a></li>
-			<!-- li><a style="cursor:pointer;" onclick="javascript:fnMenuToggle(3)" class="tab_title" ><span>업무데스크 관리</span></a></li -->
 		</ul>
-		<!--//tab링크-->
-		
-		<div class="tab_post">
-			
-			<!--button-->
-			<!--//button-->
-			
-			<form:form commandName="admGenLinkVO" name="frmMain" method="post">
-			<input type="hidden" id="linkCatId" name="linkCatId">
-			
-			<!--search-->
-					<h2>링크 등록</h2>
-					<div class="tbl_onedata">
-						<table class="tbl_form" summary="링크 등록">
-						<caption>링크 등록</caption>
-						<colgroup>
-							<col style="width:15%" />
-							<col style="width:35%" />
-							<col style="width:15%" />
-							<col style="width:35%" />
-						</colgroup>
-						<tbody>
-						<tr>
-							<th scope="row"><img src="${RES_HOME}/images/ico_essential.png" alt="필수입력" /> <label for="input02">분류명</label></th>
-							<td><input type="text"  class="text" style="width:210px" title="분류명" id="linkCatNm" name="linkCatNm" ></td>
-							<th scope="row"><label for="input03">순서</label></th>
-							<td>
-								<select name="linkCatOrder" title="순서 선택" style="width:50px;">
-								<c:forEach var="order" begin="1" end="${paginationInfo.totalRecordCount+1}" step="1">
-									<option value="${order}" <c:if test="${order == paginationInfo.totalRecordCount+1}">selected="selected"</c:if>>${order}</option>
-								</c:forEach>
-								</select>							
-							</td>
-						</tr>
-						</tbody>
-						</table>					
-					</div>
-					<br>
-					<div class="btn_board_top">
-						<div class="fr">
-							<a href="#" class="btn_set bt_style3" onclick="fn_admGen_linkCtlg_insert();"><span>등록</span></a>
-						</div>
+		<!-- //제목부분 -->
+		<!-- 내용부분 -->
+			<div class="tab_post">	
+				<form:form commandName="admGenLinkVO" name="frmMain" method="post">
+				<input type="hidden" id="linkCatId" name="linkCatId">
+				<!-- 링크 등록 -->
+				<div class="contents">
+					<table class="tbl_form" summary="이 표는 링크 등록정보 표입니다.">
+					<caption>링크 등록</caption>
+					<colgroup>
+						<col style="width:15%" />
+						<col style="width:35%" />
+						<col style="width:15%" />
+						<col style="width:35%" />
+					</colgroup>
+					<tbody>
+					<tr>
+						<th scope="row"><label for="input01">분류명</label></th>
+						<td><input type="text" id="linkCatNm" name="linkCatNm" class="text" style="width:222px" title="분류명을 입력합니다." /></td>
+						<th scope="row"><label for="input01">순서</label></th>
+						<td>
+							<select name="linkCatOrder" title="순서 선택" style="width:50px;">
+							<c:forEach var="order" begin="1" end="${paginationInfo.totalRecordCount+1}" step="1">
+								<option value="${order}" <c:if test="${order == paginationInfo.totalRecordCount+1}">selected="selected"</c:if>>${order}</option>
+							</c:forEach>
+							</select>
+						</td>
+					</tr>					
+					</tbody>
+					</table>
+					
+					<div class="pop_btn_sec">
+							<button class="btn_style3_2" type="button" onclick="fn_admGen_linkCtlg_insert();">등록</button>
 					</div>					
 					
-					<!--title-->
-					<h2>링크 목록</h2>
-					<!--//title-->
-					<!--search-->
-					<div class="rbox">
-						<span class="rbox_top"></span>
-						<div class="rboxInner">
-							<!-- 셀렉트박스 -->
-							<span style="font-weight:bold;width:100px">
-								링크분류 검색
-							</span>
-							<!-- //셀렉트박스 -->
-							<input type="text" id="searchKeyword" name="searchKeyword" title="검색어 입력" class="text ml5mr10" style="width:450px" /> 
-							<a href="#" class="btn_set bt_style7" id="search" onclick="fn_admGen_linkCtlg_search();"><span>검색</span></a>
-						</div>
+				</div>	
+				<br></br>
+				<!-- 링크 등록 -->
+	
+	
+				<!-- 링크 목록 -->
+				<div class="rbox">
+					<span class="rbox_top"></span>
+					<div class="rboxInner">
+						<label class="lbl">링크분류명</label>
+						<input type="text" value="${fn:replace(pSearch.searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:450px" /> 
+						<button class="btn_style7_2" type="button" id="search" onclick="fn_admGen_linkCtlg_search();">검색</button>
+					</div>
+				</div>
+				
+				<div class="btn_board_top">
+					<div class="fr mt5">
+						<c:out value="${pSearch.currentRecordCount}"/> 건
 					</div>					
-					<!--//search-->
-			
-			<!-- page unit -->
-			<div class="select te_right" >
-				<c:out value="${paginationInfo.recordCountPerPage}"/> 건
-			</div>
-		    <!-- //paga unit -->
-		    
-			<!--list-->
-			<div class="tbl_list te_center">
-				<table summary="링크분류 목록">
-					<caption>링크분류 목록</caption>
-					<colgroup>
-						<col width="45%">
-						<col>
-						<col>
-						<col>
-						<col>
-					</colgroup>
-					<thead>
+				</div>
+				<table summary="이 표는 링크분류 목록입니다." class="tbl_list">
+				<caption>링크분류 목록</caption>
+				<colgroup>
+					<col width="150px"/>
+					<col width="70px"/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+				<tr>
+					<th scope="col" class="f"><div class="col">링크분류</div></th>
+					<th scope="col"><div class="col">표시순서</div></th>
+					<th scope="col"><div class="col">수정</div></th>
+					<th scope="col"><div class="col">삭제</div></th>
+					<th scope="col" class="e"><div class="col">사용여부</div></th>
+				</tr>
+				</thead>
+				<tbody>
+			<c:choose>
+				<c:when test="${paginationInfo.totalRecordCount > 0}">
+					<c:forEach var="result" items="${sysLinkCtlgList}" varStatus="i">		
 						<tr>
-							<th scope="col">링크분류</th>
-							<th scope="col">표시순서</th>
-							<th scope="col">수정</th>
-							<th scope="col">삭제</th>
-							<th scope="col">사용여부</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="result" items="${sysLinkCtlgList}" varStatus="i">
-						<tr>
-							<td class="te_left"><a href="#" onclick="javascript:fn_admGen_linkCtlg_linkCall('${result.linkCatId}');">${result.linkCatNm}</a></td>
+							<td class="tit"><a href="#" onclick="javascript:fn_admGen_linkCtlg_linkCall('${result.linkCatId}');">${result.linkCatNm}</a></td>
 							<td>${result.linkCatOrder}</td>
 							<td><a href="#" onclick="fn_admGen_linkCtlg_modify('${result.linkCatId}');" class="ico_modify" title="수정"></a></td>
 							<td><a href="#" onclick="fn_admGen_linkCtlg_delete('${result.linkCatId}');" class="ico_delete" title="삭제"></a></td>
 							<td>사용</td>
-						</tr>
-						</c:forEach>
-					</tbody>
+						</tr>	
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="5">검색된 데이터가 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>		
+				
+				</tbody>
 				</table>
-			</div>
-			<!--//list-->
-			
-			<!--paginate-->
-			<div id="paging" class="paging">
-				<ui:pagination paginationInfo = "${paginationInfo}"
-						   type="image"
-						   jsFunction="fn_admGen_linkCtlg_linkPage"
-						   />
-				<form:hidden path="pageIndex" />
-			</div>
-			<!--//paginate-->
+				<div class="paging">
+				<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_admGen_linkCtlg_linkPage" />
+				</div>
+				<!-- 링크 목록 -->
 			
 			</form:form>
 			
-			<!--button-->
-			<!--//button-->
-		</div>
-		
+
+			</div>
+			<!--tab02-->
 	</div>
-	<!--//tab-->
+	<!--//tab-->	
 	
-	</div>
-	</body>
-</html>	
+</div>
+
+</body>
+</html>
+

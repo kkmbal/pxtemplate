@@ -18,7 +18,8 @@ var fn_admGen_linkCtlg_update = function(){
 		    data: $("form[name=frmMain]").serialize(),
 			success :function(data){
 				if(data.jsonResult.success === true){
-					//성공후 실행 스크립트
+					$(opener.location).attr("href", "javascript:fn_admGen_linkCtlg_search();"); 
+					self.close();
 				}else{
 					//실패후 실행 스크립트
 				}
@@ -70,30 +71,28 @@ var fn_admGen_linkCtlg_cloBTN_click = function(){
 </head>
 <body>
 
-<!--pop_wrap-->
-<div class="pop_wrap" style="width:490px;">
-	<div class="pop_header">링크분류 수정</div>
-	<div class="pop_content ma_bot10">
-	
-		<!-- popup 본문 -->
-		<form:form commandName="admGenLinkVO" name="frmMain" method="post">
-		<input type="hidden" name="linkCatId" value="${sysLinkCtlg.linkCatId}">
-		<input type="hidden" name="linkCatOrder" value="${sysLinkCtlg.linkCatOrder}">
-				
-	 	<div class="pop_post clearfix">
-			<table class="tbl_form" summary="링크를 분류 및 수정 합니다.">
-			<caption>링크분류명,링크분류순서</caption>
+<div class="pop_wrap">
+	<div class="pop_type1">
+		<div class="header">
+			<h1  style="font-size:25px;font-weight:bold;">링크분류 수정</h1>
+		</div>
+		<div class="contents">
+			<form:form commandName="admGenLinkVO" name="frmMain" method="post">
+			<input type="hidden" name="linkCatId" value="${sysLinkCtlg.linkCatId}">
+			<input type="hidden" name="linkCatOrder" value="${sysLinkCtlg.linkCatOrder}">
+			<table class="tbl_form" summary="이 표는 링크를 분류 및 수정하는 표입니다.">
+			<caption>링크분류 수정</caption>
 			<colgroup>
-				<col style="width:25%" />
+				<col style="width:20%" />
 				<col style="*" />
 			</colgroup>
 			<tbody>
 			<tr>
-				<th scope="row"><label for="input02">링크분류명</label></th>
-				<td><input type="text"  class="text" style="width:320px" id="linkCatNm" name="linkCatNm" value="${sysLinkCtlg.linkCatNm}" title="링크분류명" ></td>
-			</tr>			
+				<th scope="row"><label for="input01">링크분류명</label></th>
+				<td><input type="text" maxlength="50" id="linkCatNm" name="linkCatNm" value="${sysLinkCtlg.linkCatNm}" class="text" style="width:240px" title="링크분류명을 입력합니다." /></td>
+			</tr>
 			<tr>
-				<th scope="row"><label for="input02">링크 분류 순서</label></th>
+				<th scope="row"><label for="input01">분류 순서</label></th>
 				<td>
                 	<select name="linkCatOrderNew" title="순서를 선택하세요">
 					<c:forEach var="order" begin="1" end="${sysLinkCtlg.linkCatCount}" step="1">
@@ -101,28 +100,20 @@ var fn_admGen_linkCtlg_cloBTN_click = function(){
 					</c:forEach>
 					</select>				
 				</td>
-			</tr>			
+			</tr>	
 			</tbody>
-			</table>	 	
-		</div>
-		
-		</form:form>
-		<!-- popup 본문 -->
-	</div>
-	
-	<div class="pop_footer">
-		<!-- 버튼영역 -->
-		<div style="text-align:center;">
-			<div class="rbox_btns">
-				<a href="#" class="btn_set bt_style3" id="btnOK" onclick="fn_admGen_linkCtlg_uptBTN_click();"><span>수정</span></a>
-				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="fn_admGen_linkCtlg_iniBTN_click();"><span>초기화</span></a>
-				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="fn_admGen_linkCtlg_cloBTN_click();"><span>닫기</span></a>
+			</table>
+			</form:form>
+			<div class="pop_btn_sec">
+				<button class="btn_style3_2" type="button" id="btnOK" onclick="fn_admGen_linkCtlg_uptBTN_click();">등록</button>
+				<button class="btn_style4_3" type="button" id = "btnClose" onclick="fn_admGen_linkCtlg_iniBTN_click();">초기화</button>
+				<button class="btn_style4_2" type="button" id = "btnClose" onclick="self.close();">닫기</button>
 			</div>
 		</div>
-		<!-- //버튼영역 -->	     
-	 </div> 	
-</div>	
-<!--//pop_wrap-->
+		<a href="#" onclick="window.close();return false" class="pop_close"><img src="${RES_HOME}/images/btn_pop_close.png" width="16" height="15" alt="닫기" /></a>
+	</div>
+</div>
 
 </body>
 </html>
+

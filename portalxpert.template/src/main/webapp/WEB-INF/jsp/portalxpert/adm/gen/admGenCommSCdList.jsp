@@ -10,7 +10,7 @@
 /* 세부코드 추가*/
 var fn_adm_code_add = function(){
 	var pCD = $("#cd option:selected").val();
-	PortalCommon.popupWindowCenter('./getAdmGenCommonSCodeRegisterPop.do?cd=' + pCD,'타이틀',500,250);
+	PortalCommon.popupWindowCenter('./getAdmGenCommonSCodeRegisterPop.do?cd=' + pCD,'타이틀',500,300);
 };
 
 /* 세부코드 수정 */
@@ -32,7 +32,7 @@ var fn_adm_code_update = function(){
         alert("코드를 선택하십시오.");
         return;
     }
-	PortalCommon.popupWindowCenter('./getAdmGenCommonSCodeUpdatePop.do?cd=' + pCD + "&cdSpec=" +pCD_SPEC,'pop',495,245);
+	PortalCommon.popupWindowCenter('./getAdmGenCommonSCodeUpdatePop.do?cd=' + pCD + "&cdSpec=" +pCD_SPEC,'pop',495,300);
 };
 
 /* 세부 코드 삭제 */
@@ -129,22 +129,23 @@ $("document").ready(function(){
 });
 
 </script>
+</head>
 
 <body>
-<div class="container">	
-<div class="header">
-	<h1>공통코드관리</h1>
-	<div class="loc">
-		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
-		<span><a href="#">관리자</a></span>
-		<span><strong>공통코드관리</strong></span>
+
+<div class="container">
+	<div class="header">
+		<div class="h1">공통코드관리</div>
+		<div class="loc">
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<strong class="str">공통코드관리</strong>
+		</div>
 	</div>
-</div>
 	
 	
 	<!--tab-->
 	<div class="tab_1">
-		<!-- 제목부분 -->
+		<!-- 제목부분 --> 
 		<ul class="clearfix">
 			<!--tab01-->
 			<li><a style="cursor:pointer;" onclick="javascript:fnMenuToggle(1)" class="tab_title" ><span>상위코드</span></a></li>
@@ -152,98 +153,98 @@ $("document").ready(function(){
 		</ul>
 		<!-- //제목부분 -->
 		<!-- 내용부분 -->
-			<div class="tab_post">
+			<div class="tab_post">	
 				<form:form commandName="admGenCodeManageVO" name="listForm" method="post">
 				<input type="hidden" name="cdSpec" id="cdSpec">
-
+	
 				<div class="rbox">
-					<span class="rbox_top"></span>
+					<div class="rbox_top"></div>
 					<div class="rboxInner">
-						<ul>
-							<li>
-								<label for="subtitle">상위코드</label>
-								<select title="검색할 코드 선택" id="cd" name="cd">
-									<c:forEach var="result" items="${admGenCodeTypeList}" varStatus="status">
-										<option value="${result.cd}" <c:if test="${result.cd==pSearch.cd}"> selected="selected" </c:if> ><c:out value="${result.cd} - ${result.cdNm}"/></option>
-									</c:forEach>
-								</select>
-							</li>				
-							<li>
-								<label for="subtitle">세부코드명</label>
-								<input type="text" id="searchKeyword" name="searchKeyword" title="코드 검색 입력" value="${fn:replace(pSearch.searchKeyword,'"', '&quot;')}" class="text" style="width:554px">
-							</li>				
-						</ul>
-						<div class="rbox_btns">
-							<a href="#" class="btn_set bt_style7" onclick="fn_adm_code_search();"><span>검색</span></a> 
-<!-- 							<a href="#" class="btn_set bt_style6"><span>초기화</span></a> -->
-						</div>		
-					</div>
-				</div>			
-				<br/>	
+						<div class="halfWrap">
+							<div class="half" style="width:70%">
+							    <label class="lbl">상위코드</label>
+								<span class="selectN" style="width:120px">
+									<span>
+										<select title="검색할 코드 선택" id="cd" name="cd">
+											<c:forEach var="result" items="${admGenCodeTypeList}" varStatus="status">
+												<option value="${result.cd}" <c:if test="${result.cd==pSearch.cd}"> selected="selected" </c:if> ><c:out value="${result.cd} - ${result.cdNm}"/></option>
+											</c:forEach>
+										</select> 
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="half">
+							<label class="lbl">세부코드명</label>
+							<input type="text" id="searchKeyword" name="searchKeyword" title="코드 검색 입력" value="${fn:replace(pSearch.searchKeyword,'"', '&quot;')}" class="text" style="width:554px">
+						</div>
 			
-				<!--  버튼영역 -->
+						<div class="rbox_btns">
+							<button type="button" class="btn_style7_2" onclick="fn_adm_code_search();">검색</button> 
+							<button type="button" class="btn_style6_3" id="btnReset" onclick="listForm.reset();">초기화</button>
+						</div>
+					</div>
+				</div>
+				
 				<div class="btn_board_top">
 					<div class="fl">
-						<a href="#" onclick="fn_adm_code_add();" class="btn_set bt_style2 btn_modify"><span>추가</span></a>
-						<a href="#" onclick="fn_adm_code_update();" class="btn_set bt_style2 btn_delete"><span>수정</span></a>
-						<a href="#" onclick="fn_adm_code_delete();" class="btn_set bt_style2 btn_print"><span>삭제</span></a>
+						<button class="btn_style4_2" type="button" onclick="fn_adm_code_add();">추가</button>
+						<button class="btn_style4_2" type="button" onclick="fn_adm_code_update();">수정</button>
+						<button class="btn_style3_2" type="button" onclick="fn_adm_code_delete();">삭제</button>
 					</div>
+					<div class="fr mt5">
+						<c:out value="${pSearch.currentRecordCount}"/> 건
+					</div>					
 				</div>
-				<!-- // 버튼영역 -->
-							
-				<!-- page unit -->
-				<div class="select te_right" >
-					<c:out value="${pSearch.currentRecordCount}"/> 건
-			    </div>
-			    <!-- //paga unit -->
-				<!--list-->
-				<div class="tbl_list te_center">
-					<table summary="세부코드 목록">
-						<caption>세부코드 목록</caption>
-						<colgroup>
-							<col width="10%">
-							<col width="15%">
-							<col>
-							<col>
-						</colgroup>
-						<thead>
-							<tr>
-								<th scope="col">선택</th>
-								<th scope="col">세부코드</th>
-								<th scope="col">세부 코드명</th>
-								<th scope="col">세부 코드 설명</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="result" items="${admGenCodeList}" varStatus="status">
-								<tr>
-									<td><input type="radio" title="선택" name="choice" value="${result.cdSpec}"></td>
-									<td><c:out value="${result.cdSpec}"/></td>
-									<td><c:out value="${result.cdNm}"/></td>
-									<td class="te_left"><c:out value="${result.remark}"/></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
+				<table summary="이 표는 세부코드 목록입니다." class="tbl_list">
+				<caption>세부코드 목록</caption>
+				<colgroup>
+				<col style="width:10%" />
+				<col style="width:15" />
+				<col style="width:*" />
+				<col style="width:*" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th scope="col" class="f"><div class="col">선택</div></th>
+					<th scope="col"><div class="col">세부코드</div></th>
+					<th scope="col"><div class="col">세부코드명</div></th>
+					<th scope="col" class="e"><div class="col">세부코드설명</div></th>
+				</tr>
+				</thead>
+				<tbody>
+			<c:choose>
+				<c:when test="${paginationInfo.totalRecordCount > 0}">
+					<c:forEach var="result" items="${admGenCodeList}" varStatus="status">		
+						<tr>
+							<td><input type="radio" title="선택" name="choice" value="${result.cdSpec}"></td>
+							<td>${result.cdSpec}</td>
+							<td>${result.cdNm}</td>
+							<td>${result.remark}</td>
+						</tr>	
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4">검색된 데이터가 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>		
 				
-				<!--//list-->
-				<!--paginate-->
-				<div id="paging" class="paging">
-					<ui:pagination paginationInfo = "${paginationInfo}"
-							   type="image"
-							   jsFunction="fn_adm_code_link_page"
-							   />
-					<form:hidden path="pageIndex" />
+				</tbody>
+				</table>
+				<div class="paging">
+				<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_adm_code_link_page" />
 				</div>
-				<!--//paginate-->
-				</form:form>
-				
+			</form:form>
+
 			</div>
 			<!--tab02-->
 	</div>
-	<!--//tab-->
+	<!--//tab-->	
 	
-	</div>
-	</body>
+</div>
+
+</body>
 </html>	
+

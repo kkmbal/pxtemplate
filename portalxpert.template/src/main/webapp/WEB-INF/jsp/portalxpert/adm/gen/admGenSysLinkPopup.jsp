@@ -19,6 +19,7 @@ var fn_admGen_link_update = function(){
 		success :function(data){
 			if(data.jsonResult.success === true){
 				$(opener.location).attr("href", "javascript:fn_admGen_linkCtlg_search();"); 
+				self.close();
 			}else{
 					//실패후 실행 스크립트
 			}
@@ -72,38 +73,37 @@ var fn_admGen_link_cloBTN_click = function(){
 </head>
 <body>
 
-<!--pop_wrap-->
-<div class="pop_wrap" style="width:490px;">
-	<div class="pop_header">링크수정</div>
-	<div class="pop_content ma_bot10">
-		<!-- popup 본문 -->
-		<form:form commandName="admGenLinkVO" name="frmMain" method="post">
-		<input type="hidden" name="linkCatId" value="${sysLink.linkCatId}">
-		<input type="hidden" name="linkCd" value="${sysLink.linkCd}">
-		<input type="hidden" name="linkOrder" value="${sysLink.linkOrder}">
-		
-	 	<div class="pop_post clearfix">
-			<table class="tbl_form" summary="링크를 분류 및 수정 합니다.">
-			<caption>링크분류명,링크명,링크주소,링크순서,팝업사용여부</caption>
+<div class="pop_wrap">
+	<div class="pop_type1">
+		<div class="header">
+			<h1  style="font-size:25px;font-weight:bold;">링크수정</h1>
+		</div>
+		<div class="contents">
+			<form:form commandName="admGenLinkVO" name="frmMain" method="post">
+			<input type="hidden" name="linkCatId" value="${sysLink.linkCatId}">
+			<input type="hidden" name="linkCd" value="${sysLink.linkCd}">
+			<input type="hidden" name="linkOrder" value="${sysLink.linkOrder}">
+			<table class="tbl_form" summary="이 표는 링크수정정보 표입니다.">
+			<caption>링크수정</caption>
 			<colgroup>
-				<col style="width:25%" />
+				<col style="width:20%" />
 				<col style="*" />
 			</colgroup>
 			<tbody>
 			<tr>
-				<th scope="row"><label for="input02">링크분류명</label></th>
+				<th scope="row"><label for="input01">링크분류명</label></th>
 				<td>${sysLink.linkCatNm}</td>
-			</tr>			
+			</tr>
 			<tr>
-				<th scope="row"><label for="input02">링크명</label></th>
-				<td><input type="text"  class="text" style="width:320px" id="linkNm" name="linkNm" value="${sysLink.linkNm}" title="링크명" ></td>
-			</tr>			
+				<th scope="row"><label for="input01">링크명</label></th>
+				<td><input type="text" maxlength="50" id="linkNm" name="linkNm" value="${sysLink.linkNm}" class="text" style="width:240px" title="링크명을 입력합니다." /></td>
+			</tr>
 			<tr>
-				<th scope="row"><label for="input02">링크주소</label></th>
-				<td><input type="text"  class="text" style="width:320px" id="linkAddress" name="linkAddress" value="${sysLink.linkAddress}" title="링크주소" ></td>
-			</tr>			
+				<th scope="row"><label for="input01">링크주소</label></th>
+				<td><input type="text" maxlength="2000" id="linkAddress" name="linkAddress" value="${sysLink.linkAddress}"  class="text" style="width:240px" title="링크주소를 입력합니다." /></td>
+			</tr>
 			<tr>
-				<th scope="row"><label for="input02">링크 분류 순서</label></th>
+				<th scope="row"><label for="input01">분류 순서</label></th>
 				<td>
                 	<select name="linkOrderNew" title="순서를 선택하세요" class="sel_w50">
 					<c:forEach var="order" begin="1" end="${sysLink.linkCount+1}" step="1">
@@ -113,33 +113,26 @@ var fn_admGen_link_cloBTN_click = function(){
 				</td>
 			</tr>	
 			<tr>
-				<th scope="row"><label for="input02">팝업사용</label></th>
-				<td><input type="checkbox" name="popupUseGb" value="Y" <c:if test="${sysLink.popupUseGb eq 'Y'}">checked='checked'</c:if> title="링크를 분류할 이름을 입력하세요"></td>
+				<th scope="row"><label for="input01">팝업사용</label></th>
+				<td><input type="checkbox" name="popupUseGb" value="Y" <c:if test="${sysLink.popupUseGb eq 'Y'}">checked='checked'</c:if> title="팝업사용을 입력하세요"></td>
 			</tr>					
 			<tr>
-				<th scope="row"><label for="input02">약어명</label></th>
-				<td><input type="text"  class="text" style="width:320px" id="linkSnm" name="linkSnm" value="${sysLink.linkSnm}" title="약어명" ></td>
-			</tr>					
+				<th scope="row"><label for="input01">약어명</label></th>
+				<td><input type="text"  class="text" style="width:240px" id="linkSnm" name="linkSnm" value="${sysLink.linkSnm}" title="약어명" ></td>
+			</tr>
 			</tbody>
-			</table>	 	 
-		</div>
-		</form:form>
-		<!-- popup 본문 -->
-	</div>
-	
-	<div class="pop_footer">
-		<!-- 버튼영역 -->
-		<div style="text-align:center;">
-			<div class="rbox_btns">
-				<a href="#" class="btn_set bt_style3" id="btnOK" onclick="fn_admGen_link_uptBTN_click();"><span>수정</span></a>
-				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="fn_admGen_link_iniBTN_click();"><span>초기화</span></a>
-				<a href="#" class="btn_set bt_style2" id = "btnClose" onclick="fn_admGen_link_cloBTN_click();"><span>닫기</span></a>
+			</table>
+			</form:form>
+			<div class="pop_btn_sec">
+				<button class="btn_style3_2" type="button" id="btnOK" onclick="fn_admGen_link_uptBTN_click();">등록</button>
+				<button class="btn_style4_3" type="button" id = "btnClose" onclick="fn_admGen_link_iniBTN_click();">초기화</button>
+				<button class="btn_style4_2" type="button" id = "btnClose" onclick="self.close();">닫기</button>
 			</div>
 		</div>
-		<!-- //버튼영역 -->	     
-	 </div> 	
-</div>	
-<!--//pop_wrap-->
+		<a href="#" onclick="window.close();return false" class="pop_close"><img src="${RES_HOME}/images/btn_pop_close.png" width="16" height="15" alt="닫기" /></a>
+	</div>
+</div>
 	
 </body>
 </html>
+

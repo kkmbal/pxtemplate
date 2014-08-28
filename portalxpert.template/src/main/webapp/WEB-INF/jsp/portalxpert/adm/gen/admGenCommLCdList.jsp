@@ -10,7 +10,7 @@
 
 /* 상위코드 추가 */
 var fn_adm_code_add = function(){
-	PortalCommon.popupWindowCenter('./getAdmGenCommonLCodeRegisterPop.do','타이틀',490,230); 
+	PortalCommon.popupWindowCenter('./getAdmGenCommonLCodeRegisterPop.do','타이틀',490,270); 
 }; 
 
 /* 상위코드 수정 */
@@ -31,7 +31,7 @@ var fn_adm_code_update = function(){
         alert("코드를 선택하십시오.");
         return;
     }
-	PortalCommon.popupWindowCenter('./getAdmGenCommonLCodeUpdatePop.do?cd=' + pCD,'타이틀',490,200);	
+	PortalCommon.popupWindowCenter('./getAdmGenCommonLCodeUpdatePop.do?cd=' + pCD,'타이틀',490,270);	
 };
 
 /* 상위 코드 삭제 */
@@ -126,17 +126,18 @@ $("document").ready(function(){
 });
 
 </script>
+</head>
 
 <body>
-<div class="container">	
-<div class="header">
-	<h1>공통코드관리</h1>
-	<div class="loc">
-		<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
-		<span><a href="#">관리자</a></span>
-		<span><strong>공통코드관리</strong></span>
+
+<div class="container">
+	<div class="header">
+		<div class="h1">공통코드관리</div>
+		<div class="loc">
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<strong class="str">공통코드관리</strong>
+		</div>
 	</div>
-</div>
 	
 	
 	<!--tab-->
@@ -149,16 +150,17 @@ $("document").ready(function(){
 		</ul>
 		<!-- //제목부분 -->
 		<!-- 내용부분 -->
-			<div class="tab_post">
+			<div class="tab_post">	
 				<form:form commandName="admGenCodeManageVO" name="listForm" method="post">
-				<input type="hidden" id="cd" name="cd" value=""/>
-							
+				<input type="hidden" id="cd" name="cd" value=""/>	
+	
 				<div class="rbox">
 					<span class="rbox_top"></span>
 					<div class="rboxInner">
 						<!-- 셀렉트박스 -->
 						<span class="selectN" style="width:100px">
 							<span>
+								<label for="selectN_id1" class="hidden">검색구분</label>
 								<select title="검색어" name="searchCondition">
 									<option value="cd" <c:if test="${'cd'==pSearch.searchCondition}"> selected="selected" </c:if>>코드</option>
 									<option value="cdNm" <c:if test="${'cdNm'==pSearch.searchCondition}"> selected="selected" </c:if>>코드명</option>
@@ -167,76 +169,69 @@ $("document").ready(function(){
 						</span>
 						<!-- //셀렉트박스 -->
 						<input type="text" value="${fn:replace(pSearch.searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:450px" /> 
-						<a href="#" class="btn_set bt_style7" id="search" onclick="fn_adm_code_search();"><span>검색</span></a>
+						<button class="btn_style7_2" type="button" id="search" onclick="fn_adm_code_search();">검색</button>
 					</div>
 				</div>
-				<br/>	
-			
-				<!--  버튼영역 -->
+				
 				<div class="btn_board_top">
 					<div class="fl">
-						<a href="#" onclick="fn_adm_code_add();" class="btn_set bt_style2 btn_modify"><span>추가</span></a>
-						<a href="#" onclick="fn_adm_code_update();" class="btn_set bt_style2 btn_delete"><span>수정</span></a>
-						<a href="#" onclick="fn_adm_code_delete();" class="btn_set bt_style2 btn_print"><span>삭제</span></a>
+						<button class="btn_style4_2" type="button" onclick="fn_adm_code_add();">추가</button>
+						<button class="btn_style4_2" type="button" onclick="fn_adm_code_update();">수정</button>
+						<button class="btn_style3_2" type="button" onclick="fn_adm_code_delete();">삭제</button>
 					</div>
+					<div class="fr mt5">
+						<c:out value="${pSearch.currentRecordCount}"/> 건
+					</div>					
 				</div>
-				<!-- // 버튼영역 -->
+				<table summary="이 표는 상위코드 목록입니다." class="tbl_list">
+				<caption>상위코드 목록</caption>
+				<colgroup>
+				<col style="width:10%" />
+				<col style="width:15" />
+				<col style="width:*" />
+				<col style="width:*" />
+				</colgroup>
+				<thead>
+				<tr>
+					<th scope="col" class="f"><div class="col">선택</div></th>
+					<th scope="col"><div class="col">상위코드</div></th>
+					<th scope="col"><div class="col">상위코드명</div></th>
+					<th scope="col" class="e"><div class="col">상위코드설명</div></th>
+				</tr>
+				</thead>
+				<tbody>
+			<c:choose>
+				<c:when test="${paginationInfo.totalRecordCount > 0}">
+					<c:forEach var="result" items="${admGenCodeList}" varStatus="status">		
+						<tr>
+							<td><input type="radio" title="선택" name="choice" value="${result.cd}"></td>
+							<td>${result.cd}</td>
+							<td class="tit"><a href="<c:url value='./getAdmGenCommonSCodeList.do?cd=${result.cd}'/>">${result.cdNm}</a></td>
+							<td>${result.remark}</td>
+						</tr>	
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4">검색된 데이터가 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>		
 				
-				<!--//search-->
-				<!-- page unit -->
-				<div class="select te_right" >
-					<c:out value="${pSearch.currentRecordCount}"/> 건
+				</tbody>
+				</table>
+				<div class="paging">
+				<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_adm_code_link_page" />
 				</div>
-				<!-- //paga unit -->
-				<!--list-->
-				<div class="tbl_list te_center">
-					<table summary="상위코드 목록">
-						<caption>상위코드 목록</caption>
-						<colgroup>
-							<col width="10%">
-							<col width="15%">
-							<col>
-							<col>
-						</colgroup>
-						<thead>
-							<tr>
-								<th scope="col">선택</th>
-								<th scope="col">상위코드</th>
-								<th scope="col">상위 코드명</th>
-								<th scope="col">상위 코드 설명</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="result" items="${admGenCodeList}" varStatus="status">
-								<tr>
-									<td><input type="radio" title="선택" name="choice" value="${result.cd}"></td>
-									<td><c:out value="${result.cd}"/></td>
-									<td><a href="<c:url value='./getAdmGenCommonSCodeList.do?cd=${result.cd}'/>" class="fo_blue"><c:out value="${result.cdNm}"/></a></td>
-									<td class="te_left"><c:out value="${result.remark}"/></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				
-				<!--//list-->
-				
-				<!--paginate-->
-				<div id="paging" class="paging">
-					<ui:pagination paginationInfo = "${paginationInfo}"
-							   type="image"
-							   jsFunction="fn_adm_code_link_page"
-							   />
-					<form:hidden path="pageIndex" />
-				</div>
-				<!--//paginate-->
-				</form:form>
+			</form:form>
 
 			</div>
 			<!--tab02-->
 	</div>
-	<!--//tab-->
+	<!--//tab-->	
 	
 </div>
+
 </body>
 </html>	
+
