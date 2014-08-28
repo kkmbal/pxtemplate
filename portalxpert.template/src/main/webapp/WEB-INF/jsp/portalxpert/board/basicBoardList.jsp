@@ -64,104 +64,215 @@
 		</div>
 	</div>
 	
-	<c:if test="${boardForm == '040'}">
+	
+<c:choose>
+	<%-- ********************** CALENDAR BOARD --%>
+	<c:when test="${boardForm == '040'}">	
 		<div id='calendar'></div>
 		<br>
-	</c:if>	
-
-	<c:if test="${boardForm != '040'}">
-	<div class="rbox">
-		<span class="rbox_top"></span>
-		<div class="rboxInner">
-			<!-- 셀렉트박스 -->
-			<span class="selectN" style="width:100px">
-				<span>
-					<label for="selectN_id1" class="hidden">검색구분</label>
-					<select title="" id="search_gubun">
-						<option value="NOTI_TITLE_ORGN" ${searchCondition == 'NOTI_TITLE_ORGN' ? 'selected' : ''}>제목</option>
-						<option value="USER_NICK" ${searchCondition == 'USER_NICK' ? 'selected' : ''}>작성자</option>
-						<option value="NOTI_CONTS" ${searchCondition == 'NOTI_CONTS' ? 'selected' : ''}>내용</option>
-					</select>
-				</span>
-			</span>
-			<!-- //셀렉트박스 -->
-			<input type="text" value="${fn:replace(searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:450px" title="검색어를 입력합니다." /> 
-			<button class="btn_style7_2" type="button" id="search">검색</button>
-		</div>
-	</div>
-	</c:if>
-	
-	<div class="btn_board_top">
-		<div class="fl">
-			<c:if test="${btnViewYn == 'Y'}">
-			<button class="btn_write" type="button" id="btn_write">글쓰기</button>
-			</c:if>
-		</div>
-		<div class="fr mt5">
-			<span class="selectN" style="width:100px">
-				<span>
-					<label for="selectN_id1" class="hidden">게시물수</label>
-					<select title="게시물수 보기" id="list_cnt">
-						<option value="10">10개보기</option>
-						<option value="20">20개보기</option>
-						<option value="30">30개보기</option>
-					</select>
-				</span>
-			</span>
-		</div>
-	</div>
-	<!-- 테이블 글보기스타일 -->
-	<table summary="게시판목록" class="tbl_list">
-	<caption>게시판 A</caption>
-	<colgroup>
-	<col style="width:7%" />
-	<col style="width:*" />
-	<col style="width:8%" />
-	<col style="width:11%" />
-	<col style="width:11%" />
-	<col style="width:11%" />
-	</colgroup>
-	<thead>
-	<tr>
-		<th scope="col" class="f"><div class="col">번호</div></th>
-		<th scope="col"><div class="col"><a href="javascript:fnSearchList('notiTitle')">제목</a></div></th>
-		<th scope="col"><div class="col">파일</div></th>
-		<th scope="col"><div class="col"><a href="javascript:fnSearchList('regrName')">작성자</a></div></th>
-		<th scope="col"><div class="col"><a href="javascript:fnSearchList('notiReadCnt')">조회</a></div></th>
-		<th scope="col" class="e"><div class="col"><a href="javascript:fnSearchList('regDttm')">등록일</a></div></th>
-	</tr>
-	</thead>
-	<tbody>
-<c:choose>
-	<c:when test="${paginationInfo.totalRecordCount > 0}">
-		<c:forEach var="result" items="${notiList}" varStatus="status">		
-			<tr <c:if test="${result.anmtYn == 'Y'}"> class="notice"</c:if>>
-				<c:if test="${result.anmtYn == 'Y'}">
-				<td><div class="ico_notice">공지</div></td>
-				</c:if>
-				<c:if test="${result.anmtYn != 'Y'}">
-				<td>${result.oldNoticeSeq}</td>
-				</c:if>
-				<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" title="${result.notiTitleOrgn}" class="text_dot"><span<c:if test="${result.notiReadCnt == 0}"> class="nonread"</c:if>>${fn:replace(result.notiTitle,'@!', '&nbsp;&nbsp;')}</span></a>
-					<c:if test="${result.opnPrmsYn == 'Y' && result.opnCnt > 0}">
-					<span class="em">[의견${result.opnCnt}]</span>
-					</c:if>				
-				</td>
-				<td><c:if test="${result.apndFileCnt > 0}"><a href="#"><img src="${RES_HOME}/images/ico_fileAttch.png" alt="파일첨부" /></a></c:if></td>
-				<td>${result.userName}</td>
-				<td>${result.notiReadCnt}</td>
-				<td>${result.regDttm}</td>
-			</tr>
-		</c:forEach>
 	</c:when>
-	<c:otherwise>
+	<%-- ********************** CALENDAR BOARD --%>
+	<%-- ********************** CMS BOARD --%>
+	<c:when test="${boardKind == '120'}">	
+		<div class="rbox">
+			<div class="rbox_top"></div>
+			<div class="rboxInner">
+				<div class="halfWrap">
+					<div class="half" style="width:100%">
+						<span class="selectN" style="width:120px">
+							<span>
+								<label for="selectN_id1" class="hidden">구분</label>
+								<select title="" id="search_gubun">
+									<option value="NOTI_TITLE_ORGN" ${searchCondition == 'NOTI_TITLE_ORGN' ? 'selected' : ''}>제목</option>
+								</select> 
+							</span>
+						</span>
+						<input type="text" value="${fn:replace(admStatSearchVO.searchKeyword,'"', '&quot;')}" id="keyword" class="text" style="width:500px" title="검색제목" />
+					</div>
+				</div>
+				<div class="halfWrap">
+					<!-- 셀렉트박스 -->
+					<span class="selectN" style="width:120px">
+						<span>
+							<label for="selectN_id1" class="hidden">검색구분</label>
+							<select title="" id="search_gubun_dttm">
+								<option value="">선택</option>
+								<option value="NOTI_BGN_DTTM" ${searchCondition == 'NOTI_BGN_DTTM' ? 'selected' : ''}>등록일</option>
+								<option value="NOTI_END_DTTM" ${searchCondition == 'NOTI_END_DTTM' ? 'selected' : ''}>종료일</option>
+							</select>
+						</span>
+					</span>
+					<!-- //셀렉트박스 -->
+					<input type="text" class="text" id="regDttm" name="regDttm" style="width:100px" title="날짜를 입력합니다. 예)YYYY.MM.DD">
+				</div>
+	
+				<div class="rbox_btns">
+					<button type="button" class="btn_style7_2" id="search">검색</button> 
+					<button type="button" class="btn_style6_3" id="btnReset">초기화</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="btn_board_top">
+			<div class="fl">
+				<c:if test="${btnViewYn == 'Y'}">
+				<button class="btn_write5" type="button" id="btn_write">신규등록</button>
+				</c:if>
+			</div>
+			<div class="fr mt5">
+				<span class="selectN" style="width:100px">
+					<span>
+						<label for="selectN_id1" class="hidden">게시물수</label>
+						<select title="게시물수 보기" id="list_cnt">
+							<option value="10">10개보기</option>
+							<option value="20">20개보기</option>
+							<option value="30">30개보기</option>
+						</select>
+					</span>
+				</span>
+			</div>
+		</div>
+		<!-- 테이블 글보기스타일 -->
+		<table summary="게시판목록" class="tbl_list">
+		<caption>게시판 A</caption>
+		<colgroup>
+		<col style="width:7%" />
+		<col style="width:20%" />
+		<col style="width:*" />
+		<col style="width:11%" />
+		<col style="width:11%" />
+		<col style="width:11%" />
+		</colgroup>
+		<thead>
 		<tr>
-			<td colspan="6">검색된 데이터가 없습니다.</td>
+			<th scope="col" class="f"><div class="col">번호</div></th>
+			<th scope="col"><div class="col">기관</th>
+			<th scope="col"><div class="col">제목</div></th>
+			<th scope="col"><div class="col">등록일</th>
+			<th scope="col"><div class="col">게시종료일</th>
+			<th scope="col" class="e"><div class="col">재사용</div></th>
 		</tr>
+		</thead>
+		<tbody>
+		<c:choose>
+			<c:when test="${paginationInfo.totalRecordCount > 0}">
+				<c:forEach var="result" items="${notiList}" varStatus="status">		
+					<tr>
+						<td>${result.oldNoticeSeq}</td>
+						<td>${result.deptName}</td>
+						<td class="tit"><a href="javascript:fnGetBoardWrite('${result.notiId}','');" title="${result.notiTitleOrgn}" class="text_dot"><span>${result.notiTitle}</span></a></td>
+						<td>${result.regDttm}</td>
+						<td>${result.notiEndDttm}</td>
+						<td><button type="button" class="btn_style6_2" onclick="fnGetBoardWrite('${result.notiId}','copy');">복사</button></td>
+					</tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td colspan="6">검색된 데이터가 없습니다.</td>
+				</tr>
+			</c:otherwise>
+		</c:choose>	
+		</tbody>
+		</table>
+	</c:when>
+	<%-- ********************** CMS BOARD --%>
+	<%-- ********************** BASIC BOARD --%>
+	<c:otherwise>
+		<div class="rbox">
+			<span class="rbox_top"></span>
+			<div class="rboxInner">
+				<!-- 셀렉트박스 -->
+				<span class="selectN" style="width:100px">
+					<span>
+						<label for="selectN_id1" class="hidden">검색구분</label>
+						<select title="" id="search_gubun">
+							<option value="NOTI_TITLE_ORGN" ${searchCondition == 'NOTI_TITLE_ORGN' ? 'selected' : ''}>제목</option>
+							<option value="USER_NICK" ${searchCondition == 'USER_NICK' ? 'selected' : ''}>작성자</option>
+							<option value="NOTI_CONTS" ${searchCondition == 'NOTI_CONTS' ? 'selected' : ''}>내용</option>
+						</select>
+					</span>
+				</span>
+				<!-- //셀렉트박스 -->
+				<input type="text" value="${fn:replace(searchKeyword,'"', '&quot;')}" id="keyword" class="text ml5mr10" style="width:450px" title="검색어를 입력합니다." /> 
+				<button class="btn_style7_2" type="button" id="search">검색</button>
+			</div>
+		</div>
+		
+		<div class="btn_board_top">
+			<div class="fl">
+				<c:if test="${btnViewYn == 'Y'}">
+				<button class="btn_write" type="button" id="btn_write">글쓰기</button>
+				</c:if>
+			</div>
+			<div class="fr mt5">
+				<span class="selectN" style="width:100px">
+					<span>
+						<label for="selectN_id1" class="hidden">게시물수</label>
+						<select title="게시물수 보기" id="list_cnt">
+							<option value="10">10개보기</option>
+							<option value="20">20개보기</option>
+							<option value="30">30개보기</option>
+						</select>
+					</span>
+				</span>
+			</div>
+		</div>
+		<!-- 테이블 글보기스타일 -->
+		<table summary="게시판목록" class="tbl_list">
+		<caption>게시판 A</caption>
+		<colgroup>
+		<col style="width:7%" />
+		<col style="width:*" />
+		<col style="width:8%" />
+		<col style="width:11%" />
+		<col style="width:11%" />
+		<col style="width:11%" />
+		</colgroup>
+		<thead>
+		<tr>
+			<th scope="col" class="f"><div class="col">번호</div></th>
+			<th scope="col"><div class="col"><a href="javascript:fnSearchList('notiTitle')">제목</a></div></th>
+			<th scope="col"><div class="col">파일</div></th>
+			<th scope="col"><div class="col"><a href="javascript:fnSearchList('regrName')">작성자</a></div></th>
+			<th scope="col"><div class="col"><a href="javascript:fnSearchList('notiReadCnt')">조회</a></div></th>
+			<th scope="col" class="e"><div class="col"><a href="javascript:fnSearchList('regDttm')">등록일</a></div></th>
+		</tr>
+		</thead>
+		<tbody>
+		<c:choose>
+			<c:when test="${paginationInfo.totalRecordCount > 0}">
+				<c:forEach var="result" items="${notiList}" varStatus="status">		
+					<tr <c:if test="${result.anmtYn == 'Y'}"> class="notice"</c:if>>
+						<c:if test="${result.anmtYn == 'Y'}">
+						<td><div class="ico_notice">공지</div></td>
+						</c:if>
+						<c:if test="${result.anmtYn != 'Y'}">
+						<td>${result.oldNoticeSeq}</td>
+						</c:if>
+						<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" title="${result.notiTitleOrgn}" class="text_dot"><span<c:if test="${result.notiReadCnt == 0}"> class="nonread"</c:if>>${fn:replace(result.notiTitle,'@!', '&nbsp;&nbsp;')}</span></a>
+							<c:if test="${result.opnPrmsYn == 'Y' && result.opnCnt > 0}">
+							<span class="em">[의견${result.opnCnt}]</span>
+							</c:if>				
+						</td>
+						<td><c:if test="${result.apndFileCnt > 0}"><a href="#"><img src="${RES_HOME}/images/ico_fileAttch.png" alt="파일첨부" /></a></c:if></td>
+						<td>${result.userName}</td>
+						<td>${result.notiReadCnt}</td>
+						<td>${result.regDttm}</td>
+					</tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td colspan="6">검색된 데이터가 없습니다.</td>
+				</tr>
+			</c:otherwise>
+		</c:choose>	
+		</tbody>
+		</table>
 	</c:otherwise>
-</c:choose>	
-	</tbody>
-	</table>
+	<%-- ********************** BASIC BOARD --%>
+</c:choose>		
 	<!-- 테이블 글보기스타일 -->
 	<div class="paging">
 		<c:if test="${boardForm != '040'}">

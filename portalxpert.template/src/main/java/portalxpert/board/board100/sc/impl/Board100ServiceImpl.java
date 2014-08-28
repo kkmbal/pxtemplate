@@ -961,6 +961,10 @@ public class Board100ServiceImpl extends EgovAbstractServiceImpl implements  Boa
 			vo.setIsAdmin(bbsNotiObject.getString("isAdmin"));
 			String notiReadmanAsgnYn = bbsNotiObject.getString("notiReadmanAsgnYn");
 						
+			if("copy".equals(bbsNotiObject.get("type"))){
+				vo.setNotiId("");
+			}
+			
 			if (vo.getNotiId().equals(""))  //입력
 			{
 				vo.setUserName(info.getName()) ;

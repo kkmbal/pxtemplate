@@ -308,6 +308,11 @@
 		document.listForm.submit();
 	};
 	
+	//CMS용
+	var fnGetBoardWrite = function(notiId, type){
+		location.href = WEB_HOME+"/board230/board230Write.do?boardId="+ boardId+"&kind=BBS&notiId="+notiId+"&pageIndex="+pageIndex+"&pageUnit="+pageUnit+"&type="+type;
+	};
+	
 	
 	//게시글 선택체크
 	var fnDoNotiSelectCheck = function(){
@@ -557,6 +562,26 @@
 		    
 		}
 
+		$("#btnReset").click(function(){
+			$("#keyword").val("");
+			$("#regDttm").val("");
+			$("#search_gubun_dttm").val("");
+		});
+		
+		//CMS 검색달력
+		$('#regDttm').datepicker(
+			 	{      
+					showOn: "button",
+					//showOn: "both",      
+					buttonImage: RES_HOME+'/images/ico_calendar_off.png',      
+					buttonImageOnly: true,
+					buttonText: "종료일자",
+					showButtonPanel: true
+							
+		}); 	
+	 	
+	 	$('img.ui-datepicker-trigger').attr('style','margin-left:-7px; vertical-align:middle; cursor:pointer;');
+	 	$('.ui-datepicker').attr('style','display:none;');		
 		
 	});
 	

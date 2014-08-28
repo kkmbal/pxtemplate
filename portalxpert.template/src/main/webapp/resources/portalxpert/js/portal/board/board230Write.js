@@ -516,6 +516,7 @@ var fnBoardNotiCreate = function()
 		, 'agrmOppYn' : agrmOppYn
 		, 'notiReadmanAsgnYn' : notiReadmanAsgnYn
 		, 'isAdmin' : isAdmin
+		, 'type' : type
 		, 'AppendList' : []			
 		, 'AppendFileList' : []  //첨부 리스트
 		, 'NotiOpenDivDeptList' : []  // 조회자 지정 부서
@@ -762,8 +763,14 @@ var fnWriteInsert = function()
 			}
 		}
 		
-		if (!confirm('수정하시겠습니까?')) {
-			return;
+		if(type == 'copy'){
+			if (!confirm('복사하시겠습니까?')) {
+				return;
+			}
+		}else{
+			if (!confirm('수정하시겠습니까?')) {
+				return;
+			}
 		}
 	}
 	else

@@ -155,7 +155,7 @@
 		<td><textarea name="boardExpl"  id="boardExpl" cols="100" rows="5" maxlength="300" class="textbox" title="게시판 설명을 입력합니다." onclick="this.value=''">300자 이하로 작성하세요.</textarea></td>
 	</tr>
 	<tr  id="boardUrlDiv" style="display:none;">
-		<th scope="row">호출 URL</th>
+		<th scope="row">URL</th>
 		<td>
 		내부 <input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:468px"><br>
 		<span id="openBoardUrlTitle" style="display:none;">공개</span> <input type="text" class="text" id="openBoardUrl" name="openBoardUrl" title="제공  URL" readonly style="width:468px;margin-top:5px;display:none;">

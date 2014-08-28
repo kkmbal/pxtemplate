@@ -85,6 +85,8 @@
 	
 	//답글
 	var reply_list = ${reply_list};
+	//복사
+	var type = '${type}';
 	
 	
 </script>

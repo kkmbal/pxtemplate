@@ -92,7 +92,8 @@ public class Board230Controller {
 			@RequestParam(value="tmpNotiSeq", required = false) String tmpNotiSeq,
 			@RequestParam(value="pageIndex", required = false, defaultValue="1") String pageIndex,
 			@RequestParam(value="pageUnit", required = false, defaultValue="10") String pageUnit,
-			@RequestParam(value="kind", required = true) String kind  //게시물 종류(TMP, BBS, PSN)  //임시저장, 공용, 개인, 경조사, 폐쇄 
+			@RequestParam(value="kind", required = true) String kind,  //게시물 종류(TMP, BBS, PSN)  //임시저장, 공용, 개인, 경조사, 폐쇄
+			@RequestParam(value="type", required = true) String type //  복사기능
 			) throws Exception {
     	
     	if (pageIndex == null) pageIndex = "1"; 
@@ -436,6 +437,7 @@ public class Board230Controller {
     		modelMap.put("WEB_MOVIE_DIR", CONTEXT_PATH + WEB_MOVIE_DIR);
     		modelMap.put("boardExplUseYn", boardExplUseYn);
     		modelMap.put("boardExpl", boardExpl);
+    		modelMap.put("type", type);
     		
 		}
 		return ".self/board/board230Write";
