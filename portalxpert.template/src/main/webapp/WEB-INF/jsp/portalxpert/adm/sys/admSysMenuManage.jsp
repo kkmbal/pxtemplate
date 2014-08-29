@@ -62,7 +62,7 @@ var nodeCount = 0;
 		</div>
 		<div class="fr mt5">
 			<table class="tbl_form" style="margin-top:35px; width:330px !important;" summary="이 표는 메뉴ID, 메뉴명을 입력하는 메뉴정보 표입니다.">
-			<caption>사용자</caption>
+			<caption>메뉴</caption>
 			<colgroup>
 				<col style="width:30%" />
 				<col style="*" />
