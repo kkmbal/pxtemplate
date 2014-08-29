@@ -81,7 +81,7 @@
 				</div>
 				<button class="btn_sch_day" type="button" id="calTodayBtn">오늘</button>
 				<div class="option">
-<!-- 					<button class="btn_refresh" type="button"><span>새로고침</span></button> -->
+					<button class="btn_refresh" type="button" id="calResetBtn"><span>새로고침</span></button>
 				</div>
 			</div>	
 		</div>

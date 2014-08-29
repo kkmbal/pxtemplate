@@ -595,7 +595,9 @@
 		    });
 		    
 		    //새로고침
-		    
+		    $('#calResetBtn').click(function() {
+		    	location.href = WEB_HOME+'/board210/getBoardInfoList.do?boardId='+boardId;
+		    });
 		    
 		    //오늘로
 		    $('#calTodayBtn').click(function() {

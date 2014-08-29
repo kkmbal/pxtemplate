@@ -35,7 +35,6 @@
  
 <body style="overflow:hidden;">
 <form name="cateForm" method="post">
-
 </form>	
 <div id="rMenu">
 	<ul>
@@ -47,38 +46,42 @@
 	</ul>	
 </div>
 
-<!--pop_wrap-->
-<div class="pop_wrap" style="width:400px;"><!-- 팝업사이즈 width:400px; height:500px; -->
-	<div class="pop_header">게시물 이동</div>
-	<div class="pop_content">
-	<!-- popup 본문 -->
-		<div class="tree" style="border:1px solid #eee;">
-			<div class="content_wrap">
-				<div class="zTreeDemoBackground left ma_top5">
-					<ul id="treeObj" class="ztree"></ul>
-				</div>	
+<div class="pop_wrap">
+	<div class="pop_type1">
+		<div class="header">
+			<h1  style="font-size:25px;font-weight:bold;">게시물 이동</h1>
 		</div>
-		</div>
-	<!-- popup 본문 -->	
-	</div>
-	<!-- popup 본문 -->
-	<div class="pop_footer">
-		<!-- 버튼영역 -->
-		<div style="text-align:center;">
-			<div class="rbox_btns">
-				<a href="#" class="btn_set bt_style2" id="btnOK" ><span>확인</span></a>
-				<a href="#" class="btn_set bt_style2" id = "btnClose"><span>닫기</span></a>
+		<div class="contents">
+			<p class="ptxt">이동할 게시판을 선택해 주십시오.</p>
+			<table class="tbl_form" summary="이 표는 게시물 이동 표입니다.">
+			<caption>게시물 이동</caption>
+			<colgroup>
+				<col style="width:100%" />
+			</colgroup>
+			<tbody>
+			<tr>
+				<td>
+					<div class="tree" style="border:1px solid #eee;">
+						<div class="content_wrap">
+							<div class="zTreeDemoBackground left ma_top5">
+								<ul id="treeObj" class="ztree"></ul>
+							</div>	
+						</div>		
+					</div>				
+				</td>
+			</tr>
+			</tbody>
+			</table>
+			
+			<div class="pop_btn_sec">
+				<button class="btn_style3_2" type="button" id="btnOK">이동</button>
+				<button class="btn_style4_2" type="button" id="btnClose">취소</button>
 			</div>
 		</div>
-		<!-- //버튼영역 -->	 	     
-	     
-	      
-	 </div>  
-</div>	
-<div id ="div_text">
-
+		<a href="#" onclick="window.close();return false" class="pop_close"><img src="${RES_HOME}/images/btn_pop_close.png" width="16" height="15" alt="닫기" /></a>
+	</div>
 </div>
-<!--//pop_wrap-->
+
 </body>
 </html>
-</html>
+
