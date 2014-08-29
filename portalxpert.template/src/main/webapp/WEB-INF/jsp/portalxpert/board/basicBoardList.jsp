@@ -68,8 +68,51 @@
 <c:choose>
 	<%-- ********************** CALENDAR BOARD --%>
 	<c:when test="${boardForm == '040'}">	
-		<div id='calendar'></div>
-		<br>
+		<!-- 달력 -->
+		<div class="schedule_sec">
+			<div class="schedule_head">
+				<div class="btn">
+					<button class="btn_style8_3" type="button" id="btn_write">글쓰기</button>
+				</div>
+				<div class="date">
+					<button class="btn_sch_prev" type="button" id="calPrevBtn"><span>이전달</span></button>
+					<span id="calMonth"></span>
+					<button class="btn_sch_next" type="button" id="calNextBtn"><span>다음달</span></button>
+				</div>
+				<button class="btn_sch_day" type="button" id="calTodayBtn">오늘</button>
+				<div class="option">
+<!-- 					<button class="btn_refresh" type="button"><span>새로고침</span></button> -->
+				</div>
+			</div>	
+		</div>
+		<div id='calendar' style="margin-top:-30px;margin-bottom:30px;"></div>
+		<div style="display:none;">
+			<input type="text" value="" id="keyword" class="text" title="검색제목" />		
+			<select title="게시물수 보기" id="list_cnt">
+				<option value="10">10개보기</option>
+			</select>			
+		</div>
+		<!-- //달력 -->
+		<div class="h2">2014년 9월 교육안내</div>
+		<table summary="" class="tbl_list">
+		<caption></caption>
+		<colgroup>
+		<col style="width:7%" />
+		<col style="width:18%" />
+		<col style="width:*" />
+		<col style="width:22%" />
+		</colgroup>
+		<thead>
+		<tr>
+			<th scope="col" class="f"><div class="col">번호</div></th>
+			<th scope="col"><div class="col">등록 기관</div></th>
+			<th scope="col"><div class="col">제목</div></th>
+			<th scope="col" class="e"><div class="col">교육일정</div></th>
+		</tr>
+		</thead>
+		<tbody>		
+		</tbody>
+		</table>
 	</c:when>
 	<%-- ********************** CALENDAR BOARD --%>
 	<%-- ********************** CMS BOARD --%>
@@ -163,13 +206,13 @@
 						<td class="tit"><a href="javascript:fnGetBoardWrite('${result.notiId}','');" title="${result.notiTitleOrgn}" class="text_dot"><span>${result.notiTitle}</span></a></td>
 						<td>${result.regDttm}</td>
 						<td>${result.notiEndDttm}</td>
-						<td><button type="button" class="btn_style6_2" onclick="fnGetBoardWrite('${result.notiId}','copy');">복사</button></td>
+						<td><button type="button" class="btn_style1_2" onclick="fnGetBoardWrite('${result.notiId}','copy');">복사</button></td>
 					</tr>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="6">검색된 데이터가 없습니다.</td>
+					<td colspan="6">검색된 데이터가 없습니다.1</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>	
@@ -264,7 +307,7 @@
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="6">검색된 데이터가 없습니다.</td>
+					<td colspan="6">검색된 데이터가 없습니다.2</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>	
@@ -273,6 +316,7 @@
 	</c:otherwise>
 	<%-- ********************** BASIC BOARD --%>
 </c:choose>		
+
 	<!-- 테이블 글보기스타일 -->
 	<div class="paging">
 		<c:if test="${boardForm != '040'}">

@@ -81,7 +81,7 @@
 	// 040 : 설문
 	// 050 : 첨부
 	// 060 : 링크
-		
+		/*
 		$('#notiFileDl dd').remove();
 		var apFileCnt = 0;
 		for (var i=0; i < notiFileJson.length ; i++){
@@ -93,6 +93,19 @@
 			 	    
 			}
 		}
+		*/
+		
+		$('#notiFileDl dd').remove();
+		var apFileCnt = 0;
+		for (var i=0; i < notiFileJson.length ; i++){
+			if(notiFileJson[i].apndFileTp == '050'){
+				$('#notiFileDl:last').append('<dd><span class="ico_file"><strong>첨부파일</strong> <a class="bl_file2 fo_blue" href="javascript:fnDoFileDown(\''+ notiFileJson[i].apndFileSeq +'\',\''+ notiFileJson[i].apndFileName +'\',\''+ notiFileJson[i].apndFileOrgn +'\')">'+notiFileJson[i].apndFileOrgn+'</a>'
+						+' ('+getFileSzForKb(notiFileJson[i].apndFileSz)+"kb"+')</span></dd>');	
+				
+				apFileCnt++;	
+			 	    
+			}
+		}		
 		  
 		
 		if(notiKind == "010"){//일반

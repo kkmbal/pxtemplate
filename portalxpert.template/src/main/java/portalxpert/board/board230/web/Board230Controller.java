@@ -93,7 +93,7 @@ public class Board230Controller {
 			@RequestParam(value="pageIndex", required = false, defaultValue="1") String pageIndex,
 			@RequestParam(value="pageUnit", required = false, defaultValue="10") String pageUnit,
 			@RequestParam(value="kind", required = true) String kind,  //게시물 종류(TMP, BBS, PSN)  //임시저장, 공용, 개인, 경조사, 폐쇄
-			@RequestParam(value="type", required = true) String type //  복사기능
+			@RequestParam(value="type", required = false) String type //  복사기능
 			) throws Exception {
     	
     	if (pageIndex == null) pageIndex = "1"; 

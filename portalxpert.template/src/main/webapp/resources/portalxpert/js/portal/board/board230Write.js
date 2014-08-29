@@ -2532,7 +2532,7 @@ $("#btn_item_list, #btn_item_list2").click(function(){
 	{
 		if (kind == 'BBS')
 		{
-			if (boardForm == '010')
+			if (boardForm == '010' || boardForm == '040')
 			{
 				location.href = WEB_HOME+'/board210/getBoardInfoList.do?boardId='+boardId+'&pageIndex=1&pageUnit=10&orderType=default';
 			}
@@ -2555,7 +2555,7 @@ $("#btn_item_list, #btn_item_list2").click(function(){
 		}
 		else
 		{
-			if (boardForm == '010')
+			if (boardForm == '010' || boardForm == '040')
 			{
 				location.href = WEB_HOME+'/board210/getBoardInfoList.do?boardId='+boardId+'&pageIndex=1&pageUnit=10&orderType=default';
 			}

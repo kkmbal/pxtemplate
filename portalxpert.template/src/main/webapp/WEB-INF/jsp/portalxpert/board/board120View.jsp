@@ -16,42 +16,65 @@ var notiId = '${notiId}';
 
 <body>
 <div class="container">
-
 	<div class="header">
-		<h1 id="notiTitle"></h1>
+		<div class="h1" id="notiTitle"></div>
 		<div class="loc">
-			<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
-			<span><a href="#">제도안내</a></span>
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<a href="#">제도안내</a>
 		</div>
-	</div><!-- end of header -->
-	
-	<div id="notiConts">
-	${notiConts}
 	</div>
 
-	<div class="attachbox">
-		<span class="tit" style="vertical-align:top;">첨부파일</span>
-		<span class="ico_fileAttch2">
-			<dl id="notiFileDl">
-			</dl>
-		</span>
-	</div>
+	<table class="tbl_view mt10" summary="기관, 담당자, 연락처에 대한 정보제공">
+	<caption>게시판 글보기</caption>
+	<colgroup>
+		<col style="width:11%" />
+		<col style="width:22%" />
+		<col style="width:11%" />
+		<col style="width:22%" />
+		<col style="width:11%" />
+		<col style="width:23%" />
+	</colgroup>
+	<thead>
+	<tr>
+		<th scope="row">기관</th>
+		<td><span id="deptName"></span></td>
+		<th scope="row">담당자</th>
+		<td><span id="userName"></span></td>
+		<th scope="row">연락처</th>
+		<td><span id="mailTo"></span></td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td colspan="6">
+			<div class="intxt">
+				${notiConts}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="6">
+		<div class="rbox02 mt0">
+			<span class="top"></span>
+			<div class="mid">
+				<div class="inquiry_top">
+					<dl id="notiFileDl">
+					</dl>
+				</div>
+			</div>
+			<span class="btm"></span>
+		</div>
+		</td>
+	</tr>
+	</tbody>
+	</table>
 	
-	<div class="titlebox fl">
-		<div class="fl"  style="width:660px;">
-			<div class="innerbox tit">작성자</div>
-			<div class="innerbox" id="userName"></div>
-			<div class="innerbox" id="deptName"></div>
-			<div class="innerbox" id="mailTo"></div>
-		</div>
-		<div class="fl">
-			<div class="innerbox tit">등록일</div>
-			<div class="innerbox" id="regDttm"></div>
-		</div>
-	</div>	
-</div>	
+</div>
+	
 
 <iframe name="dummy" width=0 height=0 border=0 style="visibility:hidden"></iframe>
 
 </body>
-</html>			 
+</html>		
+
+ 

@@ -301,7 +301,6 @@
 		
 		document.listForm.pageUnit.value = $("#list_cnt").val();
 		document.listForm.searchCondition.value = $("#search_gubun").val();
-		//document.listForm.searchKeyword.value = $("#keyword").val();
 		document.listForm.searchKeyword.value = $("#keyword").val().replace(/&quot;/g,"\"");
 		document.listForm.pageIndex.value = pageIndex;
 		document.listForm.action = WEB_HOME+"/board210/getBasicBoardView.do?notiId="+id+"&boardId="+boardId+"&pnum="+pnum;
@@ -493,11 +492,12 @@
 			
 			//달력세팅
 		    $('#calendar').fullCalendar({
-				header: {
-					left: '',
-					center: 'prev, title, next',
-					right: 'today'
-				},
+				//header: {
+				//	left: '',
+				//	center: 'prev, title, next',
+				//	right: 'today'
+				//},
+		    	header : false,
 		    	editable: false,
 		    	height : 500,
 		    	//events : calList,
@@ -515,8 +515,14 @@
 		                	//console.log(doc.calList)
 		                    var events = [];
 		                    events = $.parseJSON(doc.calList);
+		                    var calNotAnmtList = [];
+		                    for(var i=0;i<events.length;i++){
+		                    	if("N" == events[i].anmtYn){ //공지는 달력에서 제외.
+		                    		calNotAnmtList.push(events[i]);
+		                    	}
+		                    }
 		                    calList = events;
-		                    callback(events);
+		                    callback(calNotAnmtList);
 		                }
 		            });
 		        },
@@ -527,17 +533,29 @@
 					if (!bool){
 						$(".tbl_list tbody").empty();
 						for(var i=0;i<calList.length;i++){
-							var tr = "<tr>"
+							var tr = "";
+							if(calList[i].anmtYn == 'Y'){
+								tr = "<tr class='notice'>"
+									+ "<td><div class='ico_notice'>공지</div></td>"
+									+ "<td>"+calList[i].deptName+"</td>"
+									+ "<td class='tit' title='"+calList[i].notiTitleOrgn+"'><a href=\"javascript:fnGetBoardView('"+calList[i].notiId+"','"+calList[i].pnum+"');\" class='text_dot'>"+calList[i].notiTitle+"</a></td>"
+									+ "<td>"+calList[i].regDttm+"</td>";
+							}else{
+								tr = "<tr>"
 								+ "<td>"+calList[i].oldNoticeSeq+"</td>"
+								+ "<td>"+calList[i].deptName+"</td>"
 								+ "<td class='tit' title='"+calList[i].notiTitleOrgn+"'><a href=\"javascript:fnGetBoardView('"+calList[i].notiId+"','"+calList[i].pnum+"');\" class='text_dot'>"+calList[i].notiTitle+"</a></td>"
-								+ "<td>"+(calList[i].apndFileCnt > 0?'<a href="#"><span class="ico_fileAttch"><span class="hidden">파일첨부</span></span></a>':'')+"</td>"
-								+ "<td>"+calList[i].userName+"</td>"
-								+ "<td>"+calList[i].notiReadCnt+"</td>"
-								+ "<td>"+calList[i].regDttm+"</td>";
+								+ "<td>"+calList[i].notiBgnDttm+"~"+calList[i].notiEndDttm+"</td>";
+							}
 							$(".tbl_list tbody").append(tr);
 						}
 						
-						if(calList.length == 0) $(".tbl_list tbody").append('<tr><td colspan="6">검색된 데이터가 없습니다.</td></tr>');
+						if(calList.length == 0) $(".tbl_list tbody").append('<tr><td colspan="4">검색된 데이터가 없습니다.</td></tr>');
+						
+						var moment = $('#calendar').fullCalendar('getDate');
+						var mon = moment.format("YYYY.MM");
+						$("#calMonth").html(mon);
+						
 						parent.document.getElementById("bbsFrame").height = "700px";
 						parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";
 					}
@@ -560,6 +578,32 @@
 				eventColor: '#99ccff'
 		    });
 		    
+		    //이전달
+		    $('#calPrevBtn').click(function() {
+		        $('#calendar').fullCalendar('prev');
+		        var moment = $('#calendar').fullCalendar('getDate');
+				var mon = moment.format("YYYY.MM");
+				$("#calMonth").html(mon);
+		    });
+		    
+		    //다음달
+		    $('#calNextBtn').click(function() {
+		        $('#calendar').fullCalendar('next');
+		        var moment = $('#calendar').fullCalendar('getDate');
+				var mon = moment.format("YYYY.MM");
+				$("#calMonth").html(mon);
+		    });
+		    
+		    //새로고침
+		    
+		    
+		    //오늘로
+		    $('#calTodayBtn').click(function() {
+		        $('#calendar').fullCalendar('today');
+		        var moment = $('#calendar').fullCalendar('getDate');
+				var mon = moment.format("YYYY.MM");
+				$("#calMonth").html(mon);
+		    });
 		}
 
 		$("#btnReset").click(function(){

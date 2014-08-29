@@ -336,7 +336,11 @@ public class Board210Controller {
 			for(BbsNotiInfoVO bvo : noti_list){
 				bvo.setTitle(bvo.getNotiTitle());
 				bvo.setStart(bvo.getNotiBgnDttm());
-				bvo.setEnd(bvo.getNotiEndDttm());
+				if("9999-12-31".equals(bvo.getNotiEndDttm())){
+					bvo.setEnd(bvo.getNotiEndDttm());
+				}else{
+					bvo.setEnd(CommUtil.getAddDate(bvo.getNotiEndDttm(), "yyyy-MM-dd", 1));
+				}
 				calList.add(bvo);
 			}
 		}

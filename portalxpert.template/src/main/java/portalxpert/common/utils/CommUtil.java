@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.regex.Pattern;
@@ -21,7 +22,6 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import portalxpert.common.config.PortalxpertConfigUtils;
@@ -94,6 +94,26 @@ public class CommUtil {
 		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1 , 1);
 		return year + month + cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}	
+	
+	//입력으로 들어온 일자에 대해 입력한 개월수 만큼 이전 일자로 변환
+    public static String getAddDate(String strDate, String format, int addDate)
+    {
+        SimpleDateFormat fmt = new SimpleDateFormat(format);// NOPMD : 범용성을 고려하여 default locale을 사용하므로 검출제외 by 홍태구
+        Calendar calendar = Calendar.getInstance();
+        try
+        {
+            calendar.setTime(fmt.parse(strDate));
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+        
+        calendar.add(Calendar.DATE, addDate);
+
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        return df.format(calendar.getTime());
+    }
 	
 	/**
 	 *	문자열을 받아서 null이면 공백 문자열로 리턴
