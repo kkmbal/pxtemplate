@@ -37,6 +37,12 @@
 		document.listForm.searchKeyword.value = $("#keyword").val().replace(/&quot;/g,"\"");
 		document.listForm.orderType.value = orderType;
 		document.listForm.isDesc.value = isDesc;
+		document.listForm.regDttmCondition.value = $("#search_gubun_dttm").val();
+		if($("#search_gubun_dttm").val() == "REG_DTTM_FROM"){
+			document.listForm.regDttmFrom.value = $("#regDttm").val();
+		}else if($("#search_gubun_dttm").val() == "REG_DTTM_TO"){
+			document.listForm.regDttmTo.value = $("#regDttm").val();
+		}
 
 		document.listForm.pageUnit.value = pageUnit;
 		document.listForm.action = WEB_HOME+"/board210/getBoardInfoList.do?boardId="+boardId;

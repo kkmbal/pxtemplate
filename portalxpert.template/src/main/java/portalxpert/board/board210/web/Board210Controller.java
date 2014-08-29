@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import antlr.StringUtils;
+
 import portalxpert.board.board100.sc.Board100Service;
 import portalxpert.board.board100.vo.BbsBoardInfoVO;
 import portalxpert.board.board100.vo.BbsNotiApndFileVO;
@@ -238,6 +240,9 @@ public class Board210Controller {
  			@RequestParam(value="listYn",required = false) String listYn,
  			@RequestParam(value="calYmFrom",required = false) String calYmFrom,
  			@RequestParam(value="calYmTo",required = false) String calYmTo,
+ 			@RequestParam(value="regDttmCondition",required = false) String regDttmCondition,
+ 			@RequestParam(value="regDttmFrom",required = false) String regDttmFrom,
+ 			@RequestParam(value="regDttmTo",required = false) String regDttmTo,
  			@RequestParam(value="open",required = false)  String open,
  			HttpSession session,
  			HttpServletRequest request
@@ -308,6 +313,8 @@ public class Board210Controller {
 		boardSearchVO.setBoardKind(bbsInfo.getBoardKind());
 		boardSearchVO.setUserId(info.getId());
 		boardSearchVO.setEamAdminYn(getEamAdmBoardAdmYNForList(session, bbsInfo));
+		boardSearchVO.setRegDttmFrom(regDttmFrom);
+		boardSearchVO.setRegDttmTo(regDttmTo);
 		
 		//달력타입
 		if(Constant.BOARD_FORM_040.getVal().equals(bbsInfo.getBoardForm())){
@@ -321,11 +328,9 @@ public class Board210Controller {
 			boardSearchVO.setCalYmTo(calYmTo);
 		}
 
+		
 		searchKeyword = searchKeyword == null?"":searchKeyword;
 		searchKeyword = URLDecoder.decode(searchKeyword,"UTF-8");
-//			logger.debug("사용자권한 : "+auth);
-//			logger.debug("조회자 지정여부 : "+boardSearchVO.getNotiReadmanAsgnYn());
-//			logger.debug("isDesc : "+isDesc);
 		
 		List<BbsNotiInfoVO> noti_list = board210Service.getBbsNotiInfoListForPaging(boardSearchVO);//게시글 조회
 		int totCnt = board210Service.getBbsNotiInfoListTotCnt(boardSearchVO);
@@ -345,8 +350,6 @@ public class Board210Controller {
 			}
 		}
 		
-		logger.debug("noti_list : "+noti_list.size());
-		logger.debug("totCnt : "+totCnt);
 		
 		paginationInfo.setTotalRecordCount(totCnt);
 		logger.debug("bbsInfo.getMakrDispDiv() : "+bbsInfo.getMakrDispDiv());
@@ -369,6 +372,13 @@ public class Board210Controller {
 		modelMap.put("searchKeyword", searchKeyword);
 		modelMap.put("orderType", orderType);
 		modelMap.put("calList", JSONUtils.objectToJSON(calList));
+		modelMap.put("regDttmCondition", regDttmCondition);
+		if(!CommUtil.isEmpty(regDttmFrom)){
+			modelMap.put("regDttm", regDttmFrom);
+		}
+		if(!CommUtil.isEmpty(regDttmTo)){
+			modelMap.put("regDttm", regDttmTo);
+		}
 		
 		if("80".equals(request.getServerPort())){
 			modelMap.put("host", "http://"+request.getRemoteHost());
@@ -408,7 +418,7 @@ public class Board210Controller {
  			)
             throws Exception {
     	
-    	return getBoardInfoList(modelMap, boardSearchVO, boardId, pageIndex, pageUnit, searchCondition, searchKeyword, orderType, isDesc, listYn, calYmFrom, calYmTo, open, session, request);
+    	return getBoardInfoList(modelMap, boardSearchVO, boardId, pageIndex, pageUnit, searchCondition, searchKeyword, orderType, isDesc, listYn, calYmFrom, calYmTo, "" ,"", "", open, session, request);
     
     }
     

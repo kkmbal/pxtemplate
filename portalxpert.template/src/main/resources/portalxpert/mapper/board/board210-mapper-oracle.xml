@@ -240,7 +240,7 @@
 	                        </if>
 	                        <if test="regDttmTo != null and regDttmTo != '' ">
 	                        	<![CDATA[	                        	
-	                        	AND UPD_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+	                        	AND NOTI_END_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
 	                        	]]>
 	                        </if>
 	                        <if test="calYmFrom != null and calYmFrom != '' ">/* 달력 */
@@ -413,7 +413,7 @@
 		</if>
 		<if test="regDttmTo != null and regDttmTo != '' ">
 			<![CDATA[
-			AND UPD_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			AND NOTI_END_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
 			]]>	
 		</if>               		
         <if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('N') ">

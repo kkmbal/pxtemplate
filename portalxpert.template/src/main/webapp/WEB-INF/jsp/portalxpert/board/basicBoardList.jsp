@@ -53,6 +53,9 @@
 	<form:hidden path="notiSeqNo" />
 	<form:hidden path="orderType" />
 	<form:hidden path="isDesc" />
+	<input type="hidden" id="regDttmCondition" name="regDttmCondition">
+	<input type="hidden" id="regDttmFrom" name="regDttmFrom">
+	<input type="hidden" id="regDttmTo" name="regDttmTo">
 	
 <div class="container">
 	<div class="header">
@@ -130,7 +133,7 @@
 								</select> 
 							</span>
 						</span>
-						<input type="text" value="${fn:replace(admStatSearchVO.searchKeyword,'"', '&quot;')}" id="keyword" class="text" style="width:500px" title="검색제목" />
+						<input type="text" value="${fn:replace(searchKeyword,'"', '&quot;')}" id="keyword" class="text" style="width:500px" title="검색제목" />
 					</div>
 				</div>
 				<div class="halfWrap">
@@ -140,13 +143,13 @@
 							<label for="selectN_id1" class="hidden">검색구분</label>
 							<select title="" id="search_gubun_dttm">
 								<option value="">선택</option>
-								<option value="NOTI_BGN_DTTM" ${searchCondition == 'NOTI_BGN_DTTM' ? 'selected' : ''}>등록일</option>
-								<option value="NOTI_END_DTTM" ${searchCondition == 'NOTI_END_DTTM' ? 'selected' : ''}>종료일</option>
+								<option value="REG_DTTM_FROM" ${regDttmCondition == 'REG_DTTM_FROM' ? 'selected' : ''}>등록일</option>
+								<option value="REG_DTTM_TO" ${regDttmCondition == 'REG_DTTM_TO' ? 'selected' : ''}>종료일</option>
 							</select>
 						</span>
 					</span>
 					<!-- //셀렉트박스 -->
-					<input type="text" class="text" id="regDttm" name="regDttm" style="width:100px" title="날짜를 입력합니다. 예)YYYY.MM.DD">
+					<input type="text" class="text" id="regDttm" name="regDttm" value="${regDttm}" style="width:100px" title="날짜를 입력합니다. 예)YYYY.MM.DD">
 				</div>
 	
 				<div class="rbox_btns">
