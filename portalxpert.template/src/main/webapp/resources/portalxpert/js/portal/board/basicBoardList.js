@@ -560,7 +560,10 @@
 						
 						var moment = $('#calendar').fullCalendar('getDate');
 						var mon = moment.format("YYYY.MM");
+						var monYear = moment.format("YYYY");
+						var monMon = moment.format("MM");
 						$("#calMonth").html(mon);
+						$("#calText").html(monYear+"년 "+monMon+"월 교육안내");
 						
 						parent.document.getElementById("bbsFrame").height = "700px";
 						parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";

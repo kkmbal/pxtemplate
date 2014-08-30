@@ -180,12 +180,22 @@
 			</div>
 		</td>
 	</tr>
-	<tr id="div_img_view" style="display:none;">
+	<tr id="div_img_view_text" style="display:none;">
 	<th scope="row">이미지등록</th>
-	<td colspan="3">
-	<ul style="list-style-type:none;float:left;">
+	<td colspan="3" class="imgEnrol">
+			목록에 게시될 이미지 1개를 반드시 선택해 주십시오.
+	</td>
+	<tr id="div_img_view" style="display:none;">	
+	<td colspan="4" class="img_upload">
+	<ul class="img_optList">
 		    <li class="img_imgadd">
-			<form id="bbsImgform1" name="bbsImgform1" enctype="multipart/form-data" method="post">
+		    <form id="bbsImgform0" name="bbsImgform0" enctype="multipart/form-data" method="post">
+			<input type="file" size="1" title="이미지추가" id="apndImg0" name="bbsUpImg0" class="img_file">
+			</form>
+			</li>
+	
+		    <li class="img_imgadd">
+		    <form id="bbsImgform1" name="bbsImgform1" enctype="multipart/form-data" method="post">
 			<input type="file" size="1" title="이미지추가" id="apndImg1" name="bbsUpImg1" class="img_file">
 			</form>
 			</li>
@@ -207,7 +217,6 @@
 			<input type="file" size="1" title="이미지추가" id="apndImg4" name="bbsUpImg4" class="img_file">
 			</form>
 			</li>
-	
 		</ul>
 	</td>
 	</tr>
@@ -219,11 +228,13 @@
 		<ul>
 		    <li>
 		    <form id="movieImgform" name="movieImgform" enctype="multipart/form-data" method="post">
-		    <input type="text" class="text" style="width:520px">
-		    <a href="#" class="btn_set bt_style1 mv_file_a">   
-			<input type="file" size="1" id="apndMovie" name="bbsUpMovie" class="mv_file">
-			<span>파일</span></a>
-	<!-- 		<a href="#" class="btn_set bt_style1" onclick="fnAddMovieFileList()"><span>추가</span></a> -->
+		    
+		    <input type="text" class="text" style="width:520px" readonly>
+			<span class="file_wrap">
+				<button class="btn_style1_2" type="button">파일</button>
+				<input type="file" id="apndMovie" name="bbsUpMovie" class="file_hidden" />
+			</span>		    
+		    
 			</form>
 			</li>	
 		</ul>

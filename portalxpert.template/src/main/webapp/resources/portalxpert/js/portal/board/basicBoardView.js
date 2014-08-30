@@ -314,6 +314,76 @@
 		if(notiPrevNextImgMovInfo){
 			if(notiPrevNextImgMovInfo.length < 1) return ;
 
+			$("#boardPage").empty();
+			$("#boardPage").removeClass("pageNavi").addClass("imgGallery gStyle");
+			if(prev_last){
+				$("#boardPage").append(
+					   '<div class="gal_wrap"><ul class="gal_list" id="board_mov"></ul></div>'
+					  + '<a href="javascript:fnNotiPrevNextImgMovInfoView(1)" class="arrBtn next" id="btn_next_img"><img src="'+RES_HOME+'/images/btn_galNext.png" alt="다음갤러리" /></a>'
+				);
+			}else if(next_last){
+				$("#boardPage").append(
+						'<a href="javascript:fnNotiPrevNextImgMovInfoView(-1)" class="arrBtn prev" id="btn_prev_img"><img src="'+RES_HOME+'/images/btn_galPrev.png" alt="이전갤러리" /></a>'
+					  + '<div class="gal_wrap"><ul class="gal_list" id="board_mov"></ul></div>'
+				);
+			}else{
+				$("#boardPage").append(
+						'<a href="javascript:fnNotiPrevNextImgMovInfoView(-1)" class="arrBtn prev" id="btn_prev_img"><img src="'+RES_HOME+'/images/btn_galPrev.png" alt="이전갤러리" /></a>'
+					  + '<div class="gal_wrap"><ul class="gal_list" id="board_mov"></ul></div>'
+					  + '<a href="javascript:fnNotiPrevNextImgMovInfoView(1)" class="arrBtn next" id="btn_next_img"><img src="'+RES_HOME+'/images/btn_galNext.png" alt="다음갤러리" /></a>'
+				);
+			}
+			
+			
+			for(var i=0; i<notiPrevNextImgMovInfo.length; i++){
+
+				if(boardFormSpec == '010'){
+					$("#board_mov").append(
+						'<li class="on">'
+					  + '<div class="imgFrame02">'
+					  + '	<a href="javascript:fnGetBoardView(\''+notiPrevNextImgMovInfo[i].notiId+'\' , \''+notiPrevNextImgMovInfo[i].pnum+'\')" >'
+					  + '		<img src="'+imgSvrUrl+'/'+notiPrevNextImgMovInfo[i].apndFileName+'" alt="" style="width:180px;height:120px">'
+					  + '		<strong class="img_tit">'+notiPrevNextImgMovInfo[i].notiTitle+'</strong>'
+					  +	'		<span class="selected"></span>'					  
+					  + '	</a>'
+					  + '	<div class="img_desc">'
+					  + '		<span class="fl">'
+					  + '		<span class="col03">'+notiPrevNextImgMovInfo[i].updrName+'</span><br>'+notiPrevNextImgMovInfo[i].notiBgnDttm
+					  + '		</span>'
+					  + '		<span class="fr">'
+					  + '		<span class="col02">[의견:'+notiPrevNextImgMovInfo[i].opnCnt+']</span><br>'
+					  + '		'+notiPrevNextImgMovInfo[i].notiReadCnt
+					  + '		</span>'
+					  + '	</div>'					  
+					  + '</div>'
+					  + '</li>'		
+					);
+				}else if(boardFormSpec == '020'){
+					$("#board_mov").append(
+							'<li class="on">'
+						  + '<div class="imgFrame02">'
+						  + '	<a href="javascript:fnGetBoardView(\''+notiPrevNextImgMovInfo[i].notiId+'\' , \''+notiPrevNextImgMovInfo[i].pnum+'\')" >'
+						  + '		<img src="'+movDir+'/'+notiPrevNextImgMovInfo[i].apndFileName+'" alt="" style="width:180px;height:120px" title="게시판동영상">'
+						  + '		<strong class="img_tit">'+notiPrevNextImgMovInfo[i].notiTitle+'</strong>'
+						  +	'		<span class="selected"></span>'					  
+						  + '	</a>'
+						  + '	<div class="img_desc">'
+						  + '		<span class="fl">'
+						  + '		<span class="col03">'+notiPrevNextImgMovInfo[i].updrName+'</span><br>'+notiPrevNextImgMovInfo[i].notiBgnDttm
+						  + '		</span>'
+						  + '		<span class="fr">'
+						  + '		<span class="col02">[의견:'+notiPrevNextImgMovInfo[i].opnCnt+']</span><br>'
+						  + '		'+notiPrevNextImgMovInfo[i].notiReadCnt
+						  + '		</span>'
+						  + '	</div>'					  
+						  + '</div>'
+						  + '</li>'		
+						);					
+				}
+			}
+			
+			
+			/*
 			$("#boardPage div").remove();
 			$("#boardPage").append('<div class="page_vod"></div>');
 			if(prev_last){
@@ -348,6 +418,7 @@
 					
 				}
 			}
+			*/
 		}
 		
 		if(param == 'go'){
@@ -668,9 +739,10 @@
 				+'<div style="display:none;" align="center" id="dialog-'+json.apndFileSeq+'" title="'+json.apndFileOrgn+'">'
 				+'<img src="'+imgSvrUrl+'/'+json.apndFilePath+'/'+json.apndFileName+'"></div>');
 		
-		$("#imgNotiConts").css('display','block');		
+		//$("#imgNotiConts").css('display','block');		
+		$("#imgViewer").css('display','block');		
 		$("#imgNotiConts").find('img').load(function(){
-			fnImgEffect();
+			//fnImgEffect();
 		});
 		
 	};

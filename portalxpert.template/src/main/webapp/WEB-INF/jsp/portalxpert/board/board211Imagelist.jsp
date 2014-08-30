@@ -34,24 +34,23 @@
 <form:hidden path="pageIndex" />
 <input type='hidden' name='boardId'> 
 
-	<div class="container">
-	<br/>
+<div class="container">
 	<div class="header">
-		<h1>${boardName}</h1>
+		<div class="h1">${boardName}</div>
 		<div class="loc">
-			<span><a href="#"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a></span>
-			<span><a href="#">커뮤니티</a></span>
-			<span><strong>${boardName}</strong></span>
+			<a href="#" class="home"><img src="${RES_HOME}/images/ico_home.png" alt="홈" /></a>
+			<a href="#">커뮤니티</a>
+			<strong class="str">${boardName}</strong>
 		</div>
 	</div>
-	<!-- 검색 -->
+	
 	<div class="rbox">
-		<span class="rbox_top"></span>
+		<div class="rbox_top"></div>
 		<div class="rboxInner">
 			<!-- 셀렉트박스 -->
 			<span class="selectN" style="width:100px">
 				<span>
-					<label for="selectN_id1" class="hidden"></label>
+					<label for="selectN_id1" class="hidden">제목</label>
 					<select title="" id="searchCondition" name="searchCondition">
 						<option value="0" ${searchCondition == 0 ? 'selected' : ''}>제목
 						<option value="1" ${searchCondition == 1 ? 'selected' : ''}>게시자
@@ -60,86 +59,87 @@
 				</span>
 			</span>
 			<!-- //셀렉트박스 -->
-			<input type="text" value="${fn:replace(searchKeyword,'"', '&quot;')}" name="searchKeyword" id="searchKeyword" class="text ml5mr10" style="width:450px" /> 
-			<a href="#" class="btn_set bt_style7" onclick="fnFormBbsImgBoardNotiList('1')"><span>검색</span></a>
+			<input type="text" value="${fn:replace(searchKeyword,'"', '&quot;')}" name="searchKeyword" id="searchKeyword" class="text ml5mr10" style="width:450px" title="제목입력"> 
+			<button class="btn_style7_2" type="button" onclick="fnFormBbsImgBoardNotiList('1')">검색</button>
 		</div>
 	</div>
-	<br/>
-	<!-- 테이블상단 버튼영역 -->
-	<div class="btn_board_top">
-		<div class="fl">
-			<c:if test="${btnViewYn == 'Y'}">
-			<a href="#" class="btn_write"><span>글쓰기</span></a> 
-			</c:if>
-		</div>
-	</div>
-	<!-- //테이블상단 버튼영역 -->
 
-	<!-- 게시판은 테이블 -->
-	<c:import url="./boardNotiList.jsp" />
-	<br>
-
-	<!-- 테이블상단 버튼영역 -->
-	<div class="btn_board_top">
-		<div class="fr">
-			<span class="selectN" style="width:80px">
-				<span>
-					<select title="" name="pageUnit" id="pageUnit" OnChange="fnFormBbsImgBoardNotiList('1')" title="게시물수 보기">
-						<option value="6" ${pageUnit == 6 ? 'selected' : ''}>6개보기</option>
-						<option value="12" ${pageUnit == 12 ? 'selected' : ''}>12개보기</option>
-						<option value="24" ${pageUnit == 24 ? 'selected' : ''}>24개보기</option>
-					</select>
+	<div class="imgGallery">
+		<!-- 공지 -->
+		<c:import url="./boardNotiList.jsp" />
+		
+		<table summary="" class="tbl_list">
+		<caption></caption>
+		<colgroup>
+		<col style="width:7%" />
+		<col style="width:71%" />
+		<col style="width:11%" />
+		<col style="width:11%" />
+		</colgroup>
+		<tr class="imgView">
+			<td colspan="4">
+			<div class="img_sec">
+				<!-- selectbox -->
+				<span class="selectN" style="width:100px">
+					<span>
+						<label for="selectN_id1" class="hidden">갤러리 개수선택</label>
+						<select title="" name="pageUnit" id="pageUnit" OnChange="fnFormBbsImgBoardNotiList('1')" title="게시물수 보기">
+							<option value="6" ${pageUnit == 6 ? 'selected' : ''}>6개보기</option>
+							<option value="12" ${pageUnit == 12 ? 'selected' : ''}>12개보기</option>
+							<option value="24" ${pageUnit == 24 ? 'selected' : ''}>24개보기</option>
+						</select>						
+					</span>
 				</span>
-			</span>
+				<!-- //selectbox -->
+				<ul class="gal_list">
+					<c:choose>
+						<c:when test="${paginationInfo.totalRecordCount > 0}">
+							<c:forEach var="result" items="${notiList}" varStatus="i">				
+								<li>
+									<div class="imgFrame02">
+										<!-- 링크영역 -->
+										<a href="javascript:fnNotiContsDetail('${result.notiId}')" title="${result.notiTitle}">
+											<img src="${imgUrl}${result.apndFileName}" alt="" style="width:180px;height:120px" />
+											<strong class="img_tit">${result.notiTitle}</strong>
+										</a>
+										<!-- //링크영역 -->
+										<div class="img_desc">
+											<span class="fl">
+												<span class="col03">${result.updrName}</span><br />${result.updDttm}
+											</span>
+											<span class="fr">
+												<span class="col02">[의견:${result.opnCnt}]</span><br />
+												${result.notiReadCnt}
+											</span>
+										</div>
+									</div>
+								</li>
+						</c:forEach>
+						</c:when>
+						<c:otherwise>
+							 <div style="text-align:center">검색된 데이터가 없습니다.</div> 
+						</c:otherwise>
+					</c:choose>					
+				</ul>
+			</div>
+			</td>
+		</tr>
+		</tbody>
+		</table>
+		
+		<div class="paging">
+		<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fnFormBbsImgBoardNotiList" />
 		</div>
+		
+		<c:if test="${btnViewYn == 'Y'}">
+		<button type="button" class="btn_write"><strong>글쓰기</strong></button>
+		</c:if>
 	</div>
-	<!-- //테이블상단 버튼영역 -->
-
-
-
-	<div class="bigbox">
-		<c:choose>
-			<c:when test="${paginationInfo.totalRecordCount > 0}">
-				<c:forEach var="result" items="${notiList}" varStatus="i">
-				
-					<div class="smallbox">
-			
-						<div class="imgbox">
-						<img src="${imgUrl}${result.apndFileName}" width="200" height="120" />
-						</div>
-						<a href="javascript:fnNotiContsDetail('${result.notiId}')" title="${result.notiTitle}">${result.notiTitle}</a>
-<!-- 						<textarea rows="2" class="texttitle"> -->
-<!-- 			게시물의 제목을 표기합니다. -->
-<!-- 			제목은 볼드체로2줄로 표기... -->
-<!-- 						</textarea> -->
-						<div class="textdetail">
-							<div class="fl">${result.updrName}</div>
-							<div class="fr" style="color:#1688d9;font-weight:normal">[의견 ${result.opnCnt}]</div>
-						</div>
-						<div class="textdetail">
-							<div class="fl">${result.updDttm}</div>
-							<div class="fr">${result.notiReadCnt}</div>
-						</div>
-			
-					</div><!-- end of smallbox	-->
-
-				</c:forEach>
-				</c:when>
-				<c:otherwise>
-					 검색된 데이터가 없습니다. 
-				</c:otherwise>
-			</c:choose>
-
-
-	</div> <!-- end of bigbox -->
-
-
-<div class="paging">
-<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fnFormBbsImgBoardNotiList" />
+	
+	
+	
+	
 </div>
-
-
-</div> <!-- end of container -->
 
 
 </form:form>
@@ -147,78 +147,3 @@
 </html>
 
 
-<%--
-
-
-<form:form commandName="boardSearchVO" name="listForm" method="post">
-<form:hidden path="pageIndex" />
-<input type='hidden' name='boardId'>  
- 
-  <div>
-	<select id="searchCondition" name="searchCondition">
-		<option value="0" ${searchCondition == 0 ? 'selected' : ''}>제목
-		<option value="1" ${searchCondition == 1 ? 'selected' : ''}>게시자
-		<option value="2" ${searchCondition == 2 ? 'selected' : ''}>본문
-	</select>
-	<input type="text" value="${searchKeyword}" name="searchKeyword" id="searchKeyword" >
-	<input type="button" value="검색" onclick="fnFormBbsImgBoardNotiList('1')">
-  </div>
-
-	<input type="button" value="글쓰기" class="btn_write">
-
-	<c:import url="./boardNotiList.jsp" />
-
-  <div>
-	<table>
-	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-	</table>
-  </div>
-
-  <div>
-	<select name="pageUnit" id="pageUnit" OnChange="fnFormBbsImgBoardNotiList('1')" >
-		<option value="6" ${pageUnit == 6 ? 'selected' : ''}>6
-		<option value="12" ${pageUnit == 12 ? 'selected' : ''}>12
-		<option value="24" ${pageUnit == 24 ? 'selected' : ''}>24
-	</select>
-  </div>
-
-
-
-  <div>
-	  <table>
-		<c:choose>
-			<c:when test="${paginationInfo.totalRecordCount > 0}">
-		
-				<c:forEach var="result" items="${notiList}" varStatus="i">
-				  <tr>
-					<td>
-						<img src="${imgUrl}${result.apndFileName}" width="125" height="125">
-						<a href="javascript:fnNotiContsDetail('${result.notiId}')" title="${result.notiTitle}">${result.notiTitle}</a> 
-						[의견:${result.opnCnt}] 
-						${result.updrName} 
-						${result.notiReadCnt} 
-						${result.updDttm}
-					</td>
-				  </tr>
-				</c:forEach>
-				</c:when>
-				<c:otherwise>
-					 검색된 데이터가 없습니다. 
-				</c:otherwise>
-			</c:choose>
-		</table>
-  </div>
-
-	<div id="paging" class="paginate2">
-		<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fnFormBbsImgBoardNotiList" />
-
-
-	</div>
-</form:form>
-
-
---%>

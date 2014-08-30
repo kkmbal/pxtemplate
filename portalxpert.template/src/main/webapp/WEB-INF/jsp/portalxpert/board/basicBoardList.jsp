@@ -96,7 +96,7 @@
 			</select>			
 		</div>
 		<!-- //달력 -->
-		<div class="h2">2014년 9월 교육안내</div>
+		<div class="h2" id="calText"></div>
 		<table summary="" class="tbl_list">
 		<caption></caption>
 		<colgroup>

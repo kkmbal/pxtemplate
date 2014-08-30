@@ -1907,6 +1907,7 @@ $(document).ready(function () {
 		var notiKind = $(':radio[name="apndKind"]:checked').val();
 		if(notiKind == '020'){
 			//이미지
+			$("#div_img_view_text").show();
 			$("#div_img_view").show();
 		}else if(notiKind == '030'){
 			//동영상
@@ -2129,7 +2130,7 @@ $(document).ready(function () {
 	{
 		var json = obj[0];
 		
-		$('<li id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'"  width="124" height="124"  alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#"+form_id));
+		$('<li id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'"  width="128" height="83"  alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#"+form_id));
 //			$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="/portalxpert.template/upload/test.jpg" width="124" height="124" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#"+form_id));
 
 		var jsonObject = {
@@ -2938,7 +2939,7 @@ $("input[name^=upFile]").change(function(e) {
 		{
 			var json = obj;		
 
-			$('<li id="'+json.saveFileId+'" name= '+json.apndFileOrgn+'><img id="img-'+json.saveFileId+'" src="'+WEB_DIR+json.apndFilePath+'/'+json.apndFileName+'"  width="124" height="124"  alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#bbsImgform"+idx));
+			$('<li id="'+json.saveFileId+'" name= '+json.apndFileOrgn+'><img id="img-'+json.saveFileId+'" src="'+WEB_DIR+json.apndFilePath+'/'+json.apndFileName+'"  width="128" height="83"  alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($("#bbsImgform"+idx));
 			
 			var jsonObject = {
 					'notiId' : ''

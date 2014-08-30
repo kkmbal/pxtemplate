@@ -154,9 +154,9 @@ if('${btnViewYn}' == "X"){
 			</div>
 			<!-- 글내용  -->
 			<div class="intxt">
-<!-- 				<span class="viewer"> -->
-<!-- 				</span> -->
-				<ul id="imgNotiConts" class="sns_imgs" style="display:none"></ul><!-- 이미지형 게시판 -->		
+				<span class="viewer" id="imgViewer" style="display:none">
+					<ul id="imgNotiConts"></ul><!-- 이미지형 게시판 -->		
+				</span>
 				<p class="te_center" id="movNotiConts" style="display:none"></p><!-- 동영상 게시판 -->
 				<span id="notiConts">
 				${notiConts}

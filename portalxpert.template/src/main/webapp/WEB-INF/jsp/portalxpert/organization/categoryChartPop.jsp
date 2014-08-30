@@ -61,7 +61,7 @@
 			<tbody>
 			<tr>
 				<td>
-					<div class="tree" style="border:1px solid #eee;">
+					<div class="tree" style="border:1px solid #eee;overflow:auto;">
 						<div class="content_wrap">
 							<div class="zTreeDemoBackground left ma_top5">
 								<ul id="treeObj" class="ztree"></ul>

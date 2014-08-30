@@ -218,12 +218,12 @@ ul,li,ol {
 .img_imgadd {
 	position: relative;
 	border: 1px dashed #999999;
-	width: 124px;
-	height: 124px;
+	width: 126px;
+	height: 83px;
 	list-style-type: none;
 	float: left;
-	margin: 0 17px 5px 0;
-	background: #fff url(../images/img/img_imgadd.png) no-repeat center
+	margin: 0 5px 10px 0 !important;
+	background: #fff url(../images/blank_addimg.png) no-repeat center
 		center;
 }
 
