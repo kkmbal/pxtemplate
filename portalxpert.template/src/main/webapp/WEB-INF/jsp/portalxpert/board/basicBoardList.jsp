@@ -215,7 +215,7 @@
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="6">검색된 데이터가 없습니다.1</td>
+					<td colspan="6">검색된 데이터가 없습니다.</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>	
@@ -310,7 +310,7 @@
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="6">검색된 데이터가 없습니다.2</td>
+					<td colspan="6">검색된 데이터가 없습니다.</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>	
@@ -320,7 +320,6 @@
 	<%-- ********************** BASIC BOARD --%>
 </c:choose>		
 
-	<!-- 테이블 글보기스타일 -->
 	<div class="paging">
 		<c:if test="${boardForm != '040'}">
 		<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_link_page" />

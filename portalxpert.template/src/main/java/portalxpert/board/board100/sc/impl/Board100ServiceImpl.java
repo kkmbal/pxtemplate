@@ -32,6 +32,8 @@ import portalxpert.board.board100.vo.BbsTotalSearchVO;
 import portalxpert.board.board100.vo.PbsUserBoardInfoVO;
 import portalxpert.board.board100.vo.PbsUserBoardPartInfoVO;
 import portalxpert.board.board100.vo.PsnTmlnInfoVO;
+import portalxpert.board.board230.mapper.Board230Mapper;
+import portalxpert.board.board230.vo.BbsTmpNotiInfoVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.config.PortalxpertConfigUtils;
 import portalxpert.common.utils.CommUtil;
@@ -50,6 +52,10 @@ public class Board100ServiceImpl extends EgovAbstractServiceImpl implements  Boa
 	/** board100Mapper */
     @Resource(name="board100Mapper")
     private Board100Mapper board100Mapper;
+    
+    /** board230Mapper */
+    @Resource(name="board230Mapper")
+    private Board230Mapper board230Mapper;
 
     @Resource(name = "propertiesService")
     protected EgovPropertyService propertiesService;
@@ -1273,6 +1279,26 @@ public class Board100ServiceImpl extends EgovAbstractServiceImpl implements  Boa
 				
 			}
 			
+			
+			try{
+				// 임시저장건 재등록시 임시저장건 삭제
+				int tmpNotiSeq = bbsNotiObject.getInt("tmpNotiSeq");
+				if(tmpNotiSeq > 0){
+					BbsTmpNotiInfoVO tmpVo = new BbsTmpNotiInfoVO();
+					tmpVo.setTmpNotiSeq(tmpNotiSeq);
+					tmpVo.setUserId(info.getId());
+
+					board230Mapper.deleteBbsTmpNotiInfo(tmpVo);
+					board230Mapper.deleteBbsTmpNotiApndFile(tmpVo);
+					board230Mapper.deleteBbsTmpNotiSurveyExmpl(tmpVo);
+					board230Mapper.deleteBbsTmpNotiSurvey(tmpVo);
+					board230Mapper.deleteBbsTmpNotiUserMap(tmpVo);
+				}
+			}catch(Exception e){
+				logger.error(e.toString());
+			}
+			
+			/*
 			//폐쇄게시판 관리자에게 메일
 			if(vo.getBoardId() != null){
 				BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
@@ -1291,6 +1317,7 @@ public class Board100ServiceImpl extends EgovAbstractServiceImpl implements  Boa
 	    			}
 				}
 			}
+			*/
 			
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);

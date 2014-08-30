@@ -517,6 +517,7 @@ var fnBoardNotiCreate = function()
 		, 'notiReadmanAsgnYn' : notiReadmanAsgnYn
 		, 'isAdmin' : isAdmin
 		, 'type' : type
+		, 'tmpNotiSeq' : tmpNotiSeq
 		, 'AppendList' : []			
 		, 'AppendFileList' : []  //첨부 리스트
 		, 'NotiOpenDivDeptList' : []  // 조회자 지정 부서
