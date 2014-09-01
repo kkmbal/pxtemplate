@@ -220,10 +220,10 @@
 			treeReload();
 			
 
-		$('.tree').css({
-			'margin-bottom':'0'
-		   ,'height':'200px'
-		});
+		//$('.tree').css({
+		//	'margin-bottom':'0'
+		//   ,'height':'200px'
+		//});
 	};
 	
 	

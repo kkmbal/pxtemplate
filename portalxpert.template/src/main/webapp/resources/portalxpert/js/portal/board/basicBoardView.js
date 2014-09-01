@@ -676,11 +676,12 @@
 	// 040 : 설문
 	// 050 : 첨부
 	// 060 : 링크
-		
+
 		$('#notiFileDl dd').remove();
 		var apFileCnt = 0;
 		for (var i=0; i < notiFileJson.length ; i++){
 			if(notiFileJson[i].apndFileTp == '050'){
+				$('#notiFileDlDiv').show();
 				$('#notiFileDl:last').append('<dd><span class="ico_file"><strong>첨부파일</strong> <a class="bl_file2 fo_blue" href="javascript:fnDoFileDown(\''+ notiFileJson[i].apndFileSeq +'\',\''+ notiFileJson[i].apndFileName +'\',\''+ notiFileJson[i].apndFileOrgn +'\')">'+notiFileJson[i].apndFileOrgn+'</a>'
 						+' ('+getFileSzForKb(notiFileJson[i].apndFileSz)+"kb"+')</span></dd>');	
 				
@@ -1092,10 +1093,10 @@
 		$("#replyUl").append(
 				'<li class="reply_post">'
 				+'<textarea cols="" rows="" class="textbox" style="width:610px;height:40px" id="noti_reply" title="댓글 입력"></textarea>'
-				+'<span class="textbox_btns">'
-				+'	<span class="btn_st01 w01"><button type="button" onclick="fnInsertBbsNotiOpnForView()">등록</button></span>'
-				+'	<span class="btn_st02 w01"><button>취소</button></span>'
-				+'</span>'
+				+'  <span class="textbox_btns">'
+				+'	  <span class="btn_st01 w01"><button type="button" onclick="fnInsertBbsNotiOpnForView()">등록</button></span>'
+				+'	  <span class="btn_st02 w01"><button>취소</button></span>'
+				+'  </span>'
 				+'</li>'		
 				);
 	};
