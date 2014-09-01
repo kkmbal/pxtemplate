@@ -156,10 +156,7 @@
 	</tr>
 	<tr  id="boardUrlDiv" style="display:none;">
 		<th scope="row">URL</th>
-		<td>
-		내부 <input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:468px"><br>
-		<span id="openBoardUrlTitle" style="display:none;">공개</span> <input type="text" class="text" id="openBoardUrl" name="openBoardUrl" title="제공  URL" readonly style="width:468px;margin-top:5px;display:none;">
-		</td>
+		<td><input type="text" class="text" id="boardUrl" name="boardUrl" title="제공  URL" readonly style="width:468px"></td>
 	</tr>	
 	</tbody>
 	</table>

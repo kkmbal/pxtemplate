@@ -1798,7 +1798,7 @@
 			*/
 			
 		});
-		$(".btn_print").click(function(){
+		$(".btn_printing").click(function(){
 			var top_po = (screen.availHeight/2) - (530/2);
 		    var left_po = (screen.availWidth/2) - (820/2);
 		    window.open(WEB_HOME+'/board100/bbsPrintPreview.do?notiId='+notiId+"&boardId="+boardId+"&boardKind="+boardKind+"&pnum="+pnum, 'boardPrintPreview', 'top='+top_po+',left='+left_po+',width=820,height=530,resizable=yes,scrollbars=yes,toolbar=yes,menubar=yes');

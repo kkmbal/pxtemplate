@@ -949,12 +949,7 @@
 	   $('input:radio[name=replyWrteDiv]').attr("disabled", "true");
 	   
 	   $("#boardUrlDiv").show();
-	   $("#boardUrl").val(WEB_HOME+"/board100/boardFrame.do?boardId="+boardId);
-	   if( $('#oupOpenUseTypeSelect option:selected').val() == "Y" ){
-		   $("#openBoardUrl").show();
-		   $("#openBoardUrlTitle").show();
-		   $("#openBoardUrl").val(WEB_HOME+"/board100/boardOpenFrame.do?boardId="+boardId);
-	   }
+	   $("#boardUrl").val("/board100/boardFrame.do?boardId="+boardId);
 	   
 	   //fnCustomSet(bbsList[0]);
    };

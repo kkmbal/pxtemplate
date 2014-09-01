@@ -105,9 +105,9 @@ if('${btnViewYn}' == "X"){
 			</c:if>
 			<button class="btn_style2_2 btn_modify" type="button" >수정</button>
 			<button class="btn_style2_2 btn_delete" type="button" >삭제</button>
-			</c:if>
 			<button class="btn_style2_2 btn_printing" type="button" >출력</button>
 			<button class="btn_style2_5 btn_boardMove" type="button" >게시물 이동</button>
+			</c:if>
 		</div>
 		<div class="fr">
 			<button class="btn_style4_2 btn_list" type="button" >목록</button>
@@ -214,9 +214,9 @@ if('${btnViewYn}' == "X"){
 			</c:if>
 			<button class="btn_style2_2 btn_modify" type="button" >수정</button>
 			<button class="btn_style2_2 btn_delete" type="button" >삭제</button>
-			</c:if>
 			<button class="btn_style2_2 btn_printing" type="button" >출력</button>
 			<button class="btn_style2_5 btn_boardMove" type="button" >게시물 이동</button>
+			</c:if>
 		</div>
 		<div class="fr">
 			<button class="btn_style4_2 btn_list" type="button" >목록</button>
