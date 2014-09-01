@@ -2744,6 +2744,16 @@
 			      ,A.DEL_YN
 			FROM BBS_BOARD_INFO A
 			WHERE A.BOARD_ID = #{boardId}
-	</select>		
+	</select>
+	
+	<select id="getAdminBoardOpen" 
+	        parameterType="portalxpert.board.board100.vo.BbsBoardInfoVO" 
+	        resultMap="bbs">
+		<![CDATA[		  
+		   SELECT OUTSIDE_OPEN_DIV
+			 FROM BBS_BOARD_INFO
+			 where BOARD_ID = #{boardId}		   
+		]]>
+	</select>			
 		
 </mapper>

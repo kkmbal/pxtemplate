@@ -30,7 +30,6 @@ public enum Constant {
 	E000001("portalxpert.service.error"),   //기본에러코드
 	
 	BOARD_ROLE_USER("public"), //공개게시판 사용자ID
-	BOARD_OPEN_PATH("open"), // 공개게시판 URL Path
 	
 	ROLE_SUPER("SYSTEM") //슈퍼유저권한
 	;

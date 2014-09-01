@@ -2,7 +2,7 @@
 	function fn_link_page(pageNo) {
 		$("#pageUnit").val(pageUnit);
 		$("#pageIndex").val(pageNo);
-		$('#listForm').submit();
+		document.listForm.submit();
 	}	
 
 	var fnSearchList = function(orderType) {

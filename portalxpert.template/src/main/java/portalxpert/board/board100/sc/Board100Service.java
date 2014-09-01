@@ -328,4 +328,13 @@ public interface Board100Service {
      * @auther  
      */
     public BbsBoardInfoVO getAdmBbsStat(BbsBoardInfoVO vo) throws Exception ;
+    
+    /**
+     * 게시판 공개여부 가져오기
+     * @param BbsBoardInfoVO
+     * @return int 
+     * @exception Exception
+     * @auther  
+     */
+    public BbsBoardInfoVO getAdminBoardOpen(BbsBoardInfoVO vo) throws Exception;
 }

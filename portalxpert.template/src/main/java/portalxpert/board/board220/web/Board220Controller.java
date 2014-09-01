@@ -81,18 +81,25 @@ public class Board220Controller {
 	 			@RequestParam(value="pageUnit",required = false, defaultValue="10") String pageUnit,
 	 			@RequestParam(value="searchCondition",required = false) String searchCondition,
 	 			@RequestParam(value="searchKeyword",required = false) String searchKeyword,	 			
-	 			@RequestParam(value="open",required = false) String open,	 			
 				HttpSession session,
 				HttpServletRequest request)  throws Exception {
 
     	UserInfoVO info = null;
     	String openPath = "";
-    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+    	BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+    	bbsVO.setBoardId(boardId);
+    	
+    	//외부공개여부체크
+    	BbsBoardInfoVO adminBoardOpen = board100Service.getAdminBoardOpen(bbsVO);
+    	if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
     		info = new UserInfoVO();
     		info.setId(Constant.BOARD_ROLE_USER.getVal());
-    		openPath = Constant.BOARD_OPEN_PATH.getVal() + "/"; // 공개게시판
     	}else{
     		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+    	}
+    	
+    	if(info == null){
+    		throw new PortalxpertException(messageSource.getMessage("auth.error"));
     	}
     	
 		String auth = board100Service.getUserBbsMapList(info.getId());
@@ -101,8 +108,6 @@ public class Board220Controller {
 		String WEB_DIR = PortalxpertConfigUtils.getString("upload.real.web");
     	String CONTEXT_PATH = PortalxpertConfigUtils.getString("image.web.contextpath");
     	
-		BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
-		bbsVO.setBoardId(boardId);
 		bbsVO.setUserId(info.getId());
 		bbsVO.setUserMap(auth);
 		
@@ -110,9 +115,6 @@ public class Board220Controller {
 		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 		BbsBoardInfoVO bbsInfo = list.get(0);
 		String boardBtnViewYn = getBoardBtnViewYN(session,bbsInfo );
-		
-		//공개게시판 체크
-		checkOpenBoard(open, bbsInfo);
 		
 		/** PropertyService.sample */
 		boardSearchVO.setPageUnit(Integer.parseInt(pageUnit));
@@ -228,22 +230,6 @@ public class Board220Controller {
 	}
    
 	
-	@RequestMapping(value="/{open}/getBbsSnsBoardList")                            
-	 public String getOpenBbsSnsBoardList(
-				ModelMap modelMap,
-	 			@ModelAttribute("boardSearchVO") BoardSearchVO boardSearchVO,
-	 			@RequestParam(value="boardId",required = true) String boardId,
-	 			@RequestParam(value="pageIndex",required = false, defaultValue="1") String pageIndex,
-	 			@RequestParam(value="pageUnit",required = false, defaultValue="10") String pageUnit,
-	 			@RequestParam(value="searchCondition",required = false) String searchCondition,
-	 			@RequestParam(value="searchKeyword",required = false) String searchKeyword,	 			
-	 			@PathVariable String open,	 			
-				HttpSession session,
-				HttpServletRequest request)  throws Exception {
-		
-		return getBbsSnsBoardList(modelMap, boardSearchVO, boardId, pageIndex, pageUnit, searchCondition, searchKeyword, open, session, request);
-	}
-	
 	
     /**
      * 글 조회
@@ -272,7 +258,12 @@ public class Board220Controller {
 	    	int sortSeq = jsonObject.getInt("sortSeq");
 	    	
 	    	UserInfoVO info = null;
-	    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+	    	BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+	    	bbsVO.setBoardId(boardId);
+	    	
+	    	//외부공개여부체크
+	    	BbsBoardInfoVO adminBoardOpen = board100Service.getAdminBoardOpen(bbsVO);
+	    	if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
 	    		info = new UserInfoVO();
 	    		info.setId(Constant.BOARD_ROLE_USER.getVal());
 	    	}else{
@@ -281,16 +272,12 @@ public class Board220Controller {
 	    	
 			String auth = board100Service.getUserBbsMapList(info.getId());
 			
-			BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
-			bbsVO.setBoardId(boardId);
 			bbsVO.setUserId(info.getId());
 			bbsVO.setUserMap(auth);
 
 			List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 			BbsBoardInfoVO bbsInfo = list.get(0);
 			
-			//공개게시판 체크
-			checkOpenBoard(open, bbsInfo);
 			
 			BoardSearchVO boardSearchVO = new BoardSearchVO();
 	
@@ -466,13 +453,5 @@ public class Board220Controller {
     	return yn;
     }    
     
-    //공개게시판 여부 체크
-	private void checkOpenBoard(String open, BbsBoardInfoVO bbsInfo) {
-		if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
-			if(!"Y".equals(bbsInfo.getOutsideOpenDiv())){
-				throw new PortalxpertException(messageSource.getMessage("auth.error"));
-			}
-		}
-	}
 }
 

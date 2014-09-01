@@ -15,14 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import antlr.StringUtils;
 
 import portalxpert.board.board100.sc.Board100Service;
 import portalxpert.board.board100.vo.BbsBoardInfoVO;
@@ -243,7 +240,6 @@ public class Board210Controller {
  			@RequestParam(value="regDttmCondition",required = false) String regDttmCondition,
  			@RequestParam(value="regDttmFrom",required = false) String regDttmFrom,
  			@RequestParam(value="regDttmTo",required = false) String regDttmTo,
- 			@RequestParam(value="open",required = false)  String open,
  			HttpSession session,
  			HttpServletRequest request
  			)
@@ -251,20 +247,27 @@ public class Board210Controller {
     	
  
     	UserInfoVO info = null;
-    	String openPath = "";
-    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+    	
+    	BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+    	bbsVO.setBoardId(boardId);
+    	
+    	//외부공개여부체크
+    	BbsBoardInfoVO adminBoardOpen = board100Service.getAdminBoardOpen(bbsVO);
+    	if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
     		info = new UserInfoVO();
     		info.setId(Constant.BOARD_ROLE_USER.getVal());
-    		openPath = Constant.BOARD_OPEN_PATH.getVal() + "/"; // 공개게시판
     	}else{
     		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
     	}
+    	
+    	if(info == null){
+    		throw new PortalxpertException(messageSource.getMessage("auth.error"));
+    	}
+    	
 		String auth = board100Service.getUserBbsMapList(info.getId());
 		
 		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
 		
-		BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
-		bbsVO.setBoardId(boardId);
 		bbsVO.setUserId(info.getId());
 		bbsVO.setUserMap(auth);
 		
@@ -273,8 +276,9 @@ public class Board210Controller {
 		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 		BbsBoardInfoVO bbsInfo = list.get(0);
 		String boardBtnViewYn = getBoardBtnViewYN(session,bbsInfo );
-		//공개게시판 체크
-		checkOpenBoard(open, bbsInfo);
+		if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
+			boardBtnViewYn = "N";
+		}
 		
 		/** PropertyService.sample */
 		boardSearchVO.setPageUnit(Integer.parseInt(pageUnit));
@@ -394,33 +398,10 @@ public class Board210Controller {
 			
  
     
-        return ".self/board/"+openPath+"basicBoardList";
+        return ".self/board/basicBoardList";
     }
 
     
-    @RequestMapping(value="/{open}/getBoardInfoList")
-    public String getOpenBoardInfoList(
- 			ModelMap modelMap,
- 			@ModelAttribute("boardSearchVO") BoardSearchVO boardSearchVO,
- 			@RequestParam(value="boardId",required = true) String boardId,
- 			@RequestParam(value="pageIndex",required = false, defaultValue="1") String pageIndex,
- 			@RequestParam(value="pageUnit",required = false, defaultValue="10") String pageUnit,
- 			@RequestParam(value="searchCondition",required = false) String searchCondition,
- 			@RequestParam(value="searchKeyword",required = false) String searchKeyword,
- 			@RequestParam(value="orderType",required = false, defaultValue="default") String orderType,
- 			@RequestParam(value="isDesc",required = false) boolean isDesc,
- 			@RequestParam(value="listYn",required = false) String listYn,
- 			@RequestParam(value="calYmFrom",required = false) String calYmFrom,
- 			@RequestParam(value="calYmTo",required = false) String calYmTo,
- 			@PathVariable String open,
- 			HttpSession session,
- 			HttpServletRequest request
- 			)
-            throws Exception {
-    	
-    	return getBoardInfoList(modelMap, boardSearchVO, boardId, pageIndex, pageUnit, searchCondition, searchKeyword, orderType, isDesc, listYn, calYmFrom, calYmTo, "" ,"", "", open, session, request);
-    
-    }
     
     /**
      * 게시판 게시물 전체 목록
@@ -861,7 +842,6 @@ public class Board210Controller {
  			@RequestParam(value="regDttmTo" ,required = false) String regDttmTo,
  			@RequestParam(value="orderType" ,required = false) String orderType,
  			@RequestParam(value="isDesc" ,required = false) String isDesc,
- 			@RequestParam(value="open" ,required = false) String open,
  			HttpServletRequest request,
  			HttpSession session
  			)
@@ -870,21 +850,27 @@ public class Board210Controller {
     	String CONTEXT_PATH = PortalxpertConfigUtils.getString("image.web.contextpath");
     	
     	UserInfoVO info = null;
-    	String openPath = "";
-    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+    	BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+    	bbsVO.setBoardId(boardId);
+    	
+    	//외부공개여부체크
+    	BbsBoardInfoVO adminBoardOpen = board100Service.getAdminBoardOpen(bbsVO);
+    	if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
     		info = new UserInfoVO();
     		info.setId(Constant.BOARD_ROLE_USER.getVal());
-    		openPath = Constant.BOARD_OPEN_PATH.getVal() + "/"; // 공개게시판
     	}else{
     		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+    	}
+    	
+    	if(info == null){
+    		throw new PortalxpertException(messageSource.getMessage("auth.error"));
     	}
     	
     	logger.debug("getBasicBoardView boardId : "+boardId);
     	
     	String auth = board100Service.getUserBbsMapList(info.getId());
 		logger.debug("auth : "+auth);
-    	BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
-		bbsVO.setBoardId(boardId);
+
 		bbsVO.setUserId(info.getId());
 		bbsVO.setUserMap(auth);
     	
@@ -892,9 +878,6 @@ public class Board210Controller {
 		BbsBoardInfoVO bbsInfo = list.get(0);
 		String boardBtnViewYn = getBoardBtnViewYN(session,bbsInfo );
     	logger.debug("boardBtnViewYn : "+boardBtnViewYn);
-    	
-    	//공개 게시판 체크
-    	checkOpenBoard(open, bbsInfo);
     	
     	BbsNotiInfoVO notiVo = new BbsNotiInfoVO();
 		notiVo.setBoardId(boardId);
@@ -956,9 +939,8 @@ public class Board210Controller {
 			notiConts = "";
 		}
 		
-		if( bbsNotiInfoViewForNotiConts != null){
-//			EAMCrypt ec = new EAMCrypt();
-//			modelMap.put("regrIdEncrypt", Encrypter.Encrypt(ec.decrypt(bbsNotiInfoViewForNotiConts.getRegrId())));
+		if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
+			boardBtnViewYn = "N";
 		}
 		
 		modelMap.put("notiConts",notiConts );
@@ -1000,28 +982,7 @@ public class Board210Controller {
 		modelMap.put("isDesc", isDesc);
 		logger.debug("getBasicBoardView searchCondition : "+searchCondition);
 		
-        return ".self/board/"+openPath+"basicBoardView";
-    }
-    
-    @RequestMapping(value="/{open}/getBasicBoardView")
-    public String getOpenBasicBoardView(
- 			ModelMap modelMap,
- 			@RequestParam(value="boardId" ,required = true) String boardId,
- 			@RequestParam(value="notiId" ,required = true) String notiId,
- 			@RequestParam(value="pageIndex" ,required = false) String pageIndex,
- 			@RequestParam(value="pageUnit" ,required = false) String pageUnit,
- 			@RequestParam(value="searchCondition" ,required = false) String searchCondition,
- 			@RequestParam(value="searchKeyword" ,required = false) String searchKeyword,
- 			@RequestParam(value="regDttmFrom" ,required = false) String regDttmFrom,
- 			@RequestParam(value="regDttmTo" ,required = false) String regDttmTo,
- 			@RequestParam(value="orderType" ,required = false) String orderType,
- 			@RequestParam(value="isDesc" ,required = false) String isDesc,
- 			@PathVariable String open,
- 			HttpServletRequest request,
- 			HttpSession session
- 			) throws Exception {
-    	
-    	return getBasicBoardView(modelMap, boardId, notiId, pageIndex, pageUnit, searchCondition, searchKeyword, regDttmFrom, regDttmTo, orderType, isDesc, open, request, session);
+        return ".self/board/basicBoardView";
     }
     
     /**
@@ -1141,7 +1102,6 @@ public class Board210Controller {
     public ModelMap getNotiDetailInfoView(
  			@RequestParam(value="data" ,required = true) String data,
  			@RequestParam(value="pnum" ,required = false) String pnum,
- 			@RequestParam(value="open" ,required = false) String open,
 			ModelMap 		modelMap,
 			HttpSession session) throws Exception {  
                 	
@@ -1161,7 +1121,13 @@ public class Board210Controller {
 			String notiId = (String)bbsObject.get("notiId");
 			
 	    	UserInfoVO info = null;
-	    	if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
+			String boardId = (String)bbsObject.get("boardId");
+			BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+			bbsVO.setBoardId(boardId);
+	    	
+	    	//외부공개여부체크
+	    	BbsBoardInfoVO adminBoardOpen = board100Service.getAdminBoardOpen(bbsVO);
+	    	if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
 	    		info = new UserInfoVO();
 	    		info.setId(Constant.BOARD_ROLE_USER.getVal());
 	    	}else{
@@ -1181,9 +1147,7 @@ public class Board210Controller {
 			List notiFile = board210Service.getBbsNotiApndFileListForView(data);
 			
 			String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
-			String boardId = (String)bbsObject.get("boardId");
-			BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
-			bbsVO.setBoardId(boardId);
+
 			bbsVO.setUserId(info.getId());
 			bbsVO.setUserMap(auth);	    	
 			List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);
@@ -1193,9 +1157,6 @@ public class Board210Controller {
 			{
 				notiReadmanAsgnYn = "A";
 			}
-			
-	    	//공개 게시판 체크
-	    	checkOpenBoard(open, bbsInfo);
 			
 			List<BbsNotiInfoVO> notiPrevNextInfo = board210Service.getBbsPrevNextNotiInfoForView(data, auth,prev_pnum,next_pnum,notiReadmanAsgnYn, info.getId() );
 
@@ -1255,17 +1216,6 @@ public class Board210Controller {
 		modelMap.put("jsonResult", jsonResult);
     	
         return modelMap;
-    }
-    
-    @RequestMapping(value="/{open}/getNotiDetailInfoView")
-    public ModelMap getOpenNotiDetailInfoView(
- 			@RequestParam(value="data" ,required = true) String data,
- 			@RequestParam(value="pnum" ,required = false) String pnum,
- 			@PathVariable String open,
-			ModelMap 		modelMap,
-			HttpSession session) throws Exception { 
-    	
-    	return getNotiDetailInfoView(data, pnum, open, modelMap, session);
     }
     
     /**
@@ -1732,13 +1682,5 @@ public class Board210Controller {
 		return modelMap;
     }
     
-    //공개게시판 여부 체크
-	private void checkOpenBoard(String open, BbsBoardInfoVO bbsInfo) {
-		if(Constant.BOARD_OPEN_PATH.getVal().equals(open)){
-			if(!"Y".equals(bbsInfo.getOutsideOpenDiv())){
-				throw new PortalxpertException(messageSource.getMessage("auth.error"));
-			}
-		}
-	}
 }
 
