@@ -20,33 +20,30 @@
 </script>
 </head>
 
-<body style="overflow:hidden">
+<body>
 
-<div class="pop_wrap" style="width:455px;height:150px;"><!-- 팝업사이즈 width:800px; height:500px; -->
-	<div class="pop_header">이미지 업로드</div>
-	<div class="pop_content">
-	<!-- popup 본문 -->
-	 	<div class="">
-		    <form id="detailForm" name="detailForm" action="<%=request.getContextPath()%>/board/innoUpload.do" enctype="multipart/form-data" method="post">
-		    <input type="text" class="text" id="fileName" readonly style="width:300px">
-		    <a href="#" class="btn_set bt_style1 mv_file_a">   
-			<input type="file" size="1" name="file" class="mv_file" onchange="javascript: document.getElementById('fileName').value = this.value">
-			<span>파일</span></a>
-			</form>	 	
+<div class="pop_wrap">
+	<div class="pop_type1">
+		<div class="header">
+			<h1  style="font-size:25px;font-weight:bold;">이미지 업로드</h1>
 		</div>
-		<!-- popup 본문 -->
-	</div>
-	<div class="pop_footer">
-		<!-- 버튼영역 -->
-		<div style="text-align:center;">
-			<div class="rbox_btns">
-				<a href="#" class="btn_set bt_style3" onclick="goAppend();" ><span>등록</span></a>
-				<a href="#" class="btn_set bt_style2" onclick="window.close();"><span>닫기</span></a>
+		<div class="contents">
+		    <form id="detailForm" name="detailForm" action="<%=request.getContextPath()%>/board/innoUpload.do" enctype="multipart/form-data" method="post">
+			    <input type="text" class="text" id="fileName" style="width:300px" readonly>
+				<span class="file_wrap">
+					<button class="btn_style1_2" type="button">파일</button>
+					<input type="file" name="file" class="file_hidden" onchange="javascript: document.getElementById('fileName').value = this.value" />
+				</span>	
+			</form>							
+			<div class="pop_btn_sec">
+				<button class="btn_style3_2" type="button" onclick="goAppend();">저장</button>
+				<button class="btn_style4_2" type="button" onclick="window.close();">취소</button>
 			</div>
 		</div>
-		<!-- //버튼영역 -->	
-	</div>	
+		<a href="#" onclick="window.close();return false" class="pop_close"><img src="${RES_HOME}/images/btn_pop_close.png" width="16" height="15" alt="닫기" /></a>
+	</div>
 </div>
 
 </body>
 </html>
+

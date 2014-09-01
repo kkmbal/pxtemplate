@@ -79,6 +79,7 @@ if('${btnViewYn}' == "X"){
 	var selectBoardForm = null;
 	
 	var isNotiSurvey = false;
+	var upNotiIdCnt = 0;
 </script>
 <script type="text/javascript" src="${RES_HOME}/js/portal/board/basicBoardView.js"></script>
 </head>

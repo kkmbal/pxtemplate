@@ -289,14 +289,14 @@
 		<c:choose>
 			<c:when test="${paginationInfo.totalRecordCount > 0}">
 				<c:forEach var="result" items="${notiList}" varStatus="status">		
-					<tr <c:if test="${result.anmtYn == 'Y'}"> class="notice"</c:if>>
+					<tr <c:if test="${result.anmtYn == 'Y'}"> class="notice"</c:if> <c:if test="${result.lvl > 0}"> class="re${result.lvl}"</c:if>>
 						<c:if test="${result.anmtYn == 'Y'}">
 						<td><div class="ico_notice">공지</div></td>
 						</c:if>
 						<c:if test="${result.anmtYn != 'Y'}">
 						<td>${result.oldNoticeSeq}</td>
 						</c:if>
-						<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" title="${result.notiTitleOrgn}" class="text_dot"><span<c:if test="${result.notiReadCnt == 0}"> class="nonread"</c:if>>${fn:replace(result.notiTitle,'@!', '&nbsp;&nbsp;')}</span></a>
+						<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" title="${result.notiTitleOrgn}" class="text_dot"><span<c:if test="${result.notiReadCnt == 0}"> class="nonread"</c:if>>${result.notiTitle}</span></a>
 							<c:if test="${result.opnPrmsYn == 'Y' && result.opnCnt > 0}">
 							<span class="em">[의견${result.opnCnt}]</span>
 							</c:if>				

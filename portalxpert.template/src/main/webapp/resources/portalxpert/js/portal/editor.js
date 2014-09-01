@@ -98,6 +98,6 @@ function cmdImgUploadPop(){
  var win = window.open(
 		 			WEB_HOME+"/board/imageUp.do",
 					"editor_win",
-					"toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=no,resizable=0,width=450,height=150,left=50,top=50");
+					"toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=no,resizable=0,width=450,height=190,left=50,top=50");
 	win.focus();  
 }

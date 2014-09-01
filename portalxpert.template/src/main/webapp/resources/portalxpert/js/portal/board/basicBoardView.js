@@ -218,6 +218,7 @@
 					notiOpn2 = $.parseJSON(data.notiOpn2);
 					notiPrevNextInfo = $.parseJSON(data.notiPrevNextInfo);
 					notiKind = notiInfo[0].notiKind;
+					upNotiIdCnt = notiInfo[0].upNotiIdCnt;
 					
 					if(data.notiPrevNextImgMovInfo){
 						notiPrevNextImgMovInfo = $.parseJSON(data.notiPrevNextImgMovInfo);
@@ -603,6 +604,11 @@
 			if(notiJson.replyPrmsYn == 'Y'){
 				$(".btn_reply").show();	
 			}
+		}
+		
+		//답글제한
+		if(upNotiIdCnt >= 3){
+			$(".btn_reply").hide();
 		}
 		
 		//공지

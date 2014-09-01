@@ -825,13 +825,14 @@
 //		);
 		$("#apndFileform ul").append(
 						'<li id="apnd-'+id+'" class="ma_bot5"> '
-						+'<input type="text" class="text" style="width:476px" title="파일을 넣으세요" readonly> ' 
-						+'<a href="#" class="btn_set bt_style1 mv_file_a"><input type="file" class="mv_file" size="1" title="찾기" id="file-'+id+'" name="upFile-'+id+'"> '
-						+'<span>파일</span></a> '
-						+'<a style="cursor:pointer;" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')" class="btn_set bt_style1"><span>삭제</span></a> '
-						+'</li>'
+						+'<input type="text" class="text" style="width:476px" readonly>'
+						+'<span class="file_wrap">'
+						+'<button class="btn_style1_2" type="button">파일</button>'
+						+'<input type="file" id="file-'+id+'" name="upFile-'+id+'" class="file_hidden" />'
+						+'</span>'
+						+'<button type="button" class="btn_style1_2" onclick="javascript:fnDelFileList(\'apnd-'+id+'\')">삭제</button>'
 				);		
-		
+
 		
 		$("#file-"+id).bind("change",function(e) {
 			$(this).parent().prev().val($(this).val());
@@ -1271,7 +1272,7 @@
 			return;
 		}
 		
-		$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'" width="124" height="124" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($('.sns_imgadd'));
+		$('<li class="sns_img" id="'+json.saveFileId+'" name= '+json.original+'><img id="img-'+json.saveFileId+'" src="'+json.webDir+json.saveFileName+'" width="126" height="83" alt="이미지"><a style="cursor:pointer;" class="ico_clo" title="삭제" onclick="javascript:fnImgListRemove(\''+json.saveFileId+'\')" ><!--삭제--></a></li>').insertBefore($('.sns_imgadd'));
 		var jsonObject = {
 				  'notiId' : ''
 				, 'apndFileSeq' : '1'

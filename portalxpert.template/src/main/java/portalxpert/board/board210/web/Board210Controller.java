@@ -1241,6 +1241,7 @@ public class Board210Controller {
 			
 			modelMap.put("notiInfo", JSONUtils.objectToJSON(notiInfo));
 			modelMap.put("notiFile", JSONUtils.objectToJSON(notiFile));
+			modelMap.put("upNotiIdCnt", vo.getUpNotiIdCnt());
 			modelMap.put("notiPrevNextInfo", JSONUtils.objectToJSON(notiPrevNextInfo));
 			modelMap.put("notiOpn1", CommUtil.scriptRemove(JSONUtils.objectToJSON(notiOpn1)));
 			modelMap.put("notiOpn2", CommUtil.scriptRemove(JSONUtils.objectToJSON(notiOpn2)));

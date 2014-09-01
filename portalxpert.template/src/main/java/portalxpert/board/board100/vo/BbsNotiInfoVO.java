@@ -78,9 +78,22 @@ public class BbsNotiInfoVO {
 	private String title;
 	private String start;
 	private String end;
+	private int lvl;
+	private int upNotiIdCnt;
 	
 	
-	
+	public int getUpNotiIdCnt() {
+		return upNotiIdCnt;
+	}
+	public void setUpNotiIdCnt(int upNotiIdCnt) {
+		this.upNotiIdCnt = upNotiIdCnt;
+	}
+	public int getLvl() {
+		return lvl;
+	}
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
+	}
 	public String getTitle() {
 		return title;
 	}
