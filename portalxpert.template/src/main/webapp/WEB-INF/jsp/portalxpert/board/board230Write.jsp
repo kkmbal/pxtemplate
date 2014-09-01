@@ -136,7 +136,7 @@
 		<th scope="row"><label for="input01">제목</label></th>
 		<td colspan="3">
 			<input type="text" class="text" id="txt_title" style="width:503px" value=""  title="제목을 입력합니다." /> &nbsp;
-			<c:if test="${boardKind != '120'}">
+			<c:if test="${boardKind != '120' && isAdmin == 'Y'}">
 			<input type="checkbox" class="check" id="rt4" value=""  title="공지를 체크합니다." /> <strong><label for="check01" class="mgrn">공지</label></strong>
 			</c:if>
 		</td>

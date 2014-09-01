@@ -49,7 +49,7 @@
 				addData += '<td class="te_center">'+json.displayname+'</td><td class="deptTD" style="display:none" ><span class="te_dot te93">'+json.ou+'</span></td><td><span class="te_dot te93">'+json.titlename+'</span></td><td>'+json.telephonenumber+'</td></tr>';
 			}
 		}
-		
+
 		$("#userList").html(addData);
 		
 		if (view_mode == "1")
