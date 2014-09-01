@@ -239,7 +239,7 @@
 			</li>	
 		</ul>
 		</div>
-		<div id="movieFileDiv" class="mv_file_div">
+		<div id="movieFileDiv" class="listbox">
 			<dl></dl>
 		</div>
 		</div>
@@ -258,17 +258,15 @@
 				    <form id="apndFileform" name="apndFileform" enctype="multipart/form-data" method="post">
 					<ul>
 					    <li class="ma_bot5">
-						    <input type="text" class="text" style="width:476px" readonly>
-							<span class="file_wrap">
+					    <input type="text" class="text" style="width:476px" readonly><span class="file_wrap">
 								<button class="btn_style1_2" type="button">파일</button>
 								<input type="file" name="upFile-" class="file_hidden" />
-							</span>					    
-					    	<button type="button" class="btn_style1_2" onclick="fnAddFileList();">추가</button>
+							</span><button type="button" class="btn_style1_2" onclick="fnAddFileList();">추가</button>
 					    </li>	
 					</ul>
 					</form>
 				</div>
-				<div id="innoApDiv" class="mv_file_div" style="display:none;">
+				<div id="innoApDiv" class="listbox" style="display:none;">
 					<dl></dl>
 				</div>
 				</div>

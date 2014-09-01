@@ -276,7 +276,7 @@ public class Board210Controller {
 		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);//게시판 조회
 		BbsBoardInfoVO bbsInfo = list.get(0);
 		String boardBtnViewYn = getBoardBtnViewYN(session,bbsInfo );
-		if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
+		if("Y".equals(adminBoardOpen.getOutsideOpenDiv()) && session.getAttribute("pxLoginInfo") == null){
 			boardBtnViewYn = "N";
 		}
 		
@@ -939,7 +939,7 @@ public class Board210Controller {
 			notiConts = "";
 		}
 		
-		if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
+		if("Y".equals(adminBoardOpen.getOutsideOpenDiv())  && session.getAttribute("pxLoginInfo") == null){
 			boardBtnViewYn = "N";
 		}
 		

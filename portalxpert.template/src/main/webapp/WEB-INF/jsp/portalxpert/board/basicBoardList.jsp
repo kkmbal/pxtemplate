@@ -209,7 +209,7 @@
 						<td class="tit"><a href="javascript:fnGetBoardWrite('${result.notiId}','');" title="${result.notiTitleOrgn}" class="text_dot"><span>${result.notiTitle}</span></a></td>
 						<td>${result.regDttm}</td>
 						<td>${result.notiEndDttm}</td>
-						<td><button type="button" class="btn_style1_2" onclick="fnGetBoardWrite('${result.notiId}','copy');">복사</button></td>
+						<td><c:if test="${btnViewYn == 'Y'}"><button type="button" class="btn_style1_2" onclick="fnGetBoardWrite('${result.notiId}','copy');">복사</button></c:if></td>
 					</tr>
 				</c:forEach>
 			</c:when>

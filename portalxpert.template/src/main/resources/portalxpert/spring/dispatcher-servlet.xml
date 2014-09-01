@@ -49,8 +49,6 @@
 					<value>/login/login.do</value>
 					<value>/doLogin.do</value>
 					<value>/logout.do</value>
-					<value>/board100/boardOpenFrame.do</value>
-					<value>/board*/open/*</value>
 				</list>
 			</property>
 		</bean>
@@ -61,8 +59,6 @@
 					<value>/login/login.do</value>
 					<value>/doLogin.do</value>
 					<value>/logout.do</value>
-					<value>/board100/boardOpenFrame.do</value>
-					<value>/board*/open/*</value>
 				</list>
 			</property>
 		</bean>

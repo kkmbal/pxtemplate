@@ -168,7 +168,7 @@ if('${btnViewYn}' == "X"){
 	</tr>
 	<tr>
 		<td colspan="7">
-		<div class="rbox02 mt0">
+		<div class="rbox02 mt0" id="notiFileDlDiv" style="display:none;">
 			<span class="top"></span>
 			<div class="mid">
 				<div class="inquiry_top">

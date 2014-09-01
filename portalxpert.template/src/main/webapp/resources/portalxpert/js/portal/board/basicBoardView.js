@@ -1044,7 +1044,7 @@
 					+'  <textarea cols="" rows="" class="textbox" style="width:610px;height:40px" id="opnTxt_'+notiOpn1[i].notiOpnSeq+'" title="댓글 입력">'+notiOpn1[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
 					+'  <span class="textbox_btns">'
 					+'	<span class="btn_st01 w01"><button type="button" onclick="fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')">등록</button></span>'
-					+'	<span class="btn_st02 w01"><button>취소</button></span>'
+					+'	<span class="btn_st02 w01"><button type="button" onclick="fnCancleBbsNotiOpnForView(\'opnTxt_'+notiOpn1[i].notiOpnSeq+'\')">취소</button></span>'
 					+'</div>'					
 					+'</li>');
 		
@@ -1057,15 +1057,15 @@
 			
 			$("#btnOpn_"+notiOpn1[i].notiOpnSeq).click(function(){//의견
 				
-				$(".reply_post2").remove();
+				$(".reply_post3").remove();
 				$("#noti_opn_"+$(this).attr("notiOpnSeq")).parent("li").after(
 				//$("#noti_opn_"+$(this).attr("notiOpnSeq")).append(
-						'<li class="re">'
+						'<li class="re reply_post3">'
 						+'<div class="reply_post2">'	
 					 	+'  	<textarea class="textbox" id="re_reply_'+$(this).attr("notiOpnSeq")+'"  cols="5" rows="3" style="width:560px;height:40px" title="댓글 입력"></textarea>'
 					 	+'      <span class="textbox_btns">'
 						+'	    <span class="btn_st01 w01"><button type="button" onclick="fnInsertBbsNotiOpnForView('+$(this).attr("notiOpnSeq")+')">등록</button></span>'
-						+'	    <span class="btn_st02 w01"><button>취소</button></span>'
+						+'	    <span class="btn_st02 w01"><button type="button" onclick="fnCancleBbsNotiOpnForView(\'re_reply_'+$(this).attr("notiOpnSeq")+'\')">취소</button></span>'
 						+'</div>'
 						+'</li>');
 			});
@@ -1095,7 +1095,7 @@
 				+'<textarea cols="" rows="" class="textbox" style="width:610px;height:40px" id="noti_reply" title="댓글 입력"></textarea>'
 				+'  <span class="textbox_btns">'
 				+'	  <span class="btn_st01 w01"><button type="button" onclick="fnInsertBbsNotiOpnForView()">등록</button></span>'
-				+'	  <span class="btn_st02 w01"><button>취소</button></span>'
+				+'	  <span class="btn_st02 w01"><button type="button" onclick="fnCancleBbsNotiOpnForView(\'noti_reply\')">취소</button></span>'
 				+'  </span>'
 				+'</li>'		
 				);
@@ -1137,7 +1137,7 @@
 				 	+'  	<textarea class="textbox" id="opnTxt_'+notiOpn2[i].notiOpnSeq+'" cols="5" rows="3" style="width:560px;height:40px" title="댓글 입력">'+notiOpn2[i].opnConts.replaceAll('<br/>','\n')+'</textarea>'
 				 	+'      <span class="textbox_btns">'
 					+'	    <span class="btn_st01 w01"><button type="button" onclick="fnUpdateBbsNotiOpnForView('+notiOpn2[i].notiOpnSeq+')">등록</button></span>'
-					+'	    <span class="btn_st02 w01"><button>취소</button></span>'
+					+'	    <span class="btn_st02 w01"><button type="button" onclick="fnCancleBbsNotiOpnForView(\'opnTxt_'+notiOpn2[i].notiOpnSeq+'\')">취소</button></span>'
 				 	+'	</div>'
 					+'</div>'
 					+'</li>');			
@@ -1712,6 +1712,10 @@
 				'400', '450');
 	};
 	
+	function fnCancleBbsNotiOpnForView(id){
+		$("#"+id).val("");
+	}
+	
 
 /*	
 	 $(window).load(function () {
@@ -1812,7 +1816,7 @@
 			fnSetFrameHeight(100);
 		});
 		$("#mailToAddr").click(function(){//메일아이콘
-			PortalCommon.windowPopup("http://98.33.11.25:9001/sso/Login/App/SSOAppConnect_2.jsp?SG=LNK&forwardAction=create&sReceive="+userMail,'',1024,600);
+			//PortalCommon.windowPopup("http://98.33.11.25:9001/sso/Login/App/SSOAppConnect_2.jsp?SG=LNK&forwardAction=create&sReceive="+userMail,'',1024,600);
 		});
 		
 		
