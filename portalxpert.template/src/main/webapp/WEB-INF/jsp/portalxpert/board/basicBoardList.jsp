@@ -301,10 +301,11 @@
 							<td class="tit"><span class="adm">[비밀글] 관리자만 읽을 수 있습니다.</span></td>
 						</c:when>
 						<c:otherwise>
-							<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" title="${result.notiTitleOrgn}" class="text_dot"><span<c:if test="${result.notiReadCnt == 0}"> class="nonread"</c:if>>${result.notiTitle}</span></a>
+							<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" title="${result.notiTitleOrgn}" class="text_dot"><span<c:if test="${result.notiReadCnt == 0}"> class="nonread"</c:if>>${result.notiTitle}</span>
 								<c:if test="${result.opnPrmsYn == 'Y' && result.opnCnt > 0}">
 								<span class="em">[의견${result.opnCnt}]</span>
-								</c:if>				
+								</c:if>
+								</a>				
 							</td>
 						</c:otherwise>
 						</c:choose>
