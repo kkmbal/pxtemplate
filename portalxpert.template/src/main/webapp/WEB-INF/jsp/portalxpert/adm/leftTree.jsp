@@ -75,9 +75,14 @@ var left_menu_setting = {
 	
 $(function(){
 	
+	var zNodes = $.parseJSON('${sessionScope.pxLoginInfo.menuConts}');
+	var treeObj = $.fn.zTree.init($("#menuTreeObj"), left_menu_setting, PortalCommon.getChildZMenuById(zNodes, "1")); //관리자메뉴
+	treeObj.expandAll(true);		
+	
+	/*
 	PortalCommon.getJson({
 		url : "${pageContext.request.contextPath}/adm/sys/getAuthMenu.do?format=json",
-		data : 'authCd=${sessionScope.pxLoginInfo.authCd}',
+		data : 'authCd=${sessionScope.pxLoginInfo.authCdStr}',
 		success : function(data) {
 			if (data.jsonResult.success === true) {
 
@@ -88,7 +93,7 @@ $(function(){
 			};
 		}
 	});		
-	
+	*/
 	
 	
 	
