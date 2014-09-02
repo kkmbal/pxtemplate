@@ -78,10 +78,17 @@ public class BbsNotiInfoVO {
 	private String title;
 	private String start;
 	private String end;
-	private int lvl;
-	private int upNotiIdCnt;
+	private int lvl; // 답글레벨
+	private int upNotiIdCnt; //답글갯수
+	private String openAdm; //운영자만공개
 	
 	
+	public String getOpenAdm() {
+		return openAdm;
+	}
+	public void setOpenAdm(String openAdm) {
+		this.openAdm = openAdm;
+	}
 	public int getUpNotiIdCnt() {
 		return upNotiIdCnt;
 	}

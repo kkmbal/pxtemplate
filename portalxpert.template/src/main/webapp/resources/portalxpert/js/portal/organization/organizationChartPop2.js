@@ -40,7 +40,7 @@
 			
 			if (type == 1)
 			{
-				addData += '<tr><td class="te_center">'+json.displayname+'</td><td class="deptTD" style="display:none" ><span class="te_dot te93">'+json.ou+'</span></td><td>'+json.titlename+'</td><td>'+json.telephonenumber+'</td></tr>';
+				addData += '<tr><td class="te_center">'+json.displayname+'</td><td><span class="te_dot te93">'+json.ou+'</span></td><td>'+json.titlename+'</td><td>'+json.telephonenumber+'</td></tr>';
 			}
 			else
 			{
@@ -52,6 +52,7 @@
 
 		$("#userList").html(addData);
 		
+		/*
 		if (view_mode == "1")
 		{
 			$("#deptTH").hide();			
@@ -61,6 +62,7 @@
 			$("#deptTH").show();
 			$(".deptTD").css("display","block");
 		}
+		*/
 		
 	};
 	
@@ -97,7 +99,7 @@
 	function zTreeBeforeCheck(treeId, treeNode) {
 		parentCnt = 0;
 		
-		if (treeNode.id == '6110002' || treeNode.id == '6110003')
+		if (treeNode.id == '6110002' || treeNode.id == '6110003') //특정부서 제외시.
 		{
 			//alert('하위 부서를 선택하세요');
 			//return false;
@@ -107,7 +109,7 @@
 			if (!treeNode.checked)
 			{
 				var rtnCnt = findParentNode(treeNode.pId);
-				if (rtnCnt < 2)
+				if (rtnCnt < 1)
 				{
 					alert('하위 부서를 선택하세요');				
 					return false;

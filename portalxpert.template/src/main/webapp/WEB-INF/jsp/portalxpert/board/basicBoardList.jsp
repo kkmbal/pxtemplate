@@ -296,11 +296,18 @@
 						<c:if test="${result.anmtYn != 'Y'}">
 						<td>${result.oldNoticeSeq}</td>
 						</c:if>
-						<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" title="${result.notiTitleOrgn}" class="text_dot"><span<c:if test="${result.notiReadCnt == 0}"> class="nonread"</c:if>>${result.notiTitle}</span></a>
-							<c:if test="${result.opnPrmsYn == 'Y' && result.opnCnt > 0}">
-							<span class="em">[의견${result.opnCnt}]</span>
-							</c:if>				
-						</td>
+						<c:choose>
+						<c:when test="${result.openAdm > 0 && eamAdminYn == 'N' && userId != result.userId}">
+							<td class="tit"><span class="adm">[비밀글] 관리자만 읽을 수 있습니다.</span></td>
+						</c:when>
+						<c:otherwise>
+							<td class="tit"><a href="javascript:fnGetBoardView('${result.notiId}','${result.pnum}');" title="${result.notiTitleOrgn}" class="text_dot"><span<c:if test="${result.notiReadCnt == 0}"> class="nonread"</c:if>>${result.notiTitle}</span></a>
+								<c:if test="${result.opnPrmsYn == 'Y' && result.opnCnt > 0}">
+								<span class="em">[의견${result.opnCnt}]</span>
+								</c:if>				
+							</td>
+						</c:otherwise>
+						</c:choose>
 						<td><c:if test="${result.apndFileCnt > 0}"><a href="#"><img src="${RES_HOME}/images/ico_fileAttch.png" alt="파일첨부" /></a></c:if></td>
 						<td>${result.userName}</td>
 						<td>${result.notiReadCnt}</td>

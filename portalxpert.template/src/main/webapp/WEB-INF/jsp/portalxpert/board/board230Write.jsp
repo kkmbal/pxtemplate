@@ -166,12 +166,13 @@
 				<span>
 					<select title="" name="notiOpenDiv" id="notiOpenDiv">
 						<option value="010" selected>전체공개
-						<option value="020">사용자지정
+ 						<%-- <option value="020">사용자지정  --%>
+						<option value="040">운영자만공개
 						<option value="030">부서지정
 					</select>
 				</span>
 			</span>
-<!-- 			<button type="button" class="btn_style1_3">조직도</button> -->
+			<button type="button" class="btn_style1_3" type="button" id="notiOpenDivBtn" style="display:none;">조직도</button>
 			<div class="listbox">
 				<ul id="OpenDeptCategories">
 				</ul>

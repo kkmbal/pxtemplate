@@ -92,6 +92,7 @@
 		<result property="notiReadmanAsgnYn" column="NOTI_READMAN_ASGN_YN" />
 		<result property="boardName" column="BOARD_NAME" />
 		<result property="lvl" column="LVL" />
+		<result property="openAdm" column="OPEN_ADM" />
 		
 	</resultMap>  
 	
@@ -182,7 +183,8 @@
 		             OLD_NOTICE_SEQ,
 		             NOTI_TAG_LST,
 		             NOTI_AGRM_CNT,
-		             NOTI_OPP_CNT
+		             NOTI_OPP_CNT,
+		             (SELECT COUNT(NOTI_ID) FROM BBS_NOTI_USER_MAP WHERE NOTI_ID = X.NOTI_ID AND USER_DIV='ADM') OPEN_ADM
 			      FROM (SELECT /*+ INDEX(A IDX_BBS_NOTI_INFO_03) */
 			            A.*
 			            FROM BBS_NOTI_INFO A

@@ -372,6 +372,8 @@ var fnBoardNotiCreate = function()
 		notiOpenDivSpec = '020';
 	}else if (userDiv == 'SGU'){
 		notiOpenDivSpec = '030';
+	}else if (userDiv == 'ADM'){
+		notiOpenDivSpec = '040';
 	}
 	
 	var opnPrmsYN = 'N';	
@@ -731,6 +733,29 @@ var fnBoardNotiCreate = function()
 				'auth' : 'RED'
 		};
 		jsonWriteObject.NotiOpenDivDeptList[0] = jsonObject;
+	}
+	
+	//운영자만 공개면
+	if (notiOpenDiv == '040')
+	{
+		jsonWriteObject.NotiOpenDivDeptList = [];
+		jsonWriteObject.NotiOpenDivEmpList = [];
+		
+		var jsonObject = {
+				'id' : 'ALL',
+				'name' : '',
+				'div'  : 'PUB',
+				'auth' : 'RED'
+		};
+		jsonWriteObject.NotiOpenDivDeptList[0] = jsonObject;
+		
+		var jsonObject = {
+				'id' : 'ALL',
+				'name' : '',
+				'div'  : 'ADM',
+				'auth' : 'RED'
+		};
+		jsonWriteObject.NotiOpenDivDeptList[1] = jsonObject;
 	}
 	//보드 권한 지정이면 게시물 권한 지정 X
 	if (notiReadmanAsgnYn == 'N')
@@ -1158,6 +1183,8 @@ var fnBoardTempNotiCreate = function()
 		notiOpenDivSpec = '020';
 	}else if (userDiv == 'SGU'){
 		notiOpenDivSpec = '030';
+	}else if (userDiv == 'ADM'){
+		notiOpenDivSpec = '040';
 	}
 	
 	var opnPrmsYN = 'N';
@@ -3425,7 +3452,9 @@ $("input[name^=upFile]").change(function(e) {
 				$("#rt4").attr("checked", "true");
 			}
 			
-			
+			//공개구분
+			$("#notiOpenDiv").val(notiOpenDiv);
+			if(notiOpenDiv == '030') $("#notiOpenDivBtn").show();
 			
 			
 			fnFrameReload();
@@ -3687,6 +3716,10 @@ $("input[name^=upFile]").change(function(e) {
 				$("#rt4").attr("checked", "true");
 			}
 			
+			//공개구분
+			$("#notiOpenDiv").val(notiOpenDiv);
+			if(notiOpenDiv == '030') $("#notiOpenDivBtn").show();
+			
 			fnFrameReload();
 			$("#editor").val(notiConts);
 			
@@ -3735,10 +3768,20 @@ $("input[name^=upFile]").change(function(e) {
 		}); */	
 
 		
-		
+		$("#notiOpenDiv").change(function(){
+			var div = $(this).val();
+			if(div == '030'){
+				//부서지정
+				$("#notiOpenDivBtn").show();
+			}else{
+				$("#notiOpenDivBtn").hide();
+				$("#OpenEmpCategories").empty();
+				$("#OpenDeptCategories").empty();
+			}
+		});	
 	
-	$("#notiOpenDiv").change(function(){
-		var div = $(this).val();
+	$("#notiOpenDivBtn").click(function(){
+		var div = $("#notiOpenDiv").val();
 		if(div == '020'){
 			//개인지정
 			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart2.do?type=2&callback=callbackOpenPerson', '개인선택',900,520);
