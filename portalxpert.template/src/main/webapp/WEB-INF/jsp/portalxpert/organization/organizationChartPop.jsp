@@ -27,7 +27,7 @@
 
 
 </script>
-<script type="text/javascript" src="${RES_HOME}/js/portal/organization/organizationChartPop2.js"></script>
+<script type="text/javascript" src="${RES_HOME}/js/portal/organization/organizationChartPop.js"></script>
 </head>
 
 <body>

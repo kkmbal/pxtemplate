@@ -206,7 +206,7 @@
 // 		var url = '../organization/personChart.do?type=1&callback=callbackManager'+'&search='+encodeURIComponent( $("#txt_manager_search").val());
 // 	    PortalCommon.popupWindowModal(url, this,400,505);
 		callbackKind = 'A';
-		PortalCommon.popupWindowCenter('../organization/organizationChart2.do?type=2&callback=callbackManager', '관리자지정',900,515);
+		PortalCommon.popupWindowCenter('../organization/organizationChart.do?type=2&callback=callbackManager', '관리자지정',900,515);
 	};
 	
 	//공개여부 개인지정
@@ -214,14 +214,14 @@
 	{
 		callbackKind = kind;
 		
-		PortalCommon.popupWindowCenter('../organization/organizationChart2.do?type=2&callback=callbackOpenPerson', '개인지정',900,515);
+		PortalCommon.popupWindowCenter('../organization/organizationChart.do?type=2&callback=callbackOpenPerson', '개인지정',900,515);
 	};
 	
 	//공개여부 부서지정
 	var fnDeptList = function(kind)
 	{
 		callbackKind = kind;
-		PortalCommon.popupWindowCenter('../organization/organizationChart2.do?type=1&callback=callbackOpenDept', '부서지정',900,515);
+		PortalCommon.popupWindowCenter('../organization/organizationChart.do?type=1&callback=callbackOpenDept', '부서지정',900,515);
 	};
 	
 	

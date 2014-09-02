@@ -376,10 +376,10 @@ $(document).ready(function () {
 		var div = $(this).val();
 		if(div == '020'){
 			//개인지정
-			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart2.do?type=2&callback=callbackOpenPerson', '개인선택',900,520);
+			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart.do?type=2&callback=callbackOpenPerson', '개인선택',900,520);
 		}else if(div == '030'){
 			//부서지정
-			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart2.do?type=1&callback=callbackOpenDept', '부서선택',900,520);
+			PortalCommon.popupWindowCenter(WEB_HOME+'/organization/organizationChart.do?type=1&callback=callbackOpenDept', '부서선택',900,520);
 		}
 	});		
 	

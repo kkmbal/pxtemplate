@@ -71,8 +71,8 @@ public class OrganizationController {
      * @throws Exception
     ***********************************************************************************/
 
-    @RequestMapping(value="/organizationChart")                            
-    public String getOrganizationChart(
+    @RequestMapping(value="/organizationChart2")                            
+    public String getOrganizationChart2(
     		@RequestParam(value="type",required = true) String type,
     		@RequestParam(value="callback" ,required = true) String callback,
     		HttpSession session,
@@ -650,8 +650,8 @@ public class OrganizationController {
      * @throws Exception
     ***********************************************************************************/
 
-    @RequestMapping(value="/organizationChart2")                            
-    public String getOrganizationChart2(
+    @RequestMapping(value="/organizationChart")                            
+    public String getOrganizationChart(
     		@RequestParam(value="type",required = true) String type,
     		@RequestParam(value="callback" ,required = true) String callback,
     		HttpSession session,
@@ -664,7 +664,7 @@ public class OrganizationController {
     	modelMap.put("callback", callback);
     	modelMap.put("oucode", info.getOucode());
     	
-    	return ".self/organization/organizationChartPop2";
+    	return ".self/organization/organizationChartPop";
     }
     
     /**********************************************************************************
