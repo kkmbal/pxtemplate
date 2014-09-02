@@ -51,24 +51,28 @@ public class AuthUrlPatternInterceptor extends HandlerInterceptorAdapter {
         	if(checkIgnoreUrlPattern(request.getServletPath())){
                 return true;
             } 
-        	if(!CommUtil.isEmpty(user.getAuthCd())){
-        		AdmSysAuthVO admSysAuthVO = new AdmSysAuthVO();
-    			admSysAuthVO.setAuthCd(user.getAuthCd());
-    			admSysAuthVO = admSysAuthService.getAdmSysAuthInfo(admSysAuthVO);
-    			if(admSysAuthVO != null && !CommUtil.isEmpty(admSysAuthVO.getUrlPtn())){
-    				System.out.println(request.getServletPath());
-    				String[] locations = StringUtils.tokenizeToStringArray(admSysAuthVO.getUrlPtn(), ",; \t\n");
-    				boolean result = false;
-    				for (int i = 0; i < locations.length; ++i){
-    					System.out.println(locations[i]);
-    					if(pathMatcher.match(locations[i], request.getServletPath()) ){
-    						result = true;
-    						break;
-    					}
-    				}
-    				if(!result) throw new PortalxpertException("Insufficient auth");
-    	            	//return false;
-    			}
+        	if(user.getAuthCd() != null){
+        		List<String> authCdList = user.getAuthCd();
+        		AdmSysAuthVO admSysAuthVO = null;
+        		for(String authCd : authCdList){
+        			admSysAuthVO = new AdmSysAuthVO();
+	    			admSysAuthVO.setAuthCd(authCd);
+	    			admSysAuthVO = admSysAuthService.getAdmSysAuthInfo(admSysAuthVO);
+	    			if(admSysAuthVO != null && !CommUtil.isEmpty(admSysAuthVO.getUrlPtn())){
+	    				System.out.println(request.getServletPath());
+	    				String[] locations = StringUtils.tokenizeToStringArray(admSysAuthVO.getUrlPtn(), ",; \t\n");
+	    				boolean result = false;
+	    				for (int i = 0; i < locations.length; ++i){
+	    					System.out.println(locations[i]);
+	    					if(pathMatcher.match(locations[i], request.getServletPath()) ){
+	    						result = true;
+	    						break;
+	    					}
+	    				}
+	    				if(!result) throw new PortalxpertException("Insufficient auth");
+	    	            	//return false;
+	    			}
+        		}
         	}
         }
         return true;

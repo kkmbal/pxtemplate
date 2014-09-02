@@ -1,6 +1,33 @@
 
+// 권한제거
+var fnUserAuthListRemove = function(id)
+{
+   $("#userAuthList #"+id).remove();
+};	
 	
+// 권한추가
+var fnUserAuthListAdd = function(){
 	
+	if($("#authCd").val() == "") return;
+	
+	var json = {
+			id : $("#authCd").val(),
+			name : $("#authCd option:selected").text()
+	};
+	
+	var contains = false;
+	$obj = $('#userAuthList li');
+	for( var j=0; j < $obj.length; j++)
+	{
+		if ($obj.eq(j).attr("id") == json.id)
+		{
+			contains = true;
+			break;
+		}
+	}	    	
+	if (!contains) $('#userAuthList').append('<li id="'+json.id+'"><a style="cursor:pointer;" onclick="javascript:fnUserAuthListRemove(\''+json.id+'\')" ></a>'+json.name+'</li>');
+	//}
+};
 	
 ////////////////////////////////onload/////////////////////////////////////////////////////////////////////
 
@@ -15,7 +42,7 @@ $(document).ready(function () {
 	}
 	
 	$("#deptCode").val(deptCode);
-	$("#authCd").val(authCd);
+	
 	if(userId != ''){
 		$('#userId_v').attr('disabled', 'true');
 	}
@@ -46,18 +73,38 @@ $(document).ready(function () {
 			alert("부서를 선택하세요.");
 			return;
 		}
-		if($("#authCd").val() == ""){
-			alert("권한을 선택하세요.");
-			return;
-		}
+		//if($("#authCd").val() == ""){
+		//	alert("권한을 선택하세요.");
+		//	return;
+		//}
 		
 		if (!confirm('등록 하시겠습니까?')) {
 			return;
 		}
 		
+		var jsonObject = {
+			'userId' : 	$("#userId").val(),
+			'userName' : $("#userName").val(),
+			'userPassword' : $("#userPassword").val(),
+			'mobile' : $("#mobile").val(),
+			'mail' : $("#mail").val(),
+			'deptCode' : $("#deptCode").val(),
+			'authList' : []
+		};
+		
+		$obj = $('#userAuthList li');	
+		for( var i=0; i < $obj.length; i++)
+		{
+			var json = {
+	    			'authCd' : $obj.eq(i).attr("id"),
+	    	};
+			jsonObject.authList[i] = json;
+		}		
+		
 		PortalCommon.getJson({
 			url : WEB_HOME+"/adm/sys/insertAdmUser.do?format=json",
-			data: $("form[name=listForm]").serialize(),
+			//data: $("form[name=listForm]").serialize(),
+			data: {'data' : JSON.stringify(jsonObject)},
 			success : function(data) {
 				if (data.jsonResult.success === true) {
 					opener.location.reload();

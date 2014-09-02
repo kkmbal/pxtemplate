@@ -1,12 +1,16 @@
 package portalxpert.common.sc.impl;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.mapper.UserLoginMapper;
 import portalxpert.common.sc.UserLoginService;
@@ -53,15 +57,7 @@ public class UserLoginServiceImpl extends EgovAbstractServiceImpl implements Use
 		}
     }
     
-    public int insertTmlnRead(UserInfoVO vo) throws Exception
-    {
-    	try{
-    		return userLoginMapper.insertTmlnRead(vo);
-		}catch(Exception e){
-			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
-		}
-    	
-    }
+
     
 	
 	

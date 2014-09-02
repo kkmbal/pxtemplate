@@ -19,7 +19,8 @@
  
 <script type="text/javascript">
 var menuId = '${param.menuId}';
-var authCd = '${sessionScope.pxLoginInfo.authCd}';
+var authCd = '${sessionScope.pxLoginInfo.authCdStr}';
+var menuConts = '${sessionScope.pxLoginInfo.menuConts}';
 </script>           
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/portalxpert/js/portal/common/leftTree.js"></script>
  		

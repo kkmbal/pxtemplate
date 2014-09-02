@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.omg.CORBA.portable.ApplicationException;
+
 import portalxpert.adm.sys.vo.AdmSysAuthVO;
 import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
@@ -93,6 +95,13 @@ public interface AdmSysAuthService {
      */
 	public List<AdmSysAuthVO> getAuchCodeList(AdmSysAuthVO admSysAuthVO) throws Exception; 
     
- 	
+	 /**
+	  * Method Desciption : 권한정보 조회
+	  * 
+	  * @param con
+	  * @return
+	  * @throws ApplicationException
+	  */
+	 public List<AdmSysAuthVO> getAuthInfo(String userId) throws Exception;
 
 }

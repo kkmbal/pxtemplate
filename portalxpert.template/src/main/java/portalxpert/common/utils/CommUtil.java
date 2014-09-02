@@ -15,12 +15,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+
+import oracle.net.aso.e;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -670,6 +674,15 @@ public class CommUtil {
         return true;
     }	
     
+    public static String getListToStr(List<String> list){
+    	if(list == null || list.size() == 0) return null;
+    	StringBuilder sb = new StringBuilder();
+    	for(String str : list){
+    		sb.append(str).append(",");
+    	}
+    	return sb.substring(0, sb.length()-1).toString();
+    }
+    
     /**
      * 메일보내기
      * @param toMail TO_MAIL
@@ -688,4 +701,11 @@ public class CommUtil {
     public static void sendAlert(String ownerId, String fromName, String conts){
     }
     
+    public static void main(String[] args){
+    	ArrayList a = new ArrayList();
+    	a.add("A");
+    	a.add("B");
+    	a.add("C");
+    	System.out.println(getListToStr(a));
+    }
 }

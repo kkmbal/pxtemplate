@@ -26,6 +26,8 @@ var authCd = '${admSysPsnUserInfoVO.authCd}';
 			<h1  style="font-size:25px;font-weight:bold;">사용자</h1>
 		</div>
 		<div class="contents">
+			<form:form commandName="admSysPsnUserInfoVO" action="${WEB_HOME}/adm/sys/getAdmSysUserManage.do" name="listForm" method="post">
+			<input type="hidden" name="userId" id="userId" value="${admSysPsnUserInfoVO.userId}">		
 			<table class="tbl_form" summary="이 표는 사용자이름, 휴대폰, 이메일, 부서, 권한사항을 입력하는 사용자정보 표입니다.">
 			<caption>사용자</caption>
 			<colgroup>
@@ -65,7 +67,7 @@ var authCd = '${admSysPsnUserInfoVO.authCd}';
 						</span>
 					</span>
 				</td>
-				<th scope="row"><label for="select02">권한</label></th>
+				<th scope="row"><label for="select02">권한선택</label></th>
 				<td>
 					<span class="selectN" style="width:150px">
 						<span>
@@ -74,10 +76,23 @@ var authCd = '${admSysPsnUserInfoVO.authCd}';
 							</select>
 						</span>
 					</span>
+					<button type="button" class="btn_style1_2" onclick="fnUserAuthListAdd()">추가</button>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row"><label for="select02">권한</label></th>
+				<td colspan="3">
+					<div class="listbox">
+					<ul id="userAuthList">
+						<c:forEach var="result" items="${userAuthList}" varStatus="status">	
+							<li id="${result.authCd}"><a class="ico_del" style="cursor:pointer;" onclick="javascript:fnUserAuthListRemove('${result.authCd}')" ></a>${result.authNm}</li>
+						</c:forEach> 
+					</ul>
+					</div>
+				</td>			
 			</tbody>
 			</table>
+			</form:form>
 			<div class="pop_btn_sec">
 				<button class="btn_style3_2" type="button" id="btnSave">저장</button>
 				<button class="btn_style4_2" type="button" id="btnClose">취소</button>

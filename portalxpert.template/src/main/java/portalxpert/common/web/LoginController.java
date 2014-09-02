@@ -1,5 +1,8 @@
 package portalxpert.common.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,8 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import portalxpert.adm.sys.sc.AdmSysAuthService;
+import portalxpert.adm.sys.vo.AdmSysAuthVO;
+import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
+import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import portalxpert.common.config.Constant;
 import portalxpert.common.sc.UserLoginService;
+import portalxpert.common.utils.CommUtil;
 import portalxpert.common.vo.JSONResult;
 import portalxpert.common.vo.UserInfoVO;
 
@@ -21,6 +29,9 @@ public class LoginController {
 
 	@Resource(name = "userLoginService")
 	private UserLoginService userLoginService;
+	
+	@Resource(name = "admSysAuthService")
+	private AdmSysAuthService admSysAuthService;
 	
 	@Resource(name="messageSourceAccessor")
 	private MessageSourceAccessor messageSource;
@@ -40,8 +51,34 @@ public class LoginController {
 			UserInfoVO vo = null;
 			if(ssnId == null || "".equals(ssnId)) {
 				vo = userLoginService.getLoginInfo(userId);
+				
+				//권한
+				List<AdmSysAuthVO> authList = admSysAuthService.getAuthInfo(userId);
+				vo.setAuthCd(getAuthList(authList));
+				vo.setAuthCdStr(CommUtil.getListToStr(getAuthList(authList)));
+				
+				// 메뉴
+				AdmSysMenuAuthVO admSysMenuAuthVO = new AdmSysMenuAuthVO();
+				admSysMenuAuthVO.setAuthCd(vo.getAuthCdStr());
+				admSysMenuAuthVO = admSysAuthService.getAdmSysMenuAuthInfo(admSysMenuAuthVO);
+				if(admSysMenuAuthVO != null){
+					vo.setMenuConts(admSysMenuAuthVO.getMenuConts());
+				}
 			}else {
 				vo = userLoginService.getLoginInfoBySsnId(ssnId);
+				
+				//권한
+				List<AdmSysAuthVO> authList = admSysAuthService.getAuthInfo(vo.getId());
+				vo.setAuthCd(getAuthList(authList));
+				vo.setAuthCdStr(CommUtil.getListToStr(getAuthList(authList)));
+				
+				// 메뉴
+				AdmSysMenuAuthVO admSysMenuAuthVO = new AdmSysMenuAuthVO();
+				admSysMenuAuthVO.setAuthCd(vo.getAuthCdStr());
+				admSysMenuAuthVO = admSysAuthService.getAdmSysMenuAuthInfo(admSysMenuAuthVO);
+				if(admSysMenuAuthVO != null){
+					vo.setMenuConts(admSysMenuAuthVO.getMenuConts());
+				}
 			}
 			
 			if(null == vo || StringUtils.isEmpty(vo.getSid()) || StringUtils.isEmpty(vo.getPasswd()) || !vo.getPasswd().equals(passwd)){
@@ -75,4 +112,12 @@ public class LoginController {
     	return "redirect:/index.html";
 	}
 	
+	private List<String> getAuthList(List<AdmSysAuthVO> list){
+		if(list == null || list.size() == 0) return null;
+		List<String> listStr = new ArrayList<String>();
+		for(AdmSysAuthVO vo : list){
+			listStr.add(vo.getAuthCd());
+		}
+		return listStr;
+	}
 }

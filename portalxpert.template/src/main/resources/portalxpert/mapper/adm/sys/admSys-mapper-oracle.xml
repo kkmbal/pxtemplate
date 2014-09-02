@@ -516,7 +516,6 @@
 	                , P.INTERMAIL
 	                , P.USER_PASSWORD
 	                , P.DEL_YN
-	                , (SELECT AUTH_CD FROM ADM_USER_AUTH WHERE USER_ID = P.USER_ID) AUTH_CD
 	                , RNUM SEQ		
 			FROM
 			(
@@ -606,14 +605,10 @@
                 , PU.MAIL
                 , PU.INTERMAIL
                 , PU.USER_PASSWORD
-                , C.AUTH_CD
-                , (SELECT AUTH_NM FROM ADM_AUTH WHERE AUTH_CD = C.AUTH_CD) AUTH_NM
                 , PU.DEL_YN
         FROM      PSN_USER_INFO PU
                 , PSN_DEPT_INFO LD
-                , ADM_USER_AUTH C
         WHERE PU.DEPT_CODE = LD.DEPT_CODE(+)
-        AND   PU.USER_ID = C.USER_ID(+)
         AND   PU.USER_ID = #{userId}    
         AND   PU.DEL_YN = 'N'
 		]]>
@@ -858,6 +853,11 @@
 		<if test="delYn != null and delYn != ''"> , DEL_YN = #{delYn} </if>
 		WHERE USER_ID = #{userId}
 	</update>
+	
+	<delete id="deleteUserAuth" parameterType="portalxpert.adm.sys.vo.AdmSysUserAuthVO">
+		DELETE FROM ADM_USER_AUTH 
+		WHERE USER_ID = #{userId}
+	</delete>
 
 	<select id="getAdmSysMenuAuthInfo" parameterType="portalxpert.adm.sys.vo.AdmSysMenuAuthVO"
 	resultType="portalxpert.adm.sys.vo.AdmSysMenuAuthVO">
@@ -927,5 +927,14 @@
         FROM PSN_DEPT_INFO A
 		]]>
 	</select>					
+
+	<select id="getAuthInfo" parameterType="string" resultType="portalxpert.adm.sys.vo.AdmSysAuthVO">
+		SELECT A.AUTH_CD, B.AUTH_NM
+		FROM ADM_USER_AUTH A,
+		     ADM_AUTH B
+		WHERE A.USER_ID = #{userId}
+		AND   A.AUTH_CD = B.AUTH_CD
+		AND   B.DEL_YN = 'N'
+	</select>
 			
 </mapper>

@@ -1,15 +1,20 @@
 package portalxpert.adm.sys.sc.impl;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
+import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import portalxpert.adm.sys.mapper.AdmSysMapper;
 import portalxpert.adm.sys.sc.AdmSysAuthService;
@@ -147,7 +152,29 @@ public class AdmSysAuthServiceImpl extends EgovAbstractServiceImpl implements Ad
      */
     public AdmSysMenuAuthVO getAdmSysMenuAuthInfo(AdmSysMenuAuthVO admSysMenuAuthVO) throws Exception{
     	try{
-    		return admSysMapper.getAdmSysMenuAuthInfo(admSysMenuAuthVO);
+    		String authCdStr = admSysMenuAuthVO.getAuthCd(); // 다건.
+    		
+    		TreeMap<String, JSONObject> jsonMap = new TreeMap<String, JSONObject>();
+    		for (String authCd : StringUtils.tokenizeToStringArray(authCdStr, ",")) {
+    			AdmSysMenuAuthVO vo = new AdmSysMenuAuthVO();
+    			vo.setAuthCd(authCd);
+    			vo = admSysMapper.getAdmSysMenuAuthInfo(vo);
+    			if(vo != null){
+	    			JSONArray jsonArr = JSONArray.fromObject(vo.getMenuConts());
+	    			for(int i = 0;i<jsonArr.size();i++){
+	    				jsonMap.put(jsonArr.getJSONObject(i).getString("menuId"), jsonArr.getJSONObject(i));
+	    			}
+    			}
+    		}
+    		
+    		JSONArray json = new JSONArray();
+    		Set<String> keySet = jsonMap.keySet();
+    		for(String key : keySet){
+    			json.add(jsonMap.get(key));
+    		}
+    		
+    		admSysMenuAuthVO.setMenuConts(json.toString());
+    		return admSysMenuAuthVO;
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}   
@@ -233,4 +260,21 @@ public class AdmSysAuthServiceImpl extends EgovAbstractServiceImpl implements Ad
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}
 	}
+	
+	
+	 /**
+	  * Method Desciption : 권한정보 조회
+	  * 
+	  * @param con
+	  * @return
+	  * @throws ApplicationException
+	  */
+	 public List<AdmSysAuthVO> getAuthInfo(String userId) throws Exception
+	 {
+	   	try{
+	   		return admSysMapper.getAuthInfo(userId);
+			}catch(Exception e){
+				throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+			}
+	   }
 }

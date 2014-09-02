@@ -47,6 +47,11 @@ $(function(){
 	$("body").remove('menuTreeObj');
 	$("body").append("<div id='menuTreeObj' style='display:none'></div>");
 	
+	var zNodes = $.parseJSON(menuConts);
+	var treeObj = $.fn.zTree.init($("#menuTreeObj"), left_menu_setting, PortalCommon.getChildZMenuById(zNodes, menuId));
+	treeObj.expandAll(true);
+	
+	/*
 	PortalCommon.getJson({
 		url : WEB_HOME+"/adm/sys/getAuthMenu.do?format=json",
 		data : 'authCd='+authCd,
@@ -57,7 +62,8 @@ $(function(){
 				treeObj.expandAll(true);					
 			};
 		}
-	});		
+	});	
+	*/	
 	
 	
 });

@@ -2,6 +2,11 @@ package portalxpert.common.sc;
 
 
 
+import java.util.List;
+
+import org.omg.CORBA.portable.ApplicationException;
+
+import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import portalxpert.common.vo.UserInfoVO;
 
 
@@ -23,12 +28,6 @@ public interface UserLoginService {
 	 */
   public UserInfoVO getLoginInfoBySsnId(String ssnId) throws Exception;
 	
-    /**
-	 * 소통글 읽음 처리
-	 * @param UserInfoVO
-	 * @return
-	 * @exception Exception
-	 */
-    public int insertTmlnRead(UserInfoVO vo) throws Exception;
+
     
 }

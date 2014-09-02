@@ -75,6 +75,27 @@ $(function(){
 	$("body").remove('menuTreeObj');
 	$("body").append("<div id='menuTreeObj' style='display:none'></div>");
 	
+	
+	var treeObjMenu = $("#menuTreeObj");
+
+	var zNodes = $.parseJSON(menuConts);
+	var treeObj = $.fn.zTree.init($("#menuTreeObj"), left_menu_setting, PortalCommon.getChildZMenuById(zNodes, menuId));
+	treeObj.expandAll(true);
+	
+	
+	var zTree_Menu = $.fn.zTree.getZTreeObj("menuTreeObj");
+	var curMenu = zTree_Menu.getNodes()[0].children[0].children[0];
+	zTree_Menu.selectNode(curMenu);
+
+	treeObjMenu.hover(function () {
+		if (!treeObjMenu.hasClass("showIcon")) {
+			treeObjMenu.addClass("showIcon");
+		}
+	}, function() {
+		treeObjMenu.removeClass("showIcon");
+	});
+	
+	/*
 	PortalCommon.getJson({
 		url : WEB_HOME+"/adm/sys/getAuthMenu.do?format=json",
 		data : 'authCd='+authCd,
@@ -101,7 +122,8 @@ $(function(){
 
 			};
 		}
-	});		
+	});	
+	*/
 	
 	
 });

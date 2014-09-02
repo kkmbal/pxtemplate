@@ -76,10 +76,9 @@
 	<caption>사용자관리 목록</caption>
 	<colgroup>
 		<col style="width:7%" />
-		<col style="width:10%" />
+		<col style="width:15%" />
 		<col style="width:*" />
-		<col style="width:11%" />
-		<col style="width:11%" />
+		<col style="width:15%" />
 		<col style="width:15%" />
 	</colgroup>
 	<thead>
@@ -88,8 +87,7 @@
 		<th scope="col"><div class="col">사용자ID</div></th>
 		<th scope="col"><div class="col">사용자명</div></th>
 		<th scope="col"><div class="col">부서</div></th>
-		<th scope="col"><div class="col">담당업무</div></th>
-		<th scope="col" class="e"><div class="col">권한</div></th>
+		<th scope="col" class="e"><div class="col">담당업무</div></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -102,14 +100,6 @@
 				<td class="tit" title="${result.userName}"><a href="javascript:fnGetRegView('${result.userId}');" class="text_dot">${result.userName}</a></td>
 				<td>${result.deptFname}</td>
 				<td>${result.userJob}</td>
-				<td>
-					<select name="authCd${status.count}">
-						<option value="">선택</option>
-					<c:forEach var="auth" items="${authCodeList}">
-						<option value="${auth.authCd}" ${result.authCd == auth.authCd ? 'selected' : ''}>${auth.authNm}</option>
-					</c:forEach>
-					</select>
-				</td>
 			</tr>	
 		</c:forEach>
 	</c:when>

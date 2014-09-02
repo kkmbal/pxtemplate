@@ -26,6 +26,7 @@ import portalxpert.adm.sys.vo.AdmSysAuthVO;
 import portalxpert.adm.sys.vo.AdmSysDeptInfo;
 import portalxpert.adm.sys.vo.AdmSysMenuAuthVO;
 import portalxpert.adm.sys.vo.AdmSysPsnUserInfoVO;
+import portalxpert.adm.sys.vo.AdmSysUserAuthVO;
 import portalxpert.common.utils.CommUtil;
 import portalxpert.common.utils.JSONUtils;
 import portalxpert.common.vo.JSONResult;
@@ -116,6 +117,10 @@ public class AdmSysUserController {
 		if(!CommUtil.isEmpty(userId)){
 			admSysPsnUserInfoVO.setUserId(userId);
 			admSysPsnUserInfoVO = admSysUserService.getAdmSysUserInfo(admSysPsnUserInfoVO);
+			
+			//소유권한목록
+			List<AdmSysAuthVO> authList = admSysAuthService.getAuthInfo(userId);
+			modelMap.put("userAuthList", authList);
 		}
 		
 		//권한코드
@@ -150,12 +155,12 @@ public class AdmSysUserController {
 		* @throws Exception
 		*/
 	@RequestMapping(value = "/insertAdmUser")
-	public ModelMap insertAdmUser(@ModelAttribute("admSysPsnUserInfoVO") AdmSysPsnUserInfoVO admSysPsnUserInfoVO ,ModelMap modelMap, HttpSession session) throws Exception{
+	public ModelMap insertAdmUser(@RequestParam(value="data",required = true) String data ,ModelMap modelMap, HttpSession session) throws Exception{
 	
 			JSONResult jsonResult = new JSONResult();
 				
 			try{
-				admSysUserService.insertPsnUserInfo(admSysPsnUserInfoVO, session);
+				admSysUserService.insertPsnUserInfo(data, session);
 				
 		   	}catch (Exception e) {
 		   		jsonResult.setSuccess(false);

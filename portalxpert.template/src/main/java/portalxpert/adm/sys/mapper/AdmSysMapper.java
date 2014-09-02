@@ -2,6 +2,8 @@ package portalxpert.adm.sys.mapper;
 
 import java.util.List;
 
+import org.omg.CORBA.portable.ApplicationException;
+
 import portalxpert.adm.gen.vo.AdmGenLinkVO;
 import portalxpert.adm.sys.vo.AdmSysAuthVO;
 import portalxpert.adm.sys.vo.AdmSysBbsNotiApndFileVO;
@@ -306,4 +308,21 @@ public interface AdmSysMapper {
      * @exception Exception
      */
 	public List<AdmSysAuthVO> getAuchCodeList(AdmSysAuthVO admSysAuthVO) throws Exception; 
+	
+	 /**
+	  * Method Desciption : 권한정보 조회
+	  * 
+	  * @param con
+	  * @return
+	  * @throws ApplicationException
+	  */
+	 public List<AdmSysAuthVO> getAuthInfo(String userId) throws Exception;
+
+    /**
+     * 사용자 권한삭제
+     * @param AdmSysUserAuthVO
+     * @return void
+     * @exception Exception
+     */
+	public void deleteUserAuth(AdmSysUserAuthVO admSysUserAuthVO);
 }

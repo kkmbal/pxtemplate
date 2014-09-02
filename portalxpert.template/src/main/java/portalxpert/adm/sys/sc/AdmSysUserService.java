@@ -39,7 +39,7 @@ public interface AdmSysUserService {
      * @return void
      * @exception Exception
      */
-    public void insertPsnUserInfo(AdmSysPsnUserInfoVO admSysPsnUserInfoVO, HttpSession session) throws Exception;    
+    public void insertPsnUserInfo(String data, HttpSession session) throws Exception;    
     
     /**
      * 사용자수정

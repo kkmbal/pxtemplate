@@ -22,7 +22,8 @@
     <!--//header-->
     
 <script type="text/javascript">
-var topMenuAuthCd = '${sessionScope.pxLoginInfo.authCd}';
+var topMenuAuthCd = '${sessionScope.pxLoginInfo.authCdStr}';
+var menuConts = '${sessionScope.pxLoginInfo.menuConts}';
 </script>           
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/portalxpert/js/portal/common/header.js"></script>
  	    

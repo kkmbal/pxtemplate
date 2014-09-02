@@ -5,6 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -76,15 +79,27 @@ public class AdmSysUserServiceImpl extends EgovAbstractServiceImpl implements Ad
      * @return void
      * @exception Exception
      */
-    public void insertPsnUserInfo(AdmSysPsnUserInfoVO admSysPsnUserInfoVO, HttpSession session) throws Exception {
+    public void insertPsnUserInfo(String json, HttpSession session) throws Exception {
     	try{
-	    	//로그인된 User 정보 세팅
+    		JSONObject bbsObject = JSONObject.fromObject(json);
+    		AdmSysPsnUserInfoVO admSysPsnUserInfoVO = new AdmSysPsnUserInfoVO();
+    		admSysPsnUserInfoVO.setUserId(bbsObject.getString("userId"));
+    		admSysPsnUserInfoVO.setUserName(bbsObject.getString("userName"));
+    		admSysPsnUserInfoVO.setUserPassword(bbsObject.getString("userPassword"));
+    		admSysPsnUserInfoVO.setDeptCode(bbsObject.getString("deptCode"));
+    		admSysPsnUserInfoVO.setMobile(bbsObject.getString("mobile"));
+    		admSysPsnUserInfoVO.setMail(bbsObject.getString("mail"));
+    		
+    		//로그인된 User 정보 세팅
 	    	UserInfoVO usrInfo = (UserInfoVO)session.getAttribute("pxLoginInfo");
 	    	admSysPsnUserInfoVO.setRegrId(usrInfo.getId());
 	    	admSysPsnUserInfoVO.setRegrName(usrInfo.getName());
 	    	admSysPsnUserInfoVO.setUpdrId(usrInfo.getId());
 	    	admSysPsnUserInfoVO.setUpdrName(usrInfo.getName());
 	    	admSysPsnUserInfoVO.setDelYn("N");
+	    	
+	    	
+	    	
 	    	
 			AdmSysPsnUserInfoVO admSysUserInfo = admSysMapper.getAdmSysUserInfo(admSysPsnUserInfoVO);
 	    	
@@ -97,19 +112,26 @@ public class AdmSysUserServiceImpl extends EgovAbstractServiceImpl implements Ad
 	    	//권한
 	    	AdmSysUserAuthVO admSysUserAuthVO = new AdmSysUserAuthVO();
 	    	admSysUserAuthVO.setUserId(admSysPsnUserInfoVO.getUserId());
-	    	admSysUserAuthVO.setRegrId(usrInfo.getId());
-	    	admSysUserAuthVO.setRegrName(usrInfo.getName());
-	    	admSysUserAuthVO.setUpdrId(usrInfo.getId());
-	    	admSysUserAuthVO.setUpdrName(usrInfo.getName());
-	    	admSysUserAuthVO.setAuthCd(admSysPsnUserInfoVO.getAuthCd());
 	    	
-	    	AdmSysUserAuthVO admSysUserAuthInfo = admSysMapper.getAdmSysUserAuthInfo(admSysUserAuthVO);
-	    	if(admSysUserAuthInfo == null){
-	    		admSysUserAuthVO.setDelYn("N");
+	    	admSysMapper.deleteUserAuth(admSysUserAuthVO);
+			JSONArray jsonArr = (JSONArray)bbsObject.get("authList");			
+			for (int i=0; i < jsonArr.size(); i++)
+			{
+				JSONObject obj = (JSONObject)jsonArr.get(i);
+				
+				admSysUserAuthVO = new AdmSysUserAuthVO();
+				admSysUserAuthVO.setUserId(admSysPsnUserInfoVO.getUserId());
+				admSysUserAuthVO.setRegrId(usrInfo.getId());
+				admSysUserAuthVO.setRegrName(usrInfo.getName());
+				admSysUserAuthVO.setUpdrId(usrInfo.getId());
+				admSysUserAuthVO.setUpdrName(usrInfo.getName());
+				admSysUserAuthVO.setAuthCd(obj.getString("authCd"));
+				admSysUserAuthVO.setDelYn("N");
+				
 	    		admSysMapper.insertUserAuth(admSysUserAuthVO);
-	    	}else{
-	    		admSysMapper.updateUserAuth(admSysUserAuthVO);
-	    	}
+			}
+	    	
+	  
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}

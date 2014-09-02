@@ -1,6 +1,7 @@
 package portalxpert.common.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserInfoVO implements Serializable{
 
@@ -37,14 +38,29 @@ public class UserInfoVO implements Serializable{
 	private String tmlnreaddttm; 
 	private String msgYN;
 	private String passwd;
-	private String authCd;
+	private List<String> authCd;
+	private String authCdStr;
+	private String menuConts;
 	
 	
-	
-	public String getAuthCd() {
+
+
+	public String getMenuConts() {
+		return menuConts;
+	}
+	public void setMenuConts(String menuConts) {
+		this.menuConts = menuConts;
+	}
+	public String getAuthCdStr() {
+		return authCdStr;
+	}
+	public void setAuthCdStr(String authCdStr) {
+		this.authCdStr = authCdStr;
+	}
+	public List<String> getAuthCd() {
 		return authCd;
 	}
-	public void setAuthCd(String authCd) {
+	public void setAuthCd(List<String> authCd) {
 		this.authCd = authCd;
 	}
 	public String getPasswd() {

@@ -17,10 +17,11 @@
                 WHERE A.USER_ID = U.USER_ID
                 AND A.SLCT_POTO_SEQ = U.POTO_SEQ ) USER_REP_IMG
               ,USER_NICK NICKNAME
-              ,(SELECT AUTH_CD FROM ADM_USER_AUTH WHERE USER_ID = A.USER_ID AND ROWNUM = 1) AUTH_CD 
 		FROM PSN_USER_INFO A
 		WHERE USER_ID = #{userId}
-	</select>				
+	</select>
+					
+				
 											
 											
 	<select id="getLoginInfoBySsnId" parameterType="string" resultType="portalxpert.common.vo.UserInfoVO">
@@ -42,14 +43,7 @@
 		WHERE RESINUMBER = #{ssnId}
 	</select>
 	
-	
-	<update id="insertTmlnRead">
-		<![CDATA[
-		UPDATE PSN_USER_INFO SET tmln_read_dttm = TO_DATE(#{tmlnreaddttm}, 'YYYY-MM-DD HH24:MI:SS')
-		]]>
-		WHERE user_id = #{resinumber}		
-		
-	</update>
+
 
 
 </mapper>

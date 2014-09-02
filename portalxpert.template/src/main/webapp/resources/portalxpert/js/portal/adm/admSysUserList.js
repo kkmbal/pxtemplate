@@ -17,7 +17,7 @@
 	};	
 	
 	function fnGetRegView(userId){
-		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysUserManage.do?userId='+userId, '사용자',900,300);
+		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysUserManage.do?userId='+userId, '사용자',900,370);
 	}
 	
 	
@@ -41,7 +41,7 @@ $(document).ready(function () {
 	});
 	
 	$('#createUser').click(function() {//등록
-		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysUserManage.do?userId=', '사용자',900,300);
+		PortalCommon.popupWindowCenter(WEB_HOME+'/adm/sys/getAdmSysUserManage.do?userId=', '사용자',900,370);
 	});	
 	
 	parent.document.getElementById("admFrame").height = "700px";
