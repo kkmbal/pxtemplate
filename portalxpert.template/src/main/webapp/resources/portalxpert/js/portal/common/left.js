@@ -39,9 +39,7 @@ var left_menu_setting = {
 
 		if(treeId == 'menuTreeObj'){
 			if(page.match(/^\//g)) page = page.substring(1);
-			if(parent.document.getElementById("bbsFrame")){
-				parent.document.getElementById("bbsFrame").src = WEB_HOME+"/"+page;
-			}
+			parent.document.getElementById("contentfrm").src = WEB_HOME+"/"+page;
 		}
 		
 	};

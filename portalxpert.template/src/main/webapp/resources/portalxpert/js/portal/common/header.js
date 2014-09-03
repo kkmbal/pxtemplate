@@ -4,14 +4,18 @@ $(function() {
 	});
 	
 	$("#btnAdmin").click(function() {
-		$(this).attr("href", WEB_HOME+"/adm/sys/admFrame.do?url=adm/stat/getAdmBbsStatList.do");
+		//$(this).attr("href", WEB_HOME+"/adm/sys/admFrame.do?url=adm/stat/getAdmBbsStatList.do");
+		parent.document.getElementById("menufrm").src = WEB_HOME+"/adm/leftTree.do";
+		parent.document.getElementById("contentfrm").src = WEB_HOME+"/adm/stat/getAdmBbsStatList.do";
 	});	
 	
 	$("#main").click(function() {
 		$(this).attr("href", WEB_HOME+"/main/mainFrame.do");		
 	});	
 	$("#board").click(function() {
-		$(this).attr("href", WEB_HOME+"/board100/boardFrame.do?boardId=BBS000001");		
+		//$(this).attr("href", WEB_HOME+"/board100/boardFrame.do?boardId=BBS000001");
+		parent.document.getElementById("menufrm").src = WEB_HOME+"/board/leftTree.do";
+		parent.document.getElementById("contentfrm").src = WEB_HOME+"/board100/boardFrame.do?boardId=BBS000001";
 	});	
 	
 	var zNodes = $.parseJSON(menuConts);
