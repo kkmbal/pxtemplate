@@ -9,9 +9,11 @@
 		$(parent.document).scrollTop(0);
 		fnImgReSizing();
 		contentsPx = contentsPx + ( 140 * parseInt(listSize));
-		if( contentsPx > 650 )
-		parent.document.getElementById("bbsFrame").height = contentsPx;
-		else parent.document.getElementById("bbsFrame").height = 650;
+		if(parent.document.getElementById("bbsFrame")){
+			if( contentsPx > 650 )
+			parent.document.getElementById("bbsFrame").height = contentsPx;
+			else parent.document.getElementById("bbsFrame").height = 650;
+		}
 	};
 
 	var fnRemoveNotiList = function()

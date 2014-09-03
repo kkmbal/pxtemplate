@@ -36,10 +36,10 @@
 	};
 	
 	var fnSetFrameHeight = function(addHeight){
-		parent.document.getElementById("bbsFrame").height = "700px";
-		parent.document.getElementById("bbsFrame").height = Number($(document).height()+ addHeight )+"px";
-		//parent.document.getElementById("bbsFrame").height = (document.body.scrollHeight+ addHeight)+"px";
-		
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = "700px";
+			parent.document.getElementById("bbsFrame").height = Number($(document).height()+ addHeight )+"px";
+		}
 	};
 	
 	
@@ -168,8 +168,9 @@
 	$(document).ready(function () {//이벤트 모음 
 		
 		
-		
-		parent.document.getElementById("bbsFrame").height = "700px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = "700px";
+		}
 		
 		fnGetNotiDetailInfoView();
 		

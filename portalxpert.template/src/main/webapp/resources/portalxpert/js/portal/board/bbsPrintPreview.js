@@ -236,7 +236,9 @@
 	};
 	
 	var fnSetFrameHeight = function(addHeight){
-		parent.document.getElementById("bbsFrame").height = Number($(document).height()+ addHeight )+"px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = Number($(document).height()+ addHeight )+"px";
+		}
 	};
 	
 	//이미지형 게시글 이전글 다음글 

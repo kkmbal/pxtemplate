@@ -1,7 +1,9 @@
 
 	var fnAutoSetHeight = function()
 	{
-		parent.document.getElementById("bbsFrame").height = ($("#my_list").height() + 45 )+"px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = ($("#my_list").height() + 45 )+"px";
+		}
 	};
 	
 	
@@ -838,7 +840,9 @@
 			$(this).parent().prev().val($(this).val());
 		});
 		
-		parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
+		}
 		
 	}
 	
@@ -1316,7 +1320,9 @@
 		
 		
 		$(window).load(function () {
-			parent.document.getElementById("bbsFrame").height = "700px";
+			if(parent.document.getElementById("bbsFrame")){
+				parent.document.getElementById("bbsFrame").height = "700px";
+			}
 			fnSetNotiList();
 
 			

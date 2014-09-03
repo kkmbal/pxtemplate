@@ -84,15 +84,18 @@ $(document).ready(function () {
 	
 	if(fh == ""){fh = "700";}
 	var _height = fh;
-	if(pageUnit == "10"){
-		parent.document.getElementById("bbsFrame").height = _height +"px";
-	}else if(pageUnit == "15"){
-		parent.document.getElementById("bbsFrame").height = _height + 100 +"px";
-	}else if(pageUnit == "30"){
-		parent.document.getElementById("bbsFrame").height = _height + 550 +"px";
-	}else if(pageUnit == "50"){
-		parent.document.getElementById("bbsFrame").height = _height + 750 +"px";
-	} 		
+	
+	if(parent.document.getElementById("bbsFrame")){
+		if(pageUnit == "10"){
+			parent.document.getElementById("bbsFrame").height = _height +"px";
+		}else if(pageUnit == "15"){
+			parent.document.getElementById("bbsFrame").height = _height + 100 +"px";
+		}else if(pageUnit == "30"){
+			parent.document.getElementById("bbsFrame").height = _height + 550 +"px";
+		}else if(pageUnit == "50"){
+			parent.document.getElementById("bbsFrame").height = _height + 750 +"px";
+		} 		
+	}
 	 $('#list_cnt').change(function() {//조회갯수
 			fnSearchList('default');
 			//alert($('#list_cnt').val());

@@ -241,9 +241,10 @@
 	};
 	
 	var fnSetFrameHeight = function(addHeight){
-		parent.document.getElementById("bbsFrame").height = "700px";
-		parent.document.getElementById("bbsFrame").height = Number($(document).height()+ addHeight )+"px";
-		//parent.document.getElementById("bbsFrame").height = (document.body.scrollHeight+ addHeight)+"px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = "700px";
+			parent.document.getElementById("bbsFrame").height = Number($(document).height()+ addHeight )+"px";
+		}
 		
 	};
 	
@@ -1335,21 +1336,23 @@
 	};
 	
 	var fnGetBoardView = function(id, temp){
-		parent.document.getElementById("bbsFrame").height = "700px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = "700px";
+		}
 		location.href = WEB_HOME+"/board210/getBasicBoardView.do?notiId="+id+"&boardId="+boardId+"&pageIndex="+pageIndex+"&pageUnit=10&pnum="+temp;
 	};
 	
 	//목록
 	var fnDoList = function(){
 		if (boardId == 'BBS999999'){//임시게시판이면
-			parent.document.getElementById("bbsFrame").src= WEB_HOME+'/board240/getTmpBoardInfoList.do?boardId='+boardId+'&pageIndex=1&pageUnit=10&orderType=default';
+			parent.document.getElementById("contentfrm").src= WEB_HOME+'/board240/getTmpBoardInfoList.do?boardId='+boardId+'&pageIndex=1&pageUnit=10&orderType=default';
 		}else{
 			if (boardForm == '030' && boardFormSpec == '010'){  //이미지형
-				parent.document.getElementById("bbsFrame").src=WEB_HOME+'/board211/getBbsImgBoardNotiList.do?boardId='+boardId+'&pageIndex=1&pageUnit=6&orderType=default';
+				parent.document.getElementById("contentfrm").src=WEB_HOME+'/board211/getBbsImgBoardNotiList.do?boardId='+boardId+'&pageIndex=1&pageUnit=6&orderType=default';
 			}else if (boardForm == '030' && boardFormSpec == '020'){  //동영상형
-				parent.document.getElementById("bbsFrame").src=WEB_HOME+'/board212/getBbsVideoBoardNotiList.do?boardId='+boardId+'&pageIndex=1&pageUnit=6&orderType=default';
+				parent.document.getElementById("contentfrm").src=WEB_HOME+'/board212/getBbsVideoBoardNotiList.do?boardId='+boardId+'&pageIndex=1&pageUnit=6&orderType=default';
 			}else if (boardForm == '030' && boardFormSpec == '030'){  //컨텐츠형
-				parent.document.getElementById("bbsFrame").src=WEB_HOME+'/board213/getBbsContentsBoardNotiList.do?boardId='+boardId+'&pageIndex=1&pageUnit=6&orderType=default';
+				parent.document.getElementById("contentfrm").src=WEB_HOME+'/board213/getBbsContentsBoardNotiList.do?boardId='+boardId+'&pageIndex=1&pageUnit=6&orderType=default';
 			}else{
 				isDesc = isDesc==null?false:isDesc;
 				isDesc = isDesc==""?false:isDesc;
@@ -1359,7 +1362,7 @@
 					listYn = 'Y';
 				}
 				
-				parent.document.getElementById("bbsFrame").src= 
+				parent.document.getElementById("contentfrm").src= 
 					WEB_HOME+"/board210/getBoardInfoList.do?boardId="
 							+boardId+"&pageIndex="+pageIndex+"&pageUnit="+pageUnit
 							+"&searchCondition="+searchCondition
@@ -1728,9 +1731,9 @@
 	$(document).ready(function () {//이벤트 모음 
 		
 		
-		//parent.document.getElementById("bbsFrame").height = "600px";
-		
-		parent.document.getElementById("bbsFrame").height = "700px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = "700px";
+		}
 		
 		if(boardExplUseYn){
 			if(boardExplUseYn == 'Y' && boardExpl !=""){

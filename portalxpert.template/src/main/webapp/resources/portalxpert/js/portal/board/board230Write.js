@@ -13,8 +13,10 @@ var fnUnLoadPage = function()
 // rePaint
 var fnFrameReload = function()
 {
-	parent.document.getElementById("bbsFrame").height = "700px";
-	parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
+	if(parent.document.getElementById("bbsFrame")){
+		parent.document.getElementById("bbsFrame").height = "700px";
+		parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
+	}
 	
 	
 };
@@ -1581,7 +1583,9 @@ var fnAddFileList = function()
 		$(this).parent().prev().val($(this).val());
 	});
 
-	parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
+	if(parent.document.getElementById("bbsFrame")){
+		parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
+	}
 	
 	return false;
 }	
@@ -2370,7 +2374,9 @@ $(document).ready(function () {
 
 							}
 						}
-					parent.document.getElementById("bbsFrame").height = $(document).height();
+					if(parent.document.getElementById("bbsFrame")){
+						parent.document.getElementById("bbsFrame").height = $(document).height();
+					}
 				}
 	    				
 	    	});
@@ -2730,7 +2736,6 @@ $("input[name^=upFile]").change(function(e) {
 			fnFrameReload();
 		});
 		
-		//parent.document.getElementById("bbsFrame").height = $(document).height();
 	};	
 	
 	//설문 보기항목 추가
@@ -3791,8 +3796,6 @@ $("input[name^=upFile]").change(function(e) {
 		}
 	});		
 			
-	//parent.document.getElementById("bbsFrame").height = "700px";
-	//parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
 	
 	
 	

@@ -6,8 +6,10 @@
 	//rePaint
 	var fnFrameReload = function()
 	{
-		parent.document.getElementById("bbsFrame").height = "700px";
-		parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = "700px";
+			parent.document.getElementById("bbsFrame").height = $(document).height()+"px"; //document.body.scrollHeight+400+"px";
+		}
 	};
 
 	function fn_link_page(pageNo) {
@@ -367,20 +369,10 @@
 ////////////////////////////////onload/////////////////////////////////////////////////////////////////////	
 	
 	$(document).ready(function () {//이벤트 모음 
-		/*	
-		if(pageUnit == "10"){
-			parent.document.getElementById("bbsFrame").height = frameHeight +"px";
-		}else if(pageUnit == "20"){
-			parent.document.getElementById("bbsFrame").height = Number(frameHeight) + 200 +"px";
-		}else if(pageUnit == "30"){
-			parent.document.getElementById("bbsFrame").height = Number(frameHeight) + 550 +"px";
-		}else if(pageUnit == "50"){
-			parent.document.getElementById("bbsFrame").height = Number(frameHeight) + 1150 +"px";
+		if(parent.document.getElementById("bbsFrame")){
+			parent.document.getElementById("bbsFrame").height = "700px";
+			parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
 		}
-		*/
-
-		parent.document.getElementById("bbsFrame").height = "700px";
-		parent.document.getElementById("bbsFrame").height = $(document).height()+"px";
 	
 		$(parent.document).scrollTop(0);
 
@@ -565,8 +557,10 @@
 						$("#calMonth").html(mon);
 						$("#calText").html(monYear+"년 "+monMon+"월 교육안내");
 						
-						parent.document.getElementById("bbsFrame").height = "700px";
-						parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";
+						if(parent.document.getElementById("bbsFrame")){
+							parent.document.getElementById("bbsFrame").height = "700px";
+							parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";
+						}
 					}
 				},
 				selectable: true,
@@ -581,8 +575,10 @@
 			    	//var tskYmd = convertDate(date);
 			    },
 			    viewRender : function(){
-			    	parent.document.getElementById("bbsFrame").height = "700px";
-					parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";
+			    	if(parent.document.getElementById("bbsFrame")){
+			    		parent.document.getElementById("bbsFrame").height = "700px";
+			    		parent.document.getElementById("bbsFrame").height = ($(document).height()+700)+"px";
+			    	}
 			    },
 				eventColor: '#99ccff'
 		    });

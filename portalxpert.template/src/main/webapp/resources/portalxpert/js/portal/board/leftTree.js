@@ -52,18 +52,18 @@
 
 		if(treeId == 'commonBoardtreeObj'){   //공용  
 			if (bid == 'BBS999999'){  //임시게시판이면
-				parent.document.getElementById("bbsFrame").src= WEB_HOME+'/board240/getTmpBoardInfoList.do?boardId='+bid;
+				parent.document.getElementById("contentfrm").src= WEB_HOME+'/board240/getTmpBoardInfoList.do?boardId='+bid;
 			}else{
 				if (boardForm == '030' && boardFormSpec == '010'){  //이미지형
-					parent.document.getElementById("bbsFrame").src=WEB_HOME+'/board211/getBbsImgBoardNotiList.do?boardId='+bid;
+					parent.document.getElementById("contentfrm").src=WEB_HOME+'/board211/getBbsImgBoardNotiList.do?boardId='+bid;
 				}else if (boardForm == '030' && boardFormSpec == '020'){  //동영상형
-					parent.document.getElementById("bbsFrame").src=WEB_HOME+'/board212/getBbsVideoBoardNotiList.do?boardId='+bid;
+					parent.document.getElementById("contentfrm").src=WEB_HOME+'/board212/getBbsVideoBoardNotiList.do?boardId='+bid;
 				}else if (boardForm == '020'){  //SNS형 게시판
-					parent.document.getElementById("bbsFrame").src=WEB_HOME+'/board220/getBbsSnsBoardList.do?boardId='+bid;
+					parent.document.getElementById("contentfrm").src=WEB_HOME+'/board220/getBbsSnsBoardList.do?boardId='+bid;
 				}else if (boardKind == '120' && nid.toString().indexOf('S') == 0){  //CMS형 게시판 게시물 링크
-					parent.document.getElementById("bbsFrame").src=WEB_HOME+'/board210/getBasicKindBoardView.do?notiId='+nid+'&boardId='+bid+'&boardKind=120';
+					parent.document.getElementById("contentfrm").src=WEB_HOME+'/board210/getBasicKindBoardView.do?notiId='+nid+'&boardId='+bid+'&boardKind=120';
 				}else{
-					parent.document.getElementById("bbsFrame").src=WEB_HOME+'/board210/getBoardInfoList.do?boardId='+bid;
+					parent.document.getElementById("contentfrm").src=WEB_HOME+'/board210/getBoardInfoList.do?boardId='+bid;
 				}
 			}
 		}
