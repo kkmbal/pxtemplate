@@ -3432,7 +3432,7 @@ $("input[name^=upFile]").change(function(e) {
 				
 				if (obj.apndFileTp == '050')
 				{
-					$("#innoApDiv dl").append('<dd id="delapnd-'+obj.apndFileSeq+'" style="border: 0 !important;">'+obj.apndFileOrgn+' <a class="ico_del" style="cursor:pointer;" onclick="javascript:fnApndFileListRemove(\''+obj.apndFileSeq+'\')" ></a></dd>');
+					$("#innoApDiv ul").append('<li id="delapnd-'+obj.apndFileSeq+'" style="border: 0 !important;"> <a class="ico_del" style="cursor:pointer;" onclick="javascript:fnApndFileListRemove(\''+obj.apndFileSeq+'\')" ></a>'+obj.apndFileOrgn+'</li>');
 				}
 			}
 			
@@ -3707,7 +3707,7 @@ $("input[name^=upFile]").change(function(e) {
 				
 				if (obj.apndFileTp == '050')
 				{
-					$("#innoApDiv dl").append('<dd style="border: 0 !important;">'+obj.apndFileOrgn+'<span class="fo_gray">('+obj.apndFileSz+')</span></dd>');
+					$("#innoApDiv ul").append('<li style="border: 0 !important;"><span class="fo_gray">('+obj.apndFileSz+')</span>'+obj.apndFileOrgn+'</li>');
 				}
 			}
 			makeAlreadyUploadFileList();

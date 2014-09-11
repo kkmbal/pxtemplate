@@ -966,7 +966,15 @@ public class Board100Controller {
  	    	
  	    	//외부공개여부체크
  	    	BbsBoardInfoVO adminBoardOpen = board100Service.getAdminBoardOpen(bbsVO);
- 	    	if(!"Y".equals(adminBoardOpen.getOutsideOpenDiv())){
+ 	    	UserInfoVO info = null;
+ 	    	if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
+ 	    		info = new UserInfoVO();
+ 	    		info.setId(Constant.BOARD_ROLE_USER.getVal());
+ 	    	}else{
+ 	    		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+ 	    	}
+ 	    	
+ 	    	if(info == null){
  	    		throw new PortalxpertException(messageSource.getMessage("auth.error"));
  	    	}
  			

@@ -853,7 +853,8 @@
 			'apndFileOrgn' : encodeURI(orgname,"UTF-8"),
 			'apndFileName' : filename,
 			'apndFileSeq' :  fileseq,
-			'notiId' : notiId
+			'notiId' : notiId,
+			'boardId' : boardId
 		};
 		 var url =WEB_HOME+"/board100/bbsFileDownload.do?data="+encodeURI(JSON.stringify(jsonObject),"UTF-8");	
 		 
