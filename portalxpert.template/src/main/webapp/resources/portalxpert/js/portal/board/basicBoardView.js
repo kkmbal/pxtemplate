@@ -1046,6 +1046,7 @@
 					+'  <span class="textbox_btns">'
 					+'	<span class="btn_st01 w01"><button type="button" onclick="fnUpdateBbsNotiOpnForView('+notiOpn1[i].notiOpnSeq+')">등록</button></span>'
 					+'	<span class="btn_st02 w01"><button type="button" onclick="fnCancleBbsNotiOpnForView(\'opnTxt_'+notiOpn1[i].notiOpnSeq+'\')">취소</button></span>'
+					+'  </span>'
 					+'</div>'					
 					+'</li>');
 		

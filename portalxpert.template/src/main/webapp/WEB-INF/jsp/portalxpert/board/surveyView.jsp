@@ -1064,7 +1064,7 @@ var fnSurveySubject1 = function(id)
 //설문 결과 저장
 var fnSurveyAnswInsert = function(data){
 	PortalCommon.getJson({
-		url: WEB_HOME+"/person300/insertBbsNotiSurveyAnsw.do?format=json",
+		url: WEB_HOME+"/board230/insertBbsNotiSurveyAnsw.do?format=json",
 	    data: {'data' : data},
 		success :function(data){
 			if(data.jsonResult.success ===true){

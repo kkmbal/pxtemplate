@@ -167,7 +167,7 @@ textarea.textbox:disabled {border:1px solid #d1d1d1;background:#ececec;color:#78
 .rbox03 > .mid >ul >li .answer p {margin-bottom:13px;color:#000;font-size:14px;font-weight:bold}
 .rbox03 > .mid >ul >li .answer label {display:inline-block;width:273px;.width:266px;color:#343434;vertical-align:middle}
 .rbox03 > .mid >ul >li .answer label.directInput {width:auto}
-.rbox03 > .mid >ul >li .answer label.quest3 {margin-right:10px;.margin-right:20px}
+.rbox03 > .mid >ul >li .answer label.quest3 {margin-right:10px;.margin-right:20px;margin-bottom: 10px;}
 .rbox03 > .mid >ul >li .answer .vTop {vertical-align:top;.margin-top:-5px}
 .rbox03 > .mid >ul >li .directBox {margin-top:7px}
 .rbox03 > .mid .thanks {position:relative;padding:10px 15px;background:#fafafa;text-align:center}
