@@ -23,6 +23,15 @@ public class BbsNotiSurveyVO {
 	private String viewMode;
 	private int rowNum;
 	private String maxNotiId;
+	private String surveyOpenDttm;
+	private String surveyForm;
+	private int grpSurveyNo;
+	private int grpSurveyCnt;
+	private String exmplTp;
+	private String inputAddYn;
+	private String skipPermitYn;
+	private String multiSelPermitYn;
+	private int exmplCnt;
 	
 	public String getMaxNotiId() {
 		return maxNotiId;
@@ -155,6 +164,60 @@ public class BbsNotiSurveyVO {
 	}
 	public void setRowNum(int rowNum) {
 		this.rowNum = rowNum;
+	}
+	public String getSurveyOpenDttm() {
+		return surveyOpenDttm;
+	}
+	public void setSurveyOpenDttm(String surveyOpenDttm) {
+		this.surveyOpenDttm = surveyOpenDttm;
+	}
+	public String getSurveyForm() {
+		return surveyForm;
+	}
+	public void setSurveyForm(String surveyForm) {
+		this.surveyForm = surveyForm;
+	}
+	public int getGrpSurveyNo() {
+		return grpSurveyNo;
+	}
+	public void setGrpSurveyNo(int grpSurveyNo) {
+		this.grpSurveyNo = grpSurveyNo;
+	}
+	public int getGrpSurveyCnt() {
+		return grpSurveyCnt;
+	}
+	public void setGrpSurveyCnt(int grpSurveyCnt) {
+		this.grpSurveyCnt = grpSurveyCnt;
+	}
+	public String getExmplTp() {
+		return exmplTp;
+	}
+	public void setExmplTp(String exmplTp) {
+		this.exmplTp = exmplTp;
+	}
+	public String getInputAddYn() {
+		return inputAddYn;
+	}
+	public void setInputAddYn(String inputAddYn) {
+		this.inputAddYn = inputAddYn;
+	}
+	public String getMultiSelPermitYn() {
+		return multiSelPermitYn;
+	}
+	public void setMultiSelPermitYn(String multiSelPermitYn) {
+		this.multiSelPermitYn = multiSelPermitYn;
+	}
+	public String getSkipPermitYn() {
+		return skipPermitYn;
+	}
+	public void setSkipPermitYn(String skipPermitYn) {
+		this.skipPermitYn = skipPermitYn;
+	}
+	public int getExmplCnt() {
+		return exmplCnt;
+	}
+	public void setExmplCnt(int exmplCnt) {
+		this.exmplCnt = exmplCnt;
 	}
 	
 	

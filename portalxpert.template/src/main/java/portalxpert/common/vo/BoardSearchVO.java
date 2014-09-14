@@ -33,9 +33,16 @@ public class BoardSearchVO extends SearchConditionVO{
 	private String boardForm;
 	private String calYmFrom;
 	private String calYmTo;
+	private String chkSurvey;
 	
 	
 	
+	public String getChkSurvey() {
+		return chkSurvey;
+	}
+	public void setChkSurvey(String chkSurvey) {
+		this.chkSurvey = chkSurvey;
+	}
 	public String getBoardForm() {
 		return boardForm;
 	}

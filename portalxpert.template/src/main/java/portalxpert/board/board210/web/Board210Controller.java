@@ -1,25 +1,42 @@
 package portalxpert.board.board210.web;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ibm.icu.util.Output;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import portalxpert.board.board100.sc.Board100Service;
 import portalxpert.board.board100.vo.BbsBoardInfoVO;
@@ -29,7 +46,9 @@ import portalxpert.board.board100.vo.BbsNotiDelInfoVO;
 import portalxpert.board.board100.vo.BbsNotiEvalInfoVO;
 import portalxpert.board.board100.vo.BbsNotiInfoVO;
 import portalxpert.board.board100.vo.BbsNotiOpnVO;
+import portalxpert.board.board100.vo.BbsNotiSurveyAnswVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyExmplVO;
+import portalxpert.board.board100.vo.BbsNotiSurveyRsltVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyVO;
 import portalxpert.board.board100.vo.ComCodeSpecVO;
 import portalxpert.board.board210.sc.Board210Service;
@@ -232,6 +251,7 @@ public class Board210Controller {
  			@RequestParam(value="pageUnit",required = false, defaultValue="10") String pageUnit,
  			@RequestParam(value="searchCondition",required = false) String searchCondition,
  			@RequestParam(value="searchKeyword",required = false) String searchKeyword,
+ 			@RequestParam(value="chkSurvey",required = false, defaultValue="all") String chkSurvey,
  			@RequestParam(value="orderType",required = false, defaultValue="default") String orderType,
  			@RequestParam(value="isDesc",required = false) boolean isDesc,
  			@RequestParam(value="listYn",required = false) String listYn,
@@ -335,9 +355,23 @@ public class Board210Controller {
 		
 		searchKeyword = searchKeyword == null?"":searchKeyword;
 		searchKeyword = URLDecoder.decode(searchKeyword,"UTF-8");
-		
-		List<BbsNotiInfoVO> noti_list = board210Service.getBbsNotiInfoListForPaging(boardSearchVO);//게시글 조회
-		int totCnt = board210Service.getBbsNotiInfoListTotCnt(boardSearchVO);
+//			logger.debug("사용자권한 : "+auth);
+//			logger.debug("조회자 지정여부 : "+boardSearchVO.getNotiReadmanAsgnYn());
+//			logger.debug("isDesc : "+isDesc);
+		List<BbsNotiInfoVO> noti_list = null;
+		int totCnt = 0;
+		if(Constant.BOARD_KIND_110.getVal().equals(boardSearchVO.getBoardKind()))
+		{
+			boardSearchVO.setChkSurvey(chkSurvey);
+			noti_list = board210Service.getBbsNotiInfoListForPagingNew(boardSearchVO);//게시글 조회
+			totCnt = board210Service.getBbsNotiInfoListTotCntNew(boardSearchVO);
+			modelMap.put("chkSurvey", chkSurvey);
+		}
+		else
+		{
+			noti_list = board210Service.getBbsNotiInfoListForPaging(boardSearchVO);//게시글 조회
+			totCnt = board210Service.getBbsNotiInfoListTotCnt(boardSearchVO);
+		}
 		
 		// 달력타입
 		List calList = new ArrayList();
@@ -396,12 +430,16 @@ public class Board210Controller {
 		modelMap.put("eamAdminYn", getEamAdmBoardAdmYNForList(session, bbsInfo));
 		modelMap.put("btnViewYn", boardBtnViewYn);
 			
- 
-    
-        return ".self/board/basicBoardList";
+		if(Constant.BOARD_KIND_110.getVal().equals(boardSearchVO.getBoardKind()))
+		{
+			return ".self/board/surveyList";
+		}
+		else
+		{
+			return ".self/board/basicBoardList";
+		}
     }
 
-    
     
     /**
      * 게시판 게시물 전체 목록
@@ -838,6 +876,7 @@ public class Board210Controller {
  			@RequestParam(value="pageUnit" ,required = false) String pageUnit,
  			@RequestParam(value="searchCondition" ,required = false) String searchCondition,
  			@RequestParam(value="searchKeyword" ,required = false) String searchKeyword,
+ 			@RequestParam(value="chkSurvey" ,required = false) String chkSurvey,
  			@RequestParam(value="regDttmFrom" ,required = false) String regDttmFrom,
  			@RequestParam(value="regDttmTo" ,required = false) String regDttmTo,
  			@RequestParam(value="orderType" ,required = false) String orderType,
@@ -965,6 +1004,8 @@ public class Board210Controller {
     	modelMap.put("imgSvrUrl", CONTEXT_PATH + imgSvrUrl);
     	//modelMap.put("imgRealDir", PortalxpertConfigUtils.getString("upload.real.dir"));
     	modelMap.put("imgRealDir", "");
+    	//yblee 추가
+    	modelMap.put("tempWeb", CONTEXT_PATH + PortalxpertConfigUtils.getString("upload.temp.web"));
     	modelMap.put("realWeb", CONTEXT_PATH + PortalxpertConfigUtils.getString("upload.real.web"));
     	modelMap.put("admYn", bbsInfo.getAdmYn());//게시판 관리자 여부
     	modelMap.put("eamAdminYn", getEamAdmBoardAdmYNForList(session, bbsInfo));
@@ -982,7 +1023,176 @@ public class Board210Controller {
 		modelMap.put("isDesc", isDesc);
 		logger.debug("getBasicBoardView searchCondition : "+searchCondition);
 		
-        return ".self/board/basicBoardView";
+		if(Constant.BOARD_KIND_110.getVal().equals(bbsInfo.getBoardKind()))
+		{
+			modelMap.put("chkSurvey", chkSurvey);
+			return ".self/board/surveyView";
+		}
+		else
+		{
+			return ".self/board/basicBoardView";
+		}        
+    }
+    
+    /**
+     * 설문결과 조회
+     * @param modelMap
+     * @return board/surveyRslt
+     * @throws Exception
+     * @auther yblee
+     */
+    @RequestMapping(value="/getSurveyRslt")
+    public String getSurveyRslt(
+ 			ModelMap modelMap,
+ 			@RequestParam(value="boardId" ,required = true) String boardId,
+ 			@RequestParam(value="notiId" ,required = true) String notiId,
+ 			@RequestParam(value="pageIndex" ,required = false) String pageIndex,
+ 			@RequestParam(value="pageUnit" ,required = false) String pageUnit,
+ 			@RequestParam(value="searchCondition" ,required = false) String searchCondition,
+ 			@RequestParam(value="searchKeyword" ,required = false) String searchKeyword,
+ 			@RequestParam(value="chkSurvey" ,required = false) String chkSurvey,
+ 			@RequestParam(value="regDttmFrom" ,required = false) String regDttmFrom,
+ 			@RequestParam(value="regDttmTo" ,required = false) String regDttmTo,
+ 			@RequestParam(value="orderType" ,required = false) String orderType,
+ 			@RequestParam(value="isDesc" ,required = false) String isDesc,
+ 			HttpServletRequest request,
+ 			HttpSession session
+ 			)
+            throws Exception {
+    	String imgSvrUrl = PortalxpertConfigUtils.getString("upload.real.web"); 
+    	String CONTEXT_PATH = PortalxpertConfigUtils.getString("image.web.contextpath");
+    	
+    	UserInfoVO info = null;
+    	BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+    	bbsVO.setBoardId(boardId);
+    	
+    	//외부공개여부체크
+    	BbsBoardInfoVO adminBoardOpen = board100Service.getAdminBoardOpen(bbsVO);
+    	if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
+    		info = new UserInfoVO();
+    		info.setId(Constant.BOARD_ROLE_USER.getVal());
+    	}else{
+    		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+    	}
+    	
+    	if(info == null){
+    		throw new PortalxpertException(messageSource.getMessage("auth.error"));
+    	}
+    	
+    	logger.debug("getBasicBoardView boardId : "+boardId);
+    	
+    	String auth = board100Service.getUserBbsMapList(info.getId());
+		logger.debug("auth : "+auth);
+		bbsVO.setUserId(info.getId());
+		bbsVO.setUserMap(auth);
+    	
+		List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);
+		BbsBoardInfoVO bbsInfo = list.get(0);
+		String boardBtnViewYn = getBoardBtnViewYN(session,bbsInfo );
+    	logger.debug("boardBtnViewYn : "+boardBtnViewYn);
+    	
+    	BbsNotiInfoVO notiVo = new BbsNotiInfoVO();
+		notiVo.setBoardId(boardId);
+		notiVo.setNotiId(notiId);
+		notiVo.setUserMap(auth);
+		notiVo.setUserId(info.getId());
+		notiVo.setAnmtYn(bbsInfo.getBoardAnmtUseYn());
+		notiVo.setNotiKind(bbsInfo.getBoardForm());
+		notiVo.setNotiReadmanAsgnYn(bbsInfo.getNotiReadmanAsgnYn());
+		String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
+		if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
+		{
+			notiVo.setNotiReadmanAsgnYn("A");
+		}
+		
+		//게시물권한 체크
+		if("Y".equals(notiVo.getNotiReadmanAsgnYn())){
+			int notiUserAuth = board100Service.getNotiUserAuth(notiVo);
+			if(notiUserAuth == 0){
+				boardBtnViewYn = "X";
+			}
+			//관리자추천 동영상,이미지 체크
+			if(Constant.BOARD_FORM_SPEC_010.getVal().equals(bbsInfo.getBoardFormSpec()) || Constant.BOARD_FORM_SPEC_020.getVal().equals(bbsInfo.getBoardFormSpec())){//이미지, 동영상
+				String data = "{\"notiId\":\""+notiId+"\"}";
+				List<BbsNotiApndFileVO> notiFile = board210Service.getBbsNotiApndFileListForView(data);
+				for(BbsNotiApndFileVO vo : notiFile){
+					if("Y".equals(vo.getAdminRcmdYn())){
+						boardBtnViewYn = "Y";
+						break;
+					}
+				}
+			}
+		}
+		
+		int pnum = board100Service.getBbsMyPnumInfo(notiVo);
+		
+		
+    	int prev_pnum = 0, next_pnum = 0;
+    	if(pnum > 0){
+    		prev_pnum = pnum -1;next_pnum = pnum +1;
+    	}
+    	
+    	BbsNotiEvalInfoVO vo = new BbsNotiEvalInfoVO();
+		vo.setNotiId(notiId);
+		vo.setNotiEvalDiv("040");
+		vo.setUserId(info.getId());
+		vo.setUserName(info.getName());
+		vo.setRegrId(info.getId());
+		vo.setRegrName(info.getName());
+		vo.setUpdrId(info.getId());
+		vo.setUpdrName(info.getName());
+		board210Service.insertBbsNotiEvalInfoForRead(vo);//읽음처리 조회수++, 
+		BbsNotiInfoVO bbsNotiInfoViewForNotiConts = board210Service.getBbsNotiInfoViewForNotiConts(notiId);//본문가져오기 
+		String notiConts = bbsNotiInfoViewForNotiConts==null?"":bbsNotiInfoViewForNotiConts.getNotiConts();
+		if(notiConts != null){ 
+			notiConts = notiConts.replaceAll("\r\n","<br>");
+			notiConts = CommUtil.scriptRemove(notiConts);
+		}else{ 
+			notiConts = "";
+		}
+		
+		modelMap.put("notiConts",notiConts );
+		modelMap.put("noTagNotiConts", CommUtil.htmlEscape(notiConts) );
+    	modelMap.put("boardId", boardId);
+    	modelMap.put("pnum", pnum);
+    	modelMap.put("prev_pnum", prev_pnum);
+    	modelMap.put("next_pnum", next_pnum);
+    	modelMap.put("boardName", bbsInfo.getBoardName());
+    	modelMap.put("boardKind", bbsInfo.getBoardKind());
+    	modelMap.put("boardForm", bbsInfo.getBoardForm());
+    	modelMap.put("boardFormSpec", bbsInfo.getBoardFormSpec());
+    	modelMap.put("replyWrteDiv", bbsInfo.getReplyWrteDiv());//답변쓰기 구분
+    	modelMap.put("notiId", notiId);
+    	modelMap.put("userId", info.getId());
+    	modelMap.put("pageIndex", pageIndex);
+    	modelMap.put("pageUnit", pageUnit);
+    	modelMap.put("btnViewYn", boardBtnViewYn);
+    	modelMap.put("likeUseYn", bbsInfo.getLikeUseYn());//좋아요_사용_여부
+    	modelMap.put("agrmOppUseYn", bbsInfo.getAgrmOppUseYn());//찬성_반대_사용_여부
+    	modelMap.put("nickUseYn", bbsInfo.getNickUseYn());//닉네임_사용_여부
+    	modelMap.put("imgSvrUrl", CONTEXT_PATH + imgSvrUrl);
+    	//modelMap.put("imgRealDir", PortalxpertConfigUtils.getString("upload.real.dir"));
+    	modelMap.put("imgRealDir", "");
+    	modelMap.put("tempWeb", CONTEXT_PATH + PortalxpertConfigUtils.getString("upload.temp.web"));
+    	modelMap.put("realWeb", CONTEXT_PATH + PortalxpertConfigUtils.getString("upload.real.web"));
+    	modelMap.put("admYn", bbsInfo.getAdmYn());//게시판 관리자 여부
+    	modelMap.put("eamAdminYn", getEamAdmBoardAdmYNForList(session, bbsInfo));
+    	modelMap.put("movDir", CONTEXT_PATH + PortalxpertConfigUtils.getString("upload.thumbnail.web"));
+    	modelMap.put("thumbnailFile", PortalxpertConfigUtils.getString("upload.thumbnail.file"));
+    	modelMap.put("boardExplUseYn", bbsInfo.getBoardExplUseYn());
+		modelMap.put("boardExpl", bbsInfo.getBoardExpl());
+		modelMap.put("opnWrteDiv", bbsInfo.getOpnWrteDiv());
+		modelMap.put("notiEmailSendYn", bbsInfo.getNotiEmailSendYn());
+		modelMap.put("searchCondition", searchCondition);
+		modelMap.put("searchKeyword", searchKeyword);
+		modelMap.put("regDttmFrom", regDttmFrom);
+		modelMap.put("regDttmTo", regDttmTo);
+		modelMap.put("orderType", orderType);
+		modelMap.put("isDesc", isDesc);
+		logger.debug("getSurveyRslt searchCondition : "+searchCondition);
+		modelMap.put("chkSurvey", chkSurvey);
+		
+		return ".self/board/surveyRslt";     
     }
     
     /**
@@ -1168,21 +1378,50 @@ public class Board210Controller {
 			List survey_list = null;
 			if(vo.getNotiKind() !=null && vo.getNotiKind().equals(Constant.NOTI_KIND_040.getVal())){//설문
 				//설문 정보 조회
-    			BbsNotiSurveyVO surveyVO = new BbsNotiSurveyVO();
-    			surveyVO.setNotiId(notiId);	    			
-    			survey_list = board230Service.getBbsNotiSurveyList(surveyVO);
-    			
-    			List surveyExmpl_list = null;
-    			logger.debug("survey_list.size() : "+survey_list.size());
-    			if (survey_list.size() > 0){
-    				// 설문 보기 정보 조회
-    				BbsNotiSurveyExmplVO surveyExmplVO = new BbsNotiSurveyExmplVO();
-    				surveyExmplVO.setNotiId(notiId);
-    				surveyExmplVO.setUserId(info.getId());
-	    			surveyExmpl_list = board230Service.getBbsNotiSurveyExmplList(surveyExmplVO);
-	    			modelMap.put("surveyList", JSONUtils.objectToJSON(survey_list));
-	    			modelMap.put("surveyExmplList", JSONUtils.objectToJSON(surveyExmpl_list));
-    			}
+				if(Constant.BOARD_KIND_110.getVal().equals(bbsInfo.getBoardKind()))
+				{
+	    			BbsNotiSurveyVO surveyVO = new BbsNotiSurveyVO();
+	    			surveyVO.setNotiId(notiId);	    			
+	    			survey_list = board230Service.getBbsNotiSurveyListNew(surveyVO);
+	    			
+	    			List surveyExmpl_list = null;
+	    			logger.debug("survey_list.size() : "+survey_list.size());
+	    			if (survey_list.size() > 0){
+	    				// 설문 보기 정보 조회
+	    				BbsNotiSurveyExmplVO surveyExmplVO = new BbsNotiSurveyExmplVO();
+	    				surveyExmplVO.setNotiId(notiId);
+	    				surveyExmplVO.setUserId(info.getId());
+		    			surveyExmpl_list = board230Service.getBbsNotiSurveyExmplListNew(surveyExmplVO);
+		    			
+		    			List surveyAnsw_list = null;
+	    				//설문 결과 정보 조회
+	    				BbsNotiSurveyAnswVO surveyAnswVO = new BbsNotiSurveyAnswVO();
+	    				surveyAnswVO.setNotiId(notiId);
+	    				surveyAnswVO.setUserId(info.getId());
+	    				surveyAnsw_list = board230Service.getBbsNotiSurveyAnswList(surveyAnswVO);		    				
+		    			modelMap.put("surveyList", JSONUtils.objectToJSON(survey_list));
+		    			modelMap.put("surveyExmplList", JSONUtils.objectToJSON(surveyExmpl_list));
+		    			modelMap.put("surveyAnswList", JSONUtils.objectToJSON(surveyAnsw_list));			    						    					    			
+	    			}
+				}
+				else
+				{
+					BbsNotiSurveyVO surveyVO = new BbsNotiSurveyVO();
+	    			surveyVO.setNotiId(notiId);	    			
+	    			survey_list = board230Service.getBbsNotiSurveyList(surveyVO);
+	    			
+	    			List surveyExmpl_list = null;
+	    			logger.debug("survey_list.size() : "+survey_list.size());
+	    			if (survey_list.size() > 0){
+	    				// 설문 보기 정보 조회
+	    				BbsNotiSurveyExmplVO surveyExmplVO = new BbsNotiSurveyExmplVO();
+	    				surveyExmplVO.setNotiId(notiId);
+	    				surveyExmplVO.setUserId(info.getId());
+		    			surveyExmpl_list = board230Service.getBbsNotiSurveyExmplList(surveyExmplVO);
+		    			modelMap.put("surveyList", JSONUtils.objectToJSON(survey_list));
+		    			modelMap.put("surveyExmplList", JSONUtils.objectToJSON(surveyExmpl_list));
+	    			}
+				}
 			}else if(vo.getNotiKind() !=null && vo.getNotiKind().equals(Constant.NOTI_KIND_030.getVal())){//동영상
 				List movList = board210Service.getTnMspMvpFileList(notiId);
 				logger.debug("movList 2 : "+JSONUtils.objectToJSON(movList));
@@ -1214,8 +1453,261 @@ public class Board210Controller {
 		}
     	
 		modelMap.put("jsonResult", jsonResult);
+        
+		return modelMap;
+    }
+    
+    /**
+     * 설문조사 결과정보 DATA 가져오기
+     * @param modelMap
+     * @return modelMap
+     * @throws Exception
+     * @auther yblee
+     */
+    @RequestMapping(value="/getSurveyRsltInfoView")
+    public ModelMap getSurveyRsltInfoView(
+ 			@RequestParam(value="data" ,required = true) String data,
+ 			@RequestParam(value="pnum" ,required = false) String pnum,
+			ModelMap 		modelMap,
+			HttpSession session) throws Exception {  
+                	
+    	JSONResult jsonResult = new JSONResult();
+//    	EAMCrypt ec = new EAMCrypt();
+		try{	
+			int prev_pnum = 0, next_pnum = 0;
+			if(!CommUtil.isEmpty(pnum)){
+	    	//if(pnum > 0){
+	    		prev_pnum = Integer.parseInt(pnum) -1;
+	    		next_pnum = Integer.parseInt(pnum) +1;
+			}
+			
+			JSONObject bbsObject = JSONObject.fromObject(data);
+			logger.debug("boardId : "+(String)bbsObject.get("boardId"));
+			logger.debug("notiId : "+(String)bbsObject.get("notiId"));
+			String notiId = (String)bbsObject.get("notiId");
+			
+	    	UserInfoVO info = null;
+			String boardId = (String)bbsObject.get("boardId");
+			BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+			bbsVO.setBoardId(boardId);
+	    	
+	    	//외부공개여부체크
+	    	BbsBoardInfoVO adminBoardOpen = board100Service.getAdminBoardOpen(bbsVO);
+	    	if("Y".equals(adminBoardOpen.getOutsideOpenDiv())){
+	    		info = new UserInfoVO();
+	    		info.setId(Constant.BOARD_ROLE_USER.getVal());
+	    	}else{
+	    		info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+	    	}
+	    	
+			String auth = board100Service.getUserBbsMapList(info.getId());
+			
+			List notiInfo = board210Service.getBbsNotiInfoView(data);
+			
+			if(notiInfo == null || notiInfo.size() == 0) {
+				notiInfo = new ArrayList<BbsNotiInfoVO>();
+				notiInfo.add(new BbsNotiInfoVO());
+			}
+			BbsNotiInfoVO vvo =  (BbsNotiInfoVO)notiInfo.get(0);
+			
+			List notiFile = board210Service.getBbsNotiApndFileListForView(data);
+			
+			String superAdmin = (String)session.getAttribute("superAdmin")==null?"":(String)session.getAttribute("superAdmin");
+			bbsVO.setBoardId(boardId);
+			bbsVO.setUserId(info.getId());
+			bbsVO.setUserMap(auth);	    	
+			List<BbsBoardInfoVO> list = board100Service.getAdminBbsBoardInfoList(bbsVO);
+			BbsBoardInfoVO bbsInfo = list.get(0);
+			String notiReadmanAsgnYn = bbsInfo.getNotiReadmanAsgnYn();
+			if (superAdmin.equals(Constant.ROLE_SUPER.getVal()))
+			{
+				notiReadmanAsgnYn = "A";
+			}
+			
+			List<BbsNotiInfoVO> notiPrevNextInfo = board210Service.getBbsPrevNextNotiInfoForView(data, auth,prev_pnum,next_pnum,notiReadmanAsgnYn, info.getId() );
+
+			List notiOpn1 = board210Service.getBbsNotiOpnList1ForView(data);
+			List notiOpn2 = board210Service.getBbsNotiOpnList2ForView(data);
+			
+			
+			BbsNotiInfoVO vo = (BbsNotiInfoVO) notiInfo.get(0);
+			List survey_list = null;
+			if(vo.getNotiKind() !=null && vo.getNotiKind().equals(Constant.NOTI_KIND_040.getVal())){//설문
+				//설문 정보 조회
+				if(Constant.BOARD_KIND_110.getVal().equals(bbsInfo.getBoardKind()))
+				{
+	    			BbsNotiSurveyVO surveyVO = new BbsNotiSurveyVO();
+	    			surveyVO.setNotiId(notiId);	    			
+	    			survey_list = board230Service.getBbsNotiSurveyListNew(surveyVO);
+	    			
+	    			List surveyExmpl_list = null;
+	    			logger.debug("survey_list.size() : "+survey_list.size());
+	    			if (survey_list.size() > 0){
+	    				// 설문 보기 정보 조회
+	    				BbsNotiSurveyExmplVO surveyExmplVO = new BbsNotiSurveyExmplVO();
+	    				surveyExmplVO.setNotiId(notiId);
+	    				surveyExmplVO.setUserId(info.getId());
+		    			surveyExmpl_list = board230Service.getBbsNotiSurveyExmplListNew(surveyExmplVO);
+		    			
+		    			List surveyRsltAnswCnt_list = null;
+		    			int mCnt = 0;//참여인원수
+		    			
+	    				//설문 결과 정보 조회
+	    				BbsNotiSurveyRsltVO surveyRsltVO = new BbsNotiSurveyRsltVO();
+	    				surveyRsltVO.setNotiId(notiId);
+	    				surveyRsltAnswCnt_list = board230Service.getSurveyRsltAnswCntList(surveyRsltVO);		
+	    				mCnt = board230Service.getSurveyRsltMemberCnt(surveyRsltVO);
+		    			modelMap.put("surveyList", JSONUtils.objectToJSON(survey_list));
+		    			modelMap.put("surveyExmplList", JSONUtils.objectToJSON(surveyExmpl_list));
+		    			modelMap.put("surveyRsltAnswCntList", JSONUtils.objectToJSON(surveyRsltAnswCnt_list));
+		    			modelMap.put("mCnt", mCnt);
+	    			}
+				}				
+			}
+			if( vo.getRegrId() != null){
+//				modelMap.put("regrIdEncrypt", Encrypter.Encrypt(ec.decrypt(vo.getRegrId())));
+			}
+			
+			vo.setNotiTagLst(CommUtil.scriptRemove(vo.getNotiTagLst()));
+			
+			//이미지,동영상 이전,다음글 처리
+			if(Constant.BOARD_FORM_SPEC_010.getVal().equals(vo.getBoardFormSpec()) || Constant.BOARD_FORM_SPEC_020.getVal().equals(vo.getBoardFormSpec())){//이미지, 동영상
+				
+				modelMap.put("notiPrevNextImgMovInfo", JSONUtils.objectToJSON(board210Service.getBbsMovieImagePrevNextNotiInfoForView( data, session, auth )));
+			}
+			
+			modelMap.put("notiInfo", JSONUtils.objectToJSON(notiInfo));
+			modelMap.put("notiFile", JSONUtils.objectToJSON(notiFile));
+			modelMap.put("notiPrevNextInfo", JSONUtils.objectToJSON(notiPrevNextInfo));
+			modelMap.put("notiOpn1", CommUtil.scriptRemove(JSONUtils.objectToJSON(notiOpn1)));
+			modelMap.put("notiOpn2", CommUtil.scriptRemove(JSONUtils.objectToJSON(notiOpn2)));
+			jsonResult.setSuccess(true);
+		}catch(Exception e){
+			jsonResult.setSuccess(false);
+			jsonResult.setMessage(messageSource.getMessage("common.error")); 
+ 			jsonResult.setErrMessage(e.getMessage());
+		}
     	
+		modelMap.put("jsonResult", jsonResult);
         return modelMap;
+    }
+   
+    /**
+     * yblee
+     * 설문조사 직접입력 및 주관식 내용 엑셀다운로드 
+     * @param modelMap, session
+     * @return String
+     * @throws Exception
+     */
+    @RequestMapping(value="/surveyRsltExcelDown", method = RequestMethod.GET)
+    public void surveyRsltExcelDown(
+    		@RequestParam(value="data" ,required = true) String data,
+ 			ModelMap 		modelMap,
+ 			HttpServletRequest request, 
+ 			HttpServletResponse response,
+ 			HttpSession session) throws Exception {  
+    	
+		try{
+			data = URLDecoder.decode(new String(data.getBytes("ISO-8859-1")), "UTF-8");
+			data = URLDecoder.decode(data, "UTF-8");
+	    	JSONObject bbsObject = JSONObject.fromObject(data);
+	   	
+	    	BbsNotiSurveyRsltVO surveyRsltVO = new BbsNotiSurveyRsltVO();
+			surveyRsltVO.setExcelDivn((String)bbsObject.get("divn"));
+			surveyRsltVO.setExcelSurveyNo(bbsObject.getInt("surveyNo"));
+			String surveyTitle = (String)bbsObject.get("surveyTitle");
+			String questionConts = (String)bbsObject.get("questionConts");		
+			String exmplNo = (String)bbsObject.get("exmplNo");
+			String cnt = (String)bbsObject.get("cnt");
+			logger.debug("surveyTitle : "+surveyTitle);
+			
+			List<BbsNotiSurveyRsltVO> surveyRsltExcelList = null;
+			surveyRsltExcelList = board230Service.getSurveyRsltExcelDown(surveyRsltVO);
+
+			//Excel Write
+			HSSFWorkbook workbook = new HSSFWorkbook();
+			HSSFSheet sheet = workbook.createSheet("Sheet1");
+			sheet.setDefaultColumnWidth((short)120);
+			
+			//Font 설정
+			HSSFFont font = workbook.createFont();
+			font.setFontName(HSSFFont.FONT_ARIAL);
+			
+			HSSFCellStyle titlestyle = workbook.createCellStyle();
+			titlestyle.setFont(font);		
+			HSSFRow row = sheet.createRow((short)0);
+			HSSFCell cell1 = row.createCell((short)0);
+			cell1.setEncoding(HSSFCell.ENCODING_UTF_16);
+			logger.debug(surveyTitle);
+			
+			cell1.setCellValue(surveyTitle);
+			cell1.setCellStyle(titlestyle);			
+			
+			row = sheet.createRow((short)1);
+			cell1 = row.createCell((short)0);
+			cell1.setEncoding(HSSFCell.ENCODING_UTF_16);
+			cell1.setCellValue("질문 "+questionConts);
+			cell1.setCellStyle(titlestyle);
+			
+			row = sheet.createRow((short)2);
+			cell1 = row.createCell((short)0);
+			cell1.setEncoding(HSSFCell.ENCODING_UTF_16);
+			if("I".equals((String)bbsObject.get("divn")))
+				cell1.setCellValue("("+exmplNo+") 직접 입력 : "+cnt+"건");
+			else
+				cell1.setCellValue("주관식 설문 입력 : "+cnt+"건");
+			cell1.setCellStyle(titlestyle);
+			
+			HSSFCellStyle headstyle = workbook.createCellStyle();
+			headstyle.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+			headstyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			headstyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			headstyle.setFont(font);			
+			row = sheet.createRow((short)3);
+			cell1 = row.createCell((short)0);	
+			cell1.setEncoding(HSSFCell.ENCODING_UTF_16);
+			if("I".equals((String)bbsObject.get("divn")))
+				cell1.setCellValue("직접 입력 내용");
+			else
+				cell1.setCellValue("주관식 설문 입력 내용");
+			cell1.setCellStyle(headstyle);
+
+			//내용 스타일 지정
+			HSSFCellStyle style = workbook.createCellStyle();
+			style.setFont(font);
+			//내용중 가운데 정렬 추가
+			HSSFCellStyle styleCenter = workbook.createCellStyle();
+			styleCenter.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+			styleCenter.setFont(font);
+			
+			String answConts = "";
+			for(int i=0; i<surveyRsltExcelList.size(); i++)
+			{				
+				BbsNotiSurveyRsltVO rsltVo = surveyRsltExcelList.get(i);
+				answConts = rsltVo.getAnswConts();
+				
+				row = sheet.createRow((short)(i+4));				
+				cell1 = row.createCell((short)0);
+				cell1.setEncoding(HSSFCell.ENCODING_UTF_16);
+				cell1.setCellValue(answConts);
+				cell1.setCellStyle(styleCenter);
+			}
+				
+			
+			SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMddHHmmss");
+			String today = formatter.format(new Date());						
+			String filename = "survey_"+today+".xls";
+			OutputStream out = response.getOutputStream();
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("application/x-msexcel");
+			response.setHeader("Content-Disposition", "attachment;filename="+filename);
+			workbook.write(response.getOutputStream());						
+			workbook.write(out);
+			out.close();
+		}catch(Exception e){
+			logger.debug(e.toString(), e);
+		}
+
     }
     
     /**
@@ -1227,7 +1719,6 @@ public class Board210Controller {
     @RequestMapping(value="/notiPrevNextImgMovInfo")
     public ModelMap getNotiPrevNextImgMovInfo(
  			@RequestParam(value="data" ,required = true) String data,
- 			@RequestParam(value="open" ,required = false) String open,
 			ModelMap 		modelMap,
 			HttpSession session) throws Exception {  
                 	
@@ -1247,16 +1738,6 @@ public class Board210Controller {
 		modelMap.put("jsonResult", jsonResult);
     	
         return modelMap;
-    }
-    
-    @RequestMapping(value="/{open}/notiPrevNextImgMovInfo")
-    public ModelMap getOpenNotiPrevNextImgMovInfo(
- 			@RequestParam(value="data" ,required = true) String data,
- 			@PathVariable String open,
-			ModelMap 		modelMap,
-			HttpSession session) throws Exception { 
-    	
-    	return getNotiPrevNextImgMovInfo(data, open, modelMap, session);
     }
     
     /**

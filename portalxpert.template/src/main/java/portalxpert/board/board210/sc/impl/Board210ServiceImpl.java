@@ -69,6 +69,21 @@ public class Board210ServiceImpl extends EgovAbstractServiceImpl implements  Boa
     }
     
     /**
+     * yblee
+	 * 페이지별 게시물 정보 조회 
+	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO
+	 * @return 게시물 정보 
+	 * @exception Exception
+	 */    
+    public List<BbsNotiInfoVO> getBbsNotiInfoListForPagingNew(BoardSearchVO vo) throws Exception {
+    	try{
+    		return board210Mapper.getBbsNotiInfoListForPagingNew(vo);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+    }
+    
+    /**
 	 * 사용자 게시판 리스트 총 갯수
 	 * @param searchVO - 조회할 정보가 담긴 VO
 	 * @return 게시판 총 갯수
@@ -77,6 +92,21 @@ public class Board210ServiceImpl extends EgovAbstractServiceImpl implements  Boa
     public int getBbsNotiInfoListTotCnt(BoardSearchVO vo)throws Exception  {
     	try{
     		return board210Mapper.getBbsNotiInfoListTotCnt(vo);
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+    }
+    
+    /**
+     * yblee
+	 * 사용자 게시판 리스트 총 갯수
+	 * @param searchVO - 조회할 정보가 담긴 VO
+	 * @return 게시판 총 갯수
+	 * @exception
+	 */
+    public int getBbsNotiInfoListTotCntNew(BoardSearchVO vo)throws Exception  {
+    	try{
+    		return board210Mapper.getBbsNotiInfoListTotCntNew(vo);
 		}catch(Exception e){
 			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
 		}

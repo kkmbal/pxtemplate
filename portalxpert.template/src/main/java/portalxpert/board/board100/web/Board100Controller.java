@@ -1000,6 +1000,49 @@ public class Board100Controller {
 
  	}
     
+    /**
+     * yblee
+     * 첨부파일 다운로드
+     * @param data, modelMap, request, response, session
+     * @return void
+     * @exception Exception
+     * @auther crossent 
+     */
+    @RequestMapping(value = "/bbsFileDownloadNew", method = RequestMethod.GET)
+    public void bbsFileDownloadNew(
+    		@RequestParam(value="data" ,required = true) String data,
+ 			ModelMap 		modelMap,
+ 			HttpServletRequest request, 
+ 			HttpServletResponse response,
+ 			HttpSession session
+ 			
+    ) throws Exception {
+
+   	 	//data = URLDecoder.decode(new String(data.getBytes("ISO-8859-1")), "UTF-8");
+    	data = URLDecoder.decode(data, "UTF-8");
+
+   	 	JSONObject jsonObject = JSONObject.fromObject(data);
+   	 	String notiId = (String)jsonObject.get("notiId");
+		String apndFileOrgn = (String)jsonObject.get("apndFileOrgn");
+		String apndFileName = (String)jsonObject.get("apndFileName");
+    		
+ 		try{	
+ 			String apndFilePath = PortalxpertConfigUtils.getString("upload.temp.dir");
+ 			
+ 			File file = new File(apndFilePath+apndFileName.replace("..\\","").replace("../",""));
+ 			
+	        if(!CommUtil.uploadExtensionsCheck(file.getName(), null)){
+	        	throw new Exception("Invalid upload file");
+	        }
+ 			
+			FileDownloadUtil.download(request, response, file, apndFileOrgn);
+			
+ 		}catch(Exception e){
+ 			logger.error(e.toString(), e);
+ 		}
+
+ 	}
+    
     
 
     /**
@@ -1382,6 +1425,7 @@ public class Board100Controller {
 			@RequestParam(value="notiId",required = false) String notiId,
 			@RequestParam(value="boardKind",required = false) String boardKind,
 			@RequestParam(value="pnum",required = false) String pnum,
+			@RequestParam(value="tempWeb",required = false) String tempWeb,
 			HttpSession session
 			)
             throws Exception {
@@ -1391,7 +1435,60 @@ public class Board100Controller {
     	modelMap.put("boardKind", boardKind);
     	modelMap.put("pnum", pnum);
     	
-        return ".self/board/bbsPrintPreview";
+    	//yblee
+    	modelMap.put("tempWeb", tempWeb);
+    	if(Constant.BOARD_KIND_110.getVal().equals(boardKind))
+		{
+    		return ".self/board/surveyViewPrint";
+		}
+    	else
+    	{
+    		 return ".self/board/bbsPrintPreview";
+    	}
+       
+    }
+    
+    /**
+     * 설문결과 출력
+     * @param 
+     * @return String
+     * @exception Exception
+     * @auther crossent 
+     */
+    @RequestMapping(value="/surveyRsltPrint")
+    public String surveyRsltPrint(
+			ModelMap modelMap,
+			@RequestParam(value="pageHtml",required = false) String pageHtml,
+			HttpSession session
+			)
+            throws Exception {
+
+    	modelMap.put("pageHtml", pageHtml);
+
+    	return ".self/board/surveyRsltPrint";
+      
+    }
+    
+    /**
+     * yblee
+     * 설문 등록에서 인쇄
+     * @param 
+     * @return String
+     * @exception Exception
+     * @auther crossent 
+     */
+    @RequestMapping(value="/surveyWritePrint")
+    public String surveyWritePrint(
+			ModelMap modelMap,
+			@RequestParam(value="pageHtml",required = false) String pageHtml,
+			HttpSession session
+			)
+            throws Exception {
+
+    	modelMap.put("pageHtml", pageHtml);
+    	    	
+    	return ".self/board/surveyWritePrint";
+       
     }
         
     

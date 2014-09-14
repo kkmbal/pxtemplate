@@ -313,6 +313,15 @@ public interface Board100Mapper  {
      */
     public int insertBbsNotiSurvey(BbsNotiSurveyVO vo) throws Exception  ;
     
+    /**
+     * yblee
+     * 설문 정보 등록 
+     * @param PsnTmlnApndFileVO - 입력할 정보가 담긴 VO 
+     * @return 입력 성공 건수
+	 * @exception Exception
+     */
+    public int insertBbsNotiSurveyNew(BbsNotiSurveyVO vo) throws Exception  ;
+    
     
     /**
      * 설문 보기 정보 등록 
@@ -321,6 +330,15 @@ public interface Board100Mapper  {
 	 * @exception Exception
      */
     public int insertBbsNotiSurveyExmpl(BbsNotiSurveyExmplVO vo) throws Exception  ;
+    
+    /**
+     * yblee
+     * 설문 보기 정보 등록 
+     * @param PsnTmlnApndFileVO - 입력할 정보가 담긴 VO 
+     * @return 입력 성공 건수
+	 * @exception Exception
+     */
+    public int insertBbsNotiSurveyExmplNew(BbsNotiSurveyExmplVO vo) throws Exception  ;
     
     /**
      * 게시물 권한 입력 

@@ -4,7 +4,9 @@ import java.util.List;
 
 import portalxpert.board.board100.vo.BbsNotiApndFileVO;
 import portalxpert.board.board100.vo.BbsNotiInfoVO;
+import portalxpert.board.board100.vo.BbsNotiSurveyAnswVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyExmplVO;
+import portalxpert.board.board100.vo.BbsNotiSurveyRsltVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyVO;
 import portalxpert.board.board230.vo.BbsTmpNotiApndFileVO;
 import portalxpert.board.board230.vo.BbsTmpNotiInfoVO;
@@ -40,6 +42,15 @@ public interface Board230Mapper  {
      */
     public int insertBbsTmpNotiSurvey(BbsNotiSurveyVO vo) throws Exception  ;
     
+    /**
+     * yblee
+     * 임시 설문 정보 등록 
+     * @param PsnTmlnApndFileVO - 입력할 정보가 담긴 VO 
+     * @return 임시 입력 성공 건수
+	 * @exception Exception
+     */
+    public int insertBbsTmpNotiSurveyNew(BbsNotiSurveyVO vo) throws Exception  ;
+    
     
     /**
      * 임시 설문 보기 정보 등록 
@@ -48,6 +59,15 @@ public interface Board230Mapper  {
 	 * @exception Exception
      */
     public int insertBbsTmpNotiSurveyExmpl(BbsNotiSurveyExmplVO vo) throws Exception  ;
+    
+    /**
+     * yblee
+     * 임시 설문 보기 정보 등록 
+     * @param PsnTmlnApndFileVO - 입력할 정보가 담긴 VO 
+     * @return 입력 성공 건수
+	 * @exception Exception
+     */
+    public int insertBbsTmpNotiSurveyExmplNew(BbsNotiSurveyExmplVO vo) throws Exception  ;
     
     /**
      * 게시물 권한 입력 
@@ -91,6 +111,15 @@ public interface Board230Mapper  {
     public List<BbsNotiSurveyVO> getBbsNotiSurveyList(BbsNotiSurveyVO vo) ;
     
     /**
+     * yblee
+	 * 임시저장 설문정보  조회
+	 * @param BbsNotiSurveyVO - 조회할 정보가 담긴 Map
+	 * @return 임시저장 설문 정보 
+	 * @exception
+	 */
+    public List<BbsNotiSurveyVO> getBbsNotiSurveyListNew(BbsNotiSurveyVO vo) ;
+    
+    /**
 	 * 임시저장 설문정보 보기 조회
 	 * @param BbsNotiSurveyExmplVO - 조회할 정보가 담긴 Map
 	 * @return 임시저장 설문 보기 정보 
@@ -98,6 +127,50 @@ public interface Board230Mapper  {
 	 */
     public List<BbsNotiSurveyExmplVO> getBbsNotiSurveyExmplList(BbsNotiSurveyExmplVO vo) ;
     
+    /**
+     * yblee
+	 * 임시저장 설문정보 보기 조회
+	 * @param BbsNotiSurveyExmplVO - 조회할 정보가 담긴 Map
+	 * @return 임시저장 설문 보기 정보 
+	 * @exception
+	 */
+    public List<BbsNotiSurveyExmplVO> getBbsNotiSurveyExmplListNew(BbsNotiSurveyExmplVO vo) ;
+    
+    /**
+     * yblee
+     * 설문 보기 결과 조회 
+     * @param BbsNotiSurveyAnswVO - 입력할 정보가 담긴 VO 
+     * @return 설문 보기 결과 정보
+	 * @exception Exception
+     */
+    public List<BbsNotiSurveyAnswVO> getBbsNotiSurveyAnswList(BbsNotiSurveyAnswVO vo);
+    
+    /**
+     * yblee
+     * 설문 결과 문제별 카운트 조회 
+     * @param BbsNotiSurveyRsltVO - 입력할 정보가 담긴 VO 
+     * @return 설문 보기 결과 정보
+	 * @exception Exception
+     */
+    public List<BbsNotiSurveyRsltVO> getSurveyRsltAnswCntList(BbsNotiSurveyRsltVO vo);
+    
+    /**
+     * yblee
+     * 설문 결과 참여인원수 조회 
+     * @param BbsNotiSurveyRsltVO - 입력할 정보가 담긴 VO 
+     * @return 설문 결과 참여인원수
+	 * @exception Exception
+     */
+    public int getSurveyRsltMemberCnt(BbsNotiSurveyRsltVO vo) throws Exception ;
+    
+    /**
+     * yblee
+  	 * 설문결과 내 직접입력 및 주관식 엑셀다운
+  	 * @param BbsNotiSurveyRsltVO - 입력할 정보가 담긴 VO 
+  	 * @return 직접입력 및 주관식 정보  
+  	 * @exception Exception
+  	 */
+    public List<BbsNotiSurveyRsltVO> getSurveyRsltExcelDown(BbsNotiSurveyRsltVO vo);
     
     /**
 	 * 게시물 조회 

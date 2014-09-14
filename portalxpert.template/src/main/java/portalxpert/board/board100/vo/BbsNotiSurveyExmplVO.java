@@ -28,6 +28,7 @@ public class BbsNotiSurveyExmplVO {
 	private int rowNum;
 	private String surveyTp;
 	private String answExmplNo;
+	private String moveExmplNo;
 	
 	public String getUserId() {
 		return userId;
@@ -191,6 +192,12 @@ public class BbsNotiSurveyExmplVO {
 	}
 	public void setUserNotiSeq(int userNotiSeq) {
 		this.userNotiSeq = userNotiSeq;
+	}
+	public String getMoveExmplNo() {
+		return moveExmplNo;
+	}
+	public void setMoveExmplNo(String moveExmplNo) {
+		this.moveExmplNo = moveExmplNo;
 	}
 		
 	

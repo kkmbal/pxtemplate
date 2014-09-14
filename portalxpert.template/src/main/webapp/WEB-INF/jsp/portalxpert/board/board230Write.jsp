@@ -270,7 +270,7 @@
 				<div id="innoApDiv" class="listbox" style="display:none;">
 					<dl></dl>
 				</div>
-				</div>
+				 
 		</td>
 	</tr>
 	</tbody>

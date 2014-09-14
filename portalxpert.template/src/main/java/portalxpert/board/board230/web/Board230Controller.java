@@ -25,6 +25,7 @@ import portalxpert.board.board100.vo.BbsBoardInfoVO;
 import portalxpert.board.board100.vo.BbsBoardUserMapVO;
 import portalxpert.board.board100.vo.BbsNotiApndFileVO;
 import portalxpert.board.board100.vo.BbsNotiInfoVO;
+import portalxpert.board.board100.vo.BbsNotiSurveyAnswVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyExmplVO;
 import portalxpert.board.board100.vo.BbsNotiSurveyVO;
 import portalxpert.board.board100.vo.BbsNotiUserMapVO;
@@ -218,8 +219,18 @@ public class Board230Controller {
 	    				    			
 	    			//설문 정보 조회
 	    			BbsNotiSurveyVO surveyVO = new BbsNotiSurveyVO();
-	    			surveyVO.setNotiId(notiId);	    			
-	    			List survey_list = board230Service.getBbsNotiSurveyList(surveyVO);
+	    			surveyVO.setNotiId(notiId);
+	    			
+	    			//yblee
+	    			List survey_list = null;
+	    			if(Constant.BOARD_KIND_110.getVal().equals(boardKind))
+	    			{
+	    				survey_list = board230Service.getBbsNotiSurveyListNew(surveyVO);
+	    			}
+	    			else
+	    			{
+	    				survey_list = board230Service.getBbsNotiSurveyList(surveyVO);
+	    			}
 	    			
 	    			List surveyExmpl_list = null;
 	    			
@@ -228,7 +239,22 @@ public class Board230Controller {
 	    				// 설문 보기 정보 조회
 	    				BbsNotiSurveyExmplVO surveyExmplVO = new BbsNotiSurveyExmplVO();
 		    			surveyExmplVO.setNotiId(notiId);
-		    			surveyExmpl_list = board230Service.getBbsNotiSurveyExmplList(surveyExmplVO);
+		    			//yblee
+		    			if(Constant.BOARD_KIND_110.getVal().equals(boardKind))
+		    			{
+		    				surveyExmpl_list = board230Service.getBbsNotiSurveyExmplListNew(surveyExmplVO);
+		    				List surveyAnsw_list = null;
+		    				//설문 결과 정보 조회
+		    				BbsNotiSurveyAnswVO surveyAnswVO = new BbsNotiSurveyAnswVO();
+		    				surveyAnswVO.setNotiId(notiId);
+		    				surveyAnsw_list = board230Service.getBbsNotiSurveyAnswList(surveyAnswVO);		    				
+			    			modelMap.put("surveyAnswList", JSONUtils.objectToJSON(surveyAnsw_list));
+			    			modelMap.put("tempWeb", CONTEXT_PATH + PortalxpertConfigUtils.getString("upload.temp.web"));
+		    			}
+		    			else
+		    			{
+		    				surveyExmpl_list = board230Service.getBbsNotiSurveyExmplList(surveyExmplVO);
+		    			}
 		    			modelMap.put("surveyExmplList", JSONUtils.objectToJSON(surveyExmpl_list));
 	    			}
 	    			else
@@ -268,6 +294,9 @@ public class Board230Controller {
 	    			modelMap.put("surveyList", "[]");
 	    			modelMap.put("surveyExmplList", "[]");
 	    			modelMap.put("userName", info.getName());
+	    			//yblee
+	    			modelMap.put("deptName", info.getOu());
+	    			modelMap.put("surveyAnswList", "[]");	    			
 	    		}
 	    		//게시판 및 게시물 권한 정보
 	    		modelMap.put("userMapList", JSONUtils.objectToJSON(user_list));
@@ -437,10 +466,17 @@ public class Board230Controller {
     		modelMap.put("WEB_MOVIE_DIR", CONTEXT_PATH + WEB_MOVIE_DIR);
     		modelMap.put("boardExplUseYn", boardExplUseYn);
     		modelMap.put("boardExpl", boardExpl);
-    		modelMap.put("type", type);
     		
 		}
-		return ".self/board/board230Write";
+    	//yblee
+    	if(Constant.BOARD_KIND_110.getVal().equals(boardKind))
+		{
+    		return ".self/board/surveyWrite";
+		}
+    	else
+    	{
+    		return ".self/board/board230Write";
+    	}
 	}
     
     /**
@@ -469,8 +505,27 @@ public class Board230Controller {
 
 			JSONObject jsonObject = JSONObject.fromObject(data);
 			data = jsonObject.toString();
-
-			vo = board100Service.insertBbsNotiInfo(data, session, request);
+			
+			//yblee
+			String boardId = jsonObject.getString("boardId");
+			BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+			bbsVO.setBoardId(boardId);
+			List board_list = board100Service.getAdminBbsBoardInfoList(bbsVO);
+			String boardKind = "";
+			if (board_list.size() > 0)
+			{
+				BbsBoardInfoVO bbs = (BbsBoardInfoVO)board_list.get(0);
+				boardKind = bbs.getBoardKind();								
+			}
+		
+			if(Constant.BOARD_KIND_110.getVal().equals(boardKind))
+			{
+				vo = board100Service.insertBbsNotiInfoNew(data, session, request);
+			}
+			else
+			{
+				vo = board100Service.insertBbsNotiInfo(data, session, request);
+			}//
 			jsonResult.setSuccess(true);
 			jsonResult.setMessage("");
  		}catch(Exception e){
@@ -580,8 +635,26 @@ public class Board230Controller {
 
 			JSONObject jsonObject = JSONObject.fromObject(data);
 			data = jsonObject.toString();
-
-			vo = board230Service.insertBbsTmpNotiInfo(data, request, session);
+			
+			//yblee
+			String boardId = jsonObject.getString("boardId");
+			BbsBoardInfoVO bbsVO = new BbsBoardInfoVO();
+			bbsVO.setBoardId(boardId);
+			List board_list = board100Service.getAdminBbsBoardInfoList(bbsVO);
+			String boardKind = "";
+			if (board_list.size() > 0)
+			{
+				BbsBoardInfoVO bbs = (BbsBoardInfoVO)board_list.get(0);
+				boardKind = bbs.getBoardKind();								
+			}
+			if(Constant.BOARD_KIND_110.getVal().equals(boardKind))
+			{
+				vo = board230Service.insertBbsTmpNotiInfoNew(data, request, session);
+			}
+			else
+			{
+				vo = board230Service.insertBbsTmpNotiInfo(data, request, session);
+			}
 			jsonResult.setSuccess(true);
 			jsonResult.setMessage("");
 			
@@ -752,7 +825,7 @@ public class Board230Controller {
     @RequestMapping("/bbsFileUpload") 
     @ResponseBody 
     public void bbsFileUpload(HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpSession session) throws Exception{
- 	  
+    	response.setContentType("text/html;charset=UTF-8");
 		String SAVE_DIR = PortalxpertConfigUtils.getString("upload.temp.dir");
 		String WEB_DIR = PortalxpertConfigUtils.getString("upload.temp.web");
 		String CONTEXT_PATH = PortalxpertConfigUtils.getString("image.web.contextpath");

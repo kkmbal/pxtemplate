@@ -32,6 +32,16 @@ public interface Board210Mapper  {
     public List<BbsNotiInfoVO> getBbsNotiInfoListForPaging(BoardSearchVO vo)throws Exception ;
     
     /**
+     * yblee
+	 * 게시물 정보 조회
+	 * @param BoardSearchVO - 조회할 정보가 담긴 Map
+	 * @return 게시물 정보 
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public List<BbsNotiInfoVO> getBbsNotiInfoListForPagingNew(BoardSearchVO vo)throws Exception ;
+    
+    /**
 	 * 게시물 총 개수 조회
 	 * @param BoardSearchVO - 조회할 정보가 담긴 VO
 	 * @return 게시판 총 갯수
@@ -39,6 +49,16 @@ public interface Board210Mapper  {
 	 * @auther crossent 
 	 */
     public int getBbsNotiInfoListTotCnt(BoardSearchVO vo)throws Exception;
+    
+    /**
+     * yblee
+	 * 게시물 총 개수 조회
+	 * @param BoardSearchVO - 조회할 정보가 담긴 VO
+	 * @return 게시판 총 갯수
+	 * @exception Exception
+	 * @auther crossent 
+	 */
+    public int getBbsNotiInfoListTotCntNew(BoardSearchVO vo)throws Exception;
     
 	/**
 	 * 게시물 목록 조회

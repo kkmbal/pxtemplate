@@ -350,6 +350,268 @@
 			 ORDER BY PNUM
 	</select>
 	
+	<select id="getBbsNotiInfoListForPagingNew" resultMap="bbsNotiInfoResult" parameterType="portalxpert.common.vo.BoardSearchVO" >
+		
+		SELECT    
+   		       (SELECT COUNT(NOTI_ID) FROM BBS_NOTI_APND_FILE WHERE DEL_YN = 'N' AND NOTI_ID = N.NOTI_ID AND APND_FILE_TP = '050') APND_FILE_CNT
+             , (SELECT COUNT(NOTI_ID) FROM BBS_NOTI_OPN WHERE DEL_YN = 'N' AND NOTI_ID = N.NOTI_ID) OPN_CNT
+             , CASE 
+               WHEN CDLN_EVNT_CODE = 'NT' THEN '[공지]'
+               ELSE  '[' || (SELECT CD_NM FROM COM_CODE_SPEC WHERE CD = 'CBV' AND CD_SPEC = N.CDLN_EVNT_CODE) || ' ' || CDLN_OBJR_NAME || ']' 
+               END AS CDLN_TITLE
+             , NVL((SELECT 'Y' FROM DUAL WHERE EXISTS (SELECT 1 FROM BBS_NOTI_EVAL_INFO WHERE NOTI_ID = N.NOTI_ID AND USER_ID = #{userId} AND NOTI_EVAL_DIV = '040')), 'N') AS NOTI_READ_YN  
+			 , N.*   
+		FROM (SELECT 
+					<![CDATA[
+					CASE 
+		               WHEN UP_NOTI_ID = '*' THEN NOTI_TITLE
+		               ELSE '<span class="ico_reply"><span class="hidden">답글</span></span>' || NOTI_TITLE
+		             END AS NOTI_TITLE,
+		             ]]>
+		             ROWNUM PNUM,
+		             NOTI_ID,
+		             UP_NOTI_ID,
+		             SORT_SEQ,
+		             BOARD_ID,
+		             EMGC_YN,
+		             ANMT_YN,
+		             POPUP_YN,
+		             BRIEF_YN,
+		             MOBL_OPEN_DIV,
+		             NOTI_TITLE_ORGN,
+		             TITLE_BOLD_YN,
+		             TITLE_COLOR_DIV,
+		             LINK_URL,
+		             NOTI_TP,
+		             NOTI_CONTS,
+		             NOTI_KIND,
+		             NICK_USE_YN,
+		             USER_ID,
+		             USER_NICK,
+		             USER_NAME,
+		             EDIT_DIV,
+		             RSRV_YN,
+		             TO_CHAR(NOTI_BGN_DTTM, 'yyyy-mm-dd') NOTI_BGN_DTTM,
+		             TO_CHAR(NOTI_END_DTTM, 'yyyy-mm-dd') NOTI_END_DTTM,
+		             NOTI_OPEN_DIV,
+		             NOTI_OPEN_DIV_SPEC,
+		             PUBL_ASGN_DIV,
+		             PUBL_ASGN_DIV_SPEC,
+		             REPLY_PRMS_YN,
+		             REPLY_MAKR_REALNAME_YN,
+		             OPN_PRMS_YN,
+		             OPN_MAKR_REALNAME_YN,
+		             NOTI_READ_CNT ,		             
+					<![CDATA[
+		             CASE 
+		               WHEN REG_DTTM < UPD_DTTM THEN 'Y'
+		               WHEN REG_DTTM = UPD_DTTM THEN 'N'
+		               ELSE 'X'
+		             END UPD_YN,
+		             ]]>
+		             BF_BOARD_ID,
+		             BF_NOTI_ID,
+		             STAT_CODE,
+		             DEPT_CODE,
+		             DEPT_NAME,
+		             DEPT_FNAME,
+		             MAKR_IP,
+		             BRGH_CODE,
+		             CDLN_DEPT_CODE,
+		             CDLN_DEPT_NAME,
+		             CDLN_DEPT_FNAME,
+		             CDLN_OBJR_NAME,
+		             CDLN_EVNT_CODE,
+		             DEL_YN,
+		             REGR_ID,
+		             REGR_NAME,
+		             TO_CHAR(REG_DTTM, 'yyyy-mm-dd') REG_DTTM,
+		             UPDR_ID,
+		             UPDR_NAME,
+		             UPD_DTTM,
+		             OLD_BRD_ID,
+		             OLD_HEADER_ID,
+		             OLD_ORIGNAL_ID,
+		             OLD_NOTICE_SEQ,
+		             NOTI_TAG_LST,
+		             NOTI_AGRM_CNT,
+		             NOTI_OPP_CNT
+			      FROM (SELECT /*+ INDEX(A IDX_BBS_NOTI_INFO_03) */
+			            A.*
+			            FROM BBS_NOTI_INFO A
+			            WHERE DEL_YN = 'N'
+			              AND BOARD_ID = #{boardId}
+			              <if test="boardAnmtUseYn !=null and boardAnmtUseYn.equalsIgnoreCase('N') ">
+			              	AND ANMT_YN = 'N'
+			              </if>
+			              <![CDATA[ 
+			              AND (NOTI_BGN_DTTM <= SYSDATE OR (RSRV_YN = 'Y' AND REGR_ID = #{userId} AND REG_DTTM <= SYSDATE))			         
+			              ]]>
+			              <if test="chkSurvey !=null and chkSurvey.equalsIgnoreCase('ing') ">
+			              <![CDATA[ 
+			              AND NOTI_END_DTTM >= SYSDATE -1
+			              ]]> 
+			              </if>
+			              <if test="chkSurvey !=null and chkSurvey.equalsIgnoreCase('finish') ">
+			              <![CDATA[ 
+			              AND NOTI_END_DTTM < SYSDATE -1
+			              ]]> 
+			              </if>
+			              
+			              <if test="searchCondition !=null and searchCondition !=''">
+	                            <if test="searchKeyword !=null and searchKeyword !=''">
+	                            	<if test="!searchCondition.equalsIgnoreCase('MY_NOTI_TITLE') ">
+	                            		/* 키워드 검색 */
+	                            		<choose>
+	                            			<when test="searchCondition.equalsIgnoreCase('REGR_NAME')">
+	                            				AND REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+	                            				AND NICK_USE_YN = 'N'
+	                            			</when>
+	                            			<otherwise>
+	                            				AND ${searchCondition} LIKE '%' || #{searchKeyword} || '%'
+	                            			</otherwise>
+	                            		</choose>	
+                            			<if test="boardKind == '020'">
+                            				AND (USER_ID = #{userId} OR 'Y' = #{eamAdminYn}) 
+                            			</if>
+									</if>
+	                            </if>
+	                            <if test="searchCondition.equalsIgnoreCase('MY_NOTI_TITLE') ">
+                            		/* 내게시글 검색 */
+                            		AND REGR_ID = #{userId}
+                            		AND NOTI_TITLE LIKE '%' || #{searchKeyword} || '%'
+                            	</if>
+	                        </if>
+	                        <if test="cdlnEvntCode != null and cdlnEvntCode != '' ">
+	                        	/* 경조사 구분 */
+	                        	AND CDLN_EVNT_CODE = #{cdlnEvntCode}
+		                    </if>
+		                    <if test="cdlnObjrName != null and cdlnObjrName != '' ">
+	                        	/* 경조사 대상자 */
+	                        	AND CDLN_OBJR_NAME LIKE '%' || #{cdlnObjrName} || '%'
+		                    </if>
+		                    <if test="cdlnDeptName != null and cdlnDeptName != '' ">
+		                    	/* 경조사 기관 */
+	                        	AND CDLN_DEPT_NAME LIKE '%' || #{cdlnDeptName} || '%'
+		                    </if>
+		                    <if test="cdlnDeptFname != null and cdlnDeptFname != '' ">
+		                    	/* 경조사 부서 */
+	                        	AND CDLN_DEPT_FNAME LIKE '%' || #{cdlnDeptFname} || '%'
+		                    </if>
+	                        <if test="regDttmFrom != null and regDttmFrom != '' ">/* 기간 */
+	                            <![CDATA[
+	                            AND UPD_DTTM >= TO_DATE(#{regDttmFrom},'yyyy-mm-dd')
+	                            ]]>
+	                        </if>
+	                        <if test="regDttmTo != null and regDttmTo != '' ">
+	                        	<![CDATA[	                        	
+	                        	AND UPD_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+	                        	]]>
+	                        </if>
+	                        <if test="calYmFrom != null and calYmFrom != '' ">/* 달력 */
+	                            <![CDATA[
+	                            AND NOTI_BGN_DTTM <= TO_DATE(#{calYmTo},'yyyy-mm-dd')
+	                            ]]>
+	                        </if>
+	                        <if test="calYmTo != null and calYmTo != '' ">/* 달력 */
+	                        	<![CDATA[	                        	
+	                        	AND NOTI_END_DTTM >= TO_DATE(#{calYmFrom} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+	                        	]]>
+	                        </if>
+	                        <if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('N') ">
+	                        AND EXISTS(SELECT 1
+                                       FROM BBS_BOARD_USER_MAP B
+                                       WHERE A.BOARD_ID = B.BOARD_ID
+                                       AND B.USER_ID IN (${userMap}))
+							</if>
+							<if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('Y') ">
+							AND EXISTS(SELECT 1
+                                       FROM BBS_NOTI_USER_MAP B
+                                       WHERE A.NOTI_ID = B.NOTI_ID
+                                       AND B.USER_ID IN (${userMap}))
+							</if>
+							<if test="searchCondition !=null and searchCondition !=''">
+	                            <if test="searchKeyword !=null and searchKeyword !=''">
+									<if test="orderType != null and orderType.equalsIgnoreCase('default') ">
+										ORDER BY UPD_DTTM DESC
+									</if>
+									<if test="orderType == null or orderType == '' ">
+										ORDER BY UPD_DTTM DESC
+									</if>
+									<if test="orderType != null and !orderType.equalsIgnoreCase('default') ">
+										<if test="orderType != null and orderType.equalsIgnoreCase('notiTitle') ">
+											ORDER BY TRIM(NOTI_TITLE_ORGN)
+										</if>
+										<if test="orderType != null and orderType.equalsIgnoreCase('regrName') ">
+											ORDER BY REGR_NAME
+										</if>
+										<if test="orderType != null and orderType.equalsIgnoreCase('deptName') ">
+											ORDER BY DEPT_NAME
+										</if>
+										<if test="orderType != null and orderType.equalsIgnoreCase('notiBgnDttm') ">
+											 ORDER BY NOTI_BGN_DTTM 
+										</if>
+										<if test="orderType != null and orderType.equalsIgnoreCase('notiEndDttm') ">
+											 ORDER BY NOTI_END_DTTM 
+										</if>
+										<if test="orderType != null and orderType.equalsIgnoreCase('notiReadCnt') ">
+											 ORDER BY NOTI_READ_CNT 
+										</if>
+										<if test="orderType != null and orderType.equalsIgnoreCase('cdlnDeptFname') ">
+											 ORDER BY CDLN_DEPT_FNAME 
+										</if>
+										<if test="orderType != null and orderType.equalsIgnoreCase('regDttm') ">
+											 ORDER BY REG_DTTM 
+										</if>
+										<if test="isDesc != true ">
+											  DESC
+										</if>
+									</if>	                            
+	                            </if>
+	                        </if>
+							) X
+							START WITH UP_NOTI_ID = '*' 
+							CONNECT BY PRIOR  NOTI_ID = UP_NOTI_ID
+			                <if test="searchKeyword == null or searchKeyword ==''">	                        
+								
+								<if test="orderType != null and orderType.equalsIgnoreCase('default') ">
+									ORDER SIBLINGS BY ANMT_YN DESC , UPD_DTTM DESC
+								</if>
+								<if test="orderType != null and !orderType.equalsIgnoreCase('default') ">
+									<if test="orderType != null and orderType.equalsIgnoreCase('notiTitle') ">
+										ORDER SIBLINGS BY TRIM(NOTI_TITLE_ORGN)
+									</if>
+									<if test="orderType != null and orderType.equalsIgnoreCase('regrName') ">
+										ORDER SIBLINGS BY REGR_NAME
+									</if>
+									<if test="orderType != null and orderType.equalsIgnoreCase('deptName') ">
+										ORDER SIBLINGS BY DEPT_NAME
+									</if>
+									<if test="orderType != null and orderType.equalsIgnoreCase('notiBgnDttm') ">
+										 ORDER SIBLINGS BY NOTI_BGN_DTTM 
+									</if>
+									<if test="orderType != null and orderType.equalsIgnoreCase('notiEndDttm') ">
+										 ORDER SIBLINGS BY NOTI_END_DTTM 
+									</if>
+									<if test="orderType != null and orderType.equalsIgnoreCase('notiReadCnt') ">
+										 ORDER SIBLINGS BY NOTI_READ_CNT 
+									</if>
+									<if test="orderType != null and orderType.equalsIgnoreCase('cdlnDeptFname') ">
+										 ORDER SIBLINGS BY CDLN_DEPT_FNAME 
+									</if>
+									<if test="orderType != null and orderType.equalsIgnoreCase('regDttm') ">
+										 ORDER SIBLINGS BY REG_DTTM 
+									</if>									
+									<if test="isDesc != true ">
+										 DESC
+									</if>
+								</if>
+							</if>
+			      ) N
+			 WHERE (PNUM BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}) or '040'=#{boardForm}
+			 ORDER BY PNUM
+	</select>
+	
 	<!-- 일반게시판 게시글 총 개수 -->
 	<select id="getBbsNotiInfoListTotCnt" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO" 
 	    	resultType="int">
@@ -418,6 +680,102 @@
 		<if test="regDttmTo != null and regDttmTo != '' ">
 			<![CDATA[
 			AND NOTI_END_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			]]>	
+		</if>               		
+        <if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('N') ">
+		AND EXISTS(SELECT 1
+                   FROM BBS_BOARD_USER_MAP B
+                   WHERE A.BOARD_ID = B.BOARD_ID
+                   AND B.USER_ID IN (${userMap}))
+		</if>
+		<if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('Y') ">
+		AND EXISTS(SELECT 1
+                   FROM BBS_NOTI_USER_MAP B
+                   WHERE A.NOTI_ID = B.NOTI_ID
+                   AND B.USER_ID IN (${userMap}))
+		</if>   
+		<if test="searchKeyword == null or searchKeyword ==''">
+			) X START WITH UP_NOTI_ID = '*' CONNECT BY PRIOR  NOTI_ID = UP_NOTI_ID
+		</if>
+	</select> 
+	
+	<select id="getBbsNotiInfoListTotCntNew" parameterType="portalxpert.board.board100.vo.BbsNotiInfoVO" 
+	    	resultType="int">
+		
+		<if test="searchKeyword == null or searchKeyword ==''">
+			SELECT COUNT(1) CNT FROM (		
+			SELECT /*+ INDEX(A IDX_BBS_NOTI_INFO_03) */ * 
+		</if>
+		<if test="searchKeyword != null and searchKeyword !=''">
+			SELECT /*+ INDEX(A IDX_BBS_NOTI_INFO_03) */ COUNT(1) CNT 
+		</if>
+		<![CDATA[
+		FROM BBS_NOTI_INFO A 
+		WHERE BOARD_ID = #{boardId} AND DEL_YN = 'N'
+		AND (NOTI_BGN_DTTM <= SYSDATE  OR (RSRV_YN = 'Y' AND REGR_ID = #{userId} AND REG_DTTM <= SYSDATE)) 
+		]]>
+		<if test="chkSurvey !=null and chkSurvey.equalsIgnoreCase('ing') ">
+        <![CDATA[ 
+        AND NOTI_END_DTTM >= SYSDATE -1
+        ]]> 
+        </if>
+        <if test="chkSurvey !=null and chkSurvey.equalsIgnoreCase('finish') ">
+        <![CDATA[ 
+        AND NOTI_END_DTTM < SYSDATE -1
+        ]]> 
+        </if>
+		
+		<if test="boardAnmtUseYn !=null and boardAnmtUseYn.equalsIgnoreCase('N') ">
+        	AND ANMT_YN = 'N'
+        </if>
+        <if test="searchCondition !=null and searchCondition !=''">
+			<if test="searchKeyword !=null and searchKeyword !=''">
+                <if test="!searchCondition.equalsIgnoreCase('MY_NOTI_TITLE') ">
+                	/* 키워드 검색 */
+                    <choose>
+                    	<when test="searchCondition.equalsIgnoreCase('REGR_NAME')">
+                       		AND REGR_NAME LIKE '%' || #{searchKeyword} || '%'
+                       		AND NICK_USE_YN = 'N'
+                       	</when>
+                       	<otherwise>
+                       		AND ${searchCondition} LIKE '%' || #{searchKeyword} || '%'
+                       	</otherwise>
+					</choose>	
+                   	<if test="boardKind == '020'">
+           				AND (USER_ID = #{userId} OR 'Y' = #{eamAdminYn}) 
+           			</if>
+				</if>
+			</if>
+			<if test="searchCondition.equalsIgnoreCase('MY_NOTI_TITLE') ">
+				/* 내게시글 검색 */
+				AND REGR_ID = #{userId}
+				AND NOTI_TITLE LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
+		<if test="cdlnEvntCode != null and cdlnEvntCode != '' ">
+			/* 경조사 구분 */
+			AND CDLN_EVNT_CODE = #{cdlnEvntCode}
+		</if>
+		<if test="cdlnObjrName != null and cdlnObjrName != '' ">
+			/* 경조사 대상자 */
+			AND CDLN_OBJR_NAME = #{cdlnObjrName}
+		</if>
+		<if test="cdlnDeptName != null and cdlnDeptName != '' ">
+			/* 경조사 기관 */
+			AND CDLN_DEPT_NAME = #{cdlnDeptName}
+		</if>
+		<if test="cdlnDeptFname != null and cdlnDeptFname != '' ">
+			/* 경조사 부서 */
+			AND CDLN_DEPT_FNAME = #{cdlnDeptFname}
+		</if>
+		<if test="regDttmFrom != null and regDttmFrom != '' ">/* 기간 */
+			<![CDATA[
+			AND UPD_DTTM >= TO_DATE(#{regDttmFrom},'yyyy-mm-dd')
+			]]>	
+		</if>
+		<if test="regDttmTo != null and regDttmTo != '' ">
+			<![CDATA[
+			AND UPD_DTTM <= TO_DATE(#{regDttmTo} || ' 23:59:59','yyyy-mm-dd hh24:mi:ss')
 			]]>	
 		</if>               		
         <if test="notiReadmanAsgnYn != null and notiReadmanAsgnYn.equalsIgnoreCase('N') ">

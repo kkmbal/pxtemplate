@@ -26,12 +26,30 @@ public interface Board210Service {
     List<BbsNotiInfoVO> getBbsNotiInfoListForPaging(BoardSearchVO vo) throws Exception;
     
     /**
+     * yblee
+	 * 페이지별 게시물 정보 조회
+	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO
+	 * @return 게시물 정보
+	 * @exception Exception
+	 */
+    List<BbsNotiInfoVO> getBbsNotiInfoListForPagingNew(BoardSearchVO vo) throws Exception;
+    
+    /**
 	 * 게시물 정보 조회
 	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO
 	 * @return 게시물 정보
 	 * @exception Exception
 	 */
     int getBbsNotiInfoListTotCnt(BoardSearchVO vo) throws Exception;
+    
+    /**
+     * yblee
+	 * 게시물 정보 조회
+	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO
+	 * @return 게시물 정보
+	 * @exception Exception
+	 */
+    int getBbsNotiInfoListTotCntNew(BoardSearchVO vo) throws Exception;
     
 	/**
 	 * 게시물 목록 조회

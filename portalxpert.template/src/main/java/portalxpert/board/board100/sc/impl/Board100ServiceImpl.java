@@ -1326,6 +1326,323 @@ public class Board100ServiceImpl extends EgovAbstractServiceImpl implements  Boa
 		return vo;
     }
     
+    /*
+     * yblee
+     * 게시물 입력
+     * */
+    public BbsNotiInfoVO insertBbsNotiInfoNew(String json, HttpSession session, HttpServletRequest request) throws Exception {
+    	
+    	String WEB_DIR = PortalxpertConfigUtils.getString("upload.real.web");
+        String SAVE_DIR = PortalxpertConfigUtils.getString("upload.temp.dir");
+        //String REAL_DIR = PortalxpertConfigUtils.getString("upload.real.dir");        
+    	BbsNotiInfoVO vo = new BbsNotiInfoVO();
+		try {
+			
+			UserInfoVO info = (UserInfoVO)session.getAttribute("pxLoginInfo");
+			JSONObject bbsNotiObject = JSONObject.fromObject(json);
+			//게시물 기본 테이블			
+			vo.setNotiId((String)bbsNotiObject.get("notiId")) ;
+			vo.setUpNotiId((String)bbsNotiObject.get("upNotiId")) ;
+			vo.setSortSeq( bbsNotiObject.getInt("sortSeq")) ;
+			vo.setBoardId((String)bbsNotiObject.get("boardId")) ;
+			vo.setEmgcYn((String)bbsNotiObject.get("emgcYn")) ;
+			vo.setAnmtYn((String)bbsNotiObject.get("anmtYn")) ;
+			vo.setPopupYn((String)bbsNotiObject.get("popupYn")) ;
+			vo.setBriefYn((String)bbsNotiObject.get("briefYn")) ;
+			vo.setMoblOpenDiv((String)bbsNotiObject.get("moblOpenDiv")) ;
+			vo.setNotiTitle((String)bbsNotiObject.get("notiTitle")) ;
+			vo.setNotiTitleOrgn((String)bbsNotiObject.get("notiTitleOrgn")) ;
+			vo.setTitleBoldYn((String)bbsNotiObject.get("titleBoldYn")) ;
+			vo.setTitleColorDiv((String)bbsNotiObject.get("titleColorDiv")) ;
+			vo.setNotiConts((String)bbsNotiObject.get("notiConts")) ;
+			vo.setLinkUrl((String)bbsNotiObject.get("linkUrl")) ;
+			vo.setNotiTp((String)bbsNotiObject.get("notiTp")) ;
+			vo.setNotiKind((String)bbsNotiObject.get("notiKind")) ;
+			vo.setNickUseYn((String)bbsNotiObject.get("nickUseYn")) ;			
+			vo.setUserNick((String)bbsNotiObject.get("userNick")) ;			
+			vo.setEditDiv((String)bbsNotiObject.get("editDiv")) ;
+			vo.setRsrvYn((String)bbsNotiObject.get("rsrvYn")) ;
+			vo.setNotiBgnDttm((String)bbsNotiObject.get("notiBgnDttm")) ;
+			vo.setNotiEndDttm((String)bbsNotiObject.get("notiEndDttm")) ;
+			vo.setNotiOpenDiv((String)bbsNotiObject.get("notiOpenDiv")) ;
+			vo.setNotiOpenDivSpec((String)bbsNotiObject.get("notiOpenDivSpec")) ;
+			vo.setPublAsgnDiv((String)bbsNotiObject.get("publAsgnDiv")) ;
+			vo.setPublAsgnDivSpec((String)bbsNotiObject.get("publAsgnDivSpec")) ;
+			vo.setReplyPrmsYn((String)bbsNotiObject.get("replyPrmsYn")) ;
+			vo.setReplyMakrRealnameYn((String)bbsNotiObject.get("replyMakrRealnameYn")) ;
+			vo.setOpnPrmsYn((String)bbsNotiObject.get("opnPrmsYn")) ;
+			vo.setOpnMakrRealnameYn((String)bbsNotiObject.get("opnMakrRealnameYn")) ;
+			vo.setNotiReadCnt( bbsNotiObject.getInt("notiReadCnt")) ;
+			vo.setNotiOpnCnt( bbsNotiObject.getInt("notiOpnCnt")) ;
+			vo.setNotiAgrmCnt( bbsNotiObject.getInt("notiAgrmCnt")) ;
+			vo.setNotiOppCnt( bbsNotiObject.getInt("notiOppCnt")) ;
+			vo.setNotiLikeCnt( bbsNotiObject.getInt("notiLikeCnt")) ;
+			vo.setBfBoardId((String)bbsNotiObject.get("bfBoardId")) ;
+			vo.setBfNotiId((String)bbsNotiObject.get("bfNotiId")) ;
+			vo.setStatCode((String)bbsNotiObject.get("statCode")) ;			
+			vo.setMakrIp(CommUtil.getClientIpAddr(request)) ;
+			vo.setBrghCode((String)bbsNotiObject.get("brghCode")) ;
+			vo.setCdlnDeptCode((String)bbsNotiObject.get("cdlnDeptCode")) ;
+			vo.setCdlnDeptName((String)bbsNotiObject.get("cdlnDeptName")) ;
+			vo.setCdlnDeptFname((String)bbsNotiObject.get("cdlnDeptFname")) ;
+			vo.setCdlnObjrName((String)bbsNotiObject.get("cdlnObjrName")) ;
+			vo.setCdlnEvntCode((String)bbsNotiObject.get("cdlnEvntCode")) ;
+			vo.setDelYn((String)bbsNotiObject.get("delYn")) ;			
+			vo.setRegDttm((String)bbsNotiObject.get("regDttm")) ;			
+			vo.setUpdDttm((String)bbsNotiObject.get("updDttm")) ;			
+			vo.setNotiTagLst((String)bbsNotiObject.get("notiTagLst")) ;
+			vo.setAgrmOppYn((String)bbsNotiObject.get("agrmOppYn")) ;
+			vo.setIsAdmin(bbsNotiObject.getString("isAdmin"));
+			String notiReadmanAsgnYn = bbsNotiObject.getString("notiReadmanAsgnYn");
+						
+			if (vo.getNotiId().equals(""))  //입력
+			{
+				vo.setUserName(info.getName()) ;
+				vo.setUpdrId(info.getId()) ;
+				vo.setUpdrName(info.getName()) ;
+				vo.setRegrId(info.getId()) ;
+				vo.setRegrName(info.getName()) ;
+				vo.setUserId(info.getId()) ;
+				vo.setDeptCode(info.getOucode()) ;
+				vo.setDeptName(info.getOu()) ;
+				vo.setDeptFname(info.getOrgfullname()) ;
+				board100Mapper.insertBbsNotiInfo(vo);
+			}
+			else  //수정
+			{
+				
+				//관리자라도 자기 글이면 수정일자 업데이트 처리
+				if (bbsNotiObject.getString("updrId").equals(info.getId()))
+				{
+					vo.setIsAdmin("N");
+				}
+				//vo.setUserId((String)bbsNotiObject.get("userId"));
+				vo.setUpdrId(info.getId()) ;
+				vo.setUpdrName(info.getName()) ;				
+				board100Mapper.updateBbsNotiInfo(vo);	
+				
+				board100Mapper.deleteBbsNotiApndFile(vo);				
+				BbsNotiSurveyVO surveyVO = new BbsNotiSurveyVO();
+				surveyVO.setNotiId(vo.getNotiId());
+				board100Mapper.deleteBbsNotiSurveyExmpl(surveyVO);
+				board100Mapper.deleteBbsNotiSurvey(surveyVO);
+				board100Mapper.deleteBbsNotiUserMap(vo);
+				
+			}
+			//보드 권한이 게시물 지정일 경우만 입력 한다.
+			if (notiReadmanAsgnYn.equals("Y"))
+			{
+				int totPsnCnt = 0;
+				int totDeptCnt = 0;
+				
+				JSONArray jsonArr = (JSONArray)bbsNotiObject.get("NotiOpenDivDeptList");  //부서지정
+
+				for(int i=0; i < jsonArr.size(); i++)
+				{
+					JSONObject obj = (JSONObject)jsonArr.get(i);
+					BbsNotiUserMapVO userVO = new BbsNotiUserMapVO();				
+					userVO.setNotiId(vo.getNotiId());
+					userVO.setUserDiv((String)obj.get("div"));
+					userVO.setUserId((String)obj.get("id"));
+					userVO.setMngAuth((String)obj.get("auth"));
+					userVO.setDelYn("N");
+					userVO.setRegrId(info.getId());
+					userVO.setRegrName(info.getName());
+					userVO.setRegDttm("");
+					userVO.setUpdrId(info.getId());
+					userVO.setUpdrName(info.getName());
+					userVO.setUpdDttm("");
+					
+					if (userVO.getUserId().equals(info.getOucode())||userVO.getUserDiv().equals("PUB") )
+					{
+						totDeptCnt++;
+						if (userVO.getUserDiv().equals("PUB"))  //전체공개면 부서,개인정보 INSERT X
+						{
+							totPsnCnt++;
+						}
+					}
+					
+					board100Mapper.insertBbsNotiUserMap(userVO);
+				}
+				jsonArr = (JSONArray)bbsNotiObject.get("NotiOpenDivEmpList");  //개인지정				
+				for(int i=0; i < jsonArr.size(); i++)
+				{
+					JSONObject obj = (JSONObject)jsonArr.get(i);
+					BbsNotiUserMapVO userVO = new BbsNotiUserMapVO();				
+					userVO.setNotiId(vo.getNotiId());
+					userVO.setUserDiv((String)obj.get("div"));
+					userVO.setUserId((String)obj.get("id"));
+					userVO.setMngAuth((String)obj.get("auth"));
+					userVO.setDelYn("N");
+					userVO.setRegrId(info.getId());
+					userVO.setRegrName(info.getName());
+					userVO.setRegDttm("");
+					userVO.setUpdrId(info.getId());
+					userVO.setUpdrName(info.getName());
+					userVO.setUpdDttm("");
+					
+					if (userVO.getUserId().equals(info.getId()))
+					{
+						totPsnCnt++;
+					}
+					board100Mapper.insertBbsNotiUserMap(userVO);
+					
+				}
+				//입력한 권한 정보가 없으면 작성자 정보를 입력한다.
+				if (totPsnCnt == 0)
+				{
+					
+					BbsNotiUserMapVO userVO = new BbsNotiUserMapVO();				
+					userVO.setNotiId(vo.getNotiId());
+					userVO.setUserDiv("EMP");
+					userVO.setUserId(info.getId());
+					userVO.setMngAuth("RED");
+					userVO.setDelYn("N");
+					userVO.setRegrId(info.getId());
+					userVO.setRegrName(info.getName());
+					userVO.setRegDttm("");
+					userVO.setUpdrId(info.getId());
+					userVO.setUpdrName(info.getName());
+					userVO.setUpdDttm("");
+					
+					board100Mapper.insertBbsNotiUserMap(userVO);
+					
+				}
+				//내부서 정보가 들어가있지 않은경우 부서업무 공지면 권한을 할당한다.
+				if (totDeptCnt == 0)
+				{
+					if  (vo.getBoardId().equals("BBS000001"))
+					{
+						BbsNotiUserMapVO userVO = new BbsNotiUserMapVO();				
+						userVO.setNotiId(vo.getNotiId());
+						userVO.setUserDiv("DPT");
+						userVO.setUserId(info.getOucode());
+						userVO.setMngAuth("RED");
+						userVO.setDelYn("N");
+						userVO.setRegrId(info.getId());
+						userVO.setRegrName(info.getName());
+						userVO.setRegDttm("");
+						userVO.setUpdrId(info.getId());
+						userVO.setUpdrName(info.getName());
+						userVO.setUpdDttm("");
+						board100Mapper.insertBbsNotiUserMap(userVO);
+					}
+				}
+				
+				
+			}
+    
+			JSONArray jsonArr2 = (JSONArray)bbsNotiObject.get("AppendList");				
+			for (int i=0; i < jsonArr2.size(); i++)
+			{
+				JSONObject obj = (JSONObject)jsonArr2.get(i);
+				BbsNotiSurveyVO surveyVO = new BbsNotiSurveyVO();
+				surveyVO.setSurveyNo( obj.getInt("surveyNo")) ;
+				surveyVO.setRelaNotiKind((String)obj.get("relaNotiKind"));
+				surveyVO.setNotiId( vo.getNotiId() ) ;
+				surveyVO.setTmpNotiSeq( obj.getInt("tmpNotiSeq")) ;
+				surveyVO.setTmlnSeq( obj.getInt("tmpNotiSeq")) ;
+				surveyVO.setSurveyClosDttm( (String)obj.get("surveyClosDttm")) ;
+				surveyVO.setSurveyRsltOpenYn( (String)obj.get("surveyRsltOpenYn")) ;
+				surveyVO.setSurveyConts( (String)obj.get("surveyConts")) ;
+				surveyVO.setSurveyTp( (String)obj.get("surveyTp")) ;
+				surveyVO.setDelYn( (String)obj.get("delYn")) ;
+				surveyVO.setRegrId( info.getId()) ;
+				surveyVO.setRegrName( info.getName()) ;
+				surveyVO.setRegDttm( (String)obj.get("regDttm")) ;
+				surveyVO.setUpdrId( info.getId()) ;
+				surveyVO.setUpdrName( info.getName()) ;
+				surveyVO.setUpdDttm( (String)obj.get("updDttm")) ;
+				surveyVO.setSurveyOpenDttm( (String)obj.get("surveyOpenDttm")) ;
+				surveyVO.setSurveyForm( (String)obj.get("surveyForm")) ;
+				surveyVO.setGrpSurveyNo( obj.getInt("grpSurveyNo")) ;
+				surveyVO.setGrpSurveyCnt( obj.getInt("grpSurveyCnt")) ;
+				surveyVO.setExmplTp( (String)obj.get("exmplTp")) ;
+				surveyVO.setInputAddYn( (String)obj.get("inputAddYn")) ;
+				surveyVO.setSkipPermitYn( (String)obj.get("skipPermitYn")) ;
+				surveyVO.setMultiSelPermitYn( (String)obj.get("multiSelPermitYn")) ;
+
+				board100Mapper.insertBbsNotiSurveyNew(surveyVO);
+				
+				JSONArray jsonArr3 = (JSONArray)obj.get("apndExmpList");
+									
+				for(int j=0; j < jsonArr3.size(); j++ )
+				{
+					JSONObject exmplObj = (JSONObject)jsonArr3.get(j);
+					
+					BbsNotiSurveyExmplVO surveyExmplVO = new BbsNotiSurveyExmplVO();
+					surveyExmplVO.setSurveyNo( surveyVO.getSurveyNo()) ;
+					surveyExmplVO.setExmplNo( exmplObj.getInt("exmplNo")) ;
+					surveyExmplVO.setExmplConts((String)exmplObj.get("exmplConts")) ;
+					
+					//surveyExmplVO.setImgPath( (String)exmplObj.get("imgPath")) ;						
+					surveyExmplVO.setImgPath(SAVE_DIR+'/'+CommUtil.getDateString("yyyyMMdd")+"/") ;
+					surveyExmplVO.setImgName( (String)exmplObj.get("imgName")) ;
+					
+					String realPath = CommUtil.apndFileCopy(surveyExmplVO.getImgPath(), surveyExmplVO.getImgName());
+					surveyExmplVO.setImgPath(WEB_DIR+'/'+realPath);
+					
+					surveyExmplVO.setPrvwPath( (String)exmplObj.get("prvwPath")) ;
+					surveyExmplVO.setPrvwName( (String)exmplObj.get("prvwName")) ;
+					surveyExmplVO.setTotCnt( exmplObj.getInt("totCnt")) ;
+					surveyExmplVO.setRsltCnt( exmplObj.getInt("rsltCnt")) ;
+					surveyExmplVO.setRsltRto( exmplObj.getInt("rsltRto")) ;
+					surveyExmplVO.setDelYn( (String)exmplObj.get("delYn")) ;
+					surveyExmplVO.setRegrId( info.getId()) ;
+					surveyExmplVO.setRegrName( info.getName()) ;
+					surveyExmplVO.setRegDttm( (String)exmplObj.get("regDttm")) ;
+					surveyExmplVO.setUpdrId( info.getId()) ;
+					surveyExmplVO.setUpdrName( info.getName()) ;
+					surveyExmplVO.setUpdDttm( (String)exmplObj.get("updDttm")) ;
+					surveyExmplVO.setMoveExmplNo( (String)exmplObj.get("moveExmplNo")) ;
+					
+					board100Mapper.insertBbsNotiSurveyExmplNew(surveyExmplVO);
+				}
+
+			}		
+						
+			//첨부파일 처리
+			JSONArray jsonArr3 = (JSONArray)bbsNotiObject.get("AppendFileList");
+						
+			for (int i=0; i < jsonArr3.size(); i++)
+			{
+				JSONObject obj = (JSONObject)jsonArr3.get(i);
+				BbsNotiApndFileVO apndVO = new BbsNotiApndFileVO();
+				apndVO.setNotiId( vo.getNotiId()) ;
+				apndVO.setApndFileSeq(obj.getInt("apndFileSeq")) ;
+				apndVO.setApndFileTp( (String)obj.get("apndFileTp")) ;
+				apndVO.setApndFileSz( obj.getInt("apndFileSz")) ;
+				apndVO.setApndFileOrgn( (String)obj.get("apndFileOrgn")) ;
+				apndVO.setApndFileName( (String)obj.get("apndFileName")) ;				
+				apndVO.setApndFilePath( (String)obj.get("apndFilePath")) ;				
+				apndVO.setApndFilePrvwPath( (String)obj.get("apndFilePrvwPath")) ;
+				apndVO.setApndFilePrvwName( (String)obj.get("apndFilePrvwName")) ;
+				apndVO.setSourceCodeInput( (String)obj.get("sourceCodeInput")) ;
+				apndVO.setDelYn( (String)obj.get("delYn")) ;
+				apndVO.setRegrId( info.getId()) ;
+				apndVO.setRegrName( info.getName()) ;
+				apndVO.setRegDttm( (String)obj.get("regDttm")) ;
+				apndVO.setUpdrId( info.getId()) ;
+				apndVO.setUpdrName( info.getName()) ;
+				apndVO.setUpdDttm( (String)obj.get("updDttm")) ;
+				
+				String realPath = CommUtil.apndFileCopy(apndVO.getApndFilePath(), apndVO.getApndFileName());
+				apndVO.setReadCnt(obj.getInt("readCnt"));
+				apndVO.setApndFilePath(realPath);
+				apndVO.setApndFilePrvwPath(realPath) ;  //첨부파일 수정시 처리 하기 위하여 변경 20130705
+				apndVO.setMvpKey((String)obj.get("mvpKey"));
+
+				board100Mapper.insertBbsNotiApndFile(apndVO);
+				
+			}						
+			
+		}catch(Exception e){
+			throw processException(Constant.E000001.getVal(), new String[]{e.toString(), this.getClass().getSimpleName()}, e);
+		}
+		
+		return vo;
+    }
+    
     /**
 	 * 게시물 정보 조회 
 	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO

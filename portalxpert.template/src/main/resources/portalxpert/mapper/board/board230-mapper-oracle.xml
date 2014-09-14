@@ -116,6 +116,15 @@
 		<result property="updrId" column="UPDR_ID" />
 		<result property="updrName" column="UPDR_NAME" />
 		<result property="updDttm" column="UPD_DTTM" />
+		<result property="surveyOpenDttm" column="SURVEY_OPEN_DTTM" />
+		<result property="surveyForm" column="SURVEY_FORM" />
+		<result property="grpSurveyNo" column="GRP_SURVEY_NO" />
+		<result property="grpSurveyCnt" column="GRP_SURVEY_CNT" />
+		<result property="exmplTp" column="EXMPL_TP" />
+		<result property="inputAddYn" column="INPUT_ADD_YN" />
+		<result property="skipPermitYn" column="SKIP_PERMIT_YN" />
+		<result property="multiSelPermitYn" column="MULTI_SEL_PERMIT_YN" />
+		<result property="exmplCnt" column="EXMPL_CNT" />
 	</resultMap>
 	
 	<resultMap id="bbsNotiSurveyExmplResult" type="portalxpert.board.board100.vo.BbsNotiSurveyExmplVO">
@@ -137,6 +146,7 @@
 		<result property="updrName" column="UPDR_NAME" />
 		<result property="updDttm" column="UPD_DTTM" />
 		<result property="answExmplNo" column="ANSW_EXMPL_NO" />
+		<result property="moveExmplNo" column="MOVE_EXMPL_NO" />
 	</resultMap>
 	
 	<resultMap id="bbsNotiInfoResult" type="portalxpert.board.board100.vo.BbsNotiInfoVO">
@@ -229,7 +239,35 @@
 		<result property="updDttm" column="UPD_DTTM" />
 		<result property="mvpKey" column="MVP_KEY" />
 	</resultMap>
+		
+	<!-- yblee 설문 대답 정보 -->
+	<resultMap id="bbsNotiSurveyAnswResult" type="portalxpert.board.board100.vo.BbsNotiSurveyAnswVO">
+		<result property="surveyNo" column="SURVEY_NO" />
+		<result property="answmanId" column="ANSWMAN_ID" />
+		<result property="answmanName" column="ANSWMAN_NAME" />
+		<result property="answExmplNo" column="ANSW_EXMPL_NO" />
+		<result property="delYn" column="DEL_YN" />
+		<result property="regrId" column="REGR_ID" />
+		<result property="regrName" column="REGR_NAME" />
+		<result property="regDttm" column="REG_DTTM" />
+		<result property="updrId" column="UPDR_ID" />
+		<result property="updrName" column="UPDR_NAME" />
+		<result property="updDttm" column="UPD_DTTM" />
+		<result property="answConts" column="ANSW_CONTS" />
+
+	</resultMap>
 	
+	<!-- yblee 설문 결과 정보 -->
+	<resultMap id="bbsNotiSurveyRsltResult" type="portalxpert.board.board100.vo.BbsNotiSurveyRsltVO">
+		<result property="mCnt" column="M_CNT" />
+		<result property="surveyNo" column="SURVEY_NO" />
+		<result property="answExmplNo" column="ANSW_EXMPL_NO" />
+		<result property="eCnt" column="E_CNT" />
+		<result property="iCnt" column="I_CNT" />
+		<result property="sCnt" column="S_CNT" />
+		<result property="answConts" column="ANSW_CONTS" />
+		
+	</resultMap>
 	
 	<select id="getMovieKey" resultType="int">
 		<![CDATA[
@@ -446,6 +484,68 @@
 		]]>
 	</insert>
 	
+	<insert id="insertBbsTmpNotiSurveyNew">
+		<selectKey keyProperty="surveyNo" resultType="int" order="BEFORE" >
+		  SELECT SEQ_NOTI_SURVEY.NEXTVAL As surveyNo 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+			INSERT INTO BBS_NOTI_SURVEY(
+			 SURVEY_NO
+			, RELA_NOTI_KIND
+			, NOTI_ID
+			, TMP_NOTI_SEQ
+			, TMLN_SEQ
+			, USER_NOTI_SEQ
+			, SURVEY_CLOS_DTTM
+			, SURVEY_RSLT_OPEN_YN
+			, SURVEY_CONTS
+			, SURVEY_TP
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, SURVEY_OPEN_DTTM
+			, SURVEY_FORM
+			, GRP_SURVEY_NO 
+			, GRP_SURVEY_CNT 
+			, EXMPL_TP 
+			, INPUT_ADD_YN 
+			, SKIP_PERMIT_YN 
+			, MULTI_SEL_PERMIT_YN 
+			) VALUES (
+			 #{surveyNo}
+			, #{relaNotiKind}
+			, #{notiId}
+			, #{tmpNotiSeq}
+			, #{tmlnSeq}
+			, #{userNotiSeq}
+			, TO_DATE(#{surveyClosDttm}, 'YYYY-MM-DD HH24:MI:SS')
+			, #{surveyRsltOpenYn}
+			, #{surveyConts}
+			, #{surveyTp}
+			, #{delYn}
+			, #{regrId}
+			, #{regrName}
+			, sysdate
+			, #{updrId}
+			, #{updrName}
+			, sysdate
+			, TO_DATE(#{surveyOpenDttm}, 'YYYY-MM-DD HH24:MI:SS')
+			, #{surveyForm}
+			, #{grpSurveyNo}
+			, #{grpSurveyCnt}
+			, #{exmplTp}
+			, #{inputAddYn}
+			, #{skipPermitYn}
+			, #{multiSelPermitYn}
+			)
+		]]>
+	</insert>
+	
 	
 	<insert id="insertBbsTmpNotiSurveyExmpl" >
 		<selectKey keyProperty="exmplNo" resultType="int" order="BEFORE" >
@@ -489,6 +589,54 @@
 		, #{updrId}
 		, #{updrName}
 		, sysdate
+		)
+		]]>
+	</insert>
+	
+	<insert id="insertBbsTmpNotiSurveyExmplNew" >
+		<selectKey keyProperty="exmplNo" resultType="int" order="BEFORE" >
+		  SELECT SEQ_NOTI_EXMPL.NEXTVAL As exmplNo 
+			FROM DUAL
+	    </selectKey>
+		<![CDATA[
+		INSERT INTO BBS_NOTI_SURVEY_EXMPL(
+		 SURVEY_NO
+		, EXMPL_NO
+		, EXMPL_CONTS
+		, IMG_PATH
+		, IMG_NAME
+		, PRVW_PATH
+		, PRVW_NAME
+		, TOT_CNT
+		, RSLT_CNT
+		, RSLT_RTO
+		, DEL_YN
+		, REGR_ID
+		, REGR_NAME
+		, REG_DTTM
+		, UPDR_ID
+		, UPDR_NAME
+		, UPD_DTTM
+		, MOVE_EXMPL_NO
+		) VALUES (
+		 #{surveyNo}
+		, #{exmplNo}
+		, #{exmplConts}
+		, #{imgPath}
+		, #{imgName}
+		, #{prvwPath}
+		, #{prvwName}
+		, #{totCnt}
+		, #{rsltCnt}
+		, #{rsltRto}
+		, #{delYn}
+		, #{regrId}
+		, #{regrName}
+		, sysdate
+		, #{updrId}
+		, #{updrName}
+		, sysdate
+		, #{moveExmplNo}
 		)
 		]]>
 	</insert>
@@ -657,6 +805,41 @@
 	<if test="notiId != null and notiId != ''"> WHERE NOTI_ID = #{notiId} </if>
 	<if test="userNotiSeq != null and userNotiSeq != ''"> WHERE USER_NOTI_SEQ = #{userNotiSeq} </if>
 	</select>
+	
+	<select id="getBbsNotiSurveyListNew" resultMap="bbsNotiSurveyResult">
+		<![CDATA[
+			SELECT SURVEY_NO
+			, RELA_NOTI_KIND
+			, NOTI_ID
+			, TMP_NOTI_SEQ
+			, TMLN_SEQ
+			, USER_NOTI_SEQ
+			, SURVEY_CLOS_DTTM
+			, SURVEY_RSLT_OPEN_YN
+			, SURVEY_CONTS
+			, SURVEY_TP
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, SURVEY_OPEN_DTTM
+			, SURVEY_FORM
+			, GRP_SURVEY_NO
+			, GRP_SURVEY_CNT
+			, EXMPL_TP
+			, INPUT_ADD_YN
+			, SKIP_PERMIT_YN
+			, MULTI_SEL_PERMIT_YN
+			, (SELECT COUNT(*) FROM BBS_NOTI_SURVEY_EXMPL B WHERE B.SURVEY_NO = A.SURVEY_NO) EXMPL_CNT  
+			FROM BBS_NOTI_SURVEY A
+		]]>
+	<if test="tmpNotiSeq != null and tmpNotiSeq != ''"> WHERE TMP_NOTI_SEQ = #{tmpNotiSeq} </if>
+	<if test="notiId != null and notiId != ''"> WHERE NOTI_ID = #{notiId} </if>
+	<if test="userNotiSeq != null and userNotiSeq != ''"> WHERE USER_NOTI_SEQ = #{userNotiSeq} </if>
+	</select>
 				
 	<select id="getBbsNotiSurveyExmplList" resultMap="bbsNotiSurveyExmplResult">
 		<![CDATA[
@@ -697,6 +880,138 @@
 		]]>
 		
 	</select>
+	
+	<select id="getBbsNotiSurveyExmplListNew" resultMap="bbsNotiSurveyExmplResult">
+		<![CDATA[
+			SELECT SURVEY_NO
+			, EXMPL_NO
+			, EXMPL_CONTS
+			, IMG_PATH
+			, IMG_NAME
+			, PRVW_PATH
+			, PRVW_NAME
+			, TOT_CNT
+			, RSLT_CNT
+			, RSLT_RTO
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, MOVE_EXMPL_NO
+		]]>		
+			<if test="userId != null and userId != ''">
+			, NVL((SELECT EXMPL_NO FROM BBS_NOTI_SURVEY_ANSW B WHERE E.EXMPL_NO = B.ANSW_EXMPL_NO AND B.ANSWMAN_ID = #{userId}),0) AS ANSW_EXMPL_NO
+			</if>
+			FROM BBS_NOTI_SURVEY_EXMPL E
+				
+			<if test="tmpNotiSeq != null and tmpNotiSeq != 0">
+				WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE TMP_NOTI_SEQ = #{tmpNotiSeq})
+			</if>
+			<if test="notiId != null and notiId != ''"> 
+				WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE NOTI_ID = #{notiId})
+			</if>
+			<if test="userNotiSeq != null and userNotiSeq != 0"> 
+				WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE USER_NOTI_SEQ = #{userNotiSeq})
+			</if>
+		<![CDATA[	
+			ORDER BY 1,2
+		]]>
+		
+	</select>
+	
+	<!-- yblee 추가 -->	
+	<select id="getBbsNotiSurveyAnswList" resultMap="bbsNotiSurveyAnswResult">
+		<![CDATA[
+		SELECT SURVEY_NO
+			, ANSWMAN_ID
+			, ANSWMAN_NAME
+			, ANSW_EXMPL_NO
+			, DEL_YN
+			, REGR_ID
+			, REGR_NAME
+			, REG_DTTM
+			, UPDR_ID
+			, UPDR_NAME
+			, UPD_DTTM
+			, ANSW_CONTS
+		FROM BBS_NOTI_SURVEY_ANSW
+		WHERE SURVEY_NO IN (SELECT SURVEY_NO FROM BBS_NOTI_SURVEY WHERE NOTI_ID = #{notiId})
+		AND ANSWMAN_ID = #{userId}
+		]]>	
+	</select>
+	
+	<!-- yblee 추가 -->	
+	<select id="getSurveyRsltAnswCntList" resultMap="bbsNotiSurveyRsltResult">
+		<![CDATA[
+		SELECT SURVEY_NO,
+		    ANSW_EXMPL_NO,
+		    SUM(E_CNT) E_CNT,
+		    SUM(I_CNT) I_CNT,
+		    SUM(S_CNT) S_CNT
+		FROM(
+		    SELECT ANSWMAN_ID,
+		        SURVEY_NO,
+		        ANSW_EXMPL_NO,
+		        CASE WHEN SURVEY_NO != ANSW_EXMPL_NO AND ANSW_EXMPL_NO != '0' THEN 1 ELSE 0 END AS E_CNT,
+		        CASE WHEN SURVEY_NO = ANSW_EXMPL_NO AND INPUT_ADD_YN = 'Y' THEN 1 ELSE 0 END AS I_CNT,
+		        CASE WHEN SURVEY_NO = ANSW_EXMPL_NO AND EXMPL_TP = '020' THEN 1 ELSE 0 END AS S_CNT   
+		    FROM(
+		        SELECT A.ANSWMAN_ID, 
+		            A.SURVEY_NO, 
+		            A.ANSW_EXMPL_NO,
+		            B.INPUT_ADD_YN,
+		            B.EXMPL_TP  
+		        FROM BBS_NOTI_SURVEY_ANSW A
+		        LEFT OUTER JOIN BBS_NOTI_SURVEY B
+		        ON A.SURVEY_NO = B.SURVEY_NO
+		        WHERE B.NOTI_ID = #{notiId}
+		    ) A
+		)A 
+		GROUP BY SURVEY_NO, ANSW_EXMPL_NO
+		ORDER BY SURVEY_NO, ANSW_EXMPL_NO
+		]]>	
+	</select>
+	
+	<!-- yblee 추가 -->	
+	<select id="getSurveyRsltMemberCnt" parameterType="portalxpert.board.board100.vo.BbsNotiSurveyRsltVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT(*) M_CNT
+		FROM
+		(
+		    SELECT ANSWMAN_ID 
+		    FROM BBS_NOTI_SURVEY_ANSW A
+		    LEFT OUTER JOIN BBS_NOTI_SURVEY B
+		    ON A.SURVEY_NO = B.SURVEY_NO
+		    WHERE B.NOTI_ID = #{notiId}
+		    GROUP BY ANSWMAN_ID
+		) A
+		]]>	
+	</select>
+	
+	<!-- yblee 추가 -->
+	<select id="getSurveyRsltExcelDown" resultMap="bbsNotiSurveyRsltResult">
+		<![CDATA[
+		SELECT ANSW_CONTS
+		FROM BBS_NOTI_SURVEY A
+		LEFT OUTER JOIN BBS_NOTI_SURVEY_ANSW B
+		ON A.SURVEY_NO = B.SURVEY_NO
+		WHERE A.SURVEY_NO = #{excelSurveyNo} 
+		AND B.ANSW_EXMPL_NO = #{excelSurveyNo}
+		]]>
+		 
+		<if test='excelDivn=="I"'>
+		AND INPUT_ADD_YN = 'Y'
+		</if>
+		<if test='excelDivn=="S"'>
+		AND EXMPL_TP = '020'
+		</if>	
+		<![CDATA[
+		ORDER BY B.REG_DTTM
+		]]>
+	</select> 	 
 	
 	<select id="getBbsNotiInfoList" resultMap="bbsNotiInfoResult">
 		<![CDATA[

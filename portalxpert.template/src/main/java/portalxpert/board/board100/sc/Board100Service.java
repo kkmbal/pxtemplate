@@ -136,6 +136,15 @@ public interface Board100Service {
     BbsNotiInfoVO insertBbsNotiInfo(String json, HttpSession session, HttpServletRequest request) throws Exception;
     
     /**
+     * yblee
+	 * 설문 게시물 정보 입력
+	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO
+	 * @return 게시물 정보 입력
+	 * @exception Exception
+	 */
+    BbsNotiInfoVO insertBbsNotiInfoNew(String json, HttpSession session, HttpServletRequest request) throws Exception;
+    
+    /**
 	 * 게시물 정보 조회
 	 * @param BbsNotiInfoVO - 조회할 정보가 담긴 VO
 	 * @return 게시물 정보

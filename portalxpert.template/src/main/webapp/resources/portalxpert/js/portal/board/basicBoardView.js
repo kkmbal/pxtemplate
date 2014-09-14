@@ -1363,7 +1363,7 @@
 					listYn = 'Y';
 				}
 				
-				parent.document.getElementById("contentfrm").src= 
+				parent.document.getElementById("bbsFrame").src= 
 					WEB_HOME+"/board210/getBoardInfoList.do?boardId="
 							+boardId+"&pageIndex="+pageIndex+"&pageUnit="+pageUnit
 							+"&searchCondition="+searchCondition

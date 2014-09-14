@@ -2020,6 +2020,53 @@
 	</select>
 	
 	<insert id="insertBbsNotiSurvey">
+        <selectKey keyProperty="surveyNo" resultType="int" order="BEFORE" >
+          SELECT SEQ_NOTI_SURVEY.NEXTVAL As surveyNo 
+            FROM DUAL
+        </selectKey>
+        <![CDATA[
+            INSERT INTO BBS_NOTI_SURVEY(
+             SURVEY_NO
+            , RELA_NOTI_KIND
+            , NOTI_ID
+            , TMP_NOTI_SEQ
+            , TMLN_SEQ
+            , USER_NOTI_SEQ
+            , SURVEY_CLOS_DTTM
+            , SURVEY_RSLT_OPEN_YN
+            , SURVEY_CONTS
+            , SURVEY_TP
+            , DEL_YN
+            , REGR_ID
+            , REGR_NAME
+            , REG_DTTM
+            , UPDR_ID
+            , UPDR_NAME
+            , UPD_DTTM
+            ) VALUES (
+             #{surveyNo}
+            , #{relaNotiKind}
+            , #{notiId}
+            , #{tmpNotiSeq}
+            , #{tmlnSeq}
+            , #{userNotiSeq}
+            , TO_DATE(#{surveyClosDttm}, 'YYYY-MM-DD HH24:MI:SS')
+            , #{surveyRsltOpenYn}
+            , #{surveyConts}
+            , #{surveyTp}
+            , #{delYn}
+            , #{regrId}
+            , #{regrName}
+            , sysdate
+            , #{updrId}
+            , #{updrName}
+            , sysdate
+            )
+            
+        ]]>
+    </insert>
+	
+	<insert id="insertBbsNotiSurveyNew">
 		<selectKey keyProperty="surveyNo" resultType="int" order="BEFORE" >
 		  SELECT SEQ_NOTI_SURVEY.NEXTVAL As surveyNo 
 			FROM DUAL
@@ -2043,6 +2090,14 @@
 			, UPDR_ID
 			, UPDR_NAME
 			, UPD_DTTM
+			, SURVEY_OPEN_DTTM
+			, SURVEY_FORM
+			, GRP_SURVEY_NO 
+			, GRP_SURVEY_CNT 
+			, EXMPL_TP 
+			, INPUT_ADD_YN 
+			, SKIP_PERMIT_YN 
+			, MULTI_SEL_PERMIT_YN 
 			) VALUES (
 			 #{surveyNo}
 			, #{relaNotiKind}
@@ -2061,6 +2116,14 @@
 			, #{updrId}
 			, #{updrName}
 			, sysdate
+			, TO_DATE(#{surveyOpenDttm}, 'YYYY-MM-DD HH24:MI:SS')
+			, #{surveyForm}
+			, #{grpSurveyNo}
+			, #{grpSurveyCnt}
+			, #{exmplTp}
+			, #{inputAddYn}
+			, #{skipPermitYn}
+			, #{multiSelPermitYn}
 			)
 			
 		]]>
@@ -2111,6 +2174,54 @@
 			)
 		]]>
 	</insert>
+	
+	<insert id="insertBbsNotiSurveyExmplNew">
+        <selectKey keyProperty="exmplNo" resultType="int" order="BEFORE" >
+          SELECT SEQ_NOTI_EXMPL.NEXTVAL As exmplNo 
+            FROM DUAL
+        </selectKey>
+        <![CDATA[
+            INSERT INTO Bbs_NOTI_SURVEY_EXMPL(
+             SURVEY_NO
+            , EXMPL_NO
+            , EXMPL_CONTS
+            , IMG_PATH
+            , IMG_NAME
+            , PRVW_PATH
+            , PRVW_NAME
+            , TOT_CNT
+            , RSLT_CNT
+            , RSLT_RTO
+            , DEL_YN
+            , REGR_ID
+            , REGR_NAME
+            , REG_DTTM
+            , UPDR_ID
+            , UPDR_NAME
+            , UPD_DTTM
+            , MOVE_EXMPL_NO
+            ) VALUES (
+             #{surveyNo}
+            , #{exmplNo}
+            , #{exmplConts}
+            , #{imgPath}
+            , #{imgName}
+            , #{prvwPath}
+            , #{prvwName}
+            , #{totCnt}
+            , #{rsltCnt}
+            , #{rsltRto}
+            , #{delYn}
+            , #{regrId}
+            , #{regrName}
+            , sysdate
+            , #{updrId}
+            , #{updrName}
+            , sysdate
+            , #{moveExmplNo}
+            )
+        ]]>
+    </insert>
 	
 	<insert id="insertBbsNotiUserMap" >
 		<![CDATA[
@@ -2719,7 +2830,7 @@
 			PBS_USER_NOTI_INFO WHERE USER_NOTI_SEQ = #{userNotiSeq}
 		</if>
 	</select>
-		
+
 	<!-- 게시판 사용현황 -->	
 	<select id="getAdmBbsStat" parameterType="portalxpert.board.board100.vo.BbsBoardInfoVO" resultType="portalxpert.board.board100.vo.BbsBoardInfoVO">
 			SELECT A.BOARD_ID

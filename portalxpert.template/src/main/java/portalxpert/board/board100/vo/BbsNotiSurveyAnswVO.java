@@ -13,6 +13,10 @@ public class BbsNotiSurveyAnswVO {
 	private String updrId;
 	private String updrName;
 	private String updDttm;
+	private String answConts; //yblee 추가
+	private String userId; //yblee 추가
+	private String notiId;//yblee 추가
+	
 	public int getSurveyNo() {
 		return surveyNo;
 	}
@@ -78,6 +82,24 @@ public class BbsNotiSurveyAnswVO {
 	}
 	public void setUpdDttm(String updDttm) {
 		this.updDttm = updDttm;
+	}
+	public String getAnswConts() {
+		return answConts;
+	}
+	public void setAnswConts(String answConts) {
+		this.answConts = answConts;
+	}
+	public String getNotiId() {
+		return notiId;
+	}
+	public void setNotiId(String notiId) {
+		this.notiId = notiId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 
