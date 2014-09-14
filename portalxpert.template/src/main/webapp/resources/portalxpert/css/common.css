@@ -118,6 +118,10 @@ textarea.textbox:disabled {border:1px solid #d1d1d1;background:#ececec;color:#78
 .paging a:hover .on {text-decoration:none}
 .paging a:hover .num {text-decoration:underline;color:#000}
 .paging .disabled {cursor:default}
+.paging .allprev {width:20px;background:url(../images/btn_allprev.png) no-repeat 0 0}
+.paging .prev {width:20px;background:url(../images/btn_prev.png) no-repeat 0 0}
+.paging .next {width:20px;background:url(../images/btn_next.png) no-repeat 0 0}
+.paging .allnext {width:20px;background:url(../images/btn_allnext.png) no-repeat 0 0}
 
 /* 검색조건 */
 .rbox {position:relative;width:700px;background:url(../images/bg_rbox.gif) no-repeat 0 100%;border:0;margin-bottom:20px}
